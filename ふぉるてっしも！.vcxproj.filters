@@ -13,5 +13,153 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{46eb7c4a-3345-48b3-afd3-3222b93889bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{0cf99b4b-bc4f-479e-9740-924c34d88174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{ad455c8f-5e8a-4564-8a87-d51c29161187}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Library\Camera.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Common.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Counter.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\DebugProcess.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Direct3D.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Fade.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\FPSManager.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Input.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Light.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Loading.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ObjectBase2D.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\ObjectBase3D.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Polygon.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Sound.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Texture.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\TsuLibSystem.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\Vector.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\WindowClass.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Result.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Library\Camera.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Color.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Common.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Counter.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\DebugProcess.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Direct3D.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Fade.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\FPSManager.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Input.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Light.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\LinkLibrary.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Loading.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Math.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ObjectBase2D.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\ObjectBase3D.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Polygon.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Sound.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Texture.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\TsuLibSystem.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\Vector.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\WindowClass.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
