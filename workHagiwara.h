@@ -1,10 +1,10 @@
 //=============================================================================
 //
-//宇津木担当分　workUtsugi.cpp
+//萩原担当分　workHagiwara.h
 //
 //=============================================================================
-#ifndef _WORKUTSUGI_H_
-#define _WORKUTSUGI_H_
+#ifndef _WORKHAGIWARA_H_
+#define _WORKHAGIWARA_H_
 
 
 
@@ -12,9 +12,9 @@
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
-HRESULT InitWorkUtsugi(void);
-void UninitWorkUtsugi(void);
-void UpdateWorkUtsugi(void);
-void DrawWorkUtsugi(void);
+HRESULT InitWorkHagiwara(void);
+void UninitWorkHagiwara(void);
+void UpdateWorkHagiwara(void);
+void DrawWorkHagiwara(void);
 
 #endif

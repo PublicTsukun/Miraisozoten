@@ -96,6 +96,27 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="workHagiwara.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="workKimura.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="workSato.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="workSon.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="workTsu.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="workYamaguchi.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="workYamamoto.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -175,6 +196,27 @@
     </ClInclude>
     <ClInclude Include="SceneManager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="workHagiwara.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="workKimura.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="workSato.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="workSon.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="workTsu.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="workYamaguchi.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="workYamamoto.h">
+      <Filter>work</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

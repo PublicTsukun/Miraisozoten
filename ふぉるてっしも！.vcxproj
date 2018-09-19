@@ -177,7 +177,14 @@
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="workHagiwara.cpp" />
+    <ClCompile Include="workKimura.cpp" />
+    <ClCompile Include="workSato.cpp" />
+    <ClCompile Include="workSon.cpp" />
+    <ClCompile Include="workTsu.cpp" />
     <ClCompile Include="workUtsugi.cpp" />
+    <ClCompile Include="workYamaguchi.cpp" />
+    <ClCompile Include="workYamamoto.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h" />
@@ -205,7 +212,14 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="workHagiwara.h" />
+    <ClInclude Include="workKimura.h" />
+    <ClInclude Include="workSato.h" />
+    <ClInclude Include="workSon.h" />
+    <ClInclude Include="workTsu.h" />
     <ClInclude Include="workUtsugi.h" />
+    <ClInclude Include="workYamaguchi.h" />
+    <ClInclude Include="workYamamoto.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

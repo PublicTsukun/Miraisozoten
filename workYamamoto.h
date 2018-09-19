@@ -1,10 +1,10 @@
 //=============================================================================
 //
-//宇津木担当分　workUtsugi.cpp
+//山本担当分　workYamamoto.cpp
 //
 //=============================================================================
-#ifndef _WORKUTSUGI_H_
-#define _WORKUTSUGI_H_
+#ifndef _WORKYAMAMOTO_H_
+#define _WORKYAMAMOTO_H_
 
 
 
@@ -12,9 +12,9 @@
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
-HRESULT InitWorkUtsugi(void);
-void UninitWorkUtsugi(void);
-void UpdateWorkUtsugi(void);
-void DrawWorkUtsugi(void);
+HRESULT InitWorkYamamoto(void);
+void UninitWorkYamamoto(void);
+void UpdateWorkYamamoto(void);
+void DrawWorkYamamoto(void);
 
 #endif
