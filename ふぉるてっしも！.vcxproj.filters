@@ -22,6 +22,9 @@
     <Filter Include="Game">
       <UniqueIdentifier>{ad455c8f-5e8a-4564-8a87-d51c29161187}</UniqueIdentifier>
     </Filter>
+    <Filter Include="work">
+      <UniqueIdentifier>{e17f62df-ea3a-4e33-832f-e3b91401426e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Library\Camera.cpp">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="Title.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="workUtsugi.cpp">
+      <Filter>work</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Title.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="workUtsugi.h">
+      <Filter>work</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
