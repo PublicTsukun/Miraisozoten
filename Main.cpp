@@ -76,12 +76,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	timeBeginPeriod(1);	// 分解能設定
 	FPSManager::Init();	// FPS制御
 
-	InitCamera();
-	Dx9Light Light;
-	//Light.SetLight();
-	// ラインティングを無効にする
-	//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
-
 	/* メッセージループ */
 	while (1)
 	{
@@ -92,8 +86,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		{
 			PrintDebugProcess("FPS : %f\n", FPSManager::DisplayFPS(FPS_NORMAL));
 
-			//Update();	// 更新処理
-			UpdateCamera(D3DXVECTOR3(0, 0, 0));
+			Update();	// 更新処理
 			Draw();		// 描画処理
 		}
 	}
@@ -112,8 +105,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 //=============================================================================
 HRESULT Init()
 {
-	InitCamera();
-
 	// フェード
 	CSFade::MakeVertex();
 
