@@ -93,6 +93,9 @@
     <ClCompile Include="workUtsugi.cpp">
       <Filter>work</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="workUtsugi.h">
       <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,8 +14,7 @@
 #include "Library/Fade.h"
 #include "Library/Camera.h"
 #include "Library/Light.h"
-#include "Result.h"
-#include "Title.h"
+#include "SceneManager.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -24,15 +23,6 @@
 #define WINDOW_NAME		"白紅プロジェクト"	// ウインドウのキャプション名
 
 
-/* ゲーム状態の種類 */
-typedef enum
-{
-	SCENE_TITLE = 0,	// タイトル画面
-	SCENE_GAME,			// メインゲーム
-	SCENE_RESULT,		// リザルト画面
-	SCENE_MAX,
-	SCENE_END,	// アプリ終了
-} GAMESCENE;
 
 
 //*****************************************************************************
@@ -47,14 +37,13 @@ HRESULT Init();
 void Uninit(void);
 void Update(void);
 void Draw(void);
-GAMESCENE SetGameScene(GAMESCENE scene);
 
 
 //*****************************************************************************
 // グローバル変数:
 //*****************************************************************************
-bool		g_bDispDebug = true;	// デバッグ表示ON/OFF
-GAMESCENE	g_GameScene = SCENE_MAX;
+bool DispDebug = true;	// デバッグ表示ON/OFF
+
 
 //=============================================================================
 // メイン関数
@@ -94,7 +83,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	TsuSystem::Uninitialize();	// TSUシステムを初期化
 	Uninit();					// その他終了処理
 
-
 	timeEndPeriod(1);	// 分解能を戻す
 
 	return 0;
@@ -109,7 +97,7 @@ HRESULT Init()
 	CSFade::MakeVertex();
 
 	// タイトルシーンにセット
-	SetGameScene(SCENE_GAME);
+	Scene::SetScene(SCENE_GAME);
 
 	return S_OK;
 }
@@ -119,7 +107,7 @@ HRESULT Init()
 //=============================================================================
 void Uninit(void)
 {
-	SetGameScene(SCENE_END);
+	Scene::SetScene(SCENE_END);
 
 }
 
@@ -130,38 +118,14 @@ void Update(void)
 {
 	if (GetKeyboardTrigger(DIK_F3))
 	{// デバッグ表示ON/OFF
-		g_bDispDebug = g_bDispDebug ? false : true;
+		DispDebug = DispDebug ? false : true;
 	}
 
 	// 入力の更新処理
 	UpdateInput();
 
-	switch (g_GameScene)
-	{
-	case SCENE_TITLE:
-
-		// タイトルシーンの更新処理
-		UpdateTitle();
-
-		break;
-
-	case SCENE_GAME:
-
-		// ゲームシーンの更新
-		g_GameScene = SCENE_RESULT;
-
-		break;
-
-	case SCENE_RESULT:
-
-		// リザルトシーンの更新処理
-		UpdateResult();
-
-		break;
-
-	default:
-		break;
-	}
+	// シーンの更新
+	Scene::Update();
 
 	// フェード処理の更新
 	CSFade::Update();
@@ -180,38 +144,14 @@ void Draw(void)
 	// Direct3Dによる描画の開始
 	if (SUCCEEDED(Direct3D::GetD3DDevice()->BeginScene()))
 	{
-		switch (g_GameScene)
-		{
-		case SCENE_TITLE:
-
-			// タイトルシーンの描画処理
-			DrawTitle();
-
-			break;
-
-		case SCENE_GAME:
-
-			// ゲームシーンの描画処理
-			SetCamera();
-
-			break;
-
-		case SCENE_RESULT:
-
-			// リザルトの描画処理
-			DrawResult();
-
-			break;
-
-		default:
-			break;
-		}
+		// シーンの描画
+		Scene::Draw();
 
 		// フェード描画
 		CSFade::Draw();
 
 		// デバッグ表示の描画処理
-		if (g_bDispDebug)
+		if (DispDebug)
 		{
 			DrawDebugProcess();
 		}
@@ -224,89 +164,4 @@ void Draw(void)
 	Direct3D::GetD3DDevice()->Present(NULL, NULL, NULL, NULL);
 }
 
-//=============================================================================
-// ゲームシーンの更新・取得
-//=============================================================================
-GAMESCENE SetGameScene(GAMESCENE scene)
-{
-	/* 指定シーンが同じ場合は戻る */
-	if (scene == SCENE_MAX)
-	{
-		return g_GameScene;
-	}
-
-	/* 現在のシーンのお片付け */
-	switch (g_GameScene)
-	{
-	case SCENE_TITLE:
-
-		// タイトルシーンの終了処理
-		UninitTitle();
-
-		break;
-
-	case SCENE_GAME:
-
-		// ゲームシーンの終了処理 リザルトに統一
-		//UninitGame();
-
-		// ポーズシーンの終了処理
-
-		// カットインシーンの終了処理
-
-		break;
-
-	case SCENE_RESULT:
-
-		// リザルトシーンの終了処理
-		UninitResult();
-
-		// ゲームシーンの終了処理
-
-
-		break;
-
-	default:
-		break;
-	}
-
-	/* 次のシーンの準備 */
-	switch (scene)
-	{
-	case SCENE_TITLE:
-
-		// タイトルシーンの初期化
-		InitTitle();
-
-		g_GameScene = SCENE_TITLE;
-
-		break;
-
-	case SCENE_GAME:
-
-		// ゲームシーンの初期化
-
-
-		g_GameScene = SCENE_GAME;
-
-		break;
-
-	case SCENE_RESULT:
-
-		// リザルトシーンの初期化
-		InitResult();
-
-		g_GameScene = SCENE_RESULT;
-
-		break;
-
-	default:
-		return g_GameScene;
-		break;
-	}
-
-	g_GameScene = scene;
-
-	return g_GameScene;
-}
 

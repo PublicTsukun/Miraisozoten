@@ -175,6 +175,7 @@
     <ClCompile Include="Library\WindowClass.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Result.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="workUtsugi.cpp" />
   </ItemGroup>
@@ -202,6 +203,7 @@
     <ClInclude Include="Library\WindowClass.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Result.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="workUtsugi.h" />
   </ItemGroup>
