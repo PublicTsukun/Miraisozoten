@@ -14,9 +14,8 @@
 *.userprefs
 
 # Build results
-Mikoshikagura/[Dd]ebug/
-[Dd]ebugPublic/
-Mikoshikagura/[Rr]elease/
+[Dd]ebug/
+[Rr]elease/
 [Rr]eleases/
 x64/
 x86/
@@ -218,5 +217,4 @@ ModelManifest.xml
 *.db
 *.iobj
 *.ipdb
-Mikoshikagura/imgui.ini
-Mikoshikagura/Mikoshikagura_Debug.exe
+
