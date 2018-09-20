@@ -75,22 +75,6 @@ public:
 };
 
 
-/* 2DUIアニメーション */
-class UI2DAnimation : public C2DObject
-{
-	D3DXCOLOR Color;
-	float     Curve;
-
-public:
-	int Init(const char *texture);
-	int Init(float posX, float posY, float sizX, float sizY, const char *texture);
-	
-	void ResetData(int type);
-	void Animation01();
-
-};
-
-
 /* 2DUI数字 */
 class UI2DNumber : public C2DObject
 {

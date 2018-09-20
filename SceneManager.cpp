@@ -16,6 +16,11 @@ int  SceneManager::Update()
 		// タイトルシーンの更新処理
 
 
+		if (false)
+		{
+			Scene::SetScene(SCENE_GAME);
+		}
+
 		break;
 
 	case SCENE_GAME:
@@ -23,12 +28,22 @@ int  SceneManager::Update()
 		// ゲームシーンの更新
 
 
+		if (false)
+		{
+			Scene::SetScene(SCENE_RESULT);
+		}
+
 		break;
 
 	case SCENE_RESULT:
 
 		// リザルトシーンの更新処理
 
+
+		if (false)
+		{
+			Scene::SetScene(SCENE_TITLE);
+		}
 
 		break;
 

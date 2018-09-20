@@ -312,41 +312,6 @@ UIBackGround::UIBackGround(const char *texture)
 }
 
 
-/* 2DUIアニメーション */
-int  UI2DAnimation::Init(const char *texture)
-{
-	this->Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	this->Curve = 0.0f;
-	this->C2DObject::Init(texture);
-	return 0;
-}
-int  UI2DAnimation::Init(float posX, float posY, float sizX, float sizY, const char *texture)
-{
-	this->Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	this->Curve = 0.0f;
-	this->C2DObject::Init(posX, posY, sizX, sizY, texture);
-	return 0;
-}
-void UI2DAnimation::ResetData(int type)
-{
-	if (type)
-	{
-		this->Position = Vector2(0.0f, 0.0f);
-		this->Size = Vector2(0.0f, 0.0f);
-	}
-	this->Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	this->Scale = 1.0f;
-	this->Angle = 0.0f;
-	this->Curve = 0.0f;
-}
-void UI2DAnimation::Animation01()
-{
-	Curve += 0.0625f;
-	Scale = sinf(Curve) * 0.1f + 1.0f;
-	SetVertex();
-}
-
-
 /* 2DUI数字 */
 void UI2DNumber::SetNumber(int num)
 {
