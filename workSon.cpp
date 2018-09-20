@@ -1,22 +1,22 @@
 //=============================================================================
 //
-//宇津木担当分　workUtsugi.cpp
+//宋担当分　workSon.cpp
 //
 //=============================================================================
 
 //必須インクルード
 #include <windows.h>
-#include "workUtsugi.h"
+#include "workSon.h"
 #include "SceneManager.h"
 
 
-//宇津木担当分インクルード
+//宋担当分インクルード
 
 
 //=============================================================================
 //初期化処理
 //=============================================================================
-HRESULT InitWorkUtsugi(void)
+HRESULT InitWorkSon(void)
 {
 	switch (Scene::SetScene(SCENE_MAX))
 	{
@@ -41,7 +41,7 @@ HRESULT InitWorkUtsugi(void)
 //=============================================================================
 //終了処理　※記載場所注意
 //=============================================================================
-void UninitWorkUtsugi(void)
+void UninitWorkSon(void)
 {
 
 	switch (Scene::SetScene(SCENE_MAX))
@@ -67,7 +67,7 @@ void UninitWorkUtsugi(void)
 //=============================================================================
 //更新処理
 //=============================================================================
-void UpdateWorkUtsugi(void)
+void UpdateWorkSon(void)
 {
 	switch (Scene::SetScene(SCENE_MAX))
 	{
@@ -92,7 +92,7 @@ void UpdateWorkUtsugi(void)
 //=============================================================================
 //描画処理
 //=============================================================================
-void DrawWorkUtsugi(void)
+void DrawWorkSon(void)
 {
 	switch (Scene::SetScene(SCENE_MAX))
 	{

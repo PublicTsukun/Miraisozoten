@@ -1,10 +1,10 @@
 //=============================================================================
 //
-//宇津木担当分　workUtsugi.cpp
+//宋担当分　workSon.h
 //
 //=============================================================================
-#ifndef _WORKUTSUGI_H_
-#define _WORKUTSUGI_H_
+#ifndef _WORKSON_H_
+#define _WORKSON_H_
 
 
 
@@ -12,9 +12,9 @@
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
-HRESULT InitWorkUtsugi(void);
-void UninitWorkUtsugi(void);
-void UpdateWorkUtsugi(void);
-void DrawWorkUtsugi(void);
+HRESULT InitWorkSon(void);
+void UninitWorkSon(void);
+void UpdateWorkSon(void);
+void DrawWorkSon(void);
 
 #endif

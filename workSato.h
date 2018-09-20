@@ -1,10 +1,10 @@
 //=============================================================================
 //
-//宇津木担当分　workUtsugi.cpp
+//佐藤担当分　workSato.cpp
 //
 //=============================================================================
-#ifndef _WORKUTSUGI_H_
-#define _WORKUTSUGI_H_
+#ifndef _WORKSATO_H_
+#define _WORKSATO_H_
 
 
 
@@ -12,9 +12,9 @@
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
-HRESULT InitWorkUtsugi(void);
-void UninitWorkUtsugi(void);
-void UpdateWorkUtsugi(void);
-void DrawWorkUtsugi(void);
+HRESULT InitWorkSato(void);
+void UninitWorkSato(void);
+void UpdateWorkSato(void);
+void DrawWorkSato(void);
 
 #endif

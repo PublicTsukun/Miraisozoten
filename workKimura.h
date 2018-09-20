@@ -1,10 +1,10 @@
 //=============================================================================
 //
-//宇津木担当分　workUtsugi.cpp
-//
+//木村担当分　workKimura.h
+//きむら
 //=============================================================================
-#ifndef _WORKUTSUGI_H_
-#define _WORKUTSUGI_H_
+#ifndef _WORKKIMURA_H_
+#define _WORKKIMURA_H_
 
 
 
@@ -12,9 +12,9 @@
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
-HRESULT InitWorkUtsugi(void);
-void UninitWorkUtsugi(void);
-void UpdateWorkUtsugi(void);
-void DrawWorkUtsugi(void);
+HRESULT InitWorkKimura(void);
+void UninitWorkKimura(void);
+void UpdateWorkKimura(void);
+void DrawWorkKimura(void);
 
 #endif
