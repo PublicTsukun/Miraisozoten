@@ -6,7 +6,7 @@
 #ifndef ___SOUND_INCLUDE_H___
 #define ___SOUND_INCLUDE_H___
 
-#include <windows.h>
+#include <Windows.h>
 #include <tchar.h>
 #include <dsound.h>
 #include <mmsystem.h>

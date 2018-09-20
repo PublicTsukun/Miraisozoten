@@ -179,9 +179,6 @@
     <ClInclude Include="Library\WindowClass.h">
       <Filter>Library</Filter>
     </ClInclude>
-    <ClInclude Include="Main.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Result.h">
       <Filter>Scene</Filter>
     </ClInclude>

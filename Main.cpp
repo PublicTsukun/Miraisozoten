@@ -3,7 +3,6 @@
 // ƒƒCƒ“ˆ— [main.cpp]
 //
 //=============================================================================
-
 #include "Library/Common.h"
 #include "Library/TsuLibSystem.h"
 #include "Library/WindowClass.h"
@@ -16,7 +15,6 @@
 #include "Library/Light.h"
 #include "Library/DebugProcess.h"
 #include "SceneManager.h"
-
 
 
 //*****************************************************************************

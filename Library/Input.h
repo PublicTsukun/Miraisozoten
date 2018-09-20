@@ -10,7 +10,7 @@
 #define DIRECTINPUT_VERSION (0x0800)	// Œx‘Îô
 #include <dinput.h>
 #include <d3dx9math.h>
-#include <windows.h>
+#include <Windows.h>
 #include <tchar.h>
 #pragma comment (lib, "dinput8.lib")
 

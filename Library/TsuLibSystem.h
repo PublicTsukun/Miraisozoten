@@ -1,7 +1,7 @@
 #ifndef __TSULIB_STSTEM_H_INCLUDE__
 #define __TSULIB_STSTEM_H_INCLUDE__
 
-#include <windows.h>
+#include <Windows.h>
 
 typedef class TSULibrarySystem
 {

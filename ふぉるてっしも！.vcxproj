@@ -207,7 +207,6 @@
     <ClInclude Include="Library\TsuLibSystem.h" />
     <ClInclude Include="Library\Vector.h" />
     <ClInclude Include="Library\WindowClass.h" />
-    <ClInclude Include="Main.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Title.h" />

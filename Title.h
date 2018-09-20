@@ -6,7 +6,8 @@
 #ifndef _TITLE_INCLUDE_H_
 #define _TITLE_INCLUDE_H_
 
-#include "Library/ObjectBase2D.h"
+
+#include <Windows.h>
 
 
 //*****************************************************************************

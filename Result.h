@@ -7,7 +7,7 @@
 #define _RESULT_INCLUDE_H_
 
 
-#include "Main.h"
+#include <Windows.h>
 
 
 //*****************************************************************************
