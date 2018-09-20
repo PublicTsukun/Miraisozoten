@@ -117,6 +117,9 @@
     <ClCompile Include="workYamamoto.cpp">
       <Filter>ソース ファイル\work</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -211,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="workYamamoto.h">
       <Filter>ソース ファイル\work</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
