@@ -190,7 +190,6 @@
     <ClInclude Include="Library\FPSManager.h" />
     <ClInclude Include="Library\Input.h" />
     <ClInclude Include="Library\Light.h" />
-    <ClInclude Include="Library\LinkLibrary.h" />
     <ClInclude Include="Library\Loading.h" />
     <ClInclude Include="Library\Math.h" />
     <ClInclude Include="Library\ObjectBase2D.h" />

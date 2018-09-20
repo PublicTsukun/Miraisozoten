@@ -6,6 +6,7 @@
 #include "DebugProcess.h"
 #include "Common.h"
 #include "Direct3D.h"
+#include <stdio.h>
 
 //*****************************************************************************
 // É}ÉNÉçíËã`

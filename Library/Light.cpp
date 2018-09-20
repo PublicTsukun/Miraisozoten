@@ -4,8 +4,6 @@
 //
 //=============================================================================
 #include "Light.h"
-#include "Direct3D.h"
-#include <d3dtypes.h>
 
 
 //----コンストラクタ--------
@@ -27,7 +25,7 @@ Dx9Light::Dx9Light()
 }
 
 //----オーバーロード--------
-Dx9Light::operator D3DLIGHT9()
+Dx9Light::operator D3DLIGHT9() const
 {
 	D3DLIGHT9 light;
 	light.Type          = this->Type;

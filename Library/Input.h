@@ -12,6 +12,7 @@
 #include <d3dx9math.h>
 #include <windows.h>
 #include <tchar.h>
+#pragma comment (lib, "dinput8.lib")
 
 
 //*****************************************************************************

@@ -3,7 +3,7 @@
 // メイン処理 [main.cpp]
 //
 //=============================================================================
-#include "main.h"
+
 #include "Library/Common.h"
 #include "Library/TsuLibSystem.h"
 #include "Library/WindowClass.h"
@@ -14,15 +14,16 @@
 #include "Library/Fade.h"
 #include "Library/Camera.h"
 #include "Library/Light.h"
+#include "Library/DebugProcess.h"
 #include "SceneManager.h"
+
+
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
 #define CLASS_NAME		"ShirabeniProject"	// ウインドウのクラス名
 #define WINDOW_NAME		"白紅プロジェクト"	// ウインドウのキャプション名
-
-
 
 
 //*****************************************************************************

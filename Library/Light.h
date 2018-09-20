@@ -6,7 +6,8 @@
 #ifndef __LIGHT_INCLUDE_H__
 #define __LIGHT_INCLUDE_H__
 
-#include "LinkLibrary.h"
+
+#include "Direct3D.h"
 
 
 class Dx9Light
@@ -29,7 +30,7 @@ public:
 	Dx9Light();
 
 	/* Overload */
-	operator D3DLIGHT9();
+	operator D3DLIGHT9() const;
 
 	/* Function */
 	void SetLight();

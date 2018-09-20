@@ -7,7 +7,6 @@
 #define __LOADING_INCLUDE_H__
 
 
-#include "LinkLibrary.h"
 #include "ObjectBase2D.h"
 
 

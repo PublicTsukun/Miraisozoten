@@ -128,9 +128,6 @@
     <ClInclude Include="Library\Light.h">
       <Filter>Library</Filter>
     </ClInclude>
-    <ClInclude Include="Library\LinkLibrary.h">
-      <Filter>Library</Filter>
-    </ClInclude>
     <ClInclude Include="Library\Loading.h">
       <Filter>Library</Filter>
     </ClInclude>

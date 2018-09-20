@@ -6,7 +6,11 @@
 #ifndef __DEBUGPROCESS_INCLUDE_H__
 #define __DEBUGPROCESS_INCLUDE_H__
 
-#include "LinkLibrary.h"
+
+#define _CRT_SECURE_NO_WARNINGS		// warningñhé~
+
+
+#include <Windows.h>
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
