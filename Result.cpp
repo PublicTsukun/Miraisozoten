@@ -9,6 +9,16 @@
 #include "Library/ObjectBase2D.h"
 
 
+//ワークのインクルード
+#include "workHagiwara.h"
+#include "workKimura.h"
+#include "workSato.h"
+#include "workSon.h"
+#include "workTsu.h"
+#include "workUtsugi.h"
+#include "workYamaguchi.h"
+#include "workYamamoto.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -29,7 +39,14 @@
 //=============================================================================
 HRESULT InitResult(void)
 {
-
+	InitWorkHagiwara();
+	InitWorkKimura();
+	InitWorkSato();
+	InitWorkSon();
+	InitWorkTsu();
+	InitWorkUtsugi();
+	InitWorkYamaguchi();
+	InitWorkYamamoto();
 
 	return S_OK;
 }
@@ -39,6 +56,14 @@ HRESULT InitResult(void)
 //=============================================================================
 void UninitResult(void)
 {
+	UninitWorkHagiwara();
+	UninitWorkKimura();
+	UninitWorkSato();
+	UninitWorkSon();
+	UninitWorkTsu();
+	UninitWorkUtsugi();
+	UninitWorkYamaguchi();
+	UninitWorkYamamoto();
 
 }
 
@@ -47,6 +72,14 @@ void UninitResult(void)
 //=============================================================================
 void UpdateResult(void)
 {
+	UpdateWorkHagiwara();
+	UpdateWorkKimura();
+	UpdateWorkSato();
+	UpdateWorkSon();
+	UpdateWorkTsu();
+	UpdateWorkUtsugi();
+	UpdateWorkYamaguchi();
+	UpdateWorkYamamoto();
 
 }
 
@@ -55,6 +88,14 @@ void UpdateResult(void)
 //=============================================================================
 void DrawResult(void)
 {
+	DrawWorkHagiwara();
+	DrawWorkKimura();
+	DrawWorkSato();
+	DrawWorkSon();
+	DrawWorkTsu();
+	DrawWorkUtsugi();
+	DrawWorkYamaguchi();
+	DrawWorkYamamoto();
 
 }
 

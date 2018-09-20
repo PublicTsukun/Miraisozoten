@@ -8,6 +8,17 @@
 #include "Library/Fade.h"
 #include "Library/ObjectBase2D.h"
 
+
+//ワークのインクルード
+#include "workHagiwara.h"
+#include "workKimura.h"
+#include "workSato.h"
+#include "workSon.h"
+#include "workTsu.h"
+#include "workUtsugi.h"
+#include "workYamaguchi.h"
+#include "workYamamoto.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -30,6 +41,17 @@ HRESULT InitTitle(void)
 {
 	TestPlayer.Init(100, 100, 50, 50, "data/TEXTURE/player.png");
 
+	InitWorkHagiwara();
+	InitWorkKimura();
+	InitWorkSato();
+	InitWorkSon();
+	InitWorkTsu();
+	InitWorkUtsugi();
+	InitWorkYamaguchi();
+	InitWorkYamamoto();
+
+
+
 	return S_OK;
 }
 
@@ -39,6 +61,16 @@ HRESULT InitTitle(void)
 void UninitTitle(void)
 {
 	TestPlayer.Release();
+
+	UninitWorkHagiwara();
+	UninitWorkKimura();
+	UninitWorkSato();
+	UninitWorkSon();
+	UninitWorkTsu();
+	UninitWorkUtsugi();
+	UninitWorkYamaguchi();
+	UninitWorkYamamoto();
+
 }
 
 //=============================================================================
@@ -46,6 +78,14 @@ void UninitTitle(void)
 //=============================================================================
 void UpdateTitle(void)
 {
+	UpdateWorkHagiwara();
+	UpdateWorkKimura();
+	UpdateWorkSato();
+	UpdateWorkSon();
+	UpdateWorkTsu();
+	UpdateWorkUtsugi();
+	UpdateWorkYamaguchi();
+	UpdateWorkYamamoto();
 
 }
 
@@ -55,5 +95,15 @@ void UpdateTitle(void)
 void DrawTitle(void)
 {
 	TestPlayer.Draw();
+
+	DrawWorkHagiwara();
+	DrawWorkKimura();
+	DrawWorkSato();
+	DrawWorkSon();
+	DrawWorkTsu();
+	DrawWorkUtsugi();
+	DrawWorkYamaguchi();
+	DrawWorkYamamoto();
+
 }
 
