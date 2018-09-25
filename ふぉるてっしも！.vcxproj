@@ -155,7 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Library\Camera.cpp" />
     <ClCompile Include="Library\Common.cpp" />
     <ClCompile Include="Library\Counter.cpp" />
@@ -188,7 +188,7 @@
     <ClCompile Include="workYamamoto.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Library\Camera.h" />
     <ClInclude Include="Library\Color.h" />
     <ClInclude Include="Library\Common.h" />

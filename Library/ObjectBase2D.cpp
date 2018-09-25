@@ -20,10 +20,10 @@ _ObjectBase2D::_ObjectBase2D()
 	Vertex[2].rhw = 1.0f;
 	Vertex[3].rhw = 1.0f;
 
-	Vertex[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	Vertex[0].diffuse = DX9COLOR_WHITE;
+	Vertex[1].diffuse = DX9COLOR_WHITE;
+	Vertex[2].diffuse = DX9COLOR_WHITE;
+	Vertex[3].diffuse = DX9COLOR_WHITE;
 
 	Vertex[0].uv = Vector2(0.0f, 0.0f);
 	Vertex[1].uv = Vector2(1.0f, 0.0f);
@@ -45,10 +45,10 @@ int  _ObjectBase2D::Init()
 	Vertex[2].rhw = 1.0f;
 	Vertex[3].rhw = 1.0f;
 
-	Vertex[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	Vertex[0].diffuse = DX9COLOR_WHITE;
+	Vertex[1].diffuse = DX9COLOR_WHITE;
+	Vertex[2].diffuse = DX9COLOR_WHITE;
+	Vertex[3].diffuse = DX9COLOR_WHITE;
 
 	Vertex[0].uv = Vector2(0.0f, 0.0f);
 	Vertex[1].uv = Vector2(1.0f, 0.0f);
@@ -99,10 +99,10 @@ void _ObjectBase2D::MakeVertex(float sizeX, float sizeY, float posX, float posY)
 	Vertex[3].rhw = 1.0f;
 
 	// 反射光の設定
-	Vertex[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	Vertex[0].diffuse = DX9COLOR_WHITE;
+	Vertex[1].diffuse = DX9COLOR_WHITE;
+	Vertex[2].diffuse = DX9COLOR_WHITE;
+	Vertex[3].diffuse = DX9COLOR_WHITE;
 
 	// テクスチャ座標の設定
 	Vertex[0].uv = Vector2(0.0f, 0.0f);
@@ -125,10 +125,10 @@ void _ObjectBase2D::MakeVertex(float sizeX, float sizeY)
 	Vertex[3].rhw = 1.0f;
 
 	// 反射光の設定
-	Vertex[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	Vertex[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	Vertex[0].diffuse = DX9COLOR_WHITE;
+	Vertex[1].diffuse = DX9COLOR_WHITE;
+	Vertex[2].diffuse = DX9COLOR_WHITE;
+	Vertex[3].diffuse = DX9COLOR_WHITE;
 
 	// テクスチャ座標の設定
 	Vertex[0].uv = Vector2(0.0f, 0.0f);

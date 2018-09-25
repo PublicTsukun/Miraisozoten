@@ -117,7 +117,7 @@
     <ClCompile Include="workYamamoto.cpp">
       <Filter>ソース ファイル\work</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -215,7 +215,7 @@
     <ClInclude Include="workYamamoto.h">
       <Filter>ソース ファイル\work</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
+    <ClInclude Include="Game.h">
       <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>

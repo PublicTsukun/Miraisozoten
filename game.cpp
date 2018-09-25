@@ -1,9 +1,9 @@
 //=============================================================================
 //
-// ƒQ[ƒ€‰æ–Êˆ— [game.cpp]
+// ƒQ[ƒ€‰æ–Êˆ— [Game.cpp]
 //
 //=============================================================================
-#include "game.h"
+#include "Game.h"
 #include "Library/Input.h"
 #include "Library/Fade.h"
 #include "Library/ObjectBase2D.h"
