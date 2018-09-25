@@ -17,22 +17,17 @@
 #include "SceneManager.h"
 
 
-//*****************************************************************************
+//****************************************************************
 // マクロ定義
-//*****************************************************************************
-#define CLASS_NAME		"ShirabeniProject"	// ウインドウのクラス名
-#define WINDOW_NAME		"白紅プロジェクト"	// ウインドウのキャプション名
-
-
-//*****************************************************************************
-// 構造体定義
-//*****************************************************************************
+//****************************************************************
+#define CLASS_NAME  "ShirabeniProject"	// ウインドウのクラス名
+#define WINDOW_NAME "白紅プロジェクト"	// ウインドウのキャプション名
 
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT Init();
+HRESULT Init(void);
 void Uninit(void);
 void Update(void);
 void Draw(void);
@@ -72,7 +67,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		if (FPSManager::FramerateControl())
 		{
-			PrintDebugProcess("FPS : %f\n", FPSManager::DisplayFPS(FPS_NORMAL));
+			PrintDebugProcess("FPS : %f    ", FPSManager::DisplayFPS(FPS_NORMAL));
+			PrintDebugProcess("SCENE : ");
+			switch (Scene::SetScene(SCENE_MAX))
+			{
+			case SCENE_TITLE:   PrintDebugProcess("Title\n");   break;
+			case SCENE_GAME:    PrintDebugProcess("Game\n");   break;
+			case SCENE_RESULT:  PrintDebugProcess("Result\n");   break;
+			case SCENE_MAX:     PrintDebugProcess("処理中...\n");   break;
+			case SCENE_END:     PrintDebugProcess("エラー処理です\n");   break;
+			}
 
 			Update();	// 更新処理
 			Draw();		// 描画処理
@@ -86,6 +90,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	return 0;
 }
+
 
 //=============================================================================
 // 初期化処理
