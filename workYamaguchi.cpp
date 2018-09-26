@@ -11,7 +11,7 @@
 
 
 //山口担当分インクルード
-
+#include "field.h"
 
 //=============================================================================
 //初期化処理
@@ -26,7 +26,7 @@ HRESULT InitWorkYamaguchi(void)
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
-
+		InitFeild();
 		break;
 
 
@@ -57,7 +57,7 @@ void UninitWorkYamaguchi(void)
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
-
+		UninitFeild();
 		break;
 	}
 
@@ -102,7 +102,7 @@ void DrawWorkYamaguchi(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのDraw
-
+		DrawFeild();
 		break;
 
 
