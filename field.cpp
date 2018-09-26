@@ -25,7 +25,7 @@ const Vector3 LwallPos = Vector3(LEFTWALL_POS_X, LEFTWALL_POS_Y, LEFTWALL_POS_Z)
 const Vector3 LwallRot = Vector3(0.0f, LEFTWALL_ROT, 0.0f);
 
 const Vector3 RwallPos = Vector3(RIGHTWALL_POS_X, RIGHTWALL_POS_Y, RIGHTWALL_POS_Z);
-const Vector3 RwallRot = Vector3(0.0f, LEFTWALL_ROT, 0.0f);
+const Vector3 RwallRot = Vector3(0.0f, RIGHTWALL_ROT, 0.0f);
 
 const Vector3 BwallPos = Vector3(BACKWALL_POS_X, BACKWALL_POS_Y, BACKWALL_POS_Z);
 
