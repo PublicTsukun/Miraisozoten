@@ -157,11 +157,7 @@
   <ItemGroup>
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="field.cpp" />
-<<<<<<< HEAD
-    <ClCompile Include="game.cpp" />
-=======
     <ClCompile Include="Game.cpp" />
->>>>>>> b3af883bf0630d24924daefd4e1b70c416edd62c
     <ClCompile Include="Library\Camera.cpp" />
     <ClCompile Include="Library\Common.cpp" />
     <ClCompile Include="Library\Counter.cpp" />
@@ -197,12 +193,7 @@
   <ItemGroup>
     <ClInclude Include="enemy.h" />
     <ClInclude Include="field.h" />
-<<<<<<< HEAD
-    <ClInclude Include="game.h" />
-    <ClInclude Include="voiceten.h" />
-=======
     <ClInclude Include="Game.h" />
->>>>>>> b3af883bf0630d24924daefd4e1b70c416edd62c
     <ClInclude Include="Library\Camera.h" />
     <ClInclude Include="Library\Color.h" />
     <ClInclude Include="Library\Common.h" />
