@@ -17,7 +17,7 @@ int  SceneManager::Update()
 		// タイトルシーンの更新
 		UpdateTitle();
 
-		if (false)
+		if (GetKeyboardTrigger(DIK_RETURN))
 		{
 			Scene::SetScene(SCENE_GAME);
 		}
@@ -27,7 +27,7 @@ int  SceneManager::Update()
 		// ゲームシーンの更新
 		UpdateGame();
 
-		if (false)
+		if (GetKeyboardTrigger(DIK_RETURN))
 		{
 			Scene::SetScene(SCENE_RESULT);
 		}
@@ -37,7 +37,7 @@ int  SceneManager::Update()
 		// リザルトシーンの更新
 		UpdateResult();
 
-		if (false)
+		if (GetKeyboardTrigger(DIK_RETURN))
 		{
 			Scene::SetScene(SCENE_TITLE);
 		}

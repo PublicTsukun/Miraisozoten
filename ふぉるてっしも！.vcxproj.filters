@@ -120,6 +120,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\マイクテスト2\HitCheck.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -216,6 +219,9 @@
       <Filter>ソース ファイル\work</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\マイクテスト2\HitCheck.h">
       <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>

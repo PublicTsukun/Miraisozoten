@@ -35,7 +35,7 @@ protected:
 	Vector3 Position;	// 位置座標
 	Vector3 Rotation;	// 回転角度
 	Vector2 Size;		// ポリゴンサイズ
-	float       Scale;		// サイズ倍率
+	float   Scale;		// サイズ倍率
 
 	int TexPattern_X;		// テクスチャパターン（横）
 	int TexPattern_Y;		// テクスチャパターン（縦）

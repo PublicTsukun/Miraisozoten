@@ -32,15 +32,13 @@
 //*****************************************************************************
 // ÉOÉçÅ[ÉoÉãïœêî
 //*****************************************************************************
-C2DObject TestPlayer;
+
 
 //=============================================================================
 // èâä˙âªèàóù
 //=============================================================================
 HRESULT InitTitle(void)
 {
-	TestPlayer.Init(100, 100, 50, 50, "data/TEXTURE/player.png");
-
 	InitWorkHagiwara();
 	InitWorkKimura();
 	InitWorkSato();
@@ -60,8 +58,6 @@ HRESULT InitTitle(void)
 //=============================================================================
 void UninitTitle(void)
 {
-	TestPlayer.Release();
-
 	UninitWorkHagiwara();
 	UninitWorkKimura();
 	UninitWorkSato();
@@ -94,8 +90,6 @@ void UpdateTitle(void)
 //=============================================================================
 void DrawTitle(void)
 {
-	TestPlayer.Draw();
-
 	DrawWorkHagiwara();
 	DrawWorkKimura();
 	DrawWorkSato();

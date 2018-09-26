@@ -7,6 +7,7 @@
 #include "Library/Input.h"
 #include "Library/Fade.h"
 #include "Library/ObjectBase2D.h"
+#include "Library\ObjectBase3D.h"
 
 
 //ワークのインクルード
@@ -32,13 +33,19 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-
+C2DObject        TestPlayer2D;
+C3DPolygonObject TestPlayer3D;
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
 HRESULT InitGame(void)
 {
+	TestPlayer2D.Init(100, 100, 50, 50, "data/TEXTURE/Player.jpg");
+
+	TestPlayer3D.Init(Vector3(200, 0, 200), Vector2(50, 50));
+	TestPlayer3D.LoadTexture("data/TEXTURE/Player.jpg");
+
 	InitWorkHagiwara();
 	InitWorkKimura();
 	InitWorkSato();
@@ -56,6 +63,10 @@ HRESULT InitGame(void)
 //=============================================================================
 void UninitGame(void)
 {
+	TestPlayer2D.Release();
+
+	TestPlayer3D.Release();
+
 	UninitWorkHagiwara();
 	UninitWorkKimura();
 	UninitWorkSato();
@@ -88,6 +99,10 @@ void UpdateGame(void)
 //=============================================================================
 void DrawGame(void)
 {
+	TestPlayer2D.Draw();
+
+	TestPlayer3D.Draw();
+
 	DrawWorkHagiwara();
 	DrawWorkKimura();
 	DrawWorkSato();

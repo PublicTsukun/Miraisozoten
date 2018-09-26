@@ -75,7 +75,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			case SCENE_GAME:    PrintDebugProcess("Game\n");   break;
 			case SCENE_RESULT:  PrintDebugProcess("Result\n");   break;
 			case SCENE_MAX:     PrintDebugProcess("処理中...\n");   break;
-			case SCENE_END:     PrintDebugProcess("エラー処理です\n");   break;
+			case SCENE_END:     PrintDebugProcess("終了処理です(表示されないはずだよ)\n");   break;
 			}
 
 			Update();	// 更新処理
@@ -103,6 +103,9 @@ HRESULT Init()
 	// タイトルシーンにセット
 	Scene::SetScene(SCENE_GAME);
 
+	// カメラ
+	InitCamera();
+
 	return S_OK;
 }
 
@@ -120,6 +123,9 @@ void Uninit(void)
 //=============================================================================
 void Update(void)
 {
+	// カメラ
+	UpdateCamera(Vector3());
+
 	if (GetKeyboardTrigger(DIK_F3))
 	{// デバッグ表示ON/OFF
 		DispDebug = DispDebug ? false : true;
@@ -148,6 +154,9 @@ void Draw(void)
 	// Direct3Dによる描画の開始
 	if (SUCCEEDED(Direct3D::GetD3DDevice()->BeginScene()))
 	{
+		// カメラ
+		SetCamera();
+
 		// シーンの描画
 		Scene::Draw();
 

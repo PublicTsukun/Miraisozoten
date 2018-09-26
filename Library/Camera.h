@@ -61,6 +61,10 @@ public:
 	~CCamera();
 
 	void Init(void);
+	void Translation(Vector2 moveRate);
+	void Rotation(Vector2 moveRate);
+	void Scaling(float moveRate);
+
 	void CreateMatrix(void);
 	D3DXMATRIX GetViewMatrix(void);
 
@@ -71,7 +75,7 @@ public:
 //*****************************************************************************
 HRESULT InitCamera(void);
 void UninitCamera(void);
-void UpdateCamera(D3DXVECTOR3 target);
+void UpdateCamera(Vector3 target);
 void SetCamera(void);
 
 D3DXMATRIX GetMtxView(void);

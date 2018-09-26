@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Direct3D.h"
 #include "Input.h"
+#include "DebugProcess.h"
 
 // マクロ定義
 #define CtoA_INTERVAL_MAX	(640.0f)	// カメラと注視点間の最大距離
@@ -34,19 +35,101 @@ CCamera::~CCamera()
 void CCamera::Init(void)
 {
 	// カメラの初期化
-	Gaze = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	Gaze = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
 
 	Interval = CtoA_INTERVAL_MAX;
 	Sensitivity = GAZE_MOVE_VALUE;
 
 	Position.x = 0.0f;
-	Position.y = Interval * sinf(D3DXToRadian(CAMERA_ANGLE));
-	Position.z = Interval * -cosf(D3DXToRadian(CAMERA_ANGLE));
-	Position += Gaze;
+	Position.y = 50.0f;
+	Position.z = -200.0f;
+	//Position += Gaze;
 
 	UpVector = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	Angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 //	Angle = D3DXVECTOR3(0.0f, D3DXToRadian(90), 0.0f);
+
+}
+
+//----前後移動--------
+void CCamera::Scaling(float moveRate)
+{
+	D3DXVECTOR3 gazeVec = Gaze - Position;
+
+	/* 拡大・縮小 */
+	//gazeVec *= moveRate * 0.001f;
+	//Gaze += gazeVec;
+
+	Interval -= moveRate;
+}
+
+//----旋回移動--------
+void CCamera::Rotation(Vector2 moveRate)
+{
+	/* カメラ位置 */
+	// 移動判定
+	if (IsMouseLeftPressed())
+	{
+		Angle.x -= moveRate.y * Sensitivity;
+		Angle.z -= moveRate.x * Sensitivity;
+		Angle.y += moveRate.x * Sensitivity;
+	}
+
+	/* 移動範囲制限 */
+	if (Angle.x > D3DXToRadian(179))
+	{
+		Angle.x = D3DXToRadian(179);
+	}
+	if (Angle.x < D3DXToRadian(1))
+	{
+		Angle.x = D3DXToRadian(1);
+	}
+	if (Angle.z > D3DX_PI)
+	{
+		Angle.z -= D3DX_PI * 2.0f;
+		Angle.y += D3DX_PI * 2.0f;
+	}
+	if (Angle.z < -D3DX_PI)
+	{
+		Angle.z += D3DX_PI * 2.0f;
+		Angle.y -= D3DX_PI * 2.0f;
+	}
+
+	/* 球体座標へ移動 */
+	float sinTheta = sinf(Angle.x);
+	Position.x = Interval * sinTheta * cosf(Angle.z);
+	Position.y = Interval * cosf(Angle.x);
+	Position.z = Interval * sinTheta * sinf(Angle.z);
+	// 球体座標の反映
+	Position += Gaze;
+}
+
+//----追尾--------
+void CCamera::Translation(Vector2 moveRate)
+{
+	/* 十字ベクトル */
+	D3DXVECTOR3 LeftVec, FrontVec;
+	D3DXVECTOR3 gazeVec = Gaze - Position;
+	D3DXVECTOR3 subVec = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+
+	D3DXVec3Cross(&LeftVec, &gazeVec, &subVec);
+	D3DXVec3Normalize(&LeftVec, &LeftVec);
+	D3DXVec3Cross(&FrontVec, &LeftVec, &gazeVec);
+	D3DXVec3Normalize(&FrontVec, &FrontVec);
+	D3DXVec3Normalize(&gazeVec, &gazeVec);
+
+	/* 視点平行移動 */
+	if (IsMouseCenterPressed())
+	{
+		Gaze += LeftVec *  moveRate.x * CAMERA_MOVE_VALUE;
+		Gaze += FrontVec * moveRate.y * CAMERA_MOVE_VALUE;
+	}
+
+#ifdef _DEBUG
+	PrintDebugProcess("デバッグカメラ位置 : (%v)\n", Position);
+	PrintDebugProcess("デバッグカメラ視線 : (%v)\n", Gaze);
+	PrintDebugProcess("デバッグカメラAngl : (%v)\n", Angle);
+#endif // _DEBUG
 
 }
 
@@ -130,9 +213,12 @@ void UninitCamera(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void UpdateCamera(D3DXVECTOR3 target)
+void UpdateCamera(Vector3 target)
 {
-
+	Vector3 MouseMovement = Vector3((float)GetMouseX(), (float)GetMouseY(), (float)GetMouseZ());
+	//GameCamera.Translation(Vector2(MouseMovement.x, MouseMovement.y));
+	//GameCamera.Scaling(MouseMovement.z);
+	//GameCamera.Rotation(Vector2(MouseMovement.x, MouseMovement.y));
 }
 
 //=============================================================================
