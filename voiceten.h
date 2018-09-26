@@ -33,6 +33,9 @@ void UninitVoiceten(void);
 void UpdateVoiceten(void);
 void DrawVoiceten(void);
 
+VOICETEN *GetVoiceten(int no);
+
 void SetVoiceten(D3DXVECTOR3 Self, D3DXVECTOR3 Tgt);
+void VanishVoiceten(int no);
 
 #endif
