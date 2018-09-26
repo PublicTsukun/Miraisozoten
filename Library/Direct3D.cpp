@@ -99,12 +99,6 @@ HRESULT Direct3D::Init(HWND hWnd, bool bWindowMode)
 	dx_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);	// 最初のアルファ引数
 	dx_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);	// ２番目のアルファ引数
 
-	/* テクスチャブレンド */
-	dx_pD3DDevice->SetTextureStageState(
-		1, 						// テクスチャ番号
-		D3DTSS_TEXCOORDINDEX,	// RGBのOPを設定
-		0);						// 参照するUVデータの番号
-
 	/* ライティングモードを有効 */
 	dx_pD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 

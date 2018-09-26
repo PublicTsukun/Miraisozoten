@@ -35,14 +35,14 @@ CCamera::~CCamera()
 void CCamera::Init(void)
 {
 	// カメラの初期化
-	Gaze = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
+	Gaze = D3DXVECTOR3(0.0f, 200.0f, 0.0f);
 
 	Interval = CtoA_INTERVAL_MAX;
 	Sensitivity = GAZE_MOVE_VALUE;
 
 	Position.x = 0.0f;
-	Position.y = 50.0f;
-	Position.z = -200.0f;
+	Position.y = 100.0f;
+	Position.z = -800.0f;
 	//Position += Gaze;
 
 	UpVector = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -57,8 +57,18 @@ void CCamera::Scaling(float moveRate)
 	D3DXVECTOR3 gazeVec = Gaze - Position;
 
 	/* 拡大・縮小 */
-	//gazeVec *= moveRate * 0.001f;
-	//Gaze += gazeVec;
+	gazeVec *= moveRate * 0.001f;
+	Gaze += gazeVec;
+
+	Position.x = 0.0f;
+	Position.y = -100.0f;
+	Position.z = -800.0f;
+	Position += Gaze;
+
+#ifdef _DEBUG
+	PrintDebugProcess("デバッグカメラ位置 : (%v)\n", Position);
+	PrintDebugProcess("デバッグカメラ視線 : (%v)\n", Gaze);
+#endif // _DEBUG
 
 	Interval -= moveRate;
 }
@@ -217,7 +227,7 @@ void UpdateCamera(Vector3 target)
 {
 	Vector3 MouseMovement = Vector3((float)GetMouseX(), (float)GetMouseY(), (float)GetMouseZ());
 	//GameCamera.Translation(Vector2(MouseMovement.x, MouseMovement.y));
-	//GameCamera.Scaling(MouseMovement.z);
+	GameCamera.Scaling(MouseMovement.z);
 	//GameCamera.Rotation(Vector2(MouseMovement.x, MouseMovement.y));
 }
 

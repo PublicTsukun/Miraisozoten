@@ -120,10 +120,17 @@
     <ClCompile Include="game.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="field.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="enemy.cpp">
+=======
+    <ClCompile Include="enemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="field.cpp">
+>>>>>>> b3af883bf0630d24924daefd4e1b70c416edd62c
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="voiceten.cpp">
