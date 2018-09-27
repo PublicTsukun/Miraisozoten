@@ -120,8 +120,14 @@
     <ClCompile Include="Game.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\マイクテスト2\HitCheck.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="enemy.cpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="field.cpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="voiceten.cpp">
+      <Filter>ヘッダー ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,8 +227,14 @@
     <ClInclude Include="Game.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\マイクテスト2\HitCheck.h">
-      <Filter>Scene</Filter>
+    <ClInclude Include="voiceten.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="field.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
