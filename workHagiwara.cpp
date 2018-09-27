@@ -11,6 +11,7 @@
 
 
 //萩原担当分インクルード
+#include "score.h"
 
 
 //=============================================================================
@@ -21,12 +22,13 @@ HRESULT InitWorkHagiwara(void)
 	switch (Scene::SetScene(SCENE_MAX))
 	{
 	case SCENE_TITLE://タイトルで使いたいソースのInit
+		
 
 		break;
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
-
+		InitScore();
 		break;
 
 
@@ -57,7 +59,7 @@ void UninitWorkHagiwara(void)
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
-
+		UninitScore();
 		break;
 	}
 
@@ -102,7 +104,7 @@ void DrawWorkHagiwara(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのDraw
-
+		DrawScore();
 		break;
 
 
