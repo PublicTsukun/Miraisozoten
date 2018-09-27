@@ -93,7 +93,7 @@ void C3DPolygonObject::Draw(void)
 	}
 
 	// ラインティングを無効にする (ライトを当てると変になる)
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&mtxWorld);
@@ -122,7 +122,7 @@ void C3DPolygonObject::Draw(void)
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, RECT_NUM_POLYGON);
 
 	// ラインティングを有効に戻す
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	// αテストを無効に
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
@@ -401,7 +401,7 @@ void C3DCubeObject::Draw(void)
 	}
 
 	// ラインティングを無効にする (ライトを当てると変になる)
-	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&mtxWorld);
@@ -436,7 +436,7 @@ void C3DCubeObject::Draw(void)
 	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, RECT_NUM_POLYGON, Face[5], sizeof(VERTEX_3D));
 
 	// ラインティングを有効に戻す
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	// αテストを無効に
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);

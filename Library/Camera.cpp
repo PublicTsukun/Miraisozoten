@@ -46,7 +46,7 @@ void CCamera::Init(void)
 	//Position += Gaze;
 
 	UpVector = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	Angle = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	Angle = D3DXVECTOR3(PI / 2, PI / 2, -PI / 2);
 //	Angle = D3DXVECTOR3(0.0f, D3DXToRadian(90), 0.0f);
 
 }
