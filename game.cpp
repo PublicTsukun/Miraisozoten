@@ -41,10 +41,10 @@ C3DPolygonObject TestPlayer3D;
 //=============================================================================
 HRESULT InitGame(void)
 {
-	TestPlayer2D.Init(100, 100, 50, 50, "data/TEXTURE/Player.jpg");
+	TestPlayer2D.Init(100, 100, 50, 50, "data/作業/テスト画像01.jpg");
 
 	TestPlayer3D.Init(Vector3(200, 0, 200), Vector2(50, 50));
-	TestPlayer3D.LoadTexture("data/TEXTURE/Player.jpg");
+	TestPlayer3D.LoadTexture("data/作業/テスト画像02.jpg");
 
 	InitWorkHagiwara();
 	InitWorkKimura();

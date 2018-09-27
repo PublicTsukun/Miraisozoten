@@ -19,7 +19,7 @@ int  SceneManager::Update()
 
 		if (GetKeyboardTrigger(DIK_RETURN))
 		{
-			Scene::SetScene(SCENE_GAME);
+			SetScene(SCENE_GAME);
 		}
 		break;
 
@@ -29,7 +29,7 @@ int  SceneManager::Update()
 
 		if (GetKeyboardTrigger(DIK_RETURN))
 		{
-			Scene::SetScene(SCENE_RESULT);
+			SetScene(SCENE_RESULT);
 		}
 		break;
 
@@ -39,7 +39,7 @@ int  SceneManager::Update()
 
 		if (GetKeyboardTrigger(DIK_RETURN))
 		{
-			Scene::SetScene(SCENE_TITLE);
+			SetScene(SCENE_TITLE);
 		}
 		break;
 	}
@@ -103,37 +103,34 @@ SCENE SceneManager::SetScene(SCENE scene)
 		break;
 	}
 
+	/* シーンの切り替え */
+	GameScene = scene;
+
 	/* 次のシーンの準備 */
-	switch (scene)
+	switch (GameScene)
 	{
 	case SCENE_TITLE:
 		// タイトルシーンの初期化
 		InitTitle();
 
-		GameScene = SCENE_TITLE;
 		break;
 
 	case SCENE_GAME:
 		// ゲームシーンの初期化
 		InitGame();
 
-		GameScene = SCENE_GAME;
 		break;
 
 	case SCENE_RESULT:
 		// リザルトシーンの初期化
 		InitResult();
 
-		GameScene = SCENE_RESULT;
 		break;
 
 	default:
 		return GameScene;
 		break;
 	}
-
-	/* シーンの切り替え */
-	GameScene = scene;
 
 	return GameScene;
 }
