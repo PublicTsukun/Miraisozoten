@@ -46,8 +46,8 @@
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
-HRESULT InitFeild(void);
-void UninitFeild(void);
-void DrawFeild(void);
+HRESULT InitField(void);
+void UninitField(void);
+void DrawField(void);
 
 #endif

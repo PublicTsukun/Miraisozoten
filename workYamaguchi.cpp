@@ -26,7 +26,7 @@ HRESULT InitWorkYamaguchi(void)
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
-		InitFeild();
+		InitField();
 		break;
 
 
@@ -57,7 +57,7 @@ void UninitWorkYamaguchi(void)
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
-		UninitFeild();
+		UninitField();
 		break;
 	}
 
@@ -102,7 +102,7 @@ void DrawWorkYamaguchi(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのDraw
-		DrawFeild();
+		DrawField();
 		break;
 
 
