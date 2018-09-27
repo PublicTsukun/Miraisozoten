@@ -38,8 +38,8 @@
 #define	CEILING_SIZE_X		(1000)
 #define	CEILING_SIZE_Y		(1000)
 #define CEILING_POS_X		(GROUND_POS_X)
-#define CEILING_POS_Y		(GROUND_POS_Y)
-#define CEILING_POS_Z		(WALL_SIZE_X)
+#define CEILING_POS_Y		(WALL_SIZE_X * 2)
+#define CEILING_POS_Z		(GROUND_POS_Z)
 #define CEILING_ROT			(PI/2)
 
 

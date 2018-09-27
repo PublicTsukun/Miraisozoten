@@ -225,10 +225,15 @@ void UninitCamera(void)
 //=============================================================================
 void UpdateCamera(Vector3 target)
 {
+	if (GetKeyboardTrigger(DIK_C))
+	{
+		DebugCameraFlag = DebugCameraFlag ? false : true;
+	}
+
 	Vector3 MouseMovement = Vector3((float)GetMouseX(), (float)GetMouseY(), (float)GetMouseZ());
-	//GameCamera.Translation(Vector2(MouseMovement.x, MouseMovement.y));
-	GameCamera.Scaling(MouseMovement.z);
-	//GameCamera.Rotation(Vector2(MouseMovement.x, MouseMovement.y));
+	DebugCamera.Translation(Vector2(MouseMovement.x, MouseMovement.y));
+	DebugCamera.Scaling(MouseMovement.z);
+	DebugCamera.Rotation(Vector2(MouseMovement.x, MouseMovement.y));
 }
 
 //=============================================================================
