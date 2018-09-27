@@ -123,6 +123,9 @@ void Uninit(void)
 //=============================================================================
 void Update(void)
 {
+	// 入力の更新処理
+	UpdateInput();
+
 	// カメラ
 	UpdateCamera(Vector3());
 
@@ -130,9 +133,6 @@ void Update(void)
 	{// デバッグ表示ON/OFF
 		DispDebug = DispDebug ? false : true;
 	}
-
-	// 入力の更新処理
-	UpdateInput();
 
 	// シーンの更新
 	Scene::Update();
