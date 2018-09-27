@@ -32,7 +32,7 @@
 
 #define BACKWALL_POS_X	(GROUND_POS_X)
 #define BACKWALL_POS_Y	(WALL_SIZE_Y)
-#define BACKWALL_POS_Z	(GROUND_SIZE_Y)
+#define BACKWALL_POS_Z	(GROUND_SIZE_Y*2)
 
 
 #define	CEILING_SIZE_X		(1000)
@@ -40,7 +40,7 @@
 #define CEILING_POS_X		(GROUND_POS_X)
 #define CEILING_POS_Y		(WALL_SIZE_X * 2)
 #define CEILING_POS_Z		(GROUND_POS_Z)
-#define CEILING_ROT			(PI/2)
+#define CEILING_ROT			(-PI/2)
 
 
 //=============================================================================
