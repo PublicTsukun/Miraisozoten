@@ -41,8 +41,10 @@ void InitVoiceten(void)
 //=============================================================================
 void UninitVoiceten(void)
 {
-	//Voiceten.Release();
-
+	for (int i = 0; i < VOICETEN_MAX; i++)
+	{
+		Voiceten[i].Release();
+	}
 }
 
 //=============================================================================
@@ -50,7 +52,14 @@ void UninitVoiceten(void)
 //=============================================================================
 void UpdateVoiceten(void)
 {
+	VOICETEN *v = GetVoiceten(0);
+
 	MoveVoiceten();
+
+	for (int i = 0; i < VOICETEN_MAX; i++)
+	{
+		Voiceten[i].LoadObjectStatus((v + i)->pos, (v + i)->rot);
+	}
 }
 
 //=============================================================================
@@ -59,7 +68,15 @@ void UpdateVoiceten(void)
 void DrawVoiceten(void)
 {
 	VOICETEN *v = GetVoiceten(0);
-	//Voiceten.Draw();
+
+	for (int i = 0; i < VOICETEN_MAX; i++)
+	{
+		if (v->use == TRUE)
+		{
+			Voiceten[i].Draw();
+		}
+
+	}
 
 }
 
@@ -77,4 +94,15 @@ VOICETEN *GetVoiceten(int no)
 void MoveVoiceten(void)
 {
 	VOICETEN *v = GetVoiceten(0);
+
+	for (int i = 0; i < VOICETEN_MAX; i++)
+	{
+		if (v->use == TRUE)
+		{
+			(v + i)->pos.x -= sinf((v + i)->rot.y) * (v + i)->vel;
+			(v + i)->pos.z -= cosf((v + i)->rot.y) * (v + i)->vel;
+		}
+
+	}
+
 }
