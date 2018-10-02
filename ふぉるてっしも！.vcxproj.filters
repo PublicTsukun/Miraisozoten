@@ -129,7 +129,11 @@
     <ClCompile Include="voiceten.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="voicetenTest.cpp">
+=======
+    <ClCompile Include="HitCheck.cpp">
+>>>>>>> 9039380e8d78234e3d07a7d8d2c2819380540562
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,7 +243,11 @@
     <ClInclude Include="voiceten.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="voicetenTest.h">
+=======
+    <ClInclude Include="HitCheck.h">
+>>>>>>> 9039380e8d78234e3d07a7d8d2c2819380540562
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

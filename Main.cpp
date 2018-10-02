@@ -126,7 +126,7 @@ void Update(void)
 	// 入力の更新処理
 	UpdateInput();
 
-	// カメラ
+	// カメラの更新処理
 	UpdateCamera(Vector3());
 
 	if (GetKeyboardTrigger(DIK_F3))
