@@ -7,6 +7,7 @@
 #ifndef _VOICETEN_INCLUDE_H_
 #define _VOICETEN_INCLUDE_H_
 
+#include "Library/Vector.h"
 #include <Windows.h>
 #include <d3dx9.h>
 
@@ -20,8 +21,10 @@
 //*****************************************************************************
 typedef struct
 {	
-	bool use;	// 使用しているかどうか
-	float vel;	// 速度
+	bool use;		// 使用しているかどうか
+	Vector3 pos;	// 位置
+	Vector3 rot;	// 回転
+	float vel;		// 速度
 
 } VOICETEN;
 
