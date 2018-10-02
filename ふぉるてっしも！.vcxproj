@@ -158,6 +158,7 @@
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HitCheck.cpp" />
     <ClCompile Include="Library\Camera.cpp" />
     <ClCompile Include="Library\Common.cpp" />
     <ClCompile Include="Library\Counter.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HitCheck.h" />
     <ClInclude Include="Library\Camera.h" />
     <ClInclude Include="Library\Color.h" />
     <ClInclude Include="Library\Common.h" />

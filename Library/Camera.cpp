@@ -35,14 +35,14 @@ CCamera::~CCamera()
 void CCamera::Init(void)
 {
 	// ÉJÉÅÉâÇÃèâä˙âª
-	Gaze = D3DXVECTOR3(0.0f, 200.0f, 0.0f);
+	Gaze = D3DXVECTOR3(0.0f, 250.0f, 0.0f);
 
 	Interval = CtoA_INTERVAL_MAX;
 	Sensitivity = GAZE_MOVE_VALUE;
 
 	Position.x = 0.0f;
-	Position.y = 100.0f;
-	Position.z = -800.0f;
+	Position.y = 200.0f;
+	Position.z = -600.0f;
 	//Position += Gaze;
 
 	UpVector = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -61,8 +61,8 @@ void CCamera::Scaling(float moveRate)
 	Gaze += gazeVec;
 
 	Position.x = 0.0f;
-	Position.y = -100.0f;
-	Position.z = -800.0f;
+	Position.y = 0.0f;
+	Position.z = -500.0f;
 	Position += Gaze;
 
 #ifdef _DEBUG
