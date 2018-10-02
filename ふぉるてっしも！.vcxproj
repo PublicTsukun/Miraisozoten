@@ -181,6 +181,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="voiceten.cpp" />
+    <ClCompile Include="voicetenTest.cpp" />
     <ClCompile Include="workHagiwara.cpp" />
     <ClCompile Include="workKimura.cpp" />
     <ClCompile Include="workSato.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="voiceten.h" />
+    <ClInclude Include="voicetenTest.h" />
     <ClInclude Include="workHagiwara.h" />
     <ClInclude Include="workKimura.h" />
     <ClInclude Include="workSato.h" />
