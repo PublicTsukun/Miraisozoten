@@ -26,6 +26,8 @@ char *FileVoiceten[] =
 
 C3DPolygonObject Voiceten[VOICETEN_MAX];
 
+const float voi_duration = 60;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -41,7 +43,7 @@ void InitVoiceten(void)
 		(v + i)->pos = Vector3(0.0f, 0.0f, 0.0f);
 		(v + i)->rot = Vector3(0.0f, 0.0f, 0.0f);
 
-		(v + i)->vel = 4.0f;
+		(v + i)->vel = 1.0f;
 
 		(v + i)->timer = 0;
 
@@ -50,6 +52,8 @@ void InitVoiceten(void)
 		(v + i)->dura = 60;
 
 		(v + i)->nor = Vector3(0.0f, 0.0f, 0.0f);
+
+		(v + i)->hei = 60.0f;
 
 		Voiceten[i].Init((v + i)->pos, size);
 		Voiceten[i].LoadTexture(FileVoiceten[0]);
@@ -129,6 +133,9 @@ void UpdateVoiMove(void)
 	{
 		if ((v + i)->use == TRUE)
 		{
+			
+			double g = (2 * (v + i)->vel) / (v + i)->dura;
+
 			//// 一般
 			//(v + i)->pos.x -= sinf((v + i)->rot.y) * (v + i)->vel;
 			//(v + i)->pos.z -= cosf((v + i)->rot.y) * (v + i)->vel;
@@ -137,10 +144,11 @@ void UpdateVoiMove(void)
 			(v + i)->pos.x += (v + i)->nor.x;
 			(v + i)->pos.z += (v + i)->nor.z;
 
-			// 飛行高度
-			(v + i)->pos.y =
-				((v + i)->vel * (v + i)->timer) - 
-				(0.5 * 0.15 * (v + i)->timer * (v + i)->timer);
+			(v + i)->pos.y += (v + i)->nor.y;
+
+			//(v + i)->pos.y += (v + i)->nor.y +
+			//	(-0.5 * g * (v + i)->timer * (v + i)->timer) +
+			//	((v + i)->vel * (v + i)->timer);
 
 		}
 
@@ -161,9 +169,7 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 		if ((v + i)->use == FALSE)
 		{
 			// 到達所要距離の正規化
-			(v + i)->nor = Tgt - Self / float((v + i)->dura);
-
-			// 飛行高度の正規化
+			(v + i)->nor = (Tgt - Self) / float((v + i)->dura);
 
 			(v + i)->pos = Self;
 

@@ -25,7 +25,7 @@ typedef struct
 	Vector3 pos;	// 位置
 	Vector3 rot;	// 回転
 
-	float vel;		// 速度
+	double vel;		// 速度
 
 	int timer;		// タイマー
 

@@ -18,7 +18,7 @@ void TestVL(void)
 	if (GetKeyboardTrigger(DIK_J))
 	{
 		SetVoiceten(
-			Vector3(400.0f, 0.0f, 0.0f),
-			Vector3(0.0f, 0.0f, 0.0f));
+			Vector3(400.0f, 300.0f, 400.0f),
+			Vector3(000.0f, 300.0f, 400.0f));
 	}
 }
