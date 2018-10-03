@@ -12,7 +12,7 @@
 // グローバル変数
 //*****************************************************************************
 C3DPolygonObject ground;	//床用
-C3DPolygonObject wall[3];	//壁用
+C3DPolygonObject wall[4];	//壁用
 C3DPolygonObject ceiling;	//天井用
 
 const Vector3 groundPos = Vector3(GROUND_POS_X, GROUND_POS_Y, GROUND_POS_Z);
@@ -36,21 +36,23 @@ const Vector3 ceilingRot = Vector3(CEILING_ROT, 0.0f, 0.0f);
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT InitFeild(void)
+HRESULT InitField(void)
 {
 
 	ground.Init(groundPos, groundRot, groundSize);
-	ground.LoadTexture("data/TEXTURE/wall.jpg");
+	ground.LoadTexture("data/作業/床.jpg");
 
 	wall[0].Init(LwallPos, LwallRot, wallSize);
-	wall[0].LoadTexture("data/TEXTURE/wall.jpg");
+	wall[0].LoadTexture("data/作業/西.jpg");
 	wall[1].Init(RwallPos, RwallRot, wallSize);
-	wall[1].LoadTexture("data/TEXTURE/wall.jpg");
+	wall[1].LoadTexture("data/作業/東.jpg");
 	wall[2].Init(BwallPos, wallSize);
-	wall[2].LoadTexture("data/TEXTURE/wall.jpg");
+	wall[2].LoadTexture("data/作業/北.jpg");
+	wall[3].Init(Vector3(0, 1000, 0), Vector3(0, PI, 0), Vector2(1000, 1000));
+	wall[3].LoadTexture("data/作業/南.jpg");
 
 	ceiling.Init(ceilingPos, ceilingRot, ceilingSize);
-	ceiling.LoadTexture("data/TEXTURE/wall.jpg");
+	ceiling.LoadTexture("data/作業/天井.jpg");
 
 	return S_OK;
 }
@@ -58,11 +60,11 @@ HRESULT InitFeild(void)
 //=============================================================================
 // 終了処理
 //=============================================================================
-void UninitFeild(void)
+void UninitField(void)
 {
 	ground.Release();
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		wall[i].Release();
 	}
@@ -73,11 +75,11 @@ void UninitFeild(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawFeild(void)
+void DrawField(void)
 {
 	ground.Draw();
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		wall[i].Draw();
 	}
