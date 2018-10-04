@@ -169,6 +169,7 @@
     <ClCompile Include="Library\Input.cpp" />
     <ClCompile Include="Library\Light.cpp" />
     <ClCompile Include="Library\Loading.cpp" />
+    <ClCompile Include="Library\Matrix.cpp" />
     <ClCompile Include="Library\ObjectBase2D.cpp" />
     <ClCompile Include="Library\ObjectBase3D.cpp" />
     <ClCompile Include="Library\Polygon.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Library\Light.h" />
     <ClInclude Include="Library\Loading.h" />
     <ClInclude Include="Library\Math.h" />
+    <ClInclude Include="Library\Matrix.h" />
     <ClInclude Include="Library\ObjectBase2D.h" />
     <ClInclude Include="Library\ObjectBase3D.h" />
     <ClInclude Include="Library\Polygon.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="Library\TsuLibSystem.h" />
     <ClInclude Include="Library\Vector.h" />
     <ClInclude Include="Library\WindowClass.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Title.h" />
@@ -228,6 +231,12 @@
     <ClInclude Include="workUtsugi.h" />
     <ClInclude Include="workYamaguchi.h" />
     <ClInclude Include="workYamamoto.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ふぉるてっしも！.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Test.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
