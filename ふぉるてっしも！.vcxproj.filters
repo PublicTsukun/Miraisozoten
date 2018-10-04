@@ -129,7 +129,15 @@
     <ClCompile Include="voiceten.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="ranking.cpp">
+=======
+<<<<<<< HEAD
+    <ClCompile Include="voicetenTest.cpp">
+=======
     <ClCompile Include="HitCheck.cpp">
+>>>>>>> 9039380e8d78234e3d07a7d8d2c2819380540562
+>>>>>>> 1838829d8af4e2faea232a34e01f2d0f9d8dab53
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Library\Matrix.cpp">
@@ -242,8 +250,17 @@
     <ClInclude Include="voiceten.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="ranking.h">
+      <Filter>ソース ファイル</Filter>
+=======
+<<<<<<< HEAD
+    <ClInclude Include="voicetenTest.h">
+=======
     <ClInclude Include="HitCheck.h">
+>>>>>>> 9039380e8d78234e3d07a7d8d2c2819380540562
       <Filter>ヘッダー ファイル</Filter>
+>>>>>>> 1838829d8af4e2faea232a34e01f2d0f9d8dab53
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
