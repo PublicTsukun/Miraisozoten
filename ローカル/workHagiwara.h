@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //=============================================================================
 //
 //萩原担当分　workHagiwara.h
@@ -18,25 +17,4 @@ void UninitWorkHagiwara(void);
 void UpdateWorkHagiwara(void);
 void DrawWorkHagiwara(void);
 
-=======
-//=============================================================================
-//
-//萩原担当分　workHagiwara.h
-//はぎわらなほ
-//=============================================================================
-#ifndef _WORKHAGIWARA_H_
-#define _WORKHAGIWARA_H_
-
-
-
-
-//=============================================================================
-//プロトタイプ宣言
-//=============================================================================
-HRESULT InitWorkHagiwara(void);
-void UninitWorkHagiwara(void);
-void UpdateWorkHagiwara(void);
-void DrawWorkHagiwara(void);
-
->>>>>>> 9d3e0b33906c3c66a5d911e8070648fe2bef2022
 #endif

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //=============================================================================
 //
 //‰F“s–Ø’S“–•ª@workUtsugi.h
@@ -18,25 +17,4 @@ void UninitWorkUtsugi(void);
 void UpdateWorkUtsugi(void);
 void DrawWorkUtsugi(void);
 
-=======
-//=============================================================================
-//
-//‰F“s–Ø’S“–•ª@workUtsugi.h
-//
-//=============================================================================
-#ifndef _WORKUTSUGI_H_
-#define _WORKUTSUGI_H_
-
-
-
-
-//=============================================================================
-//ƒvƒƒgƒ^ƒCƒvéŒ¾
-//=============================================================================
-HRESULT InitWorkUtsugi(void);
-void UninitWorkUtsugi(void);
-void UpdateWorkUtsugi(void);
-void DrawWorkUtsugi(void);
-
->>>>>>> 9d3e0b33906c3c66a5d911e8070648fe2bef2022
 #endif

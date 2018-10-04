@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //=============================================================================
 //
 //木村担当分　workKimura.h
@@ -18,25 +17,4 @@ void UninitWorkKimura(void);
 void UpdateWorkKimura(void);
 void DrawWorkKimura(void);
 
-=======
-//=============================================================================
-//
-//木村担当分　workKimura.h
-//きむら
-//=============================================================================
-#ifndef _WORKKIMURA_H_
-#define _WORKKIMURA_H_
-
-
-
-
-//=============================================================================
-//プロトタイプ宣言
-//=============================================================================
-HRESULT InitWorkKimura(void);
-void UninitWorkKimura(void);
-void UpdateWorkKimura(void);
-void DrawWorkKimura(void);
-
->>>>>>> 9d3e0b33906c3c66a5d911e8070648fe2bef2022
 #endif
