@@ -163,6 +163,7 @@
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HitCheck.cpp" />
     <ClCompile Include="Library\Camera.cpp" />
     <ClCompile Include="Library\Common.cpp" />
     <ClCompile Include="Library\Counter.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="voiceten.cpp" />
+    <ClCompile Include="voicetenTest.cpp" />
     <ClCompile Include="workHagiwara.cpp" />
     <ClCompile Include="workKimura.cpp" />
     <ClCompile Include="workSato.cpp" />
@@ -200,6 +202,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HitCheck.h" />
     <ClInclude Include="Library\Camera.h" />
     <ClInclude Include="Library\Color.h" />
     <ClInclude Include="Library\Common.h" />
@@ -225,6 +228,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="voiceten.h" />
+    <ClInclude Include="voicetenTest.h" />
     <ClInclude Include="workHagiwara.h" />
     <ClInclude Include="workKimura.h" />
     <ClInclude Include="workSato.h" />

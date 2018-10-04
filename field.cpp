@@ -12,7 +12,7 @@
 // グローバル変数
 //*****************************************************************************
 C3DPolygonObject ground;	//床用
-C3DPolygonObject wall[3];	//壁用
+C3DPolygonObject wall[4];	//壁用
 C3DPolygonObject ceiling;	//天井用
 
 const Vector3 groundPos = Vector3(GROUND_POS_X, GROUND_POS_Y, GROUND_POS_Z);
@@ -48,6 +48,8 @@ HRESULT InitField(void)
 	wall[1].LoadTexture("data/作業/東.jpg");
 	wall[2].Init(BwallPos, wallSize);
 	wall[2].LoadTexture("data/作業/北.jpg");
+	wall[3].Init(Vector3(0, 1000, 0), Vector3(0, PI, 0), Vector2(1000, 1000));
+	wall[3].LoadTexture("data/作業/南.jpg");
 
 	ceiling.Init(ceilingPos, ceilingRot, ceilingSize);
 	ceiling.LoadTexture("data/作業/天井.jpg");
@@ -62,7 +64,7 @@ void UninitField(void)
 {
 	ground.Release();
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		wall[i].Release();
 	}
@@ -77,7 +79,7 @@ void DrawField(void)
 {
 	ground.Draw();
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		wall[i].Draw();
 	}

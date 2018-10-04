@@ -9,12 +9,14 @@
 #include "workSon.h"
 #include "SceneManager.h"
 
+#include "voiceten.h"
+#include "voicetenTest.h"
 
 //宋担当分インクルード
 
 
 //=============================================================================
-//初期化処理
+// 初期化処理
 //=============================================================================
 HRESULT InitWorkSon(void)
 {
@@ -26,7 +28,7 @@ HRESULT InitWorkSon(void)
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
-
+		InitVoiceten();
 		break;
 
 
@@ -39,7 +41,7 @@ HRESULT InitWorkSon(void)
 }
 
 //=============================================================================
-//終了処理　※記載場所注意
+// 終了処理　※記載場所注意
 //=============================================================================
 void UninitWorkSon(void)
 {
@@ -52,7 +54,7 @@ void UninitWorkSon(void)
 
 
 	case SCENE_GAME://タイトルで使ったソースのUninit
-
+		UninitVoiceten();
 		break;
 
 
@@ -65,7 +67,7 @@ void UninitWorkSon(void)
 }
 
 //=============================================================================
-//更新処理
+// 更新処理
 //=============================================================================
 void UpdateWorkSon(void)
 {
@@ -77,7 +79,8 @@ void UpdateWorkSon(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
-
+		TestVL();
+		UpdateVoiceten();
 		break;
 
 
@@ -90,7 +93,7 @@ void UpdateWorkSon(void)
 }
 
 //=============================================================================
-//描画処理
+// 描画処理
 //=============================================================================
 void DrawWorkSon(void)
 {
@@ -102,7 +105,7 @@ void DrawWorkSon(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのDraw
-
+		DrawVoiceten();
 		break;
 
 

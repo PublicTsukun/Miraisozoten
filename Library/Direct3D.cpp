@@ -99,8 +99,8 @@ HRESULT Direct3D::Init(HWND hWnd, bool bWindowMode)
 	dx_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);	// 最初のアルファ引数
 	dx_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);	// ２番目のアルファ引数
 
-	/* ライティングモードを有効 */
-	dx_pD3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	/* ライティングモードを無効 */
+	dx_pD3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 
 	return S_OK;
