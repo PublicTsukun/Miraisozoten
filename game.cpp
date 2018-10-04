@@ -99,7 +99,7 @@ void UpdateGame(void)
 //=============================================================================
 void DrawGame(void)
 {
-	TestPlayer2D.Draw();
+	//TestPlayer2D.Draw();
 
 	TestPlayer3D.Draw();
 

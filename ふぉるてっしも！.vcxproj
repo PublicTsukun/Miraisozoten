@@ -130,6 +130,8 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -180,9 +182,9 @@
     <ClCompile Include="Library\Vector.cpp" />
     <ClCompile Include="Library\WindowClass.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ranking.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="score.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="voiceten.cpp" />
     <ClCompile Include="workHagiwara.cpp" />
@@ -218,9 +220,9 @@
     <ClInclude Include="Library\TsuLibSystem.h" />
     <ClInclude Include="Library\Vector.h" />
     <ClInclude Include="Library\WindowClass.h" />
+    <ClInclude Include="ranking.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="score.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="voiceten.h" />
     <ClInclude Include="workHagiwara.h" />
