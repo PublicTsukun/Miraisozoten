@@ -11,14 +11,14 @@
 #include "Library/ObjectBase3D.h"
 
 //=============================================================================
-// voiceten Launcher
+// Voiceten Launcher
 //=============================================================================
 void TestVL(void)
 {
 	if (GetKeyboardTrigger(DIK_J))
 	{
 		SetVoiceten(
-			Vector3(400.0f, 300.0f, 400.0f),
-			Vector3(000.0f, 300.0f, 400.0f));
+			Vector3(200.0f, 200.0f, 0.0f),			// ”­ŽËˆÊ’u
+			Vector3(-400.0f, 200.0f, 200.0f));		// –Ú•WˆÊ’u
 	}
 }
