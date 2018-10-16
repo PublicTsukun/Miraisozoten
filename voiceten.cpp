@@ -12,6 +12,7 @@
 // プロトタイプ宣言
 //*****************************************************************************
 void UpdateVoiMove(void);
+void UpdateVoiMoveY(int no);
 float DirectionCalc(D3DXVECTOR3 Self, D3DXVECTOR3 Tgt);
 
 //*****************************************************************************
@@ -21,7 +22,7 @@ VOICETEN VoicetenWk[VOICETEN_MAX];		// ワーク
 
 char *FileVoiceten[] =
 {
-	"data/作業/テスト画像02.jpg",
+	"data/作業/voiceten00.png",
 };
 
 C3DPolygonObject Voiceten[VOICETEN_MAX];
@@ -43,7 +44,7 @@ void InitVoiceten(void)
 		(v + i)->pos = Vector3(0.0f, 0.0f, 0.0f);
 		(v + i)->rot = Vector3(0.0f, 0.0f, 0.0f);
 
-		(v + i)->vel = 1.0f;
+		(v + i)->vel = 2.0f;
 
 		(v + i)->timer = 0;
 
@@ -53,7 +54,7 @@ void InitVoiceten(void)
 
 		(v + i)->nor = Vector3(0.0f, 0.0f, 0.0f);
 
-		(v + i)->hei = 60.0f;
+		(v + i)->hei = 20.0f;
 
 		Voiceten[i].Init((v + i)->pos, size);
 		Voiceten[i].LoadTexture(FileVoiceten[0]);
@@ -134,8 +135,10 @@ void UpdateVoiMove(void)
 		if ((v + i)->use == TRUE)
 		{
 			
-			double g = (2 * (v + i)->vel) / (v + i)->dura;
+			
 
+
+			
 			//// 一般
 			//(v + i)->pos.x -= sinf((v + i)->rot.y) * (v + i)->vel;
 			//(v + i)->pos.z -= cosf((v + i)->rot.y) * (v + i)->vel;
@@ -146,13 +149,51 @@ void UpdateVoiMove(void)
 
 			(v + i)->pos.y += (v + i)->nor.y;
 
-			//(v + i)->pos.y += (v + i)->nor.y +
-			//	(-0.5 * g * (v + i)->timer * (v + i)->timer) +
-			//	((v + i)->vel * (v + i)->timer);
+			//(v + i)->pos.y +=
+			//	((v + i)->vel * (v + i)->timer) -
+			//	(0.5 * g * (v + i)->timer * (v + i)->timer);
 
+			UpdateVoiMoveY(i);
+
+		
+			
 		}
 
 	}
+}
+
+//=============================================================================
+// 移動Y
+//=============================================================================
+void UpdateVoiMoveY(int no)
+{
+	VOICETEN *v = GetVoiceten(0);
+
+	const float multi = 20.0;
+
+	if (((v + no)->timer) >= 0 && ((v + no)->timer) < 3) { (v + no)->pos.y +=   float((1.14 - 0)    / 3.0 * multi); }
+	if (((v + no)->timer) >= 3 && ((v + no)->timer) < 6) { (v + no)->pos.y +=   float((2.16 - 1.14) / 3.0 * multi); }
+	if (((v + no)->timer) >= 6 && ((v + no)->timer) < 9) { (v + no)->pos.y +=   float((3.06 - 2.16) / 3.0 * multi); }
+	if (((v + no)->timer) >= 9 && ((v + no)->timer) < 12) { (v + no)->pos.y +=  float((3.84 - 3.06) / 3.0 * multi); }
+	if (((v + no)->timer) >= 12 && ((v + no)->timer) < 15) { (v + no)->pos.y += float((4.50 - 3.84) / 3.0 * multi); }
+	if (((v + no)->timer) >= 15 && ((v + no)->timer) < 18) { (v + no)->pos.y += float((5.04 - 4.50) / 3.0 * multi); }
+	if (((v + no)->timer) >= 18 && ((v + no)->timer) < 21) { (v + no)->pos.y += float((5.46 - 5.04) / 3.0 * multi); }
+	if (((v + no)->timer) >= 21 && ((v + no)->timer) < 24) { (v + no)->pos.y += float((5.76 - 5.46) / 3.0 * multi); }
+	if (((v + no)->timer) >= 24 && ((v + no)->timer) < 27) { (v + no)->pos.y += float((5.94 - 5.76) / 3.0 * multi); }
+	if (((v + no)->timer) >= 27 && ((v + no)->timer) < 30) { (v + no)->pos.y += float((6.0 - 5.94)  / 3.0 * multi); }
+
+	if (((v + no)->timer) >= 30 && ((v + no)->timer) < 33) { (v + no)->pos.y += float((5.94 - 6.0)  / 3.0 * multi); }
+	if (((v + no)->timer) >= 33 && ((v + no)->timer) < 36) { (v + no)->pos.y += float((5.76 - 5.94) / 3.0 * multi); }
+	if (((v + no)->timer) >= 36 && ((v + no)->timer) < 39) { (v + no)->pos.y += float((5.46 - 5.76) / 3.0 * multi); }
+	if (((v + no)->timer) >= 39 && ((v + no)->timer) < 42) { (v + no)->pos.y += float((5.04 - 5.46) / 3.0 * multi); }
+	if (((v + no)->timer) >= 42 && ((v + no)->timer) < 45) { (v + no)->pos.y += float((4.50 - 5.04) / 3.0 * multi); }
+	if (((v + no)->timer) >= 45 && ((v + no)->timer) < 48) { (v + no)->pos.y += float((3.84 - 4.50) / 3.0 * multi); }
+	if (((v + no)->timer) >= 48 && ((v + no)->timer) < 51) { (v + no)->pos.y += float((3.06 - 3.84) / 3.0 * multi); }
+	if (((v + no)->timer) >= 51 && ((v + no)->timer) < 54) { (v + no)->pos.y += float((2.16 - 3.06) / 3.0 * multi); }
+	if (((v + no)->timer) >= 54 && ((v + no)->timer) < 57) { (v + no)->pos.y += float((1.14 - 2.16) / 3.0 * multi); }
+	if (((v + no)->timer) >= 57 && ((v + no)->timer) < 60) { (v + no)->pos.y += float((0.0 - 1.14)  / 3.0 * multi); }
+
+
 }
 
 //=============================================================================
@@ -168,8 +209,27 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 	{
 		if ((v + i)->use == FALSE)
 		{
+			// 到達所要距離
+			(v + i)->dist =
+				sqrt(
+					pow((Tgt.x - Self.x), 2) +
+					pow((Tgt.y - Self.y), 2) +
+					pow((Tgt.z - Self.z), 2)
+					);
+
 			// 到達所要距離の正規化
 			(v + i)->nor = (Tgt - Self) / float((v + i)->dura);
+
+			// 速度
+			(v + i)->vel =
+				sqrt(
+					pow(((v + i)->nor.x), 2) +
+					pow(((v + i)->nor.y), 2) +
+					pow(((v + i)->nor.z), 2)
+					);
+
+
+
 
 			(v + i)->pos = Self;
 
