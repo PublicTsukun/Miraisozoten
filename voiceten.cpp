@@ -22,7 +22,7 @@ VOICETEN VoicetenWk[VOICETEN_MAX];		// ワーク
 
 char *FileVoiceten[] =
 {
-	"data/作業/テスト画像02.jpg",
+	"data/作業/voiceten00.png",
 };
 
 C3DPolygonObject Voiceten[VOICETEN_MAX];
