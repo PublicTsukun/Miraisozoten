@@ -149,7 +149,7 @@ void WriteRankingCsv(void)
 			fprintf(fp, "%3d,%4d,%6d,", ranking->id, ranking->rank, ranking->score);
 			for (int i = 0;i < NAME_MAX;i++)
 			{
-				fprintf(fp, "%d%d", ranking->name[i][0], ranking->name[i][1]);
+				fprintf(fp, "%lld%lld", ranking->name[i][0], ranking->name[i][1]);
 			}
 			fprintf(fp, "\n");
 		}
