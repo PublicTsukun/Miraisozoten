@@ -103,6 +103,9 @@
   <ItemGroup>
     <Image Include="Icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ふぉるてっしも！.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{334AA053-98E5-48AB-A77F-41602B82289E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

@@ -1,6 +1,6 @@
 #include "WindowClass.h"
 #include "Common.h"
-//#include "../resource.h"
+#include "../resource.h"
 
 
 HINSTANCE   WindowClass::Instance = NULL;
@@ -26,7 +26,7 @@ HRESULT WindowClass::Init(HINSTANCE hInstance)
 	wcex.lpszClassName = ClassName;
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_BACKGROUND + 1);
-	//wcex.hIcon         = LoadIcon(Instance, MAKEINTRESOURCE(IDI_ICON1));
+	wcex.hIcon = LoadIcon(Instance, MAKEINTRESOURCE(IDI_ICON1));
 
 	// ウィンドウクラスの登録
 	RegisterClassEx(&wcex);
