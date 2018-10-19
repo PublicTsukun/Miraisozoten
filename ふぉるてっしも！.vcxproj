@@ -46,6 +46,7 @@
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="timer.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="voiceten.cpp" />
     <ClCompile Include="voicetenTest.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="timer.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="voiceten.h" />
     <ClInclude Include="voicetenTest.h" />
