@@ -12,6 +12,7 @@
 
 //山口担当分インクルード
 #include "field.h"
+#include "timer.h"
 
 //=============================================================================
 //初期化処理
@@ -27,6 +28,7 @@ HRESULT InitWorkYamaguchi(void)
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitField();
+		InitTimer();
 		break;
 
 
@@ -58,6 +60,7 @@ void UninitWorkYamaguchi(void)
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
 		UninitField();
+		UninitTimer();
 		break;
 	}
 
@@ -77,7 +80,7 @@ void UpdateWorkYamaguchi(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
-
+		UpdateTimer();
 		break;
 
 
@@ -103,6 +106,7 @@ void DrawWorkYamaguchi(void)
 
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawField();
+		DrawTimer();
 		break;
 
 

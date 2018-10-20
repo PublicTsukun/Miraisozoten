@@ -25,6 +25,9 @@
     <Filter Include="ソース ファイル\Game\UI">
       <UniqueIdentifier>{16e08631-8abf-4b8f-aded-23b883e77836}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Title">
+      <UniqueIdentifier>{3358a49e-d8dd-48c1-a1e2-81346dcbc642}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Library\Camera.cpp">
@@ -143,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="timer.cpp">
       <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="titlelogo.cpp">
+      <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="timer.h">
       <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="titlelogo.h">
+      <Filter>ソース ファイル\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
