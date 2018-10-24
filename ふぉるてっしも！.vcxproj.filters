@@ -150,11 +150,8 @@
     <ClCompile Include="titlelogo.cpp">
       <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
-    <ClCompile Include="score.cpp">
-      <Filter>ソース ファイル\Game\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIBonus.cpp">
-      <Filter>ソース ファイル\Game\UI</Filter>
+    <ClCompile Include="messageBox.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,11 +281,8 @@
     <ClInclude Include="titlelogo.h">
       <Filter>ソース ファイル\Title</Filter>
     </ClInclude>
-    <ClInclude Include="score.h">
-      <Filter>ソース ファイル\Game\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIBonus.h">
-      <Filter>ソース ファイル\Game\UI</Filter>
+    <ClInclude Include="messageBox.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
