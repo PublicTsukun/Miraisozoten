@@ -19,14 +19,6 @@ void TestVL(void)
 	{
 		SetVoiceten(
 			Vector3(200.0f, 200.0f, 0.0f),			// 発射位置
-			Vector3(-200.0f, 200.0f, 0.0f));		// 目標位置
-
-		SetVoiceten(
-			Vector3(200.0f, 200.0f, 0.0f),			// 発射位置
 			Vector3(-400.0f, 200.0f, 200.0f));		// 目標位置
-
-		SetVoiceten(
-			Vector3(200.0f, 200.0f, 0.0f),			// 発射位置
-			Vector3(-200.0f, 000.0f, -100.0f));		// 目標位置
 	}
 }
