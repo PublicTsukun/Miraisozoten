@@ -31,18 +31,9 @@ void UpdateWorkYamamoto(void);
 void DrawWorkYamamoto(void);
 void Initname(void);
 
-void pinokkimon(void);
-int jyureimon(void);
+void enter_name(void);
+int get_char(void);
 
-// キーボード(真顔)
-HRESULT InitInput(HINSTANCE hInst, HWND hWnd);
-void UninitInput(void);
-void UpdateInput(void);
-
-bool GetKeyboardPress(int nKey);
-bool GetKeyboardTrigger(int nKey);
-bool GetKeyboardRepeat(int nKey);
-bool GetKeyboardRelease(int nKey);
 
 #endif
 

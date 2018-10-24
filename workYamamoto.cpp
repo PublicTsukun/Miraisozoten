@@ -147,7 +147,7 @@ void Initname(void)
 	// 画像の初期化？
 }
 //**************************************************************************:
-// void pinokkimon(void)
+// void enter_name(void)
 // 文字入力処理
 // ジュレイモン僕に足りないものって何だったの
 //***************************************************************************
@@ -160,7 +160,7 @@ Aで選択Bで戻る
 名前は5文字とする
 */
 
-void pinokkimon(void)
+void enter_name(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
 	
@@ -174,7 +174,7 @@ void pinokkimon(void)
 		// 現在の入力文字数が最大でないか
 		if (namechar < NAMEMAX)
 		{
-			rankdata[0].namechar[namechar] = jyureimon();
+			rankdata[0].namechar[namechar] = get_char();
 			// 受け取った値が文字か確認
 			if (rankdata[0].namechar[namechar <= EMPTY_NO])
 			{
@@ -200,7 +200,7 @@ void pinokkimon(void)
 		{
 			int check = 0;
 			// 戻るボタンのみ受け付け
-			check = jyureimon();
+			check = get_char();
 			if (check == BACK_CHAR)
 			{
 				rankdata[0].namechar[namechar] = EMPTY_NO;
@@ -216,13 +216,16 @@ void pinokkimon(void)
 }
 
 //******************************************************************************
-// int jyureimon(void)
+// int get_char(void)
 // カーソルキーで文字を選んで選んだ文字を格納するやつ
+// ぴのっきもん
 //***************************************************************:
-int jyureimon(void)
+int get_char(void)
 {
-	int tarinaimono=EMPTY_NO;	// 選ばれた文字
-	
+	int tarinaimono = EMPTY_NO;	// 選ばれた文字
+
 	return tarinaimono;
 }
+
+
 
