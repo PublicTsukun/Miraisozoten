@@ -134,31 +134,18 @@ void UpdateVoiMove(void)
 	{
 		if ((v + i)->use == TRUE)
 		{
-			
-			
-
-
-			
 			//// 一般
 			//(v + i)->pos.x -= sinf((v + i)->rot.y) * (v + i)->vel;
 			//(v + i)->pos.z -= cosf((v + i)->rot.y) * (v + i)->vel;
 
 			// 目標指定
 			(v + i)->pos.x += (v + i)->nor.x;
-			(v + i)->pos.z += (v + i)->nor.z;
-
 			(v + i)->pos.y += (v + i)->nor.y;
-
-			//(v + i)->pos.y +=
-			//	((v + i)->vel * (v + i)->timer) -
-			//	(0.5 * g * (v + i)->timer * (v + i)->timer);
+			(v + i)->pos.z += (v + i)->nor.z;
 
 			UpdateVoiMoveY(i);
 
-		
-			
 		}
-
 	}
 }
 
@@ -169,9 +156,13 @@ void UpdateVoiMoveY(int no)
 {
 	VOICETEN *v = GetVoiceten(0);
 
+	// 高さ調整用
 	const float value = 20.0;
 
 	// 闇
+	// 処理時間 60 / 段落 20 = 3.0
+	// ベジェ曲線 4ポイント (0, 0) (2, 8) (4, 8) (8, 8) Y軸だけ使用
+
 	if (((v + no)->timer) >= 0 && ((v + no)->timer) < 3) { (v + no)->pos.y +=   float((1.14 - 0)    / 3.0 * value); }
 	if (((v + no)->timer) >= 3 && ((v + no)->timer) < 6) { (v + no)->pos.y +=   float((2.16 - 1.14) / 3.0 * value); }
 	if (((v + no)->timer) >= 6 && ((v + no)->timer) < 9) { (v + no)->pos.y +=   float((3.06 - 2.16) / 3.0 * value); }
@@ -193,7 +184,6 @@ void UpdateVoiMoveY(int no)
 	if (((v + no)->timer) >= 51 && ((v + no)->timer) < 54) { (v + no)->pos.y += float((2.16 - 3.06) / 3.0 * value); }
 	if (((v + no)->timer) >= 54 && ((v + no)->timer) < 57) { (v + no)->pos.y += float((1.14 - 2.16) / 3.0 * value); }
 	if (((v + no)->timer) >= 57 && ((v + no)->timer) < 60) { (v + no)->pos.y += float((0.0 - 1.14)  / 3.0 * value); }
-
 
 }
 
@@ -229,10 +219,8 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 					pow(((v + i)->nor.z), 2)
 					);
 
-
-
-
 			(v + i)->pos = Self;
+			Voiceten[i].LoadObjectStatus((v + i)->pos);
 
 			(v + i)->use = TRUE;
 
@@ -255,6 +243,11 @@ void VanishVoiceten(int no)
 		(v + no)->use = FALSE;
 
 		// 初期化
+		(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
+		(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
 		(v + no)->timer = 0;
+
+		Voiceten[no].LoadObjectStatus((v + no)->pos);
+
 	}
 }
