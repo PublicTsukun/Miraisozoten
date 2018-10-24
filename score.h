@@ -3,28 +3,31 @@
 // フィールド処理 [field.cpp]
 //
 //=============================================================================
-#ifndef _TIMER_H_
-#define _TIMER_H_
+#ifndef _SCORE_H_
+#define _SCORE_H_
 
 #include "Library/Math.h"
+#include "Library/Common.h"
 #include <Windows.h>
 
-#define MAX_DIGIT		(2)
+#define SCORE_DIGIT		(5)
 
-#define NUMBER_TEX		("data/TEXTURE/number16x32.png")
+#define SCORE_TEX		("data/TEXTURE/number16x32.png")
 
-#define NUMBER_SIZE_X	(16)
-#define NUMBER_SIZE_Y	(32)
+#define SCORE_SIZE_X	(12)
+#define SCORE_SIZE_Y	(24)
 
-#define NUMBER_POS_Y	(45)
+#define SCORE_POS_X	(SCREEN_WIDTH-SCORE_SIZE_X-25)
+#define SCORE_POS_Y	(30)
 
-#define FRAME_TEX		("data/TEXTURE/タイマー枠(仮).png")
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
-HRESULT InitTimer(void);
-void UninitTimer(void);
-void DrawTimer(void);
-void UpdateTimer(void);
+HRESULT InitScore(void);
+void UninitScore(void);
+void DrawScore(void);
+void UpdateScore(void);
+
+void AddScore(int num);
 
 #endif

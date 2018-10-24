@@ -85,8 +85,9 @@ public:
 
 
 /* 2DUIゲージバー */
-class UI2DPercentGauge
+class UI2DPercentGauge : public _ObjectBase2D
 {
+
 	Vector2 Position;
 	Vector2 Size;
 
@@ -97,8 +98,10 @@ public:
 	void Init(const char *textureF, const char *textureG);
 	void Init(float sizeX, float sizeY, float posX, float posY);
 	void Update(float per);
+	void UpdateTex(float per);
 	void Draw(void);
 	void Uninit(void);
+
 
 };
 

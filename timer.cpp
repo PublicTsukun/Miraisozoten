@@ -6,8 +6,8 @@
 #include "timer.h"
 #include "Library/ObjectBase2D.h"
 #include "Library/Common.h"
-
-
+#include "Library\Input.h"
+#include "Library\DebugProcess.h"
 
 //*****************************************************************************
 // グローバル変数
@@ -15,25 +15,38 @@
 UI2DNumber number[MAX_DIGIT];	//タイマー数字
 C2DObject frame;	//タイマーフレーム
 
-const float NumberInter = NUMBER_SIZE_X * 2; //タイマー数字の間隔
 
-const float Digit1_posX = SCREEN_CENTER_X - NumberInter;
-const float Digit2_posX = SCREEN_CENTER_X;
-const float Digit3_posX = SCREEN_CENTER_X + NumberInter;
 
+//3桁バージョン
+//const float NumberInter = NUMBER_SIZE_X * 2; //タイマー数字の間隔
+//const float Digit1_posX = SCREEN_CENTER_X + NumberInter;
+//const float Digit2_posX = SCREEN_CENTER_X;
+//const float Digit3_posX = SCREEN_CENTER_X - NumberInter;
+
+//2桁バージョン
+const float NumberInter = NUMBER_SIZE_X ; //タイマー数字の間隔
+const float Digit1_posX = SCREEN_CENTER_X + NumberInter;
+const float Digit2_posX = SCREEN_CENTER_X - NumberInter;
+
+const float FrameSizeX = MAX_DIGIT * NUMBER_SIZE_X+25;
+const float FrameSizeY = NUMBER_SIZE_Y+20;
 
 int Time;
+
+int fcount;
 //=============================================================================
 // 初期化処理
 //=============================================================================
 HRESULT InitTimer(void)
 {
-	number[0].Init(Digit1_posX, 10, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
-	number[1].Init(Digit2_posX, 10, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
-	number[2].Init(Digit3_posX, 10, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
+	number[0].Init(Digit1_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
+	number[1].Init(Digit2_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
+	//number[2].Init(Digit3_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
+
+	frame.Init(SCREEN_CENTER_X, 50, FrameSizeX, FrameSizeY, FRAME_TEX);
 
 
-	Time = 123;
+	Time = 99;
 	return S_OK;
 }
 
@@ -48,6 +61,8 @@ void UninitTimer(void)
 		number[i].Release();
 	}
 
+	frame.Release();
+
 }
 
 //=============================================================================
@@ -55,12 +70,12 @@ void UninitTimer(void)
 //=============================================================================
 void DrawTimer(void)
 {
+	frame.Draw();
 
 	for (int i = 0; i < MAX_DIGIT; i++)
 	{
 		number[i].Draw();
 	}
-
 
 }
 
@@ -71,6 +86,13 @@ void DrawTimer(void)
 void UpdateTimer(void)
 {
 
+	fcount++;
+	if (fcount > 62)
+	{
+		fcount = 0;
+		Time--;
+	}
+
 	for (int i = 0; i < MAX_DIGIT; i++)
 	{
 		int num;
@@ -80,6 +102,8 @@ void UpdateTimer(void)
 
 
 		number[i].SetNumber(num);
+
+
 	}
 
 

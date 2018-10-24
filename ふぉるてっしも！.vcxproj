@@ -46,9 +46,11 @@
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="score.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="titlelogo.cpp" />
+    <ClCompile Include="UIBonus.cpp" />
     <ClCompile Include="voiceten.cpp" />
     <ClCompile Include="voicetenTest.cpp" />
     <ClCompile Include="workHagiwara.cpp" />
@@ -90,9 +92,11 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="score.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="titlelogo.h" />
+    <ClInclude Include="UIBonus.h" />
     <ClInclude Include="voiceten.h" />
     <ClInclude Include="voicetenTest.h" />
     <ClInclude Include="workHagiwara.h" />
