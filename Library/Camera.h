@@ -19,10 +19,8 @@
 #define	VIEW_NEAR_Z		(10.0f)											// ビュー平面_DEBUG_MODE_CAMERA_のNearZ値
 #define	VIEW_FAR_Z		(32768.0f)										// ビュー平面のFarZ値
 
-#if _DEBUG
 #define CAMERA_MOVE_VALUE	(2.0f)		// 移動量
 #define GAZE_MOVE_VALUE		(0.005f)	// 移動量
-#endif // _DEBUG
 
 
 enum CAMERA_STATUS
@@ -65,6 +63,9 @@ public:
 	void Rotation(Vector2 moveRate);
 	void Scaling(float moveRate);
 
+	D3DXVECTOR3 GetPosition();
+	D3DXVECTOR3 GetGazeVector();
+
 	void CreateMatrix(void);
 	D3DXMATRIX GetViewMatrix(void);
 
@@ -79,5 +80,8 @@ void UpdateCamera(Vector3 target);
 void SetCamera(void);
 
 D3DXMATRIX GetMtxView(void);
+#if _DEBUG
+CCamera *GetCamera();
+#endif // _DEBUG
 
 #endif

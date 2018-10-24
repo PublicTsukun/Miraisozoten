@@ -235,17 +235,19 @@ int  C2DObject::Init(float posX, float posY, float sizX, float sizY)
 }
 void C2DObject::SetVertex()
 {
-	Vertex[0].coord.x = Position.x - cosf((D3DX_PI * 0.25f) + Angle) * ROOT2 * Size.x * Scale;
-	Vertex[0].coord.y = Position.y - sinf((D3DX_PI * 0.25f) + Angle) * ROOT2 * Size.y * Scale;
+	float cosA = cosf(Angle);
+	float sinA = sinf(Angle);
+	Vertex[0].coord.x = Position.x + (-cosA * Size.x - sinA * Size.y) * Scale;
+	Vertex[0].coord.y = Position.y + (-cosA * Size.y + sinA * Size.x) * Scale;
 	Vertex[0].coord.z = 0.0f;
-	Vertex[1].coord.x = Position.x + cosf((D3DX_PI * 0.25f) - Angle) * ROOT2 * Size.x * Scale;
-	Vertex[1].coord.y = Position.y - sinf((D3DX_PI * 0.25f) - Angle) * ROOT2 * Size.y * Scale;
+	Vertex[1].coord.x = Position.x + ( cosA * Size.x - sinA * Size.y) * Scale;
+	Vertex[1].coord.y = Position.y + (-cosA * Size.y - sinA * Size.x) * Scale;
 	Vertex[1].coord.z = 0.0f;
-	Vertex[2].coord.x = Position.x - cosf((D3DX_PI * 0.25f) - Angle) * ROOT2 * Size.x * Scale;
-	Vertex[2].coord.y = Position.y + sinf((D3DX_PI * 0.25f) - Angle) * ROOT2 * Size.y * Scale;
+	Vertex[2].coord.x = Position.x + (-cosA * Size.x + sinA * Size.y) * Scale;
+	Vertex[2].coord.y = Position.y + ( cosA * Size.y + sinA * Size.x) * Scale;
 	Vertex[2].coord.z = 0.0f;
-	Vertex[3].coord.x = Position.x + cosf((D3DX_PI * 0.25f) + Angle) * ROOT2 * Size.x * Scale;
-	Vertex[3].coord.y = Position.y + sinf((D3DX_PI * 0.25f) + Angle) * ROOT2 * Size.y * Scale;
+	Vertex[3].coord.x = Position.x + ( cosA * Size.x + sinA * Size.y) * Scale;
+	Vertex[3].coord.y = Position.y + ( cosA * Size.y - sinA * Size.x) * Scale;
 	Vertex[3].coord.z = 0.0f;
 }
 void C2DObject::SetVertex(int no, Vector3 coord)

@@ -1,5 +1,6 @@
 #include "ObjectBase3D.h"
 #include "Direct3D.h"
+#include "Matrix.h"
 #include <math.h>
 
 
@@ -78,19 +79,15 @@ void C3DPolygonObject::Init(Vector3 pos, Vector3 rot, Vector2 size)
 }
 
 //----描画処理--------
-void C3DPolygonObject::Draw(void)
+void C3DPolygonObject::Draw(const char* order)
 {
 	LPDIRECT3DDEVICE9 pDevice = Direct3D::GetD3DDevice();
 	D3DXMATRIX mtxRot, mtxTranslate, mtxWorld;
 
-	// αテスト設定
-	//if (AlphaTestSwitch(0))
-	{
-		// αテストを有効に
-		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);		// ON
-		pDevice->SetRenderState(D3DRS_ALPHAREF, 125);				// 比較するαの値
-		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);	// 条件(GREATER : 以上)
-	}
+	// αテストを有効に
+	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);		// ON
+	pDevice->SetRenderState(D3DRS_ALPHAREF, 125);				// 比較するαの値
+	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);	// 条件(GREATER : 以上)
 
 	// ラインティングを無効にする (ライトを当てると変になる)
 	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -98,13 +95,8 @@ void C3DPolygonObject::Draw(void)
 	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&mtxWorld);
 
-	// 回転を反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, Rotation.y, Rotation.x, Rotation.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
-
-	// 移動を反映
-	D3DXMatrixTranslation(&mtxTranslate, Position.x, Position.y, Position.z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxTranslate);
+	// マトリックスの生成
+	CreateMatrix(&mtxWorld, 1.0f, Rotation, Position, order);
 
 	// ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
@@ -251,18 +243,6 @@ void C3DPolygonObject::LoadObjectStatus(Vector3 pos, Vector3 rot)
 {
 	this->Position = pos;
 	this->Rotation = rot;
-}
-
-
-/* 3D多数板ポリ */
-//----開放--------
-void C3DMultiPolygonObject::Release()
-{
-	if (VtxBuff != NULL)
-	{	// 頂点の開放
-		VtxBuff->Release();
-		VtxBuff = NULL;
-	}
 }
 
 

@@ -1,29 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Library">
+      <UniqueIdentifier>{6414ac82-e166-4c50-bcf3-2214a3ec08a9}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <UniqueIdentifier>{5333fc69-e83e-420a-9764-a11590303071}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{29e83b2d-d835-4641-a1a8-22f4f3a3ed79}</UniqueIdentifier>
     </Filter>
     <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <UniqueIdentifier>{4e7933b6-87db-4420-8c49-8657ef9757f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Library">
-      <UniqueIdentifier>{46eb7c4a-3345-48b3-afd3-3222b93889bb}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Work">
+      <UniqueIdentifier>{ce8812a1-add0-4234-a284-e36e1a7bc2b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{0cf99b4b-bc4f-479e-9740-924c34d88174}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Game">
+      <UniqueIdentifier>{00af0508-3c4f-48b2-874b-bb36f0fd4d61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{ad455c8f-5e8a-4564-8a87-d51c29161187}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{9592cde3-5d10-4aa8-9224-8f6cbbbb458e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\work">
-      <UniqueIdentifier>{e17f62df-ea3a-4e33-832f-e3b91401426e}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Game\UI">
+      <UniqueIdentifier>{16e08631-8abf-4b8f-aded-23b883e77836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Title">
+      <UniqueIdentifier>{3358a49e-d8dd-48c1-a1e2-81346dcbc642}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +60,9 @@
     <ClCompile Include="Library\Loading.cpp">
       <Filter>Library</Filter>
     </ClCompile>
+    <ClCompile Include="Library\Matrix.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
     <ClCompile Include="Library\ObjectBase2D.cpp">
       <Filter>Library</Filter>
     </ClCompile>
@@ -81,64 +87,68 @@
     <ClCompile Include="Library\WindowClass.cpp">
       <Filter>Library</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="workHagiwara.cpp">
+      <Filter>ソース ファイル\Work</Filter>
     </ClCompile>
-    <ClCompile Include="Result.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="workKimura.cpp">
+      <Filter>ソース ファイル\Work</Filter>
     </ClCompile>
-    <ClCompile Include="Title.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="workSato.cpp">
+      <Filter>ソース ファイル\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="workSon.cpp">
+      <Filter>ソース ファイル\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="workTsu.cpp">
+      <Filter>ソース ファイル\Work</Filter>
     </ClCompile>
     <ClCompile Include="workUtsugi.cpp">
-      <Filter>ソース ファイル\work</Filter>
+      <Filter>ソース ファイル\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="workYamaguchi.cpp">
+      <Filter>ソース ファイル\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="workYamamoto.cpp">
+      <Filter>ソース ファイル\Work</Filter>
+    </ClCompile>
+    <ClCompile Include="HitCheck.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="workHagiwara.cpp">
-      <Filter>ソース ファイル\work</Filter>
-    </ClCompile>
-    <ClCompile Include="workKimura.cpp">
-      <Filter>ソース ファイル\work</Filter>
-    </ClCompile>
-    <ClCompile Include="workSato.cpp">
-      <Filter>ソース ファイル\work</Filter>
-    </ClCompile>
-    <ClCompile Include="workSon.cpp">
-      <Filter>ソース ファイル\work</Filter>
-    </ClCompile>
-    <ClCompile Include="workTsu.cpp">
-      <Filter>ソース ファイル\work</Filter>
-    </ClCompile>
-    <ClCompile Include="workYamaguchi.cpp">
-      <Filter>ソース ファイル\work</Filter>
-    </ClCompile>
-    <ClCompile Include="workYamamoto.cpp">
-      <Filter>ソース ファイル\work</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="enemy.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
     <ClCompile Include="field.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ranking.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Result.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="voiceten.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="ranking.cpp">
-=======
-<<<<<<< HEAD
     <ClCompile Include="voicetenTest.cpp">
-=======
-    <ClCompile Include="HitCheck.cpp">
->>>>>>> 9039380e8d78234e3d07a7d8d2c2819380540562
->>>>>>> 1838829d8af4e2faea232a34e01f2d0f9d8dab53
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="titlelogo.cpp">
+      <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +188,9 @@
     <ClInclude Include="Library\Math.h">
       <Filter>Library</Filter>
     </ClInclude>
+    <ClInclude Include="Library\Matrix.h">
+      <Filter>Library</Filter>
+    </ClInclude>
     <ClInclude Include="Library\ObjectBase2D.h">
       <Filter>Library</Filter>
     </ClInclude>
@@ -202,62 +215,78 @@
     <ClInclude Include="Library\WindowClass.h">
       <Filter>Library</Filter>
     </ClInclude>
-    <ClInclude Include="Result.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Title.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="workUtsugi.h">
-      <Filter>ソース ファイル\work</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="workHagiwara.h">
-      <Filter>ソース ファイル\work</Filter>
+      <Filter>ソース ファイル\Work</Filter>
     </ClInclude>
     <ClInclude Include="workKimura.h">
-      <Filter>ソース ファイル\work</Filter>
+      <Filter>ソース ファイル\Work</Filter>
     </ClInclude>
     <ClInclude Include="workSato.h">
-      <Filter>ソース ファイル\work</Filter>
+      <Filter>ソース ファイル\Work</Filter>
     </ClInclude>
     <ClInclude Include="workSon.h">
-      <Filter>ソース ファイル\work</Filter>
+      <Filter>ソース ファイル\Work</Filter>
     </ClInclude>
     <ClInclude Include="workTsu.h">
-      <Filter>ソース ファイル\work</Filter>
+      <Filter>ソース ファイル\Work</Filter>
+    </ClInclude>
+    <ClInclude Include="workUtsugi.h">
+      <Filter>ソース ファイル\Work</Filter>
     </ClInclude>
     <ClInclude Include="workYamaguchi.h">
-      <Filter>ソース ファイル\work</Filter>
+      <Filter>ソース ファイル\Work</Filter>
     </ClInclude>
     <ClInclude Include="workYamamoto.h">
-      <Filter>ソース ファイル\work</Filter>
+      <Filter>ソース ファイル\Work</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Scene</Filter>
+    <ClInclude Include="HitCheck.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="field.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="voiceten.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="ranking.h">
-      <Filter>ソース ファイル</Filter>
-=======
-<<<<<<< HEAD
     <ClInclude Include="voicetenTest.h">
-=======
-    <ClInclude Include="HitCheck.h">
->>>>>>> 9039380e8d78234e3d07a7d8d2c2819380540562
-      <Filter>ヘッダー ファイル</Filter>
->>>>>>> 1838829d8af4e2faea232a34e01f2d0f9d8dab53
+      <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="titlelogo.h">
+      <Filter>ソース ファイル\Title</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Icon.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ふぉるてっしも！.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

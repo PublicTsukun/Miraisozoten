@@ -72,9 +72,9 @@ X2<DATA>::X2()
 	this->y = (DATA)0;
 }
 template<typename DATA>
-X2<DATA>::X2(const X2 &x2)
+X2<DATA>::X2(const X2<DATA> &x2)
 {
-	*this = X2;
+	*this = x2;
 }
 template<typename DATA>
 X2<DATA>::X2(DATA x, DATA y)
@@ -158,8 +158,6 @@ bool X2<DATA>::operator!=(const X2 x2) const
 {
 	return (this->x != x2.x) && (this->y != x2.y);
 }
-
-
 
 
 #endif // !__TSULIB_MATH_INCLUDE__

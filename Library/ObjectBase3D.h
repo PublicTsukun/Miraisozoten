@@ -53,7 +53,7 @@ public:
 	virtual void Init(float posX, float posY, float posZ, float sizX, float sizY);
 	virtual void Init(Vector3 pos, Vector2 size);
 	virtual void Init(Vector3 pos, Vector3 rot, Vector2 size);
-	virtual void Draw(void);
+	virtual void Draw(const char* order = "SRT");
 
 	virtual void LoadTextureStatus(float sizX, float sizY, float scale, int ptnX, int ptnY, int time);
 	virtual void LoadTextureStatus(float sizX, float sizY, float scale);
@@ -61,19 +61,12 @@ public:
 	virtual void LoadObjectStatus(Vector3 pos, Vector3 rot);
 };
 
-/* 3D多数板ポリオブジェクト */
-class C3DMultiPolygonObject : public C3DPolygonObject
-{
-public:
-	void Release();
-};
-
 
 /* 3D六面体オブジェクト *///*
 class C3DCubeObject
 {
 	Dx9Texture Texture;
-	VERTEX_3D          Face[6][4];
+	VERTEX_3D  Face[6][4];
 	Vector3 Position;	// 位置座標
 	Vector3 Rotation;	// 回転角度
 	Vector3 Size;		// ポリゴンサイズ

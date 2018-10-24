@@ -3,8 +3,8 @@
 // ƒŠƒUƒ‹ƒg‰æ–Êˆ— [result.h]
 //
 //=============================================================================
-#ifndef _RESULT_INCLUDE_H_
-#define _RESULT_INCLUDE_H_
+#ifndef _RESULT_H_INCLUDE_
+#define _RESULT_H_INCLUDE_
 
 
 #include <Windows.h>

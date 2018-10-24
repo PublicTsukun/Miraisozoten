@@ -27,21 +27,21 @@ HRESULT InitENEMY(void)
 	ENEMY3D.Init(Vector3(0, 200, 200), Vector2(300, 300));
 				//ポジション設定		//サイズ設定
 
-	ENEMY3D.LoadTexture("data/MODEL/カービー.dds");
+	ENEMY3D.LoadTexture("data/作業/カービー.dds");
 			//テクスチャの読み込み
 
 	//エネミー2
 	ENEMY3D2.Init(Vector3(100, 0, 200), Vector2(300, 300));
 	//ポジション設定		//サイズ設定
 
-	ENEMY3D2.LoadTexture("data/MODEL/すたふぃー.dds");
+	ENEMY3D2.LoadTexture("data/作業/すたふぃー.dds");
 
 
 	//エネミー3
 	ENEMY3D3.Init(Vector3(500, 500, 200), Vector2(300, 300));
 	//ポジション設定		//サイズ設定
 
-	ENEMY3D3.LoadTexture("data/TEXTURE/toumeienemy.png");
+	ENEMY3D3.LoadTexture("data/作業/toumeienemy.png");
 
 	return S_OK;
 }
