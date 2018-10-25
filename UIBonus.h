@@ -3,28 +3,29 @@
 // フィールド処理 [field.cpp]
 //
 //=============================================================================
-#ifndef _TIMER_H_
-#define _TIMER_H_
+#ifndef _UI_BONUS_H_
+#define _UI_BONUS_H_
 
 #include "Library/Math.h"
 #include <Windows.h>
 
-#define MAX_DIGIT		(2)
 
-#define NUMBER_TEX		("data/TEXTURE/number16x32.png")
+#define	TEX_BONUSGAGE	("data/TEXTURE/左矢印.png")
+#define TEX_BONUSGAGEFRAME	("data/TEXTURE/タイマー枠(仮).png")
 
-#define NUMBER_SIZE_X	(16)
-#define NUMBER_SIZE_Y	(32)
+#define BONUSGAGE_SIZE_X	(50)
+#define BONUSGAGE_SIZE_Y	(50)
 
-#define NUMBER_POS_Y	(45)
+#define BONUSGAGE_POS_X		(150)
+#define BONUSGAGE_POS_Y		(40)
 
-#define FRAME_TEX		("data/TEXTURE/タイマー枠(仮).png")
+
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
-HRESULT InitTimer(void);
-void UninitTimer(void);
-void DrawTimer(void);
-void UpdateTimer(void);
+HRESULT InitUIBonus(void);
+void UninitUIBonus(void);
+void DrawUIBonus(void);
+void UpdateUIBonus(void);
 
 #endif

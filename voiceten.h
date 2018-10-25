@@ -25,8 +25,6 @@ typedef struct
 	Vector3 pos;	// 位置
 	Vector3 rot;	// 回転
 
-	
-
 	int timer;		// タイマー
 
 	Vector3 start;	// 発射位置
