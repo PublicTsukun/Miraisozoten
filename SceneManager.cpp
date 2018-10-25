@@ -19,7 +19,7 @@ int  SceneManager::Update()
 
 		if (GetKeyboardTrigger(DIK_RETURN))
 		{
-			SetScene(SCENE_GAME);
+			//SetScene(SCENE_GAME);
 		}
 		break;
 
