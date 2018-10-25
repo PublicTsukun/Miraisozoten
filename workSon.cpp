@@ -9,10 +9,10 @@
 #include "workSon.h"
 #include "SceneManager.h"
 
+// 宋担当分インクルード
 #include "voiceten.h"
 #include "voicetenTest.h"
-
-//宋担当分インクルード
+#include "messageBox.h"
 
 
 //=============================================================================
@@ -29,6 +29,7 @@ HRESULT InitWorkSon(void)
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitVoiceten();
+		InitMessageBox();
 		break;
 
 
@@ -55,6 +56,7 @@ void UninitWorkSon(void)
 
 	case SCENE_GAME://タイトルで使ったソースのUninit
 		UninitVoiceten();
+		UninitMessageBox();
 		break;
 
 
@@ -79,8 +81,12 @@ void UpdateWorkSon(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
-		TestVL();
 		UpdateVoiceten();
+		UpdateMessageBox();
+
+		TestVL();
+		TestMB();
+
 		break;
 
 
@@ -106,6 +112,7 @@ void DrawWorkSon(void)
 
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawVoiceten();
+		DrawMessagebox();
 		break;
 
 

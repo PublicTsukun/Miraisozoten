@@ -276,6 +276,7 @@ void C2DObject::SetStatus(float posX, float posY, float sizX, float sizY)
 	this->Position.y = posY;
 	this->Size.x = sizX;
 	this->Size.y = sizY;
+	this->SetVertex();
 }
 void C2DObject::SetStatus(Vector2 pos, Vector2 siz, float scl, float ang)
 {
@@ -283,16 +284,19 @@ void C2DObject::SetStatus(Vector2 pos, Vector2 siz, float scl, float ang)
 	this->Size = siz;
 	this->Scale = scl;
 	this->Angle = ang;
+	this->SetVertex();
 }
 void C2DObject::SetStatus(Vector2 pos, Vector2 siz)
 {
 	this->Position = pos;
 	this->Size = siz;
+	this->SetVertex();
 }
 void C2DObject::SetStatus(float scl, float ang)
 {
 	this->Scale = scl;
 	this->Angle = ang;
+	this->SetVertex();
 }
 
 
@@ -342,11 +346,16 @@ void UI2DPercentGauge::Uninit(void)
 }
 void UI2DPercentGauge::Update(float per)
 {
-	Gage.SetVertex(0, Vector3(Position.x - Size.x, Position.y - Size.y, 0.0f));
-	Gage.SetVertex(1, Vector3(Position.x - Size.x + Size.x * 2 * per, Position.y - Size.y, 0.0f));
-	Gage.SetVertex(2, Vector3(Position.x - Size.x, Position.y + Size.y, 0.0f));
-	Gage.SetVertex(3, Vector3(Position.x - Size.x + Size.x * 2 * per, Position.y + Size.y, 0.0f));
+	Gage.SetVertex(0, Vector3(Position.x , Position.y - Size.y, 0.0f));
+	Gage.SetVertex(1, Vector3(Position.x  + Size.x * 2 * per, Position.y - Size.y, 0.0f));
+	Gage.SetVertex(2, Vector3(Position.x , Position.y + Size.y, 0.0f));
+	Gage.SetVertex(3, Vector3(Position.x  + Size.x * 2 * per, Position.y + Size.y, 0.0f));
 }
+void UI2DPercentGauge::UpdateTex(float per)
+{
+
+}
+
 void UI2DPercentGauge::Draw(void)
 {
 	Frame.Draw();

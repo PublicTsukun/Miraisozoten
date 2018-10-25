@@ -101,7 +101,7 @@ HRESULT Init()
 	CSFade::MakeVertex();
 
 	// タイトルシーンにセット
-	Scene::SetScene(SCENE_GAME);
+	Scene::SetScene(SCENE_TITLE);
 
 	// カメラ
 	InitCamera();
