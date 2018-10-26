@@ -27,7 +27,7 @@ HRESULT InitScore(void)
 	
 	for (int i = 0; i < SCORE_DIGIT; i++)
 	{
-		score[i].Init(SCORE_POS_X - ScoreInter*i, SCORE_POS_Y, SCORE_SIZE_X, SCORE_SIZE_Y, SCORE_TEX);
+		score[i].Init((float)(SCORE_POS_X - ScoreInter*i), SCORE_POS_Y, SCORE_SIZE_X, SCORE_SIZE_Y, SCORE_TEX);
 	}
 
 	Score = 0;
@@ -72,7 +72,7 @@ void UpdateScore(void)
 	{
 		int num;
 
-		num = (Score / (pow(10, i)));
+		num = (Score / (int)(pow(10, i)));
 		num %= 10;
 
 
@@ -93,6 +93,6 @@ void AddScore(int num)
 
 	if (Score > pow(10, SCORE_DIGIT))
 	{
-		Score = pow(10, SCORE_DIGIT) - 1;
+		Score = (int)pow(10, SCORE_DIGIT) - 1;
 	}
 }
