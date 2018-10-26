@@ -90,7 +90,7 @@ void UpdateUIBonus(void)
 	BonusGage.Update(gagelong);
 
 
-	float cor;
+	float cor=0.0f;
 
 	//cor = BONUSGAGE_SIZE_Y / (tanf(POS_COR_ANG));
 
