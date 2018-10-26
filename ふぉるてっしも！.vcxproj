@@ -44,6 +44,7 @@
     <ClCompile Include="Library\WindowClass.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="messageBox.cpp" />
+    <ClCompile Include="name.cpp" />
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Library\Vector.h" />
     <ClInclude Include="Library\WindowClass.h" />
     <ClInclude Include="messageBox.h" />
+    <ClInclude Include="name.h" />
     <ClInclude Include="ranking.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />

@@ -28,6 +28,9 @@
     <Filter Include="ソース ファイル\Title">
       <UniqueIdentifier>{3358a49e-d8dd-48c1-a1e2-81346dcbc642}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Result">
+      <UniqueIdentifier>{98f21a7e-a410-40d5-be89-9cf78a140aa9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Library\Camera.cpp">
@@ -149,6 +152,15 @@
     </ClCompile>
     <ClCompile Include="titlelogo.cpp">
       <Filter>ソース ファイル\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBonus.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="name.cpp">
+      <Filter>ソース ファイル\Result</Filter>
     </ClCompile>
     <ClCompile Include="messageBox.cpp">
       <Filter>ソース ファイル</Filter>
@@ -280,6 +292,15 @@
     </ClInclude>
     <ClInclude Include="titlelogo.h">
       <Filter>ソース ファイル\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBonus.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="name.h">
+      <Filter>ソース ファイル\Result</Filter>
     </ClInclude>
     <ClInclude Include="messageBox.h">
       <Filter>ソース ファイル</Filter>

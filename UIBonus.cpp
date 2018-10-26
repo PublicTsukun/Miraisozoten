@@ -8,13 +8,15 @@
 #include "Library/Common.h"
 #include "Library\Input.h"
 #include "Library\DebugProcess.h"
+#include "Library\Color.h"
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 UI2DPercentGauge	BonusGage;	//ボーナスゲージ
+C2DObject				a;
 
-
+int		gagenum=0;
 
 //=============================================================================
 // 初期化処理
@@ -22,7 +24,7 @@ UI2DPercentGauge	BonusGage;	//ボーナスゲージ
 HRESULT InitUIBonus(void)
 {
 	BonusGage.Init(TEX_BONUSGAGEFRAME, TEX_BONUSGAGE);
-	BonusGage.Init(BONUSGAGE_SIZE_X, BONUSGAGE_SIZE_Y, BONUSGAGE_POS_X, BONUSGAGE_POS_Y);
+	BonusGage.Init(BONUSGAGE_POS_X, BONUSGAGE_POS_Y, BONUSGAGE_SIZE_X, BONUSGAGE_SIZE_Y);
 		
 	return S_OK;
 }
@@ -54,19 +56,51 @@ void UpdateUIBonus(void)
 	if (GetKeyboardPress(DIK_0))
 	{
 		gagelong += 0.01f;
-		if (gagelong >= 1.0f)
+		if (gagelong >= LAST_GAGE)
 		{
-			gagelong = 1.0f;
+			gagelong = LAST_GAGE;
+		}
+
+		if (gagelong >= FIRST_GAGE)
+		{
+			gagenum = 1;
+			if (gagelong >= SECOND_GAGE)
+			{
+				gagenum = 2;
+				if (gagelong >= LAST_GAGE)
+				{
+					gagenum = 3;
+				}
+			}
 		}
 	}
 	if (GetKeyboardPress(DIK_9))
 	{
 		gagelong -= 0.01f;
-		if (gagelong <= 0.0f)
+		if (gagelong <= (gagenum)*0.333f)
 		{
-			gagelong = 0.0f;
+			gagelong = (gagenum)*0.333f;
 		}
+	}
 
+	if (GetKeyboardTrigger(DIK_8))
+	{
+		gagenum = 0;
 	}
 	BonusGage.Update(gagelong);
+
+
+	float cor;
+
+	//cor = BONUSGAGE_SIZE_Y / (tanf(POS_COR_ANG));
+
+	Vector3 pos;
+	pos.x = BONUSGAGE_POS_X + ((BONUSGAGE_SIZE_X-6.0f) * 2 * gagelong)+cor;
+	pos.y = BONUSGAGE_POS_Y - (BONUSGAGE_SIZE_Y-6.0f);
+	pos.z = 0.0f;
+	BonusGage.Gage.SetVertex(1,pos);
+
+
+	BonusGage.Gage.SetTexture(1, gagelong, 0.0f);
+	BonusGage.Gage.SetTexture(3, gagelong, 1.0f);
 }
