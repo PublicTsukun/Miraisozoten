@@ -12,6 +12,7 @@
 
 //木村担当分インクルード
 #include "enemy.h"
+#include "titlelogo.h"
 
 //=============================================================================
 //初期化処理
@@ -21,9 +22,8 @@ HRESULT InitWorkKimura(void)
 	switch (Scene::SetScene(SCENE_MAX))
 	{
 	case SCENE_TITLE://タイトルで使いたいソースのInit
-
+		InitTitlelogo();//タイトルロゴ
 		break;
-
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitENEMY();
@@ -52,7 +52,7 @@ void UninitWorkKimura(void)
 
 
 	case SCENE_GAME://タイトルで使ったソースのUninit
-		
+		UninitTitlelogo();//タイトルロゴで使ったソースのUninitlogo
 		break;
 
 
@@ -72,7 +72,7 @@ void UpdateWorkKimura(void)
 	switch (Scene::SetScene(SCENE_MAX))
 	{
 	case SCENE_TITLE://タイトルで使うソースのUpdate
-
+		UpdateTitlelogo();
 		break;
 
 
@@ -97,7 +97,7 @@ void DrawWorkKimura(void)
 	switch (Scene::SetScene(SCENE_MAX))
 	{
 	case SCENE_TITLE://タイトルで使うソースのDraw
-
+		DrawTitlelogo();
 		break;
 
 
