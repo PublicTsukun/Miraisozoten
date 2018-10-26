@@ -97,7 +97,7 @@ void UpdateTimer(void)
 	{
 		int num;
 
-		num = (Time / (pow(10, i)));
+		num = (Time / (int)(pow(10, i)));
 		num %= 10;
 
 
