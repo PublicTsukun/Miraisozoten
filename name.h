@@ -25,4 +25,8 @@ void enter_name(void);
 int get_char(void);
 void Initname(void);
 
+
+
+
+// ‰¼‚Ìˆ—
 #endif
