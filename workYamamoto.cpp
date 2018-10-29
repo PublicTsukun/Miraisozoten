@@ -55,7 +55,7 @@ void UninitWorkYamamoto(void)
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
-		UninitName();
+	//	UninitName();
 		break;
 	}
 
