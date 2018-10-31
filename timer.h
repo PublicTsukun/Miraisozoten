@@ -11,7 +11,7 @@
 
 #define MAX_DIGIT		(2)
 
-#define NUMBER_TEX		("data/TEXTURE/number16x32.png")
+#define NUMBER_TEX		("data/TEXTURE/タイマー数字.png")
 
 #define NUMBER_SIZE_X	(16)
 #define NUMBER_SIZE_Y	(32)

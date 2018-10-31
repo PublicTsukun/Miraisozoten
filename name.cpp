@@ -130,7 +130,7 @@ int get_char(void)
 
 	while (1)		// 決定キーが出るまで無限ループだよ
 	{
-		if ()
+		if (0)
 		{// 上方向
 			rankdata[0].cursole_Y++;
 			// チェック
@@ -139,7 +139,7 @@ int get_char(void)
 				rankdata[0].cursole_Y = 0;
 			}
 		}
-		else if ()
+		else if (0)
 		{	// したキーが押された
 			rankdata[0].cursole_Y++;
 			// チェック
@@ -148,7 +148,7 @@ int get_char(void)
 				rankdata[0].cursole_Y = MOJI_Y_MAX;
 			}
 		}
-		else if ()
+		else if (0)
 		{
 			// 右キー
 			rankdata[0].cursole_X++;
@@ -158,7 +158,7 @@ int get_char(void)
 				rankdata[0].cursole_X = 0;
 			}
 		}
-		else if ()
+		else if (0)
 		{
 			// 左キー
 			rankdata[0].cursole_X--;
@@ -172,9 +172,9 @@ int get_char(void)
 
 
 		// カーソルチェック
-		if()
+		if(0)
 
-		if ()	// 決定ボタンが押された
+		if (0)	// 決定ボタンが押された
 		{
 			break;
 		}
