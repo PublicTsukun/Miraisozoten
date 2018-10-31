@@ -162,6 +162,17 @@ void _ObjectBase2D::SetTexture(int no, float ix, float iy)
 	this->Vertex[no].uv.x = ix;
 	this->Vertex[no].uv.y = iy;
 }
+void _ObjectBase2D::SetTexture(int num, int ix, int iy)
+{
+	int x = num % ix;
+	int y = num / ix;
+	float sizeX = 1.0f / ix;
+	float sizeY = 1.0f / iy;
+	Vertex[0].uv = Vector2((float)(x)* sizeX, (float)(y)* sizeY);
+	Vertex[1].uv = Vector2((float)(x)* sizeX + sizeX, (float)(y)* sizeY);
+	Vertex[2].uv = Vector2((float)(x)* sizeX, (float)(y)* sizeY + sizeY);
+	Vertex[3].uv = Vector2((float)(x)* sizeX + sizeX, (float)(y)* sizeY + sizeY);
+}
 
 LPDx3DTex9 _ObjectBase2D::GetTexture(LPDx3DTex9 *texture)
 {
@@ -340,11 +351,10 @@ void UI2DPercentGauge::Init(const char *textureF, const char *textureG)
 }
 void UI2DPercentGauge::Init(float posX, float posY, float sizeX, float sizeY)
 {
-	float cor = sizeX * 0.04f;
 	Position = Vector2(posX, posY);
-	Size = Vector2(sizeX - cor, sizeY - cor);
+	Size = Vector2(sizeX , sizeY );
 	Frame.SetStatus(Vector2(posX + sizeX, posY),Vector2(sizeX, sizeY));
-	Gage.SetStatus( Vector2(posX, posY),Vector2(sizeX - cor, sizeY - cor));
+	Gage.SetStatus( Vector2(posX, posY),Vector2(sizeX , sizeY ));
 }
 void UI2DPercentGauge::Uninit(void)
 {
@@ -361,7 +371,7 @@ void UI2DPercentGauge::Update(float per)
 
 void UI2DPercentGauge::Draw(void)
 {
-	Frame.Draw();
 	Gage.Draw();
+	Frame.Draw();
 }
 

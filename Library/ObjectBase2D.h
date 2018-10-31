@@ -31,6 +31,7 @@ public:
 	virtual void SetVertex(float sizeX, float sizeY);
 	virtual void SetVertex(D3DXCOLOR color);
 	virtual void SetTexture(int no, float ix, float iy);	// テクスチャ座標設定
+	virtual void SetTexture(int num, int ix, int iy);
 
 	virtual LPDx3DTex9 GetTexture(LPDx3DTex9 *texture);
 
