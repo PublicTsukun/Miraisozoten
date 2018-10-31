@@ -18,6 +18,9 @@
 #define NO_ENTRY		(100)		// 文字が入力されていない
 #define BACK_CHAR		(101)		// 戻るボタンが押された
 
+// 伝達用
+#define KEY_IRETEKUDASAI	(777)
+
 //*****************************************************************************
 // ぐろーばるへんすう
 //*****************************************************************************
@@ -29,7 +32,7 @@ RANKDATA	rankdatawk[1];
 // void Initname(void)
 // 文字入力の初期化
 //*************************************************************************
-void Initname(void)
+void InitName(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
 	// 名前初期化
@@ -61,7 +64,7 @@ Aで選択Bで戻る
 名前は5文字とする
 */
 
-void enter_name(void)
+void Update_Name(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
 
@@ -130,7 +133,7 @@ int get_char(void)
 
 	while (1)		// 決定キーが出るまで無限ループだよ
 	{
-		if (0)
+		if (tarinaimono = KEY_IRETEKUDASAI)
 		{// 上方向
 			rankdata[0].cursole_Y++;
 			// チェック
@@ -139,7 +142,7 @@ int get_char(void)
 				rankdata[0].cursole_Y = 0;
 			}
 		}
-		else if (0)
+		else if (tarinaimono = KEY_IRETEKUDASAI)
 		{	// したキーが押された
 			rankdata[0].cursole_Y++;
 			// チェック
@@ -148,7 +151,7 @@ int get_char(void)
 				rankdata[0].cursole_Y = MOJI_Y_MAX;
 			}
 		}
-		else if (0)
+		else if (tarinaimono = KEY_IRETEKUDASAI)
 		{
 			// 右キー
 			rankdata[0].cursole_X++;
@@ -158,7 +161,7 @@ int get_char(void)
 				rankdata[0].cursole_X = 0;
 			}
 		}
-		else if (0)
+		else if (tarinaimono = KEY_IRETEKUDASAI)
 		{
 			// 左キー
 			rankdata[0].cursole_X--;
@@ -172,9 +175,9 @@ int get_char(void)
 
 
 		// カーソルチェック
-		if(0)
+		if(tarinaimono = KEY_IRETEKUDASAI)
 
-		if (0)	// 決定ボタンが押された
+		if (tarinaimono = KEY_IRETEKUDASAI)	// 決定ボタンが押された
 		{
 			break;
 		}

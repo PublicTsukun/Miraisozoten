@@ -29,7 +29,7 @@ HRESULT InitWorkYamamoto(void)
 
 
 	case SCENE_RESULT://リザルトで使いたいソースのInit
-		void InitName(void);
+		void InitName();
 		break;
 	}
 
@@ -55,7 +55,7 @@ void UninitWorkYamamoto(void)
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
-
+	//	UninitName();
 		break;
 	}
 

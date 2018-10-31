@@ -21,9 +21,9 @@ typedef struct
 }RANKDATA;
 
 
-void enter_name(void);
+void Update_Name(void);
 int get_char(void);
-void Initname(void);
+void InitName(void);
 
 
 
