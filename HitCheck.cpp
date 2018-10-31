@@ -69,7 +69,7 @@ bool Collision::AABBxC(Vector3 v1, Vector3 v2, Vector3 co)
 bool Collision::AABB(Vector3 vA1, Vector3 vA2, Vector3 vB1, Vector3 vB2)
 {
 	if ((vA2.x > vB1.x) && (vB2.x > vA1.x) &&
-		(vA2.y > vB1.y) && (vB2.y > vA1.y) &&
+		(vA2.y < vB1.y) && (vB2.y < vA1.y) &&
 		(vA2.z > vB1.z) && (vB2.z > vA1.z))
 		return true;
 	return false;
