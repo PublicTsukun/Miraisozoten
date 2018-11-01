@@ -273,7 +273,7 @@ void C2DObject::SetVertex(int no, DxColor    dif)
 }
 void C2DObject::SetVertex(int no, Vector2 uv)
 {
-	Vertex[0].uv = uv;
+	Vertex[no].uv = uv;
 }
 
 void C2DObject::SetStatus(float posX, float posY, float sizX, float sizY)
