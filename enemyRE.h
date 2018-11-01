@@ -14,7 +14,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define ENEMY_MAX (128)	// enemy最大数
+#define ENEMY_MAX (3)	// enemy最大数
 
 //*****************************************************************************
 // 構造体定義
@@ -24,6 +24,10 @@ typedef struct
 	bool use;		// 使用しているかどうか
 	Vector3 pos;	// 位置
 	Vector3 rot;	// 回転
+
+	float len;		// size X
+	float hei;		// size Y
+	float wid;		// size Z
 
 	int timer;		// タイマー
 	int ptn;		// 行動パターン
@@ -42,8 +46,8 @@ void DrawEnemyRE(void);
 
 ENEMY *GetEnemyRE(int no);
 
-void SetEnemyRE(Vector3 Self, Vector3 Tgt);
-void VanishEnemyRE(int no);
-
+// 予定機能：オブジェクト設置
+// 予定機能：オブジェクト消滅
+// 　　　　→オブジェクト再初期化
 
 #endif

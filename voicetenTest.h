@@ -16,6 +16,6 @@
 //*****************************************************************************
 void TestVL(void);
 void TestMB(void);
-
+void TestCO(void);
 
 #endif

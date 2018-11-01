@@ -25,6 +25,10 @@ typedef struct
 	Vector3 pos;	// 位置
 	Vector3 rot;	// 回転
 
+	float len;		// size X
+	float hei;		// size Y
+	float wid;		// size Z
+
 	int timer;		// タイマー
 
 	Vector3 start;	// 発射位置
@@ -36,7 +40,6 @@ typedef struct
 	Vector3 nor;	// 到達所要距離の正規化
 	double vel;		// 速度
 
-	float hei;		// 限界高度
 
 
 
