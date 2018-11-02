@@ -19,6 +19,15 @@
 #define NUMBER_POS_Y	(45)
 
 #define FRAME_TEX		("data/TEXTURE/タイマー枠(仮).png")
+
+#define START_TIME		(99)
+
+enum
+{
+	STOP,
+	RESET,
+	COUNT,
+};
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
@@ -26,5 +35,7 @@ HRESULT InitTimer(void);
 void UninitTimer(void);
 void DrawTimer(void);
 void UpdateTimer(void);
+
+void TimerSet(int no);
 
 #endif

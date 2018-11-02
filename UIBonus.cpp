@@ -65,7 +65,6 @@ void UninitUIBonus(void)
 	GageEff.Release();
 }
 
-bool drawswitch = true;
 //=============================================================================
 // ï`âÊèàóù
 //=============================================================================
@@ -73,14 +72,11 @@ void DrawUIBonus(void)
 {
 	GageEff.Draw();
 
-	if (drawswitch)
-	{
-		BonusGage.Draw();
+	BonusGage.Draw();
 
-		for (int i = 0; i < 3; i++)
-		{
-			Voiceten[i].Draw();
-		}
+	for (int i = 0; i < 3; i++)
+	{
+		Voiceten[i].Draw();
 	}
 }
 
@@ -91,10 +87,6 @@ float effa=0.0f;
 void UpdateUIBonus(void)
 {
 
-	if (GetKeyboardTrigger(DIK_7))
-	{
-		drawswitch = !drawswitch;
-	}
 	if (GetKeyboardPress(DIK_9) && fiverf == false)
 	{
 		AddGage(1);//ÇXÇ™âüÇ≥ÇÍÇƒÇ¢ÇÈÇ∆Ç´ÇÕÉQÅ[ÉWÇêLÇŒÇ∑
