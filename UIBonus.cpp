@@ -8,13 +8,24 @@
 #include "Library/Common.h"
 #include "Library\Input.h"
 #include "Library\DebugProcess.h"
+#include "Library\Color.h"
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 UI2DPercentGauge	BonusGage;	//ボーナスゲージ
+C2DObject			Voiceten[3];
+C2DObject			GageEff;
+
+int		gagenum = 3;
+float	gageper = 1.0f;
+int		gagelong = 900;
+bool fiverf = false;
 
 
+const Vector2 FirstPos = Vector2(169.0f, BONUSGAGE_POS_Y+10.0f);
+const Vector2 SecondPos = Vector2(295.0f, BONUSGAGE_POS_Y);
+const Vector2 ThirdPos = Vector2(420.0f, BONUSGAGE_POS_Y-10.0f);
 
 //=============================================================================
 // 初期化処理
@@ -22,9 +33,21 @@ UI2DPercentGauge	BonusGage;	//ボーナスゲージ
 HRESULT InitUIBonus(void)
 {
 	BonusGage.Init(TEX_BONUSGAGEFRAME, TEX_BONUSGAGE);
-	BonusGage.Init(BONUSGAGE_SIZE_X, BONUSGAGE_SIZE_Y, BONUSGAGE_POS_X, BONUSGAGE_POS_Y);
+	BonusGage.Init(BONUSGAGE_POS_X, BONUSGAGE_POS_Y, BONUSGAGE_SIZE_X, BONUSGAGE_SIZE_Y);
 		
-	return S_OK;
+
+
+		Vector2 pos;
+		pos = FirstPos;
+		Voiceten[0].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+		pos = SecondPos;
+		Voiceten[1].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+		pos = ThirdPos;
+		Voiceten[2].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+
+		GageEff.Init(GAGE_EFF_POS_X, GAGE_EFF_POS_Y, GAGE_EFF_SIZE_X, GAGE_EFF_SIZE_Y, TEX_GAGEEFF);
+
+		return S_OK;
 }
 
 //=============================================================================
@@ -34,39 +57,199 @@ void UninitUIBonus(void)
 {
 	BonusGage.Uninit();
 
+	for (int i = 0; i < 3; i++)
+	{
+		Voiceten[i].Release();
+	}
+
+	GageEff.Release();
 }
 
+bool drawswitch = true;
 //=============================================================================
 // 描画処理
 //=============================================================================
 void DrawUIBonus(void)
 {
-	BonusGage.Draw();
+	GageEff.Draw();
+
+	if (drawswitch)
+	{
+		BonusGage.Draw();
+
+		for (int i = 0; i < 3; i++)
+		{
+			Voiceten[i].Draw();
+		}
+	}
 }
 
-float gagelong = 0.5f;
+float effa=0.0f;
 //=============================================================================
 // 更新処理
 //=============================================================================
 void UpdateUIBonus(void)
 {
 
-	if (GetKeyboardPress(DIK_0))
+	if (GetKeyboardTrigger(DIK_7))
 	{
-		gagelong += 0.01f;
-		if (gagelong >= 1.0f)
+		drawswitch = !drawswitch;
+	}
+	if (GetKeyboardPress(DIK_9) && fiverf == false)
+	{
+		AddGage(1);//９が押されているときはゲージを伸ばす
+	}
+	else
+	{
+		AddGage(-1);//ゲージを縮める
+
+		if (fiverf == true)
 		{
-			gagelong = 1.0f;
+			AddGage(-1);//フィーバー状態ならもっと減らす
 		}
 	}
-	if (GetKeyboardPress(DIK_9))
+
+	if (GetKeyboardTrigger(DIK_8)&& gagenum == 3)
 	{
-		gagelong -= 0.01f;
-		if (gagelong <= 0.0f)
+		fiverf = true;
+	}
+
+	if (gageper >= LAST_GAGE)//ゲージが100%以上なら
+	{
+		gagenum = 3;//フラグを3に
+	}
+	else if (gageper > SECOND_GAGE)//最終ゲージなら
+	{
+		gagenum = 2;//フラグを2に
+	}
+	else if (gageper > FIRST_GAGE)//2番目のゲージなら
+	{
+		gagenum = 1;//フラグを1に
+	}
+	else if (gageper < FIRST_GAGE)//最初のゲージなら
+	{
+		gagenum = 0;//フラグを0に
+	}
+	PrintDebugProcess("フラグ%d", gagenum);
+
+
+	if (GetKeyboardTrigger(DIK_0))//0が押されたら
+	{
+		gagenum--;//フラグをひとつ前に
+	}
+
+	BonusGage.Update(gageper);//ゲージの更新
+
+	for (int i = 0; i < 3; i++)//ボイステンの更新処理
+	{
+		Voiceten[i].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));//基本はαを0.2に
+
+		if (i <= gagenum - 1||fiverf==true)//もしゲージがたまっていたら
 		{
-			gagelong = 0.0f;
+			Voiceten[i].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));//貯まったところまでボイステンを光らせる
 		}
+		Voiceten[i].SetTexture(i, 3, 1);
 
 	}
-	BonusGage.Update(gagelong);
+
+
+	float cor;
+
+	cor = (BONUSGAGE_SIZE_Y * 2) / (tanf(POS_COR_ANG));//調整値の産出
+
+	Vector3 pos;
+	Vector3 poseff;
+
+	pos.x = BONUSGAGE_POS_X + ((BONUSGAGE_SIZE_X) * 2 * gageper) + cor;//X座標は調整
+	pos.y = BONUSGAGE_POS_Y - (BONUSGAGE_SIZE_Y);//Yはそのまま
+	pos.z = 0.0f;
+	BonusGage.Gage.SetVertex(1, pos);//頂点1の調整
+	poseff.x = GAGE_EFF_POS_X + ((GAGE_EFF_SIZE_X)) + cor*1.6;
+	poseff.y = BONUSGAGE_POS_Y - (GAGE_EFF_SIZE_Y);//Yはそのまま
+	poseff.z = 0.0f;
+	GageEff.SetVertex(1, poseff);//頂点1の調整
+
+	pos.x = BONUSGAGE_POS_X + cor;//Xを再調整
+	BonusGage.Gage.SetVertex(0, pos);//頂点0を調整
+	poseff.x = GAGE_EFF_POS_X - ((GAGE_EFF_SIZE_X)) + cor*1.6;
+	poseff.z = 0.0f;
+	GageEff.SetVertex(0, poseff);//頂点1の調整
+
+	pos.x = BONUSGAGE_POS_X + ((BONUSGAGE_SIZE_X) * 2) + cor;//X座標は調整
+	pos.y = BONUSGAGE_POS_Y - (BONUSGAGE_SIZE_Y);//Yはそのまま
+	BonusGage.Frame.SetVertex(1, pos);//頂点1の調整
+
+	pos.x = BONUSGAGE_POS_X + cor;//Xを再調整
+	BonusGage.Frame.SetVertex(0, pos);//頂点0を調整
+
+
+	if (gagenum == 3||fiverf==true)
+	{
+		effa += 0.06;
+		GageEff.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, fabs(sinf(effa)) + 0.2f));
+	}
+	else
+	{
+		GageEff.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 0.0f));
+	}
+	BonusGage.Gage.SetTexture(1, gageper, 0.0f);//テクスチャ座標を割合に応じて設定
+	BonusGage.Gage.SetTexture(3, gageper, 1.0f);
+}
+
+
+//=============================================================================
+//ゲージ加算関数
+//=============================================================================
+void AddGage(int no)
+{
+
+	if (no < 0)//noがマイナスの場合
+	{
+		if (fiverf == false)//フィーバー状態でなければ
+		{
+			PrintDebugProcess("%f ", VALUE_MAX * 3 * 0.33f);
+			if ((float)(gagelong + no) > (float)(VALUE_MAX*gagenum*0.333)
+				&&gagenum!=0)//一定ポイントを上回っていれば
+			{
+				gagelong += no;//加算
+			}
+			else if (gagenum == 0)
+			{
+				gagelong += no;
+			}
+		}
+		else
+		{
+			gagelong += no;//フィーバー状態なら問答無用で加算
+		}
+	}
+	else
+	{
+		gagelong += no;//プラスでも問答無用で加算
+	}
+
+	gageper = gagelong / (float)VALUE_MAX;//最大と現在の長さから割合の算出
+
+	if (gageper >= LAST_GAGE)//100%以上なら
+	{
+		gageper = LAST_GAGE;//100%に調整して
+		gagelong = VALUE_MAX;
+		//fiverf = true;//フィーバー状態に移行
+	}
+	else if (gageper <= 0.0f)//0%以下なら
+	{
+		gageper = 0.0f;//0%に調整して
+		gagelong = 0;
+		fiverf = false;//フィーバー状態終了
+	}
+	PrintDebugProcess("フィーバー状態　[%d]\n", fiverf);
+	PrintDebugProcess("gageper [%d]\n", gagelong);
+}
+
+//=============================================================================
+//フィーバー状態取得関数
+//=============================================================================
+bool GetFiver(void)
+{
+	return fiverf;
 }

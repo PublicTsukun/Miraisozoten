@@ -10,23 +10,7 @@
 #include "SceneManager.h"
 
 
-//山本担当分インクルード
-#include "workYamamoto.h"
-#include <stdio.h>
 
-
-#define EMPTY_NO		(99)		// 
-
-// 色々おしらせする為の数字
-#define NO_ENTRY		(100)		// 文字が入力されていない
-#define BACK_CHAR		(101)		// 戻るボタンが押された
-//*****************************************************************************
-// ぐろーばるへんすう
-//*****************************************************************************
-
-int namechar;
-int lastchar;		// かーそるってえいごでなんだっけ！
-RANKDATA	rankdatawk[1];
 //=============================================================================
 //初期化処理
 //=============================================================================
@@ -45,7 +29,7 @@ HRESULT InitWorkYamamoto(void)
 
 
 	case SCENE_RESULT://リザルトで使いたいソースのInit
-		void InitName(void);
+		void InitName();
 		break;
 	}
 
@@ -71,7 +55,7 @@ void UninitWorkYamamoto(void)
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
-
+	//	UninitName();
 		break;
 	}
 
@@ -128,104 +112,4 @@ void DrawWorkYamamoto(void)
 
 
 }
-
-//*******************************************************************
-// void Initname(void)
-//*************************************************************************
-void Initname(void)
-{
-	RANKDATA *rankdata = &rankdatawk[0];
-	// 名前初期化
-	for (int i = 0; i < NAMEMAX; i++)
-	{
-		rankdata[0].namechar[i] = EMPTY_NO;
-	}
-	// カーソルを初期位置に
-	rankdata[0].cursole_X = 0;
-	rankdata[0].cursole_Y = 0;
-	namechar = 0;
-	// 画像の初期化？
-}
-//**************************************************************************:
-// void enter_name(void)
-// 文字入力処理
-// ジュレイモン僕に足りないものって何だったの
-//***************************************************************************
-
-/*
-文字入力の流れ
-十字キーでカーソルの移動
-Aで選択Bで戻る
-何らかのキーで名前の確定
-名前は5文字とする
-*/
-
-void enter_name(void)
-{
-	RANKDATA *rankdata = &rankdatawk[0];
-	
-	int namechar = 0;	// 現在の入力文字の初期化
-	// 文字
-	int playername = 0;
-
-	//　文字入力処理
-	while(1)
-	{
-		// 現在の入力文字数が最大でないか
-		if (namechar < NAMEMAX)
-		{
-			rankdata[0].namechar[namechar] = get_char();
-			// 受け取った値が文字か確認
-			if (rankdata[0].namechar[namechar <= EMPTY_NO])
-			{
-				namechar++;
-			}
-			else
-			{
-				switch (rankdata[0].namechar[namechar])
-				{
-				case NO_ENTRY:		
-					break;
-				case BACK_CHAR :
-					rankdata[0].namechar[namechar] = EMPTY_NO;
-					namechar--;
-					break;
-				default:
-					break;
-				}
-				
-			}
-		}
-		else
-		{
-			int check = 0;
-			// 戻るボタンのみ受け付け
-			check = get_char();
-			if (check == BACK_CHAR)
-			{
-				rankdata[0].namechar[namechar] = EMPTY_NO;
-				namechar--;       
-			}
-		}
-
-	
-	}
-
-
-
-}
-
-//******************************************************************************
-// int get_char(void)
-// カーソルキーで文字を選んで選んだ文字を格納するやつ
-// ぴのっきもん
-//***************************************************************:
-int get_char(void)
-{
-	int tarinaimono = EMPTY_NO;	// 選ばれた文字
-
-	return tarinaimono;
-}
-
-
 

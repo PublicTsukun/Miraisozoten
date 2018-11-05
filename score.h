@@ -12,7 +12,7 @@
 
 #define SCORE_DIGIT		(5)
 
-#define SCORE_TEX		("data/TEXTURE/number16x32.png")
+#define SCORE_TEX		("data/TEXTURE/ÉXÉRÉAêîéö.png")
 
 #define SCORE_SIZE_X	(12)
 #define SCORE_SIZE_Y	(24)

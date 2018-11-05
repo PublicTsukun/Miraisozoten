@@ -13,7 +13,6 @@
 //*****************************************************************************
 void UpdateVoiMove(void);
 void UpdateVoiMoveY(int no);
-float DirectionCalc(D3DXVECTOR3 Self, D3DXVECTOR3 Tgt);
 
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
@@ -26,8 +25,6 @@ char *FileVoiceten[] =
 };
 
 C3DPolygonObject Voiceten[VOICETEN_MAX];
-
-const float voi_duration = 60;
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -54,7 +51,6 @@ void InitVoiceten(void)
 
 		(v + i)->nor = Vector3(0.0f, 0.0f, 0.0f);
 
-		(v + i)->hei = 20.0f;
 
 		Voiceten[i].Init((v + i)->pos, size);
 		Voiceten[i].LoadTexture(FileVoiceten[0]);

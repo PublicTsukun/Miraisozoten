@@ -28,6 +28,9 @@
     <Filter Include="ソース ファイル\Title">
       <UniqueIdentifier>{3358a49e-d8dd-48c1-a1e2-81346dcbc642}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Result">
+      <UniqueIdentifier>{98f21a7e-a410-40d5-be89-9cf78a140aa9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Library\Camera.cpp">
@@ -126,9 +129,6 @@
     <ClCompile Include="field.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClCompile>
     <ClCompile Include="ranking.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
@@ -150,8 +150,34 @@
     <ClCompile Include="titlelogo.cpp">
       <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBonus.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="name.cpp">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
     <ClCompile Include="messageBox.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBonus.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="enemyRE.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+=======
+    <ClCompile Include="Game.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="voicetank.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+>>>>>>> 6169bb319f70f246eca3119a908aea2794dd004d
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +280,6 @@
     <ClInclude Include="field.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClInclude>
     <ClInclude Include="ranking.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
@@ -281,8 +304,34 @@
     <ClInclude Include="titlelogo.h">
       <Filter>ソース ファイル\Title</Filter>
     </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBonus.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="name.h">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
     <ClInclude Include="messageBox.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBonus.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="enemyRE.h">
+      <Filter>ソース ファイル\Game</Filter>
+=======
+    <ClInclude Include="Game.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="voicetank.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+>>>>>>> 6169bb319f70f246eca3119a908aea2794dd004d
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

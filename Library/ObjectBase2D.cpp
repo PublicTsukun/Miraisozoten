@@ -157,16 +157,21 @@ void _ObjectBase2D::SetVertex(D3DXCOLOR color)
 	Vertex[2].diffuse = color;
 	Vertex[3].diffuse = color;
 }
+void _ObjectBase2D::SetTexture(int no, float ix, float iy)
+{
+	this->Vertex[no].uv.x = ix;
+	this->Vertex[no].uv.y = iy;
+}
 void _ObjectBase2D::SetTexture(int num, int ix, int iy)
 {
 	int x = num % ix;
 	int y = num / ix;
 	float sizeX = 1.0f / ix;
 	float sizeY = 1.0f / iy;
-	Vertex[0].uv = Vector2((float)(x) * sizeX,         (float)(y) * sizeY);
-	Vertex[1].uv = Vector2((float)(x) * sizeX + sizeX, (float)(y) * sizeY);
-	Vertex[2].uv = Vector2((float)(x) * sizeX,         (float)(y) * sizeY + sizeY);
-	Vertex[3].uv = Vector2((float)(x) * sizeX + sizeX, (float)(y) * sizeY + sizeY);
+	Vertex[0].uv = Vector2((float)(x)* sizeX, (float)(y)* sizeY);
+	Vertex[1].uv = Vector2((float)(x)* sizeX + sizeX, (float)(y)* sizeY);
+	Vertex[2].uv = Vector2((float)(x)* sizeX, (float)(y)* sizeY + sizeY);
+	Vertex[3].uv = Vector2((float)(x)* sizeX + sizeX, (float)(y)* sizeY + sizeY);
 }
 
 LPDx3DTex9 _ObjectBase2D::GetTexture(LPDx3DTex9 *texture)
@@ -254,6 +259,7 @@ void C2DObject::SetVertex(int no, Vector3 coord)
 {
 	Vertex[no].coord = coord;
 }
+
 void C2DObject::SetVertex(        DxColor    dif)
 {
 	Vertex[0].diffuse = dif;
@@ -263,11 +269,11 @@ void C2DObject::SetVertex(        DxColor    dif)
 }
 void C2DObject::SetVertex(int no, DxColor    dif)
 {
-	Vertex[0].diffuse = dif;
+	Vertex[no].diffuse = dif;
 }
 void C2DObject::SetVertex(int no, Vector2 uv)
 {
-	Vertex[0].uv = uv;
+	Vertex[no].uv = uv;
 }
 
 void C2DObject::SetStatus(float posX, float posY, float sizX, float sizY)
@@ -318,6 +324,18 @@ UIBackGround::UIBackGround(const char *texture)
 }
 
 
+void UI2DNumber::SetTexture(int num, int ix, int iy)
+{
+	int x = num % ix;
+	int y = num / ix;
+	float sizeX = 1.0f / ix;
+	float sizeY = 1.0f / iy;
+	Vertex[0].uv = Vector2((float)(x)* sizeX, (float)(y)* sizeY);
+	Vertex[1].uv = Vector2((float)(x)* sizeX + sizeX, (float)(y)* sizeY);
+	Vertex[2].uv = Vector2((float)(x)* sizeX, (float)(y)* sizeY + sizeY);
+	Vertex[3].uv = Vector2((float)(x)* sizeX + sizeX, (float)(y)* sizeY + sizeY);
+}
+
 /* 2DUIêîéö */
 void UI2DNumber::SetNumber(int num)
 {
@@ -333,11 +351,10 @@ void UI2DPercentGauge::Init(const char *textureF, const char *textureG)
 }
 void UI2DPercentGauge::Init(float posX, float posY, float sizeX, float sizeY)
 {
-	float cor = sizeX * 0.04f;
 	Position = Vector2(posX, posY);
-	Size = Vector2(sizeX - cor, sizeY - cor);
-	Frame.SetStatus(Vector2(sizeX, sizeY), Vector2(posX, posY));
-	Gage.SetStatus(Vector2(sizeX - cor, sizeY - cor), Vector2(posX, posY));
+	Size = Vector2(sizeX , sizeY );
+	Frame.SetStatus(Vector2(posX + sizeX, posY),Vector2(sizeX, sizeY));
+	Gage.SetStatus( Vector2(posX, posY),Vector2(sizeX , sizeY ));
 }
 void UI2DPercentGauge::Uninit(void)
 {
@@ -351,14 +368,10 @@ void UI2DPercentGauge::Update(float per)
 	Gage.SetVertex(2, Vector3(Position.x , Position.y + Size.y, 0.0f));
 	Gage.SetVertex(3, Vector3(Position.x  + Size.x * 2 * per, Position.y + Size.y, 0.0f));
 }
-void UI2DPercentGauge::UpdateTex(float per)
-{
-
-}
 
 void UI2DPercentGauge::Draw(void)
 {
-	Frame.Draw();
 	Gage.Draw();
+	Frame.Draw();
 }
 
