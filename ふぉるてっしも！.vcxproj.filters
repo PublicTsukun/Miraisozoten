@@ -168,17 +168,13 @@
     <ClCompile Include="UIBonus.cpp">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="enemyRE.cpp">
-      <Filter>ソース ファイル\Game</Filter>
-=======
     <ClCompile Include="Game.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="voicetank.cpp">
       <Filter>ソース ファイル\Game\UI</Filter>
->>>>>>> 6169bb319f70f246eca3119a908aea2794dd004d
     </ClCompile>
+    <ClCompile Include="AimPointer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -322,17 +318,13 @@
     <ClInclude Include="UIBonus.h">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="enemyRE.h">
-      <Filter>ソース ファイル\Game</Filter>
-=======
     <ClInclude Include="Game.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="voicetank.h">
       <Filter>ソース ファイル\Game\UI</Filter>
->>>>>>> 6169bb319f70f246eca3119a908aea2794dd004d
     </ClInclude>
+    <ClInclude Include="AimPointer.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Icon.ico">

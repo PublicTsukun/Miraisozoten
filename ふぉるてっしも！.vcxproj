@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AimPointer.cpp" />
     <ClCompile Include="enemy.cpp" />
-    <ClCompile Include="enemyRE.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HitCheck.cpp" />
@@ -67,8 +67,8 @@
     <ClCompile Include="workYamamoto.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AimPointer.h" />
     <ClInclude Include="enemy.h" />
-    <ClInclude Include="enemyRE.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HitCheck.h" />

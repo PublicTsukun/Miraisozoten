@@ -87,19 +87,6 @@ void DrawTimer(void)
 //=============================================================================
 void UpdateTimer(void)
 {
-
-	if (GetKeyboardPress(DIK_7))
-	{
-		TimerSet(STOP);
-	}
-	else if(GetKeyboardTrigger(DIK_6))
-	{
-		TimerSet(RESET);
-	}
-	else
-	{
-		TimerSet(COUNT);
-	}
 	if (Timerf==COUNT)
 	{
 		FrameCount++;
