@@ -9,7 +9,7 @@
 #include "Library/Math.h"
 #include <Windows.h>
 
-enum cursor { SINGLE,MULTI,RANKING };
+enum cursor { SINGLE,MULTI,RANKING,CURSORMAX };
 //=============================================================================
 //プロトタイプ宣言
 //=============================================================================
