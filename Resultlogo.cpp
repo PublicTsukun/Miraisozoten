@@ -21,9 +21,9 @@
 #define CURSOR_LOGO			"data/TEXTURE/toumeiyazirusi.png"	// 読み込むカーソルロゴのファイル名
 
 #define	TITLE_LOGO_NAMEPOS_X	(SCREEN_CENTER_X)		// タイトルロゴの位置(X座標)320
-#define	TITLE_LOGO_NAMEPOS_Y	(RelativeSY(0.25f))		// タイトルロゴの位置(Y座標)40
-#define TITLE_LOGO_NAMESX		(RelativeSX(0.75f)/2)	//タイトルロゴのサイズ(X座標)
-#define TITLE_LOGO_NAMESY		(RelativeSY(0.3f)/2)	//タイトルロゴのサイズ(Y座標)
+#define	TITLE_LOGO_NAMEPOS_Y	(RelativeSY(0.25))		// タイトルロゴの位置(Y座標)40
+#define TITLE_LOGO_NAMESX		(RelativeSX(0.75)/2)	//タイトルロゴのサイズ(X座標)
+#define TITLE_LOGO_NAMESY		(RelativeSY(0.3)/2)		//タイトルロゴのサイズ(Y座標)
 //#define	TITLE_LOGO_WIDTH		(1000)		// タイトルロゴの幅640
 //#define	TITLE_LOGO_HEIGHT		(300)		// タイトルロゴの高さ640
 

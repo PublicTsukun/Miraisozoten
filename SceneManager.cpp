@@ -7,7 +7,6 @@
 
 SCENE SceneManager::GameScene = SCENE_MAX;
 
-
 //----更新--------
 int  SceneManager::Update()
 {
@@ -135,5 +134,67 @@ SCENE SceneManager::SetScene(SCENE scene)
 	return GameScene;
 }
 
+//----ランキングの更新・取得--------
+//SCENE SceneManager::SetScene(SCENE scene)
+//{
+//	/* 指定シーンが同じ場合は戻る */
+//	if (scene == SCENE_MAX)
+//	{
+//		return GameScene;
+//	}
+//
+//	/* 現在のシーンのお片付け */
+//	switch (GameScene)
+//	{
+//	case SCENE_TITLE:
+//		// タイトルシーンの終了
+//		UninitTitle();
+//
+//		break;
+//
+//	case SCENE_GAME:
+//		// ゲームシーンの終了
+//		UninitGame();
+//
+//		break;
+//
+//	case SCENE_RESULT:
+//		// リザルトシーンの終了
+//		UninitResult();
+//
+//		break;
+//	}
+//
+//	/* シーンの切り替え */
+//	GameScene = scene;
+//
+//	/* 次のシーンの準備 */
+//	switch (GameScene)
+//	{
+//	case SCENE_TITLE:
+//		// タイトルシーンの初期化
+//		InitTitle();
+//
+//		break;
+//
+//	case SCENE_GAME:
+//		// ゲームシーンの初期化
+//		InitGame();
+//
+//		break;
+//
+//	case SCENE_RESULT:
+//		// リザルトシーンの初期化
+//		InitResult();
+//
+//		break;
+//
+//	default:
+//		return GameScene;
+//		break;
+//	}
+//
+//	return GameScene;
+//}
 
 
