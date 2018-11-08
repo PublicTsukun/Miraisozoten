@@ -52,7 +52,7 @@
 #define	CURSOR_WIDTH			(50*SCREEN_SCALE)		// カーソルロゴの幅
 #define	CURSOR_HEIGHT			(20*SCREEN_SCALE)		// カーソルロゴ高さ
 
-#define	COUNT_APPERA_START		(60)		// スタートボタン出現までの時間
+#define	COUNT_APPERA_START		(60*60)		// スタートボタン出現までの時間 秒*フレーム
 #define	INTERVAL_DISP_START		(60)		// スタートボタン点滅の時間
 
 #define	COUNT_WAIT_DEMO			(60 * 5)	// デモまでの待ち時間
@@ -74,6 +74,8 @@ C2DObject cursor;		//カーソル
 bool pop;				//popの初期化
 int position;			//カーソルの位置　positionの宣言
 int x;
+
+int flagCount;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -81,6 +83,7 @@ HRESULT InitTitlelogo(void)
 {
 	pop = true;
 	x = 0;
+	flagCount = 0;
 
 	titlebg.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, TEXTURE_TITLE);
 	titlename.Init(TITLE_LOGO_NAMEPOS_X, TITLE_LOGO_NAMEPOS_Y, TITLE_LOGO_NAMESX, TITLE_LOGO_NAMESY, TEXTURE_LOGO_NAME);
@@ -136,10 +139,24 @@ void DrawTitlelogo(void)
 void UpdateTitlelogo(void)
 {
 
+	if (pop == false)//選択画面の時
+	{
+		flagCount++;//カウントを進めて
+		if (flagCount >= COUNT_APPERA_START)//もしカウントが一定に達したら
+		{
+			pop = true;//スタートボタンに戻る
+			flagCount = 0;//カウントリセット
+			x = 0;//矢印は上に
+		}
+		PrintDebugProcess("flagCount: (%d)\n", flagCount);
+
+	}
+
 	//↓入力でカーソルを下に移動
 	if (GetKeyboardTrigger(DIK_DOWN))
 	{
 		x = x + 1;
+		flagCount = 0;//カウントリセット
 	}
 
 	//カーソルが一番下にある状態で↓入力すると一番上に戻る
@@ -152,6 +169,7 @@ void UpdateTitlelogo(void)
 	if (GetKeyboardTrigger(DIK_UP))
 	{
 		x = x - 1;
+		flagCount = 0;//カウントリセット
 	}
 
 	//カーソルが一番上にある状態で↑入力すると一番下に戻る
