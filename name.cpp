@@ -25,7 +25,7 @@
 
 // •¶Žš
 // 48+26
-#define CHAR_MAX		(74)
+#define CHARS_MAX		(74)
 
 // ‚Æ‚­‚×‚Â‚È‚·‚¤‚¶
 #define NO_ENTRY		(100)		// •¶Žš‚ª“ü—Í‚³‚ê‚Ä‚¢‚È‚¢
@@ -71,7 +71,7 @@ void InitName(void)
 	mojiban.Init(MOJIBAN_POS_X, MOJIBAN_POS_Y, MOJIBAN_WIDTH, MOJIBAN_HEIGHT, MOJIBAN_TEX);
 
 	// Še•¶Žš‚ª‚¼‚¤‚Ì‰Šú‰»
-	for (int i = 0; i < CHAR_MAX; i++)
+	for (int i = 0; i < CHARS_MAX; i++)
 	{
 		moji[i].Init(CURSOLE_POS_X, CURSOLE_POS_Y, CURSOLE_WIDTH, CURSOLE_HEIGHT, Moji_FileName[i]);
 	}
