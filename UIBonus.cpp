@@ -23,9 +23,9 @@ int		gagelong = 900;
 bool fiverf = false;
 
 
-const Vector2 FirstPos = Vector2(169.0f, BONUSGAGE_POS_Y+10.0f);
-const Vector2 SecondPos = Vector2(295.0f, BONUSGAGE_POS_Y);
-const Vector2 ThirdPos = Vector2(420.0f, BONUSGAGE_POS_Y-10.0f);
+const Vector2 FirstPos = Vector2(169.0f*SCREEN_SCALE, BONUSGAGE_POS_Y+10.0f*SCREEN_SCALE);
+const Vector2 SecondPos = Vector2(295.0f*SCREEN_SCALE, BONUSGAGE_POS_Y);
+const Vector2 ThirdPos = Vector2(420.0f*SCREEN_SCALE, BONUSGAGE_POS_Y-10.0f*SCREEN_SCALE);
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -39,11 +39,11 @@ HRESULT InitUIBonus(void)
 
 		Vector2 pos;
 		pos = FirstPos;
-		Voiceten[0].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+		Voiceten[0].Init(pos.x, pos.y, 40 * SCREEN_SCALE, 40 * SCREEN_SCALE, TEX_GAGEVOICETEN);
 		pos = SecondPos;
-		Voiceten[1].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+		Voiceten[1].Init(pos.x, pos.y, 40 * SCREEN_SCALE, 40 * SCREEN_SCALE, TEX_GAGEVOICETEN);
 		pos = ThirdPos;
-		Voiceten[2].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+		Voiceten[2].Init(pos.x, pos.y, 40 * SCREEN_SCALE, 40 * SCREEN_SCALE, TEX_GAGEVOICETEN);
 
 		GageEff.Init(GAGE_EFF_POS_X, GAGE_EFF_POS_Y, GAGE_EFF_SIZE_X, GAGE_EFF_SIZE_Y, TEX_GAGEEFF);
 

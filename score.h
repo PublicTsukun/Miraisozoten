@@ -14,11 +14,11 @@
 
 #define SCORE_TEX		("data/TEXTURE/スコア数字.png")
 
-#define SCORE_SIZE_X	(12)
-#define SCORE_SIZE_Y	(24)
+#define SCORE_SIZE_X	(12*SCREEN_SCALE)
+#define SCORE_SIZE_Y	(24*SCREEN_SCALE)
 
-#define SCORE_POS_X	(SCREEN_WIDTH-SCORE_SIZE_X-25)
-#define SCORE_POS_Y	(30)
+#define SCORE_POS_X	(SCREEN_WIDTH-SCORE_SIZE_X-25*SCREEN_SCALE)
+#define SCORE_POS_Y	(30*SCREEN_SCALE)
 
 //=============================================================================
 //プロトタイプ宣言
@@ -29,5 +29,7 @@ void DrawScore(void);
 void UpdateScore(void);
 
 void AddScore(int num);
+int GetScore(void);
+
 
 #endif

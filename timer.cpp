@@ -45,10 +45,11 @@ HRESULT InitTimer(void)
 	number[1].Init(Digit2_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
 	//number[2].Init(Digit3_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
 
-	frame.Init(SCREEN_CENTER_X, 50, FrameSizeX, FrameSizeY, FRAME_TEX);
+	frame.Init(SCREEN_CENTER_X, 50* SCREEN_SCALE, FrameSizeX, FrameSizeY, FRAME_TEX);
 
 
 	TimerSet(RESET);
+	TimerSet(COUNT);
 	return S_OK;
 }
 

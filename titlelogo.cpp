@@ -27,30 +27,30 @@
 //#define	TITLE_LOGO_WIDTH		(1000)		// タイトルロゴの幅640
 //#define	TITLE_LOGO_HEIGHT		(300)		// タイトルロゴの高さ640
 
-#define	START_POS_X				(400)		// スタートボタンの位置(X座標)
-#define	START_POS_Y				(400)		// スタートボタンの位置(Y座標)
-#define	START_WIDTH				(480)		// スタートボタンの幅
-#define	START_HEIGHT			(120)		// スタートボタンの高さ
+#define	START_POS_X				(400*SCREEN_SCALE)		// スタートボタンの位置(X座標)
+#define	START_POS_Y				(400*SCREEN_SCALE)		// スタートボタンの位置(Y座標)
+#define	START_WIDTH				(480*SCREEN_SCALE)		// スタートボタンの幅
+#define	START_HEIGHT			(120*SCREEN_SCALE)		// スタートボタンの高さ
 
-#define	SINGLE_POS_X			(400)		// １人用モードロゴの位置(X座標)
-#define	SINGLE_POS_Y			(240)		// １人用モードロゴの位置(Y座標)
-#define	SINGLE_WIDTH			(70)		// １人用モードロゴの幅
-#define	SINGLE_HEIGHT			(70)		// １人用モードロゴ高さ
+#define	SINGLE_POS_X			(400*SCREEN_SCALE)		// １人用モードロゴの位置(X座標)
+#define	SINGLE_POS_Y			(240*SCREEN_SCALE)		// １人用モードロゴの位置(Y座標)
+#define	SINGLE_WIDTH			(70*SCREEN_SCALE)		// １人用モードロゴの幅
+#define	SINGLE_HEIGHT			(70*SCREEN_SCALE)		// １人用モードロゴ高さ
 
-#define	MULTI_POS_X				(400)		// 2人用モードロゴの位置(X座標)
-#define	MULTI_POS_Y				(400)		// 2人用モードロゴの位置(Y座標)
-#define	MULTI_WIDTH				(70)		// 2人用モードロゴの幅
-#define	MULTI_HEIGHT			(70)		// 2人用モードロゴ高さ
+#define	MULTI_POS_X				(400*SCREEN_SCALE)		// 2人用モードロゴの位置(X座標)
+#define	MULTI_POS_Y				(400*SCREEN_SCALE)		// 2人用モードロゴの位置(Y座標)
+#define	MULTI_WIDTH				(70*SCREEN_SCALE)		// 2人用モードロゴの幅
+#define	MULTI_HEIGHT			(70*SCREEN_SCALE)		// 2人用モードロゴ高さ
 
-#define	RANKING_POS_X			(400)		// ランキングロゴの位置(X座標)
-#define	RANKING_POS_Y			(500)		// ランキングロゴの位置(Y座標)
-#define	RANKING_WIDTH			(70)		// ランキングロゴの幅
-#define	RANKING_HEIGHT			(70)		// ランキングロゴ高さ
+#define	RANKING_POS_X			(400*SCREEN_SCALE)		// ランキングロゴの位置(X座標)
+#define	RANKING_POS_Y			(500*SCREEN_SCALE)		// ランキングロゴの位置(Y座標)
+#define	RANKING_WIDTH			(70*SCREEN_SCALE)		// ランキングロゴの幅
+#define	RANKING_HEIGHT			(70*SCREEN_SCALE)		// ランキングロゴ高さ
 
-#define	CURSOR_POS_X			(250)		// カーソルロゴの位置(X座標)
-#define	CURSOR_POS_Y			(240)		// カーソルロゴの位置(Y座標)
-#define	CURSOR_WIDTH			(50)		// カーソルロゴの幅
-#define	CURSOR_HEIGHT			(20)		// カーソルロゴ高さ
+#define	CURSOR_POS_X			(250*SCREEN_SCALE)		// カーソルロゴの位置(X座標)
+#define	CURSOR_POS_Y			(240*SCREEN_SCALE)		// カーソルロゴの位置(Y座標)
+#define	CURSOR_WIDTH			(50*SCREEN_SCALE)		// カーソルロゴの幅
+#define	CURSOR_HEIGHT			(20*SCREEN_SCALE)		// カーソルロゴ高さ
 
 #define	COUNT_APPERA_START		(60)		// スタートボタン出現までの時間
 #define	INTERVAL_DISP_START		(60)		// スタートボタン点滅の時間

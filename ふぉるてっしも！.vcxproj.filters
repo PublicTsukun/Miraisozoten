@@ -174,7 +174,12 @@
     <ClCompile Include="voicetank.cpp">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="AimPointer.cpp" />
+    <ClCompile Include="Resultlogo.cpp">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyRE.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -324,7 +329,12 @@
     <ClInclude Include="voicetank.h">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
-    <ClInclude Include="AimPointer.h" />
+    <ClInclude Include="Resultlogo.h">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyRE.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Icon.ico">
