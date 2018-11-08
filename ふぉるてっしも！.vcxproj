@@ -46,7 +46,8 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="messageBox.cpp" />
     <ClCompile Include="name.cpp" />
-    <ClCompile Include="ranking.cpp" />
+    <ClCompile Include="Ranking.cpp" />
+    <ClCompile Include="saveranking.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Resultlogo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -96,7 +97,8 @@
     <ClInclude Include="Library\WindowClass.h" />
     <ClInclude Include="messageBox.h" />
     <ClInclude Include="name.h" />
-    <ClInclude Include="ranking.h" />
+    <ClInclude Include="Ranking.h" />
+    <ClInclude Include="saveranking.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Resultlogo.h" />

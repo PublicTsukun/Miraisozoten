@@ -3,6 +3,7 @@
 #include "Title.h"
 #include "Game.h"
 #include "Result.h"
+#include "Ranking.h"
 
 
 SCENE SceneManager::GameScene = SCENE_MAX;
@@ -38,9 +39,20 @@ int  SceneManager::Update()
 
 		if (GetKeyboardTrigger(DIK_RETURN))
 		{
+			SetScene(SCENE_RANKING);
+		}
+		break;
+
+	case SCENE_RANKING:
+		// ランキングシーンの更新
+		UpdateRanking();
+
+		if (GetKeyboardTrigger(DIK_RETURN))
+		{
 			SetScene(SCENE_TITLE);
 		}
 		break;
+
 	}
 
 	return 0;
@@ -66,6 +78,12 @@ void SceneManager::Draw()
 	case SCENE_RESULT:
 		// リザルトの描画処理
 		DrawResult();
+
+		break;
+
+	case SCENE_RANKING:
+		// ランキングの描画処理
+		DrawRanking();
 
 		break;
 	}
@@ -100,6 +118,12 @@ SCENE SceneManager::SetScene(SCENE scene)
 		UninitResult();
 
 		break;
+
+	case SCENE_RANKING:
+		// ランキングシーンの終了
+		UninitRanking();
+
+		break;
 	}
 
 	/* シーンの切り替え */
@@ -123,6 +147,12 @@ SCENE SceneManager::SetScene(SCENE scene)
 	case SCENE_RESULT:
 		// リザルトシーンの初期化
 		InitResult();
+
+		break;
+
+	case SCENE_RANKING:
+		// ランキングシーンの初期化
+		InitRanking();
 
 		break;
 

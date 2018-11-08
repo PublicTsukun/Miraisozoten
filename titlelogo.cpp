@@ -221,7 +221,7 @@ void UpdateTitlelogo(void)
 		//リザルト(ランキング)画面に移行
 		else if (x == RANKING)
 		{
-			Scene::SetScene(SCENE_RESULT);
+			Scene::SetScene(SCENE_RANKING);
 		}
 	}
 

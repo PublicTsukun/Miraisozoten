@@ -8,6 +8,7 @@
 #include "Library/Input.h"
 #include "Library/DebugProcess.h"
 #include "SceneManager.h"
+#include "score.h"
 //=============================================================================
 // É}ÉNÉçíËã`
 //=============================================================================
@@ -40,14 +41,14 @@ HRESULT InitResultlogo(void)
 
 	for (int i = 0; i < NUM_PLACE; i++)
 	{
-		resultscr[i].Init(SCORE_POS_X +i*SCORE_SIZE_X*2, SCORE_POS_Y, SCORE_SIZE_X, SCORE_SIZE_Y,TEXTURE_SCORE);
+		resultscr[i].Init(RESULT_SCORE_POS_X +i*	RESULT_SCORE_SIZE_X*2, RESULT_SCORE_POS_Y, RESULT_SCORE_SIZE_X, RESULT_SCORE_SIZE_Y,TEXTURE_SCORE);
 	}
 
 	slotTimer = 0;
 	slotStart = false;
 	slotCount = 0;
 	g_score = 0;
-	g_maxscore = 0;
+	g_maxscore = GetScore();
 
 	resultlogo.Init(SCREEN_CENTER_X, RESULT_LOGO_SIZE_Y + 10.0f, RESULT_LOGO_SIZE_X, RESULT_LOGO_SIZE_Y, TEXTURE_RESULT_LOGO);
 	return S_OK;
