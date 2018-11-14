@@ -13,7 +13,7 @@
 #include "voiceten.h"
 #include "voicetenTest.h"
 #include "messageBox.h"
-
+#include "enemyRE.h"
 
 //=============================================================================
 // 初期化処理
@@ -30,6 +30,7 @@ HRESULT InitWorkSon(void)
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitVoiceten();
 		InitMessageBox();
+		InitEnemyRE();
 		break;
 
 
@@ -57,6 +58,7 @@ void UninitWorkSon(void)
 	case SCENE_GAME://タイトルで使ったソースのUninit
 		UninitVoiceten();
 		UninitMessageBox();
+		UninitEnemyRE();
 		break;
 
 
@@ -83,10 +85,11 @@ void UpdateWorkSon(void)
 	case SCENE_GAME://ゲームで使うソースのUpdate
 		UpdateVoiceten();
 		UpdateMessageBox();
+		UpdateEnemyRE();
 
 		TestVL();
 		TestMB();
-
+		TestCO();
 		break;
 
 
@@ -113,6 +116,7 @@ void DrawWorkSon(void)
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawVoiceten();
 		DrawMessagebox();
+		DrawEnemyRE();
 		break;
 
 

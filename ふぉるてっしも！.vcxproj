@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="AimPointer.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemyRE.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GamePause.cpp" />
@@ -48,8 +49,10 @@
     <ClCompile Include="messageBox.cpp" />
     <ClCompile Include="MicTest.cpp" />
     <ClCompile Include="name.cpp" />
-    <ClCompile Include="ranking.cpp" />
+    <ClCompile Include="Ranking.cpp" />
+    <ClCompile Include="saveranking.cpp" />
     <ClCompile Include="Result.cpp" />
+    <ClCompile Include="Resultlogo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="timer.cpp" />
@@ -71,6 +74,7 @@
   <ItemGroup>
     <ClInclude Include="AimPointer.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemyRE.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePause.h" />
@@ -99,9 +103,11 @@
     <ClInclude Include="messageBox.h" />
     <ClInclude Include="MicTest.h" />
     <ClInclude Include="name.h" />
-    <ClInclude Include="ranking.h" />
+    <ClInclude Include="Ranking.h" />
+    <ClInclude Include="saveranking.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Result.h" />
+    <ClInclude Include="Resultlogo.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="timer.h" />

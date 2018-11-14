@@ -8,7 +8,7 @@
 #include "Library/Common.h"
 #include "Library/Input.h"
 #include "Library/DebugProcess.h"
-
+#include "SceneManager.h"
 //=============================================================================
 // マクロ定義
 //=============================================================================
@@ -27,32 +27,32 @@
 //#define	TITLE_LOGO_WIDTH		(1000)		// タイトルロゴの幅640
 //#define	TITLE_LOGO_HEIGHT		(300)		// タイトルロゴの高さ640
 
-#define	START_POS_X				(400)		// スタートボタンの位置(X座標)
-#define	START_POS_Y				(400)		// スタートボタンの位置(Y座標)
-#define	START_WIDTH				(480)		// スタートボタンの幅
-#define	START_HEIGHT			(120)		// スタートボタンの高さ
+#define	START_POS_X				(400*SCREEN_SCALE)		// スタートボタンの位置(X座標)
+#define	START_POS_Y				(400*SCREEN_SCALE)		// スタートボタンの位置(Y座標)
+#define	START_WIDTH				(480*SCREEN_SCALE)		// スタートボタンの幅
+#define	START_HEIGHT			(120*SCREEN_SCALE)		// スタートボタンの高さ
 
-#define	SINGLE_POS_X			(400)		// １人用モードロゴの位置(X座標)
-#define	SINGLE_POS_Y			(240)		// １人用モードロゴの位置(Y座標)
-#define	SINGLE_WIDTH			(70)		// １人用モードロゴの幅
-#define	SINGLE_HEIGHT			(70)		// １人用モードロゴ高さ
+#define	SINGLE_POS_X			(400*SCREEN_SCALE)		// １人用モードロゴの位置(X座標)
+#define	SINGLE_POS_Y			(240*SCREEN_SCALE)		// １人用モードロゴの位置(Y座標)
+#define	SINGLE_WIDTH			(70*SCREEN_SCALE)		// １人用モードロゴの幅
+#define	SINGLE_HEIGHT			(70*SCREEN_SCALE)		// １人用モードロゴ高さ
 
-#define	MULTI_POS_X				(400)		// 2人用モードロゴの位置(X座標)
-#define	MULTI_POS_Y				(400)		// 2人用モードロゴの位置(Y座標)
-#define	MULTI_WIDTH				(70)		// 2人用モードロゴの幅
-#define	MULTI_HEIGHT			(70)		// 2人用モードロゴ高さ
+#define	MULTI_POS_X				(400*SCREEN_SCALE)		// 2人用モードロゴの位置(X座標)
+#define	MULTI_POS_Y				(400*SCREEN_SCALE)		// 2人用モードロゴの位置(Y座標)
+#define	MULTI_WIDTH				(70*SCREEN_SCALE)		// 2人用モードロゴの幅
+#define	MULTI_HEIGHT			(70*SCREEN_SCALE)		// 2人用モードロゴ高さ
 
-#define	RANKING_POS_X			(400)		// ランキングロゴの位置(X座標)
-#define	RANKING_POS_Y			(500)		// ランキングロゴの位置(Y座標)
-#define	RANKING_WIDTH			(70)		// ランキングロゴの幅
-#define	RANKING_HEIGHT			(70)		// ランキングロゴ高さ
+#define	RANKING_POS_X			(400*SCREEN_SCALE)		// ランキングロゴの位置(X座標)
+#define	RANKING_POS_Y			(500*SCREEN_SCALE)		// ランキングロゴの位置(Y座標)
+#define	RANKING_WIDTH			(70*SCREEN_SCALE)		// ランキングロゴの幅
+#define	RANKING_HEIGHT			(70*SCREEN_SCALE)		// ランキングロゴ高さ
 
-#define	CURSOR_POS_X			(250)		// カーソルロゴの位置(X座標)
-#define	CURSOR_POS_Y			(240)		// カーソルロゴの位置(Y座標)
-#define	CURSOR_WIDTH			(50)		// カーソルロゴの幅
-#define	CURSOR_HEIGHT			(20)		// カーソルロゴ高さ
+#define	CURSOR_POS_X			(250*SCREEN_SCALE)		// カーソルロゴの位置(X座標)
+#define	CURSOR_POS_Y			(240*SCREEN_SCALE)		// カーソルロゴの位置(Y座標)
+#define	CURSOR_WIDTH			(50*SCREEN_SCALE)		// カーソルロゴの幅
+#define	CURSOR_HEIGHT			(20*SCREEN_SCALE)		// カーソルロゴ高さ
 
-#define	COUNT_APPERA_START		(60)		// スタートボタン出現までの時間
+#define	COUNT_APPERA_START		(60*60)		// スタートボタン出現までの時間 秒*フレーム
 #define	INTERVAL_DISP_START		(60)		// スタートボタン点滅の時間
 
 #define	COUNT_WAIT_DEMO			(60 * 5)	// デモまでの待ち時間
@@ -68,17 +68,23 @@ C2DObject titlebg;		//タイトル背景
 C2DObject titlename;	//タイトルネーム
 C2DObject startbutton;	//スタートボタン
 C2DObject singlemode;	//シングルモード
-C2DObject multimode;	//マルチ
+C2DObject multimode;	//マルチモード
 C2DObject rankingmode;	//ランキング
 C2DObject cursor;		//カーソル
-bool pop = true;        //popの初期化
+bool pop;				//popの初期化
 int position;			//カーソルの位置　positionの宣言
-int x = 0;
+int x;
+
+int flagCount;
 //=============================================================================
 // 初期化処理
 //=============================================================================
 HRESULT InitTitlelogo(void)
 {
+	pop = true;
+	x = 0;
+	flagCount = 0;
+
 	titlebg.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, TEXTURE_TITLE);
 	titlename.Init(TITLE_LOGO_NAMEPOS_X, TITLE_LOGO_NAMEPOS_Y, TITLE_LOGO_NAMESX, TITLE_LOGO_NAMESY, TEXTURE_LOGO_NAME);
 	startbutton.Init(START_POS_X, START_POS_Y, START_WIDTH, START_HEIGHT, START_BUTTON);
@@ -132,19 +138,29 @@ void DrawTitlelogo(void)
 //=============================================================================
 void UpdateTitlelogo(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN) && pop == true)
+
+	if (pop == false)//選択画面の時
 	{
-		pop = false;
+		flagCount++;//カウントを進めて
+		if (flagCount >= COUNT_APPERA_START)//もしカウントが一定に達したら
+		{
+			pop = true;//スタートボタンに戻る
+			flagCount = 0;//カウントリセット
+			x = 0;//矢印は上に
+		}
+		PrintDebugProcess("flagCount: (%d)\n", flagCount);
+
 	}
 
 	//↓入力でカーソルを下に移動
 	if (GetKeyboardTrigger(DIK_DOWN))
 	{
 		x = x + 1;
+		flagCount = 0;//カウントリセット
 	}
 
 	//カーソルが一番下にある状態で↓入力すると一番上に戻る
-	if (x > 2)
+	if (x >= CURSORMAX)
 	{
 		x = 0;
 	}
@@ -153,12 +169,13 @@ void UpdateTitlelogo(void)
 	if (GetKeyboardTrigger(DIK_UP))
 	{
 		x = x - 1;
+		flagCount = 0;//カウントリセット
 	}
 
 	//カーソルが一番上にある状態で↑入力すると一番下に戻る
 	if (x < 0)
 	{
-		x = 2;
+		x = CURSORMAX-1;
 	}
 	
 	//デバッグ表示
@@ -187,4 +204,30 @@ void UpdateTitlelogo(void)
 		break;
 	}
 	cursor.SetVertex();//ポリゴンを反映
+
+	//ゲーム画面に移行
+	if (GetKeyboardTrigger(DIK_RETURN)&& pop == false)
+	{
+		if(x == SINGLE)
+		{
+			Scene::SetScene(SCENE_GAME);
+		}
+
+		else if (x == MULTI)
+		{
+			Scene::SetScene(SCENE_GAME);
+		}
+
+		//リザルト(ランキング)画面に移行
+		else if (x == RANKING)
+		{
+			Scene::SetScene(SCENE_RANKING);
+		}
+	}
+
+	else if (GetKeyboardTrigger(DIK_RETURN) && pop == true)
+	{
+		pop = false;
+	}
+
 }

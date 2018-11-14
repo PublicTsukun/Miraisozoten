@@ -33,7 +33,9 @@ const float FrameSizeY = NUMBER_SIZE_Y+20;
 
 int Time;
 
-int fcount;
+int FrameCount;
+
+int Timerf;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -43,10 +45,11 @@ HRESULT InitTimer(void)
 	number[1].Init(Digit2_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
 	//number[2].Init(Digit3_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
 
-	frame.Init(SCREEN_CENTER_X, 50, FrameSizeX, FrameSizeY, FRAME_TEX);
+	frame.Init(SCREEN_CENTER_X, 50* SCREEN_SCALE, FrameSizeX, FrameSizeY, FRAME_TEX);
 
 
-	Time = 99;
+	TimerSet(RESET);
+	TimerSet(COUNT);
 	return S_OK;
 }
 
@@ -85,12 +88,19 @@ void DrawTimer(void)
 //=============================================================================
 void UpdateTimer(void)
 {
-
-	fcount++;
-	if (fcount > 62)
+	if (Timerf==COUNT)
 	{
-		fcount = 0;
-		Time--;
+		FrameCount++;
+		if (FrameCount > 62)
+		{
+			FrameCount = 0;
+			Time--;
+
+			if (Time < 0)
+			{
+				Time = 0;
+			}
+		}
 	}
 
 	for (int i = 0; i < MAX_DIGIT; i++)
@@ -107,4 +117,25 @@ void UpdateTimer(void)
 	}
 
 
+}
+
+
+//=======================================================
+//タイマー起動管理
+//========================================================
+void TimerSet(int no)
+{
+		Timerf = no;
+
+	switch (no)
+	{
+	case STOP:
+		break;
+	case RESET:
+		Time = START_TIME;
+		FrameCount=0;
+		break;
+	case COUNT:
+		break;
+	}
 }
