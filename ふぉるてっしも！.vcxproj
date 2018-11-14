@@ -52,6 +52,7 @@
     <ClCompile Include="Resultlogo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="titlelogo.cpp" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Resultlogo.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="score.h" />
+    <ClInclude Include="StageManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="titlelogo.h" />
