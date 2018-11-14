@@ -9,10 +9,30 @@
 #include "Library/ObjectBase3D.h"
 #include "HitCheck.h"
 
+#include "Library/DebugProcess.h"
+#include "voiceten.h"
+#include "score.h"
+#include "UIBonus.h"
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+#define ENEMY_HP			(2)
+#define ENEMY_SCOREBONUS	(1)
+#define ENEMY_GAUGEBONUS	(50)
+#define ENEMY_D_SCOREBONUS	(10)
+#define ENEMY_D_GAUGEBONUS	(200)
+
+#define ENEMY_COLI_LEN		(24.0f)
+#define ENEMY_COLI_HEI		(24.0f)
+#define ENEMY_COLI_WID		(5.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+void CollisionEnemyRE(void);
+void DamageDealEnemyRE(int Eno, int Vno);
+void ResetEnemyRE(void);
 
 //*****************************************************************************
 // グローバル変数
@@ -26,6 +46,8 @@ char *FileEnemy[] =
 };
 
 C3DPolygonObject EnemyRE[ENEMY_MAX];
+
+int YOUDEFEATED;
 
 //=============================================================================
 // 初期化処理
@@ -47,24 +69,43 @@ void InitEnemyRE(void)
 		(e + i)->timer = 0;
 		(e + i)->ptn = 0;
 
-		(e + i)->hp = 0;
+		(e + i)->apr = -1;
+
+		(e + i)->hp = ENEMY_HP;
 
 		EnemyRE[i].Init((e + i)->pos, size);
 		EnemyRE[i].LoadTexture(FileEnemy[0]);
 
 	}
 
-	// 個別パラメータ設定
-	(e + 0)->use = TRUE;
-	(e + 0)->pos = Vector3(-300.0f, 100.0f, 0.0f);
+	ResetYouDefeated();
 
-	(e + 1)->use = TRUE;
+	// 個別パラメータ設定
+	//(e + 0)->use = TRUE;
+	//(e + 0)->pos = Vector3(-300.0f, 100.0f, 0.0f);
+
+	//(e + 1)->use = TRUE;
+	//(e + 1)->pos = Vector3(-400.0f, 150.0f, -50.0f);
+	//EnemyRE[1].LoadTexture(FileEnemy[1]);
+
+	//(e + 2)->use = TRUE;
+	//(e + 2)->pos = Vector3(-200.0f, 50.0f, 50.0f);
+	//EnemyRE[2].LoadTexture(FileEnemy[1]);
+
+	(e + 0)->apr = 30;
+	(e + 0)->pos = Vector3(-300.0f, 100.0f, 0.0f);
+	EnemyRE[0].LoadObjectStatus((e + 0)->pos, (e + 0)->rot);
+
+	(e + 1)->apr = 60;
 	(e + 1)->pos = Vector3(-400.0f, 150.0f, -50.0f);
 	EnemyRE[1].LoadTexture(FileEnemy[1]);
+	EnemyRE[1].LoadObjectStatus((e + 1)->pos, (e + 1)->rot);
 
-	(e + 2)->use = TRUE;
+	(e + 2)->apr = 90;
 	(e + 2)->pos = Vector3(-200.0f, 50.0f, 50.0f);
 	EnemyRE[2].LoadTexture(FileEnemy[1]);
+	EnemyRE[2].LoadObjectStatus((e + 2)->pos, (e + 2)->rot);
+
 
 }
 
@@ -91,16 +132,18 @@ void UpdateEnemyRE(void)
 		if ((e + i)->use == TRUE)
 		{
 			// 衝突判定
+			CollisionEnemyRE();
 
-			
 			// 更新処理（位置、回転）
 			EnemyRE[i].LoadObjectStatus((e + i)->pos, (e + i)->rot);
-
+			
 			// タイマーカウントアップ
 			(e + i)->timer++;
 
 		}
 	}
+
+	PrintDebugProcess("撃破数: %d\n", YOUDEFEATED);
 }
 
 //=============================================================================
@@ -128,3 +171,199 @@ ENEMY *GetEnemyRE(int no)
 	return (&EnemyREWk[no]);
 }
 
+//=============================================================================
+// 衝突判定
+//=============================================================================
+void CollisionEnemyRE(void)
+{
+	VOICETEN *v = GetVoiceten(0);
+	ENEMY *e = GetEnemyRE(0);
+
+	// 衝突範囲設定(1)
+	const float len = ENEMY_COLI_LEN;
+	const float hei = ENEMY_COLI_HEI;
+	const float wid = ENEMY_COLI_WID;
+
+	for(int i = 0; i < ENEMY_MAX; i++, e++)
+	{
+		if (e->use == FALSE) continue;
+
+		for (int j = 0; j < VOICETEN_MAX; j++, v++)
+		{
+			if (v->use == FALSE) continue;
+
+			// 衝突範囲設定(2)
+			Vector3 vA1 = v->pos;
+			Vector3 vA2 = v->pos;
+			Vector3 vB1 = e->pos;
+			Vector3 vB2 = e->pos;
+
+			vA1.x = v->pos.x - len;		// 左
+			vA1.y = v->pos.y + hei;		// 上
+			vA1.z = v->pos.z - wid;		// 前
+
+			vA2.x = v->pos.x + len;		// 右
+			vA2.y = v->pos.y - hei;		// 下
+			vA2.z = v->pos.z + wid;		// 奥
+
+			vB1.x = e->pos.x - len;		// 左
+			vB1.y = e->pos.y + hei;		// 上
+			vB1.z = e->pos.z - wid;		// 前
+
+			vB2.x = e->pos.x + len;		// 右
+			vB2.y = e->pos.y - hei;		// 下
+			vB2.z = e->pos.z + wid;		// 奥
+
+			// チェック
+			if ((vA2.x > vB1.x)
+				&& (vB2.x > vA1.x)
+				&& (vA2.y < vB1.y)
+				&& (vB2.y < vA1.y)
+				&& (vA2.z > vB1.z)
+				&& (vB2.z > vA1.z)
+				)
+			{
+				// ダメージ計算
+				DamageDealEnemyRE(i, j);
+
+				// 弾消滅
+				VanishVoiceten(j);
+
+			}
+
+		}
+		
+	}
+
+}
+
+//=============================================================================
+// ダメージ計算
+//=============================================================================
+void DamageDealEnemyRE(int Eno, int Vno)
+{
+	VOICETEN *v = GetVoiceten(0);
+	ENEMY *e = GetEnemyRE(0);
+
+	// ダメージ計算
+	(e + Eno)->hp -= (v + Vno)->atk;
+
+	// 撃破判定
+	if ((e + Eno)->hp <= 0)
+	{
+		VanisnEnenyRE(Eno);
+	}
+	else
+	{
+		// テクスチャ変更
+
+
+		// スコアアップ
+		AddScore(ENEMY_SCOREBONUS);
+
+		// ゲージアップ
+		AddGage(ENEMY_GAUGEBONUS);
+	}
+
+}
+
+//=============================================================================
+// 消滅
+//=============================================================================
+void VanisnEnenyRE(int no)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	// 消滅
+	(e + no)->use = FALSE;
+
+	// 初期化
+	(e + no)->hp = ENEMY_HP;
+	(e + no)->timer = 0;
+
+	//================================
+	// ボーナス
+	//================================
+	// スコアアップ
+	AddScore(ENEMY_D_SCOREBONUS);
+
+	// ゲージアップ
+	AddGage(ENEMY_D_GAUGEBONUS);
+
+	SetYouDefeated(1);
+}
+
+//=============================================================================
+// 全部クリア
+//=============================================================================
+void VanisnAllEnenyRE(void)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		// 消滅
+		(e + i)->use = FALSE;
+
+		// 初期化
+		(e + i)->hp = ENEMY_HP;
+		(e + i)->timer = 0;
+
+	}
+
+}
+
+//=============================================================================
+// パラメータ設定
+//=============================================================================
+void SetEnemyRE(int StageNO)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	switch (StageNO)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
+
+}
+
+//=============================================================================
+// 登場
+//=============================================================================
+void EnemyREOnStage(int no)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	(e + no)->use = TRUE;
+}
+
+//=============================================================================
+// 撃破数取得
+//=============================================================================
+int GetYouDefeated(void)
+{
+	return YOUDEFEATED;
+}
+
+//=============================================================================
+// 撃破数設定
+//=============================================================================
+void SetYouDefeated(int value)
+{
+	YOUDEFEATED += value;
+}
+
+//=============================================================================
+// 撃破数リセット
+//=============================================================================
+void ResetYouDefeated(void) 
+{
+	SetYouDefeated(0);
+}

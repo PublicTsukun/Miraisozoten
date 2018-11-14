@@ -32,7 +32,6 @@ typedef struct
 	int timer;		// タイマー
 	int ptn;		// 行動パターン
 
-	int stage;
 	int apr;
 
 	int hp;			// HP
@@ -49,8 +48,14 @@ void DrawEnemyRE(void);
 
 ENEMY *GetEnemyRE(int no);
 
-// 予定機能：オブジェクト設置
-// 予定機能：オブジェクト消滅
-// 　　　　→オブジェクト再初期化
+void VanisnEnenyRE(int no);
+void VanisnAllEnenyRE(void);
+
+void SetEnemyRE(int no);
+void EnemyREOnStage(int no);
+
+int GetYouDefeated(void);
+void SetYouDefeated(int value);
+void ResetYouDefeated(void);
 
 #endif

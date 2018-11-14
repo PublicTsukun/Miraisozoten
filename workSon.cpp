@@ -92,7 +92,7 @@ void UpdateWorkSon(void)
 
 		TestVL();
 		TestMB();
-		TestCO();
+		//TestCO();
 		break;
 
 
