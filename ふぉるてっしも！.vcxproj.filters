@@ -195,8 +195,8 @@
     <ClCompile Include="StageManager.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="StageManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Library\MultiRendering.cpp">
+      <Filter>Library</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,8 +368,8 @@
     <ClInclude Include="StageManager.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
-    <ClInclude Include="StageManager.h">
-      <Filter>ソース ファイル</Filter>
+    <ClInclude Include="Library\MultiRendering.h">
+      <Filter>Library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

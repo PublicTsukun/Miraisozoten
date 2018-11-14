@@ -37,6 +37,7 @@
     <ClCompile Include="Library\Light.cpp" />
     <ClCompile Include="Library\Loading.cpp" />
     <ClCompile Include="Library\Matrix.cpp" />
+    <ClCompile Include="Library\MultiRendering.cpp" />
     <ClCompile Include="Library\ObjectBase2D.cpp" />
     <ClCompile Include="Library\ObjectBase3D.cpp" />
     <ClCompile Include="Library\Polygon.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Library\Loading.h" />
     <ClInclude Include="Library\Math.h" />
     <ClInclude Include="Library\Matrix.h" />
+    <ClInclude Include="Library\MultiRendering.h" />
     <ClInclude Include="Library\ObjectBase2D.h" />
     <ClInclude Include="Library\ObjectBase3D.h" />
     <ClInclude Include="Library\Polygon.h" />
