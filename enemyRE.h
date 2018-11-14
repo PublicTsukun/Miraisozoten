@@ -32,6 +32,9 @@ typedef struct
 	int timer;		// タイマー
 	int ptn;		// 行動パターン
 
+	int stage;
+	int apr;
+
 	int hp;			// HP
 
 } ENEMY;

@@ -90,13 +90,14 @@ void UpdateEnemyRE(void)
 	{
 		if ((e + i)->use == TRUE)
 		{
+			// 衝突判定
+
+			
 			// 更新処理（位置、回転）
 			EnemyRE[i].LoadObjectStatus((e + i)->pos, (e + i)->rot);
 
-			// タイマー　カウントアップ
+			// タイマーカウントアップ
 			(e + i)->timer++;
-
-
 
 		}
 	}
