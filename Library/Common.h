@@ -9,8 +9,9 @@
 // 画面サイズ関係
 //================================================================
 /* 画面サイズ */
-#define SCREEN_WIDTH    (1280)
-#define SCREEN_HEIGHT   (720)
+#define SCREEN_SCALE	(1.0f)
+#define SCREEN_WIDTH    (1280*SCREEN_SCALE)
+#define SCREEN_HEIGHT   (720*SCREEN_SCALE)
 #define SCREEN_CENTER_X (SCREEN_WIDTH  / 2)	// 画面中央座標
 #define SCREEN_CENTER_Y (SCREEN_HEIGHT / 2)	// 画面中央座標
 
