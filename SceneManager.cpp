@@ -2,6 +2,7 @@
 #include "Library\Input.h"
 #include "Title.h"
 #include "Game.h"
+#include "GamePause.h"
 #include "Result.h"
 
 
@@ -31,6 +32,10 @@ int  SceneManager::Update()
 		{
 			SetScene(SCENE_RESULT);
 		}
+		if (GetKeyboardTrigger(DIK_ESCAPE))
+		{
+			SetScene(SCENE_PAUSE);
+		}
 		break;
 
 	case SCENE_RESULT:
@@ -41,6 +46,21 @@ int  SceneManager::Update()
 		{
 			SetScene(SCENE_TITLE);
 		}
+		break;
+
+	case SCENE_PAUSE:
+		// ゲーム中ポーズの更新
+		switch (GamePause::Update())
+		{
+		case GPR::BACKGAME:
+			SetScene(SCENE_GAME);
+			break;
+
+		case GPR::BACKTITLE:
+			SetScene(SCENE_TITLE);
+			break;
+		}
+
 		break;
 	}
 
@@ -69,6 +89,16 @@ void SceneManager::Draw()
 		DrawResult();
 
 		break;
+
+	case SCENE_PAUSE:
+		// ゲームシーンの描画処理
+		DrawGame();
+
+		// ゲーム中ポーズの描画処理
+		GamePause::Draw();
+
+		break;
+
 	}
 }
 
@@ -79,6 +109,21 @@ SCENE SceneManager::SetScene(SCENE scene)
 	if (scene == SCENE_MAX)
 	{
 		return GameScene;
+	}
+
+	/* ポーズ画面は例外処理方式で */
+	if (scene == SCENE_PAUSE)
+	{
+		scene = SCENE_PAUSE;
+		return SCENE_PAUSE;
+	}
+	if (GameScene == SCENE_PAUSE)
+	{
+		GameScene = SCENE_GAME;
+		if (scene == SCENE_GAME)
+		{
+			return SCENE_GAME;
+		}
 	}
 
 	/* 現在のシーンのお片付け */
@@ -93,6 +138,7 @@ SCENE SceneManager::SetScene(SCENE scene)
 	case SCENE_GAME:
 		// ゲームシーンの終了
 		UninitGame();
+		GamePause::Uninit();
 
 		break;
 
@@ -118,6 +164,7 @@ SCENE SceneManager::SetScene(SCENE scene)
 	case SCENE_GAME:
 		// ゲームシーンの初期化
 		InitGame();
+		GamePause::Init();
 
 		break;
 
@@ -132,6 +179,11 @@ SCENE SceneManager::SetScene(SCENE scene)
 		break;
 	}
 
+	return GameScene;
+}
+
+SCENE SceneManager::GetScene()
+{
 	return GameScene;
 }
 

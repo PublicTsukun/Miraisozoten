@@ -20,8 +20,8 @@
 //****************************************************************
 // マクロ定義
 //****************************************************************
-#define CLASS_NAME  "ShirabeniProject"	// ウインドウのクラス名
-#define WINDOW_NAME "白紅プロジェクト"	// ウインドウのキャプション名
+#define CLASS_NAME  "hal2018FCEgameApplication"	// ウインドウのクラス名
+#define WINDOW_NAME "ふぉるてっしも！"	// ウインドウのキャプション名
 
 
 //*****************************************************************************
@@ -71,9 +71,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			PrintDebugProcess("SCENE : ");
 			switch (Scene::SetScene(SCENE_MAX))
 			{
-			case SCENE_TITLE:   PrintDebugProcess("Title\n");   break;
-			case SCENE_GAME:    PrintDebugProcess("Game\n");   break;
-			case SCENE_RESULT:  PrintDebugProcess("Result\n");   break;
+			case SCENE_TITLE:   PrintDebugProcess("Title\n");       break;
+			case SCENE_GAME:    PrintDebugProcess("Game\n");        break;
+			case SCENE_PAUSE:   PrintDebugProcess("Pause\n");       break;
+			case SCENE_RESULT:  PrintDebugProcess("Result\n");      break;
 			case SCENE_MAX:     PrintDebugProcess("処理中...\n");   break;
 			case SCENE_END:     PrintDebugProcess("終了処理です(表示されないはずだよ)\n");   break;
 			}

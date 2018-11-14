@@ -9,6 +9,7 @@ enum SCENE
 	SCENE_GAME,			// メインゲーム
 	SCENE_RESULT,		// リザルト画面
 	SCENE_MAX,
+	SCENE_PAUSE, // ゲーム中ポーズ画面
 	SCENE_END, // アプリ終了
 };
 
@@ -21,6 +22,7 @@ public:
 	static int  Update();
 	static void Draw();
 	static SCENE SetScene(SCENE scene);
+	static SCENE GetScene();
 
 }Scene;
 

@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AimPointer.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GamePause.cpp" />
     <ClCompile Include="HitCheck.cpp" />
     <ClCompile Include="Library\Camera.cpp" />
     <ClCompile Include="Library\Common.cpp" />
@@ -44,6 +46,7 @@
     <ClCompile Include="Library\WindowClass.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="messageBox.cpp" />
+    <ClCompile Include="MicTest.cpp" />
     <ClCompile Include="name.cpp" />
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="Result.cpp" />
@@ -66,9 +69,11 @@
     <ClCompile Include="workYamamoto.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AimPointer.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GamePause.h" />
     <ClInclude Include="HitCheck.h" />
     <ClInclude Include="Library\Camera.h" />
     <ClInclude Include="Library\Color.h" />
@@ -92,6 +97,7 @@
     <ClInclude Include="Library\Vector.h" />
     <ClInclude Include="Library\WindowClass.h" />
     <ClInclude Include="messageBox.h" />
+    <ClInclude Include="MicTest.h" />
     <ClInclude Include="name.h" />
     <ClInclude Include="ranking.h" />
     <ClInclude Include="resource.h" />
