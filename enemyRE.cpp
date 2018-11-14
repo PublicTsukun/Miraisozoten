@@ -28,6 +28,35 @@
 #define ENEMY_COLI_WID		(5.0f)
 
 //*****************************************************************************
+// クラス定義
+//*****************************************************************************
+class CEnemyRE : public C3DPolygonObject
+{
+public:
+	void ChangeTexture(float row, float col, float rowMax, float colMax);
+};
+
+void CEnemyRE::ChangeTexture(float row, float col, float rowMax, float colMax)
+{
+	const float rowN = (1.0f / rowMax);		// 行を等分に分ける
+	const float colN = (1.0f / colMax);		// 列を等分に分ける
+
+	VERTEX_3D *pVtx;
+
+	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	VtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	// 頂点座標の設定
+	pVtx[0].uv = Vector2(col * colN, row * rowN);
+	pVtx[1].uv = Vector2((col + 1) * colN, row * rowN);
+	pVtx[2].uv = Vector2(col * colN, ((row + 1) * rowN));
+	pVtx[3].uv = Vector2((col + 1) * colN, ((row + 1) * rowN));
+
+	// 頂点データをアンロックする
+	VtxBuff->Unlock();
+}
+
+//*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 void CollisionEnemyRE(void);
@@ -45,9 +74,11 @@ char *FileEnemy[] =
 	"data/作業/tttt.png",
 };
 
-C3DPolygonObject EnemyRE[ENEMY_MAX];
+CEnemyRE EnemyRE[ENEMY_MAX];
 
 int YOUDEFEATED;
+
+
 
 //=============================================================================
 // 初期化処理
@@ -95,16 +126,22 @@ void InitEnemyRE(void)
 	(e + 0)->apr = 30;
 	(e + 0)->pos = Vector3(-300.0f, 100.0f, 0.0f);
 	EnemyRE[0].LoadObjectStatus((e + 0)->pos, (e + 0)->rot);
+	EnemyRE[0].LoadObjectStatus((e + 0)->pos, (e + 0)->rot);
+	EnemyRE[0].ChangeTexture(0, 0, 2, 2);
 
 	(e + 1)->apr = 60;
 	(e + 1)->pos = Vector3(-400.0f, 150.0f, -50.0f);
 	EnemyRE[1].LoadTexture(FileEnemy[1]);
 	EnemyRE[1].LoadObjectStatus((e + 1)->pos, (e + 1)->rot);
+	EnemyRE[1].ChangeTexture(0, 0, 2, 2);
+
 
 	(e + 2)->apr = 90;
 	(e + 2)->pos = Vector3(-200.0f, 50.0f, 50.0f);
 	EnemyRE[2].LoadTexture(FileEnemy[1]);
 	EnemyRE[2].LoadObjectStatus((e + 2)->pos, (e + 2)->rot);
+	EnemyRE[2].ChangeTexture(0, 0, 2, 2);
+
 
 
 }
@@ -256,7 +293,7 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	else
 	{
 		// テクスチャ変更
-
+		EnemyRE[Eno].ChangeTexture(1, 0, 2, 2);
 
 		// スコアアップ
 		AddScore(ENEMY_SCOREBONUS);
