@@ -23,6 +23,7 @@ typedef struct
 	long long namechar[NAMEMAX];
 	long long  cursole_X;
 	long long  cursole_Y;
+	bool selected[NAMEMAX];
 }RANKDATA;
 
 

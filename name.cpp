@@ -41,7 +41,6 @@
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 文字盤の表示位置を元にカーソル位置を決めています。
-// カーソルの値は基本的に変更しないでください
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // もじばん
 #define MOJIBAN_TEX		("data/作業/文字ボード.jpg")
@@ -106,6 +105,12 @@ HRESULT InitName(void)
 	{
 		rankdata[0].namechar[i] = EMPTY_NO;	// 全てを初期値に
 	}
+
+	// フラグ初期化
+	for (int i = 0; i < NAMEMAX; i++)
+	{
+		rankdata[0].selected[i] = false;
+	}
 	// カーソルを初期位置に
 	rankdata[0].cursole_X = 0;
 	rankdata[0].cursole_Y = 0;
@@ -114,10 +119,7 @@ HRESULT InitName(void)
 	cursole.Init(CURSOLE_POS_X,CURSOLE_POS_Y,CURSOLE_WIDTH,CURSOLE_HEIGHT,CURSOLE_TEX);
 	mojiban.Init(MOJIBAN_POS_X, MOJIBAN_POS_Y, MOJIBAN_WIDTH, MOJIBAN_HEIGHT, MOJIBAN_TEX);
 
-	for (int i = 0; i < CHAR_MAX; i++)
-	{
-		//select_moji[i].Init(SENTAKUMOJI_POS_X, SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-	}
+
 	return S_OK;
 }
 
@@ -149,14 +151,20 @@ void DrawName(void)
 	//mojiban.Init(MOJIBAN_POS_X, MOJIBAN_POS_Y, MOJIBAN_WIDTH, MOJIBAN_HEIGHT, MOJIBAN_TEX);
 	
 
-	// 格納文字書き出し
-	for (int namechar = 0; namechar < NAMEMAX; namechar++)
-	{
+	//select_moji[0].SetTexture(1, 10, 10);
+	//select_moji[0].Draw();
 
-		// テクスチャのセット
-		//select_moji[namechar].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH)*namechar), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-		select_moji[namechar].SetTexture(rankdata[0].namechar[namechar], 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
-		select_moji[namechar].Draw();
+	// 格納文字書き出し
+	for (int i = 0; i < NAMEMAX; i++)
+	{
+		// selectedがtrueならテクスチャ表示
+		if (rankdata[0].selected[i] == true)
+		{
+			// テクスチャのセット
+			//select_moji[namechar].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH)*namechar), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
+			select_moji[i].SetTexture(rankdata[0].namechar[i], 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
+			select_moji[i].Draw();
+		}
 	}
 }
 
@@ -222,13 +230,20 @@ void Update_Name(void)
 
 	// 決定キーが入力された場合今のカーソル位置の文字を格納
 	if (GetKeyboardTrigger(DIK_SPACE))
-	{	// 数字で文字を格納
+	{	
+		// 1フラグをtrueに
+		rankdata[0].selected[namechar] = true;
+		// 数字で文字を格納
 		rankdata[0].namechar[namechar] = rankdata[0].cursole_X + (rankdata[0].cursole_Y * 10);
-		namechar++;
 		// テクスチャのセット
-		select_moji[namechar].Init(SENTAKUMOJI_POS_X, SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-		select_moji[namechar].SetTexture(rankdata[0].namechar[namechar], 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
+		select_moji[namechar].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH*2)*namechar), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
+		//select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
 		// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
+
+		if (namechar < NAMEMAX)
+		{
+			namechar++;
+		}
 	}
 
 	// 文字入力の終了
@@ -243,11 +258,16 @@ void Update_Name(void)
 	// 削除キーが入力された場合1文字戻る
 	if (GetKeyboardTrigger(DIK_BACKSPACE))
 	{
+		if (namechar != 0)
+		{
+			namechar--;
+		}
 		rankdata[0].namechar[namechar] = EMPTY_NO;
-		namechar--;
+		rankdata[0].selected[namechar] = false;
+
 	}
 	// 00があ　01がい
-	//mojiban.SetTexture(1,10,10);
+	//select_moji[0].SetTexture(1,10,10);
 }
 
 
