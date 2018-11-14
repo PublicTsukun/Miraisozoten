@@ -47,10 +47,10 @@ void CEnemyRE::ChangeTexture(float row, float col, float rowMax, float colMax)
 	VtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
-	pVtx[0].uv = Vector2(col * colN, row * rowN);
-	pVtx[1].uv = Vector2((col + 1) * colN, row * rowN);
-	pVtx[2].uv = Vector2(col * colN, ((row + 1) * rowN));
-	pVtx[3].uv = Vector2((col + 1) * colN, ((row + 1) * rowN));
+	pVtx[0].uv = Vector2(col * colN			, row * rowN);
+	pVtx[1].uv = Vector2((col + 1) * colN	, row * rowN);
+	pVtx[2].uv = Vector2(col * colN			, ((row + 1) * rowN));
+	pVtx[3].uv = Vector2((col + 1) * colN	, ((row + 1) * rowN));
 
 	// 頂点データをアンロックする
 	VtxBuff->Unlock();
