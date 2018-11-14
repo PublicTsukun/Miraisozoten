@@ -13,6 +13,7 @@
 #include <Windows.h>
 #include <tchar.h>
 #pragma comment (lib, "dinput8.lib")
+#include "Vector.h"
 
 
 //*****************************************************************************
@@ -88,6 +89,7 @@ BOOL IsButtonPressed(int padNo, DWORD button);
 BOOL IsButtonTriggered(int padNo, DWORD button);
 D3DXVECTOR2 GetLStickVolume(int padNo);
 D3DXVECTOR2 GetRStickVolume(int padNo);
+Vector3 GetGyro(int no);
 
 HRESULT InitializePad(void);			// ÉpÉbÉhèâä˙âª
 

@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AimPointer.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemyRE.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GamePause.cpp" />
     <ClCompile Include="HitCheck.cpp" />
     <ClCompile Include="Library\Camera.cpp" />
     <ClCompile Include="Library\Common.cpp" />
@@ -45,6 +47,7 @@
     <ClCompile Include="Library\WindowClass.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="messageBox.cpp" />
+    <ClCompile Include="MicTest.cpp" />
     <ClCompile Include="name.cpp" />
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="saveranking.cpp" />
@@ -52,6 +55,7 @@
     <ClCompile Include="Resultlogo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="titlelogo.cpp" />
@@ -69,10 +73,12 @@
     <ClCompile Include="workYamamoto.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AimPointer.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemyRE.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GamePause.h" />
     <ClInclude Include="HitCheck.h" />
     <ClInclude Include="Library\Camera.h" />
     <ClInclude Include="Library\Color.h" />
@@ -96,6 +102,7 @@
     <ClInclude Include="Library\Vector.h" />
     <ClInclude Include="Library\WindowClass.h" />
     <ClInclude Include="messageBox.h" />
+    <ClInclude Include="MicTest.h" />
     <ClInclude Include="name.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="saveranking.h" />
@@ -104,6 +111,7 @@
     <ClInclude Include="Resultlogo.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="score.h" />
+    <ClInclude Include="StageManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="titlelogo.h" />
