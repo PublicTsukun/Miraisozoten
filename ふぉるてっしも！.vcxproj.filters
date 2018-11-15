@@ -198,6 +198,9 @@
     <ClCompile Include="Library\MultiRendering.cpp">
       <Filter>Library</Filter>
     </ClCompile>
+    <ClCompile Include="startcount.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -370,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="Library\MultiRendering.h">
       <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="startcount.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

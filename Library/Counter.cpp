@@ -50,7 +50,8 @@ void CountDown::Set(int inter, int time, float sizX, float sizY)
 int CountDown::Count()
 {
 	this->Counter++;
-	if (this->Counter >= this->Interval)
+	if (this->Counter >= this->Interval
+		&&this->Time > 0)
 	{
 		this->Counter = 0;
 		this->Time--;

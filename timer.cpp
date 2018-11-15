@@ -49,7 +49,7 @@ HRESULT InitTimer(void)
 
 
 	TimerSet(RESET);
-	TimerSet(COUNT);
+	TimerSet(STOP);
 	return S_OK;
 }
 
@@ -91,7 +91,7 @@ void UpdateTimer(void)
 	if (Timerf==COUNT)
 	{
 		FrameCount++;
-		if (FrameCount > 62)
+		if (FrameCount > 60)
 		{
 			FrameCount = 0;
 			Time--;

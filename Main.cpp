@@ -84,8 +84,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 	}
 
-	TsuSystem::Uninitialize();	// TSUシステムを初期化
 	Uninit();					// その他終了処理
+	TsuSystem::Uninitialize();	// TSUシステムを初期化
 
 	timeEndPeriod(1);	// 分解能を戻す
 

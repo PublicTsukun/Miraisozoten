@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AimPointer.cpp" />
+    <ClCompile Include="startcount.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemyRE.cpp" />
     <ClCompile Include="field.cpp" />
@@ -75,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimPointer.h" />
+    <ClInclude Include="startcount.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemyRE.h" />
     <ClInclude Include="field.h" />

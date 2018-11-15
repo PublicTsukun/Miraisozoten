@@ -9,6 +9,7 @@
 #include "Library/DebugProcess.h"
 #include "SceneManager.h"
 #include "score.h"
+#include "Library/MultiRendering.h" 
 //=============================================================================
 // マクロ定義
 //=============================================================================
@@ -18,13 +19,17 @@
 // プロトタイプ宣言
 //=============================================================================
 
+
 //=============================================================================
 // グローバル変数
 //=============================================================================
 C2DObject resultbg;		//タイトル背景
 C2DObject resultscr[NUM_PLACE];
 C2DObject resultlogo;
-						
+					
+RenderBuffer DetailWindow;
+C2DObject	Detail;
+
 int g_maxscore;
 
 int slotTimer;
@@ -36,6 +41,9 @@ int g_score;
 //=============================================================================
 HRESULT InitResultlogo(void)
 {
+	DetailWindow.Init(RS_X(0.75), RS_Y(0.5), RS_X(0.75), RS_Y(0.5), RS_X(0.75), RS_Y(0.5), D3DFMT_X8R8G8B8);
+	Detail.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, RS_X(0.6f/2.0f), RS_Y(0.6f/2.0f));
+
 	resultbg.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, TEXTURE_RESULTBG);
 
 
@@ -66,7 +74,7 @@ void UninitResultlogo(void)
 			resultscr[i].Release();
 		}
 		resultlogo.Release();
-
+		DetailWindow.Release();
 }
 
 //=============================================================================
@@ -81,6 +89,11 @@ void DrawResultlogo(void)
 		}
 		resultlogo.Draw();
 
+		DetailWindow.BeginDraw();
+
+		DetailWindow.EndDraw();
+
+		Detail.Draw(DetailWindow.GetTexture());
 }
 
 
@@ -89,7 +102,6 @@ void DrawResultlogo(void)
 //=============================================================================
 void UpdateResultlogo(void)
 {
-
 
 	//===========================================================================
 	//取得スコア表示

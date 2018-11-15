@@ -1,5 +1,5 @@
 #include "MultiRendering.h"
-
+#include "Common.h"
 
 RenderBuffer::~RenderBuffer()
 {
@@ -18,6 +18,13 @@ RenderBuffer::~RenderBuffer()
 
 HRESULT RenderBuffer::Init(DWORD vp_w, DWORD vp_h, UINT dep_w, UINT dep_h, UINT tex_w, UINT tex_h, D3DFORMAT tex_format)
 {
+	this->DefaultViewport.X = 0;
+	this->DefaultViewport.Y = 0;
+	this->DefaultViewport.Width = SCREEN_WIDTH;
+	this->DefaultViewport.Height = SCREEN_HEIGHT;
+	this->DefaultViewport.MinZ = 0.0f;
+	this->DefaultViewport.MaxZ = 1.0f;
+
 	this->Viewport.X = 0;
 	this->Viewport.Y = 0;
 	this->Viewport.Width = vp_w;
@@ -28,7 +35,7 @@ HRESULT RenderBuffer::Init(DWORD vp_w, DWORD vp_h, UINT dep_w, UINT dep_h, UINT 
 	//デプスバッファ作成
 	Direct3D::GetD3DDevice()->CreateDepthStencilSurface(
 		dep_w, dep_h,		//サイズ（2の階乗にしよう最低でも1024はほしい）
-		D3DFMT_D24S8,	//ピクセルフォーマット
+		D3DFMT_D24S8,		//ピクセルフォーマット
 		D3DMULTISAMPLE_NONE,//マルチサンプリングOFF
 		0,					// この下からはマルチサンプリング
 		FALSE,
@@ -38,7 +45,7 @@ HRESULT RenderBuffer::Init(DWORD vp_w, DWORD vp_h, UINT dep_w, UINT dep_h, UINT 
 	//レンダーターゲット用テクスチャ作成
 	D3DXCreateTexture(Direct3D::GetD3DDevice(),
 		tex_w, tex_h,		//サイズ 
-		1,				//ミップマップ数
+		1,					//ミップマップ数
 		D3DUSAGE_RENDERTARGET,	//使用目的
 		tex_format,		//ピクセルフォーマット D3DFMT_X8R8G8B8
 		D3DPOOL_DEFAULT,
@@ -63,10 +70,10 @@ HRESULT RenderBuffer::BeginDraw()
 	pDevice->SetDepthStencilSurface(this->DepthBuffer);
 
 	//ビューポートの切り替え
-	pDevice->GetViewport(&this->DefaultViewport);
+	//pDevice->GetViewport(&this->DefaultViewport);
 	pDevice->SetViewport(&this->Viewport);
 
-	pDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0x00, 0x00, 0x00, 0xFF), 1.0f, 0);
+	pDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0x00, 0xFF, 0x00, 0xFF), 1.0f, 0);
 
 	return S_OK;
 }
