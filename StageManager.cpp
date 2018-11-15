@@ -273,6 +273,11 @@ void EnemySpawner(void)
 	ENEMY *e = GetEnemyRE(0);
 	STAGE *s = GetStage();
 
-
-
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		if (s->timer == (e + i)->apr)
+		{
+			EnemyREOnStage(i);
+		}
+	}
 }

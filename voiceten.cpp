@@ -51,6 +51,7 @@ void InitVoiceten(void)
 
 		(v + i)->nor = Vector3(0.0f, 0.0f, 0.0f);
 
+		(v + i)->atk = 1;
 
 		Voiceten[i].Init((v + i)->pos, size);
 		Voiceten[i].LoadTexture(FileVoiceten[0]);
@@ -89,7 +90,7 @@ void UpdateVoiceten(void)
 			(v + i)->timer++;
 
 			// Á–Å
-			VanishVoiceten(i);
+			//VanishVoiceten(i);
 		}
 	}
 }
@@ -233,17 +234,19 @@ void VanishVoiceten(int no)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	if ((v + no)->timer >= (v + no)->dura)
-	{
-		// Á–Å
-		(v + no)->use = FALSE;
+	//if ((v + no)->timer >= (v + no)->dura)
+	//{
 
-		// ‰Šú‰»
-		(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
-		(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
-		(v + no)->timer = 0;
+	//}
 
-		Voiceten[no].LoadObjectStatus((v + no)->pos);
+	// Á–Å
+	(v + no)->use = FALSE;
 
-	}
+	// ‰Šú‰»
+	(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
+	(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
+	(v + no)->timer = 0;
+
+	Voiceten[no].LoadObjectStatus((v + no)->pos);
+
 }
