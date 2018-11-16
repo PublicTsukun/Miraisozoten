@@ -10,10 +10,10 @@
 #include <Windows.h>
 
 
-#define	TEX_BONUSGAGE	("data/TEXTURE/ボーナスゲージ中.png")
-#define TEX_BONUSGAGEFRAME	("data/TEXTURE/ボーナスゲージ枠.png")
-#define TEX_GAGEVOICETEN	("data/TEXTURE/ボーナスゲージ用ボイステン.png")
-#define TEX_GAGEEFF			("data/TEXTURE/ボーナスゲージ外枠.png")
+#define	TEX_BONUSGAGE		("data/TEXTURE/UI/ゲージ/ボーナスゲージ中.png")
+#define TEX_BONUSGAGEFRAME	("data/TEXTURE/UI/ゲージ/ボーナスゲージ枠.png")
+#define TEX_GAGEVOICETEN	("data/TEXTURE/UI/ゲージ/ボーナスゲージ用ボイステン.png")
+#define TEX_GAGEEFF			("data/TEXTURE/UI/ゲージ/ボーナスゲージ外枠.png")
 
 #define BONUSGAGE_SIZE_X	(200*SCREEN_SCALE)
 #define BONUSGAGE_SIZE_Y	(28*SCREEN_SCALE)

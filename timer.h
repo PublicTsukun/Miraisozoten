@@ -12,14 +12,14 @@
 
 #define MAX_DIGIT		(2)
 
-#define NUMBER_TEX		("data/TEXTURE/タイマー数字.png")
+#define NUMBER_TEX		("data/TEXTURE/UI/タイマー数字.png")
 
 #define NUMBER_SIZE_X	(16*SCREEN_SCALE)
 #define NUMBER_SIZE_Y	(32*SCREEN_SCALE)
 
 #define NUMBER_POS_Y	(45*SCREEN_SCALE)
 
-#define FRAME_TEX		("data/TEXTURE/タイマー枠(仮).png")
+#define FRAME_TEX		("data/TEXTURE/UI/タイマー枠(仮).png")
 
 #define START_TIME		(99)
 

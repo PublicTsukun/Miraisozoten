@@ -41,7 +41,7 @@ int g_score;
 //=============================================================================
 HRESULT InitResultlogo(void)
 {
-	DetailWindow.Init(RS_X(0.75), RS_Y(0.5), RS_X(0.75), RS_Y(0.5), RS_X(0.75), RS_Y(0.5), D3DFMT_X8R8G8B8);
+	DetailWindow.Init(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, D3DFMT_X8R8G8B8);
 	Detail.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, RS_X(0.6f/2.0f), RS_Y(0.6f/2.0f));
 
 	resultbg.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, TEXTURE_RESULTBG);
