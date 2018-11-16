@@ -12,6 +12,8 @@
 
 #define STARTCOUNT_TEX		"data/TEXTURE/UI/スコア数字.png"
 
+#define STARTLOGO_TEX		"data/TEXTURE/UI/すたーと.png"
+
 
 
 HRESULT InitStartCount(void);
