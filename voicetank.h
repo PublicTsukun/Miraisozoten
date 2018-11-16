@@ -8,7 +8,7 @@ class CEnergyTankUI
 {
 	C2DObject Back;
 	C2DObject Liquid;
-	C2DObject Bubble[3];
+	C2DObject Bubble[2];
 	C2DObject Tank;
 	C2DObject Volume;
 	C2DObject VoiceTen;

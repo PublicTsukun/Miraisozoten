@@ -28,7 +28,6 @@ void CEnergyTankUI::Init()
 
 	this->Bubble[0].Init(vtPosi.x, vtPosi.y, vtsBack.x, vtsBack.y, "data/TEXTURE/UI/タンク/泡.png");
 	this->Bubble[1].Init(vtPosi.x, vtPosi.y, vtsBack.x, vtsBack.y, "data/TEXTURE/UI/タンク/泡2.png");
-	this->Bubble[2].Init(vtPosi.x, vtPosi.y, vtsBack.x, vtsBack.y, "data/TEXTURE/UI/タンク/泡3.png");
 
 	this->Tank.Init(    vtPosi.x, vtPosi.y, vtsTank.x, vtsTank.y, "data/TEXTURE/UI/タンク/ボイスタンク2.png");
 	this->Volume.Init(  vtPosi.x, vtPosi.y, vtsTank.x, vtsTank.y, "data/TEXTURE/UI/タンク/ボイスゲージ.png");
@@ -69,7 +68,6 @@ void CEnergyTankUI::Update()
 	this->Liquid.SetStatus(vtPosi, vtsBack, vtScale, 0.0f);
 	this->Bubble[0].SetStatus(vtPosi, vtsBack, vtScale, 0.0f);
 	this->Bubble[1].SetStatus(vtPosi, vtsBack, vtScale, 0.0f);
-	this->Bubble[2].SetStatus(vtPosi, vtsBack, vtScale, 0.0f);
 	this->Tank.SetStatus(vtPosi, vtsTank, vtScale, 0.0f);
 	this->Volume.SetStatus(vtPosi, vtsTank, vtScale, 0.0f);
 	this->VoiceTen.SetStatus(vtPosi, vtsTank, vtScale, 0.0f);
@@ -77,15 +75,11 @@ void CEnergyTankUI::Update()
 
 	BubbleState[0] += BubbleState[0] >= 1.0f ? -1.0f : 0.005f;;
 	BubbleState[1] += BubbleState[1] >= 1.0f ? -1.0f : 0.0075f;;
-	BubbleState[2] += BubbleState[2] >= 1.0f ? -1.0f : 0.01f;;
 	this->Bubble[0].SetTexture(2, 0.0f, 1.0f + BubbleState[0]);
 	this->Bubble[0].SetTexture(3, 1.0f, 1.0f + BubbleState[0]);
 
 	this->Bubble[1].SetTexture(2, 0.0f, 1.0f + BubbleState[1]);
 	this->Bubble[1].SetTexture(3, 1.0f, 1.0f + BubbleState[1]);
-
-	this->Bubble[2].SetTexture(2, 0.0f, 1.0f + BubbleState[2]);
-	this->Bubble[2].SetTexture(3, 1.0f, 1.0f + BubbleState[2]);
 
 
 	this->Liquid.SetVertex(0, Vector3(vtPosi.x - vtsBack.x * vtScale, vtValue, 0));
@@ -100,11 +94,6 @@ void CEnergyTankUI::Update()
 	this->Bubble[1].SetVertex(1, Vector3(vtPosi.x + vtsBack.x * vtScale, vtValue, 0));
 	this->Bubble[1].SetTexture(0, 0.0f, (vtValue - (vtPosi.y - vtsBack.y)) / (vtsBack.y * 2.0f) + BubbleState[1]);
 	this->Bubble[1].SetTexture(1, 1.0f, (vtValue - (vtPosi.y - vtsBack.y)) / (vtsBack.y * 2.0f) + BubbleState[1]);
-
-	this->Bubble[2].SetVertex(0, Vector3(vtPosi.x - vtsBack.x * vtScale, vtValue, 0));
-	this->Bubble[2].SetVertex(1, Vector3(vtPosi.x + vtsBack.x * vtScale, vtValue, 0));
-	this->Bubble[2].SetTexture(0, 0.0f, (vtValue - (vtPosi.y - vtsBack.y)) / (vtsBack.y * 2.0f) + BubbleState[2]);
-	this->Bubble[2].SetTexture(1, 1.0f, (vtValue - (vtPosi.y - vtsBack.y)) / (vtsBack.y * 2.0f) + BubbleState[2]);
 
 	const float vtgPos[8] = {
 		1.0f,
@@ -141,7 +130,6 @@ void CEnergyTankUI::Draw()
 	this->Liquid.Draw();
 	this->Bubble[0].Draw();
 	this->Bubble[1].Draw();
-	this->Bubble[2].Draw();
 	this->Tank.Draw();
 	this->Volume.Draw();
 	this->VoiceTen.Draw();
@@ -155,7 +143,6 @@ void CEnergyTankUI::Uninit()
 	this->Liquid.Release();
 	this->Bubble[0].Release();
 	this->Bubble[1].Release();
-	this->Bubble[2].Release();
 	this->Tank.Release();
 	this->Volume.Release();
 	this->VoiceTen.Release();
