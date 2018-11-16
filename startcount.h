@@ -10,7 +10,7 @@
 #include <Windows.h>
 #include "Library/Common.h"
 
-#define STARTCOUNT_TEX		"data/TEXTURE/スコア数字.png"
+#define STARTCOUNT_TEX		"data/TEXTURE/UI/スコア数字.png"
 
 
 

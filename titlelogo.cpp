@@ -12,13 +12,13 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define	TEXTURE_TITLE		"data/TEXTURE/タイトル背景(修正).jpg"// 読み込むテクスチャのファイル名
-#define	TEXTURE_LOGO_NAME	"data/TEXTURE/タイトル(修正).png"		// 読み込むタイトルロゴのファイル名
-#define START_BUTTON		"data/TEXTURE/ぼたんをおしてね.png"			// 読み込むスタートボタンのファイル名
-#define SINGLE_LOGO			"data/TEXTURE/ひとりであそぶ.png"				// 読み込む１人用モードロゴのファイル名
-#define MULTI_LOGO			"data/TEXTURE/ふたりであそぶ.png"			// 読み込む２人用モードロゴファイル名
-#define RANKING_LOGO		"data/TEXTURE/らんきんぐ.png"			// 読み込むランキングロゴのファイル名
-#define CURSOR_LOGO			"data/TEXTURE/カーソル.png"	// 読み込むカーソルロゴのファイル名
+#define	TEXTURE_TITLE		"data/TEXTURE/UI/タイトル/タイトル背景.jpg"// 読み込むテクスチャのファイル名
+#define	TEXTURE_LOGO_NAME	"data/TEXTURE/UI/タイトル/タイトル.png"		// 読み込むタイトルロゴのファイル名
+#define START_BUTTON		"data/TEXTURE/UI/タイトル/ぼたんをおしてね.png"			// 読み込むスタートボタンのファイル名
+#define SINGLE_LOGO			"data/TEXTURE/UI/タイトル/ひとりであそぶ.png"				// 読み込む１人用モードロゴのファイル名
+#define MULTI_LOGO			"data/TEXTURE/UI/タイトル/ふたりであそぶ.png"			// 読み込む２人用モードロゴファイル名
+#define RANKING_LOGO		"data/TEXTURE/UI/タイトル/らんきんぐ.png"			// 読み込むランキングロゴのファイル名
+#define CURSOR_LOGO			"data/TEXTURE/UI/タイトル/カーソル.png"	// 読み込むカーソルロゴのファイル名
 
 //#define	TITLE_LOGO_WIDTH		(1000)		// タイトルロゴの幅640
 //#define	TITLE_LOGO_HEIGHT		(300)		// タイトルロゴの高さ640
@@ -77,9 +77,9 @@ int x;
 int flagCount;
 
 const char *MenuBgTex[] = {
-	"data/TEXTURE/メニュー画面_青.png",
-	"data/TEXTURE/メニュー画面_赤.png",
-	"data/TEXTURE/メニュー画面_黄.png",
+	"data/TEXTURE/UI/タイトル/メニュー画面_青.png",
+	"data/TEXTURE/UI/タイトル/メニュー画面_赤.png",
+	"data/TEXTURE/UI/タイトル/メニュー画面_黄.png",
 };
 
 const Vector2 MenuBgPos[] = {

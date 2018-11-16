@@ -12,7 +12,7 @@
 
 #define SCORE_DIGIT		(5)
 
-#define SCORE_TEX		("data/TEXTURE/スコア数字.png")
+#define SCORE_TEX		("data/TEXTURE/UI/スコア数字.png")
 
 #define SCORE_SIZE_X	(12*SCREEN_SCALE)
 #define SCORE_SIZE_Y	(24*SCREEN_SCALE)
