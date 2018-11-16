@@ -20,10 +20,6 @@ void CNowLoading::Init()
 {
 	Back.LoadTexture(LOADING_TEX_BACK);
 	Text.Init(RelativeSX(0.8f), RelativeSY(0.8f), 200, 10, LOADING_TEX_TEXT);
-	PercentGage.Init(LOADING_TEX_GAGE, LOADING_TEX_GAGE);
-	PercentGage.Init(RelativeSX(0.8f), RelativeSY(0.85f), 200, 20);
-	PercentGage.Frame.SetVertex(D3DXCOLOR(0.4f, 0.4f, 0.4f, 1.0f));
-	PercentGage.Gage.SetVertex(D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f));
 }
 
 //----終了--------
@@ -31,7 +27,6 @@ void CNowLoading::Uninit(void)
 {
 	Back.Release();
 	Text.Release();
-	PercentGage.Uninit();
 }
 
 //----更新--------
@@ -39,7 +34,6 @@ void CNowLoading::Progress(int per)
 {
 	/* 更新 */
 	float percent = (float)per / 100.0f;
-	PercentGage.Update(percent);
 
 	/* 描画 */
 	LPDIRECT3DDEVICE9 pDevice = Direct3D::GetD3DDevice();
@@ -52,7 +46,6 @@ void CNowLoading::Progress(int per)
 	{
 
 		Back.Draw();
-		PercentGage.Draw();
 		Text.Draw();
 
 		// Direct3Dによる描画の終了
