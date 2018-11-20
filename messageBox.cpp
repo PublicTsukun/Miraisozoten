@@ -117,13 +117,13 @@ void DrawMessagebox(void)
 	{
 		if ((mb + i)->use == true)
 		{
-			S_MessageBox[i].Draw();
+			//S_MessageBox[i].Draw();
 
 		}
 
 		if ((mb + i)->efx == true)
 		{
-			S_MessageBoxEffect[i].Draw();
+			//S_MessageBoxEffect[i].Draw();
 
 		}
 

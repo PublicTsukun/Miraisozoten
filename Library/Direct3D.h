@@ -22,6 +22,7 @@ public:
 	static LPDIRECT3DDEVICE9 GetD3DDevice();
 };
 
+#define Dx9SafeRelease( pointer ) if ( pointer != NULL ) { pointer->Release(); pointer = NULL; }
 
 
 #endif // !__DIRECTX9_3D_DEVICE_H_INCLUDE__

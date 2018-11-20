@@ -23,9 +23,9 @@ int		gagelong = 900;
 bool fiverf = false;
 
 
-const Vector2 FirstPos = Vector2(169.0f, BONUSGAGE_POS_Y+10.0f);
-const Vector2 SecondPos = Vector2(295.0f, BONUSGAGE_POS_Y);
-const Vector2 ThirdPos = Vector2(420.0f, BONUSGAGE_POS_Y-10.0f);
+const Vector2 FirstPos = Vector2(169.0f*SCREEN_SCALE, BONUSGAGE_POS_Y+10.0f*SCREEN_SCALE);
+const Vector2 SecondPos = Vector2(295.0f*SCREEN_SCALE, BONUSGAGE_POS_Y);
+const Vector2 ThirdPos = Vector2(420.0f*SCREEN_SCALE, BONUSGAGE_POS_Y-10.0f*SCREEN_SCALE);
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -39,11 +39,11 @@ HRESULT InitUIBonus(void)
 
 		Vector2 pos;
 		pos = FirstPos;
-		Voiceten[0].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+		Voiceten[0].Init(pos.x, pos.y, 40 * SCREEN_SCALE, 40 * SCREEN_SCALE, TEX_GAGEVOICETEN);
 		pos = SecondPos;
-		Voiceten[1].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+		Voiceten[1].Init(pos.x, pos.y, 40 * SCREEN_SCALE, 40 * SCREEN_SCALE, TEX_GAGEVOICETEN);
 		pos = ThirdPos;
-		Voiceten[2].Init(pos.x, pos.y, 40, 40, TEX_GAGEVOICETEN);
+		Voiceten[2].Init(pos.x, pos.y, 40 * SCREEN_SCALE, 40 * SCREEN_SCALE, TEX_GAGEVOICETEN);
 
 		GageEff.Init(GAGE_EFF_POS_X, GAGE_EFF_POS_Y, GAGE_EFF_SIZE_X, GAGE_EFF_SIZE_Y, TEX_GAGEEFF);
 
@@ -65,7 +65,6 @@ void UninitUIBonus(void)
 	GageEff.Release();
 }
 
-bool drawswitch = true;
 //=============================================================================
 // ï`âÊèàóù
 //=============================================================================
@@ -73,14 +72,11 @@ void DrawUIBonus(void)
 {
 	GageEff.Draw();
 
-	if (drawswitch)
-	{
-		BonusGage.Draw();
+	BonusGage.Draw();
 
-		for (int i = 0; i < 3; i++)
-		{
-			Voiceten[i].Draw();
-		}
+	for (int i = 0; i < 3; i++)
+	{
+		Voiceten[i].Draw();
 	}
 }
 
@@ -91,10 +87,6 @@ float effa=0.0f;
 void UpdateUIBonus(void)
 {
 
-	if (GetKeyboardTrigger(DIK_7))
-	{
-		drawswitch = !drawswitch;
-	}
 	if (GetKeyboardPress(DIK_9) && fiverf == false)
 	{
 		AddGage(1);//ÇXÇ™âüÇ≥ÇÍÇƒÇ¢ÇÈÇ∆Ç´ÇÕÉQÅ[ÉWÇêLÇŒÇ∑

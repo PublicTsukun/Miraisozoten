@@ -14,6 +14,7 @@
 #include "voicetenTest.h"
 #include "messageBox.h"
 #include "enemyRE.h"
+#include "StageManager.h"
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -31,6 +32,7 @@ HRESULT InitWorkSon(void)
 		InitVoiceten();
 		InitMessageBox();
 		InitEnemyRE();
+		InitStage();
 		break;
 
 
@@ -86,10 +88,11 @@ void UpdateWorkSon(void)
 		UpdateVoiceten();
 		UpdateMessageBox();
 		UpdateEnemyRE();
+		UpdateStage();
 
 		TestVL();
 		TestMB();
-		TestCO();
+		//TestCO();
 		break;
 
 

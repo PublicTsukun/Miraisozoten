@@ -5,7 +5,12 @@
 #ifndef _NAME_H_
 #define _NAME_H_
 
+#include "Library/Input.h"
+
+
+// でふぁいん
 #define NAMEMAX	(5)
+
 /*****************************************************************************
 どさいどん
 *******************************************************************************/
@@ -15,18 +20,18 @@ typedef struct
 {
 	char name[256];	// ユーザー名
 	int score;		// スコア
-	int namechar[NAMEMAX];
-	int cursole_X;
-	int cursole_Y;
+	long long namechar[NAMEMAX];
+	long long  cursole_X;
+	long long  cursole_Y;
+	bool selected[NAMEMAX];
 }RANKDATA;
 
 
 void Update_Name(void);
-int get_char(void);
-void InitName(void);
+HRESULT InitName(void);
+void UninitName(void);
+void DrawName(void);
 
 
-
-
-// 仮の処理
 #endif
+

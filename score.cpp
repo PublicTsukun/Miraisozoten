@@ -18,6 +18,7 @@ int ScoreInter = SCORE_SIZE_X * 2;
 
 
 int Score;
+int DrawScr;
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -67,12 +68,31 @@ void DrawScore(void)
 //=============================================================================
 void UpdateScore(void)
 {
+		
+	if (Score < DrawScr)
+	{
+		DrawScr -= 19;
+
+		if (Score > DrawScr)
+		{
+			DrawScr = Score;
+		}
+	}
+	else if (Score > DrawScr)
+	{
+		DrawScr += 19;
+
+		if (Score < DrawScr)
+		{
+			DrawScr = Score;
+		}
+	}
 
 	for (int i = 0; i < SCORE_DIGIT; i++)
 	{
 		int num;
 
-		num = (Score / (int)(pow(10, i)));
+		num = (DrawScr / (int)(pow(10, i)));
 		num %= 10;
 
 
@@ -95,4 +115,17 @@ void AddScore(int num)
 	{
 		Score = (int)pow(10, SCORE_DIGIT) - 1;
 	}
+	else if (Score < 0)
+	{
+		Score = 0;
+	}
+}
+
+
+//========================================================================
+//ÉXÉRÉAéÊìæä÷êî
+//========================================================================
+int GetScore(void)
+{
+	return Score;
 }

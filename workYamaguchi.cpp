@@ -15,6 +15,9 @@
 #include "timer.h"
 #include "score.h"
 #include "UIBonus.h"
+#include "startcount.h"
+
+#include "Resultlogo.h"
 
 
 //=============================================================================
@@ -34,12 +37,13 @@ HRESULT InitWorkYamaguchi(void)
 		InitTimer();
 		InitScore();
 		InitUIBonus();
+		InitStartCount();
 
 		break;
 
 
 	case SCENE_RESULT://リザルトで使いたいソースのInit
-
+		InitResultlogo();
 		break;
 	}
 
@@ -55,7 +59,7 @@ void UninitWorkYamaguchi(void)
 	switch (Scene::SetScene(SCENE_MAX))
 	{
 	case SCENE_TITLE://リザルトで使ったソースのUninit
-
+		UninitResultlogo();
 		break;
 
 
@@ -69,6 +73,7 @@ void UninitWorkYamaguchi(void)
 		UninitTimer();
 		UninitScore();
 		UninitUIBonus();
+		UninitStartCount();
 		break;
 	}
 
@@ -91,11 +96,12 @@ void UpdateWorkYamaguchi(void)
 		UpdateTimer();
 		UpdateScore();
 		UpdateUIBonus();
+		UpdateStartCount();
 		break;
 
 
 	case SCENE_RESULT://リザルトで使うソースのUpdate
-
+		UpdateResultlogo();
 		break;
 	}
 
@@ -119,10 +125,12 @@ void DrawWorkYamaguchi(void)
 		DrawTimer();
 		DrawScore();
 		DrawUIBonus();
+		DrawStartCount();
 		break;
 
 
 	case SCENE_RESULT://リザルトで使うソースのDraw
+		DrawResultlogo();
 
 		break;
 	}

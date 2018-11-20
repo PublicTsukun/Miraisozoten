@@ -29,7 +29,7 @@
       <UniqueIdentifier>{3358a49e-d8dd-48c1-a1e2-81346dcbc642}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Result">
-      <UniqueIdentifier>{1dd2b150-3770-48ae-8b7a-47f0fc938267}</UniqueIdentifier>
+      <UniqueIdentifier>{98f21a7e-a410-40d5-be89-9cf78a140aa9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +129,6 @@
     <ClCompile Include="field.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClCompile>
     <ClCompile Include="ranking.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
@@ -153,13 +150,56 @@
     <ClCompile Include="titlelogo.cpp">
       <Filter>ソース ファイル\Title</Filter>
     </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBonus.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="name.cpp">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
     <ClCompile Include="messageBox.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="score.cpp" />
-    <ClCompile Include="UIBonus.cpp" />
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBonus.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="voicetank.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="AimPointer.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MicTest.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePause.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyRE.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
     <ClCompile Include="Resultlogo.cpp">
       <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="saveranking.cpp">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="StageManager.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Library\MultiRendering.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="startcount.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,9 +302,6 @@
     <ClInclude Include="field.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClInclude>
     <ClInclude Include="ranking.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
@@ -289,13 +326,56 @@
     <ClInclude Include="titlelogo.h">
       <Filter>ソース ファイル\Title</Filter>
     </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBonus.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="name.h">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
     <ClInclude Include="messageBox.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="score.h" />
-    <ClInclude Include="UIBonus.h" />
+    <ClInclude Include="score.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBonus.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="voicetank.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AimPointer.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MicTest.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePause.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyRE.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
     <ClInclude Include="Resultlogo.h">
       <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="saveranking.h">
+      <Filter>ソース ファイル\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\MultiRendering.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="startcount.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
