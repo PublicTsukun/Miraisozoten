@@ -14,6 +14,11 @@
 #include "score.h"
 #include "UIBonus.h"
 
+#include "Library\Input.h"
+
+#include <time.h>
+
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -99,6 +104,9 @@ void SetAppear(int ENo, int time);
 void SetParameter00(void);
 void SetParameter01(void);
 
+void TestEnemyRE(void);
+void TrapFactory(int apr, int num);
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -169,6 +177,9 @@ void UninitEnemyRE(void)
 void UpdateEnemyRE(void)
 {
 	ENEMY *e = GetEnemyRE(0);
+
+	TestEnemyRE();
+
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
@@ -416,15 +427,30 @@ void ResetYouDefeated(void)
 //============================================================================='
 void SetParameter00(void)
 {
-	int ENo;	// エネミー番号
+	//int ENo;	// エネミー番号
 
-	//================================//================================
-	ENo = 0;					// 指定
+	//int apr;	// 出現タイミング
+	//int type;	// 0 - E_TEX_MAX
+	//float x;	// -280 - 280
+	//float z;	// 0 - 600
 
-	SetType(ENo, E_TEX_CHILD);	// 種類設定
-	SetPos(ENo, -300, 100, 0);	// 位置設定
-	SetAppear(ENo, 30);			// 出現タイミング設定
-	//================================
+	////================================//================================
+	//ENo = 0;					// 指定
+	//apr = 30;
+	//type = rand() % E_TEX_MAX;
+
+
+
+	//SetType(ENo, type);	// 種類設定
+	//SetPos(ENo, -260, 100, 0);	// 位置設定
+	//SetAppear(ENo, apr);			// 出現タイミング設定
+	////================================
+
+	srand((unsigned)time(NULL));
+
+	TrapFactory(30, 4);
+	TrapFactory(60, 2);
+
 
 }
 
@@ -460,6 +486,89 @@ void SetAppear(int ENo, int time)
 	ENEMY *e = GetEnemyRE(0);
 
 	(e + ENo)->apr = time;
+}
+
+//=============================================================================
+// エネミー生成（応急措置）
+//============================================================================='
+void TrapFactory(int apr, int num)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	int type;
+	float x;
+	float z;
+
+	// 未使用のオブジェクトを捜す
+	for (int i = 0; i < num; i++)
+	{
+		for (int j = 0; j < ENEMY_MAX; j++)
+		{
+			if ((e + j)->apr == -1)
+			{
+				(e + j)->apr = apr;
+
+				type = rand() % E_TEX_MAX;
+				SetType(j, type);		// 種類設定
+
+				x = float(rand() % 560 - 280);
+				z = float(rand() % 600);
+				SetPos(j, x, 100, z);	// 位置設定
+				break;
+			}
+		}
+	}
+
+}
+
+
+//=============================================================================
+// テスト用
+//============================================================================='
+void TestEnemyRE(void)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	float vel = 10.0f;
+
+	if (GetKeyboardPress(DIK_NUMPAD8))
+	{
+		e->pos.z += vel;
+	}
+
+
+	if (GetKeyboardPress(DIK_NUMPAD5))
+	{
+		e->pos.z -= vel;
+
+	}
+
+	if (GetKeyboardPress(DIK_NUMPAD4))
+	{
+		e->pos.x -= vel;
+
+	}
+
+	if (GetKeyboardPress(DIK_NUMPAD6))
+	{
+		e->pos.x += vel;
+
+	}
+
+	if (GetKeyboardPress(DIK_NUMPAD7))
+	{
+		e->pos.y -= vel;
+	}
+
+	if (GetKeyboardPress(DIK_NUMPAD9))
+	{
+		e->pos.y += vel;
+	}
+
+	PrintDebugProcess("pos: %f %f %f\n", e->pos.x, e->pos.y, e->pos.z);
+	PrintDebugProcess("pos: %f %f %f\n", (e + 1)->pos.x, (e + 1)->pos.y, (e + 1)->pos.z);
+	PrintDebugProcess("pos: %f %f %f\n", (e + 2)->pos.x, (e + 2)->pos.y, (e + 2)->pos.z);
+
 }
 
 
