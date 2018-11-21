@@ -201,6 +201,9 @@
     <ClCompile Include="startcount.cpp">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClCompile>
+    <ClCompile Include="finishcount.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -375,6 +378,9 @@
       <Filter>Library</Filter>
     </ClInclude>
     <ClInclude Include="startcount.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="finishcount.h">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>

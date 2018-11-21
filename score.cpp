@@ -12,7 +12,7 @@
 // グローバル変数
 //*****************************************************************************
 UI2DNumber score[SCORE_DIGIT];	//タイマー数字
-
+C2DObject ScoreFrame;
 
 int ScoreInter = SCORE_SIZE_X * 2;
 
@@ -32,6 +32,10 @@ HRESULT InitScore(void)
 	}
 
 	Score = 0;
+
+
+	ScoreFrame.Init(SCORE_FRAME_POS, SCORE_POS_Y, SCORE_SIZE_X * SCORE_DIGIT+20.0*SCREEN_SCALE, SCORE_SIZE_Y + 5 * SCREEN_SCALE, SCORE_FRAME_TEX);
+	ScoreFrame.SetVertex(0xff33ccff);
 	return S_OK;
 }
 
@@ -46,7 +50,7 @@ void UninitScore(void)
 		score[i].Release();
 	}
 
-
+	ScoreFrame.Release();
 }
 
 //=============================================================================
@@ -54,6 +58,7 @@ void UninitScore(void)
 //=============================================================================
 void DrawScore(void)
 {
+	ScoreFrame.Draw();
 
 	for (int i = 0; i < SCORE_DIGIT; i++)
 	{
@@ -68,7 +73,6 @@ void DrawScore(void)
 //=============================================================================
 void UpdateScore(void)
 {
-		
 	if (Score < DrawScr)
 	{
 		DrawScr -= 19;

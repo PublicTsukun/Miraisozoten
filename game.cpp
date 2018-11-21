@@ -93,10 +93,10 @@ void DrawGame(void)
 	DrawWorkKimura();
 	DrawWorkSato();
 	DrawWorkSon();
-	DrawWorkTsu();
 	DrawWorkUtsugi();
 	DrawWorkYamaguchi();
 	DrawWorkYamamoto();
+	DrawWorkTsu();
 
 }
 

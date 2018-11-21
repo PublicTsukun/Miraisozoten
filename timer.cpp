@@ -29,7 +29,7 @@ const float Digit1_posX = SCREEN_CENTER_X + NumberInter;
 const float Digit2_posX = SCREEN_CENTER_X - NumberInter;
 
 const float FrameSizeX = MAX_DIGIT * NUMBER_SIZE_X+25;
-const float FrameSizeY = NUMBER_SIZE_Y+20;
+const float FrameSizeY = NUMBER_SIZE_Y+5;
 
 int Time;
 
@@ -45,8 +45,8 @@ HRESULT InitTimer(void)
 	number[1].Init(Digit2_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
 	//number[2].Init(Digit3_posX, NUMBER_POS_Y, NUMBER_SIZE_X, NUMBER_SIZE_Y, NUMBER_TEX);
 
-	frame.Init(SCREEN_CENTER_X, 50* SCREEN_SCALE, FrameSizeX, FrameSizeY, FRAME_TEX);
-
+	frame.Init(SCREEN_CENTER_X, NUMBER_POS_Y, FrameSizeX, FrameSizeY, FRAME_TEX);
+	frame.SetVertex(0xff33ccff);
 
 	TimerSet(RESET);
 	TimerSet(STOP);
@@ -138,4 +138,14 @@ void TimerSet(int no)
 	case COUNT:
 		break;
 	}
+}
+
+int StateTimer(void)
+{
+	return Timerf;
+}
+
+int RestTimer(void)
+{
+	return Time;
 }

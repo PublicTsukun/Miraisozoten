@@ -12,6 +12,7 @@
 
 class CountDown : public UI2DNumber
 {
+protected:
 	UIBackGround Back;		// ブラックバック
 	D3DXCOLOR    Color;		// カラー
 	float        Curve;		// アニメーション用

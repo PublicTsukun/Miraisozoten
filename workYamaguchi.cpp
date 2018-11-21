@@ -16,7 +16,7 @@
 #include "score.h"
 #include "UIBonus.h"
 #include "startcount.h"
-
+#include "finishcount.h"
 #include "Resultlogo.h"
 
 
@@ -38,6 +38,7 @@ HRESULT InitWorkYamaguchi(void)
 		InitScore();
 		InitUIBonus();
 		InitStartCount();
+		InitFinishCount();
 
 		break;
 
@@ -74,6 +75,7 @@ void UninitWorkYamaguchi(void)
 		UninitScore();
 		UninitUIBonus();
 		UninitStartCount();
+		UninitFinishCount();
 		break;
 	}
 
@@ -97,6 +99,8 @@ void UpdateWorkYamaguchi(void)
 		UpdateScore();
 		UpdateUIBonus();
 		UpdateStartCount();
+		UpdateFinishCount();
+		UpdateField();
 		break;
 
 
@@ -126,6 +130,7 @@ void DrawWorkYamaguchi(void)
 		DrawScore();
 		DrawUIBonus();
 		DrawStartCount();
+		DrawFinishCount();
 		break;
 
 
