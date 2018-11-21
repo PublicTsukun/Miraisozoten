@@ -32,7 +32,9 @@ typedef struct
 	int timer;		// タイマー
 	int ptn;		// 行動パターン
 
-	int apr;
+	int apr;		// 出現タイミング
+
+	int type;		// 種類
 
 	int hp;			// HP
 
