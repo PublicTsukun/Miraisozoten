@@ -14,6 +14,11 @@
 #include "score.h"
 #include "UIBonus.h"
 
+#include "Library\Input.h"
+
+#include <time.h>
+
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -34,6 +39,9 @@ class CEnemyRE : public C3DPolygonObject
 {
 public:
 	void ChangeTexture(float row, float col, float rowMax, float colMax);
+	void SetTexture(void);
+	void ChangeTexture(void);
+	void ResetTexture(void);
 };
 
 void CEnemyRE::ChangeTexture(float row, float col, float rowMax, float colMax)
@@ -56,6 +64,33 @@ void CEnemyRE::ChangeTexture(float row, float col, float rowMax, float colMax)
 	VtxBuff->Unlock();
 }
 
+void CEnemyRE::SetTexture(void)
+{
+	CEnemyRE::ChangeTexture(0, 0, 1, 2);
+}
+
+void CEnemyRE::ChangeTexture(void)
+{
+	CEnemyRE::ChangeTexture(0, 1, 1, 2);
+}
+
+void CEnemyRE::ResetTexture(void)
+{
+	CEnemyRE::SetTexture();
+}
+
+//*****************************************************************************
+// 列挙型
+//*****************************************************************************
+enum E_TEX
+{
+	E_TEX_CHILD = 0,
+	E_TEX_MAID,
+	E_TEX_OTAKU,
+
+	E_TEX_MAX,
+};
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -63,22 +98,29 @@ void CollisionEnemyRE(void);
 void DamageDealEnemyRE(int Eno, int Vno);
 void ResetEnemyRE(void);
 
+void SetType(int ENo, int type);
+void SetPos(int ENo, float x, float y, float z);
+void SetAppear(int ENo, int time);
+void SetParameter00(void);
+void SetParameter01(void);
+
+void TestEnemyRE(void);
+void TrapFactory(int apr, int num);
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-ENEMY EnemyREWk[ENEMY_MAX];		// ワーク
-
 char *FileEnemy[] =
 {
-	"data/作業/boss.png",
-	"data/作業/tttt.png",
+	"data/TEXTURE/character/01_01_child.png",
+	"data/TEXTURE/character/01_02_maid.png",
+	"data/TEXTURE/character/01_03_otaku.png",
 };
 
+ENEMY EnemyREWk[ENEMY_MAX];		// ワーク
 CEnemyRE EnemyRE[ENEMY_MAX];
 
 int YOUDEFEATED;
-
-
 
 //=============================================================================
 // 初期化処理
@@ -88,7 +130,7 @@ void InitEnemyRE(void)
 	ENEMY *e = GetEnemyRE(0);
 
 	// 初期化用変数
-	const Vector2 size = Vector2(48, 48);
+	const Vector2 size = Vector2(96, 96);
 
 	// 全パラメータ初期化
 	for (int i = 0; i < ENEMY_MAX; i++)
@@ -111,38 +153,10 @@ void InitEnemyRE(void)
 
 	ResetYouDefeated();
 
-	// 個別パラメータ設定
-	//(e + 0)->use = TRUE;
-	//(e + 0)->pos = Vector3(-300.0f, 100.0f, 0.0f);
-
-	//(e + 1)->use = TRUE;
 	//(e + 1)->pos = Vector3(-400.0f, 150.0f, -50.0f);
-	//EnemyRE[1].LoadTexture(FileEnemy[1]);
-
-	//(e + 2)->use = TRUE;
 	//(e + 2)->pos = Vector3(-200.0f, 50.0f, 50.0f);
-	//EnemyRE[2].LoadTexture(FileEnemy[1]);
 
-	(e + 0)->apr = 30;
-	(e + 0)->pos = Vector3(-300.0f, 100.0f, 0.0f);
-	EnemyRE[0].LoadObjectStatus((e + 0)->pos, (e + 0)->rot);
-	EnemyRE[0].LoadObjectStatus((e + 0)->pos, (e + 0)->rot);
-	EnemyRE[0].ChangeTexture(0, 0, 2, 2);
-
-	(e + 1)->apr = 60;
-	(e + 1)->pos = Vector3(-400.0f, 150.0f, -50.0f);
-	EnemyRE[1].LoadTexture(FileEnemy[1]);
-	EnemyRE[1].LoadObjectStatus((e + 1)->pos, (e + 1)->rot);
-	EnemyRE[1].ChangeTexture(0, 0, 2, 2);
-
-
-	(e + 2)->apr = 90;
-	(e + 2)->pos = Vector3(-200.0f, 50.0f, 50.0f);
-	EnemyRE[2].LoadTexture(FileEnemy[1]);
-	EnemyRE[2].LoadObjectStatus((e + 2)->pos, (e + 2)->rot);
-	EnemyRE[2].ChangeTexture(0, 0, 2, 2);
-
-
+	SetParameter00();
 
 }
 
@@ -163,6 +177,9 @@ void UninitEnemyRE(void)
 void UpdateEnemyRE(void)
 {
 	ENEMY *e = GetEnemyRE(0);
+
+	TestEnemyRE();
+
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
@@ -293,7 +310,7 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	else
 	{
 		// テクスチャ変更
-		EnemyRE[Eno].ChangeTexture(1, 0, 2, 2);
+		EnemyRE[Eno].ChangeTexture(0, 1, 1, 2);
 
 		// スコアアップ
 		AddScore(ENEMY_SCOREBONUS);
@@ -404,3 +421,155 @@ void ResetYouDefeated(void)
 {
 	SetYouDefeated(0);
 }
+
+//=============================================================================
+// パラメータ設定（ここで調整）
+//============================================================================='
+void SetParameter00(void)
+{
+	//int ENo;	// エネミー番号
+
+	//int apr;	// 出現タイミング
+	//int type;	// 0 - E_TEX_MAX
+	//float x;	// -280 - 280
+	//float z;	// 0 - 600
+
+	////================================//================================
+	//ENo = 0;					// 指定
+	//apr = 30;
+	//type = rand() % E_TEX_MAX;
+
+
+
+	//SetType(ENo, type);	// 種類設定
+	//SetPos(ENo, -260, 100, 0);	// 位置設定
+	//SetAppear(ENo, apr);			// 出現タイミング設定
+	////================================
+
+	srand((unsigned)time(NULL));
+
+	TrapFactory(30, 4);
+	TrapFactory(60, 2);
+
+
+}
+
+//=============================================================================
+// テクスチャタイプ設定
+//============================================================================='
+void SetType(int ENo, int type)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	EnemyRE[ENo].LoadTexture(FileEnemy[type]);
+	EnemyRE[ENo].SetTexture();
+
+}
+
+//=============================================================================
+// 位置設定
+//============================================================================='
+void SetPos(int ENo, float x, float y, float z)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	(e + ENo)->pos = Vector3(x, y, z);
+	EnemyRE[ENo].LoadObjectStatus((e + 0)->pos, (e + 0)->rot);
+
+}
+
+//=============================================================================
+// 出現タイミング設定
+//============================================================================='
+void SetAppear(int ENo, int time)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	(e + ENo)->apr = time;
+}
+
+//=============================================================================
+// エネミー生成（応急措置）
+//============================================================================='
+void TrapFactory(int apr, int num)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	int type;
+	float x;
+	float z;
+
+	// 未使用のオブジェクトを捜す
+	for (int i = 0; i < num; i++)
+	{
+		for (int j = 0; j < ENEMY_MAX; j++)
+		{
+			if ((e + j)->apr == -1)
+			{
+				(e + j)->apr = apr;
+
+				type = rand() % E_TEX_MAX;
+				SetType(j, type);		// 種類設定
+
+				x = float(rand() % 560 - 280);
+				z = float(rand() % 600);
+				SetPos(j, x, 100, z);	// 位置設定
+				break;
+			}
+		}
+	}
+
+}
+
+
+//=============================================================================
+// テスト用
+//============================================================================='
+void TestEnemyRE(void)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	float vel = 10.0f;
+
+	if (GetKeyboardPress(DIK_NUMPAD8))
+	{
+		e->pos.z += vel;
+	}
+
+
+	if (GetKeyboardPress(DIK_NUMPAD5))
+	{
+		e->pos.z -= vel;
+
+	}
+
+	if (GetKeyboardPress(DIK_NUMPAD4))
+	{
+		e->pos.x -= vel;
+
+	}
+
+	if (GetKeyboardPress(DIK_NUMPAD6))
+	{
+		e->pos.x += vel;
+
+	}
+
+	if (GetKeyboardPress(DIK_NUMPAD7))
+	{
+		e->pos.y -= vel;
+	}
+
+	if (GetKeyboardPress(DIK_NUMPAD9))
+	{
+		e->pos.y += vel;
+	}
+
+	PrintDebugProcess("pos: %f %f %f\n", e->pos.x, e->pos.y, e->pos.z);
+	PrintDebugProcess("pos: %f %f %f\n", (e + 1)->pos.x, (e + 1)->pos.y, (e + 1)->pos.z);
+	PrintDebugProcess("pos: %f %f %f\n", (e + 2)->pos.x, (e + 2)->pos.y, (e + 2)->pos.z);
+
+}
+
+
+
