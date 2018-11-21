@@ -9,6 +9,8 @@
 
 #include "timer.h"
 
+#include "StageManager.h"
+
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************
@@ -63,6 +65,7 @@ void DrawStartCount(void)
 	if (LogoTimerUse)
 	{
 		StartLogo.Draw();
+		UnFreezeStage();
 	}
 }
 

@@ -107,6 +107,8 @@ void SetParameter01(void);
 void TestEnemyRE(void);
 void TrapFactory(int apr, int num);
 
+void CheckUptime(int no);
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -178,8 +180,11 @@ void UpdateEnemyRE(void)
 {
 	ENEMY *e = GetEnemyRE(0);
 
+#ifdef _DEBUG
+
 	TestEnemyRE();
 
+#endif
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
@@ -193,6 +198,9 @@ void UpdateEnemyRE(void)
 			
 			// タイマーカウントアップ
 			(e + i)->timer++;
+
+			// 稼働時間検査
+			CheckUptime(i);
 
 		}
 	}
@@ -448,9 +456,35 @@ void SetParameter00(void)
 
 	srand((unsigned)time(NULL));
 
-	TrapFactory(30, 4);
-	TrapFactory(60, 2);
+	TrapFactory(120, 1);
+	TrapFactory(240, 1);
+	TrapFactory(360, 1);
+	TrapFactory(480, 1);
+	TrapFactory(600, 1);
 
+	TrapFactory(720, 1);
+	TrapFactory(840, 2);
+
+	TrapFactory(1080, 1);
+	TrapFactory(1200, 2);
+
+	TrapFactory(1440, 1);
+	TrapFactory(1560, 2);
+
+	TrapFactory(1800, 1);
+	TrapFactory(1920, 2);
+
+	TrapFactory(2160, 1);
+	TrapFactory(2280, 4);
+
+	TrapFactory(2760, 1);
+	TrapFactory(2820, 1);
+	TrapFactory(2880, 1);
+	TrapFactory(2940, 1);
+	TrapFactory(3000, 1);
+
+	TrapFactory(3240, 4);
+	TrapFactory(3480, 4);
 
 }
 
@@ -474,7 +508,7 @@ void SetPos(int ENo, float x, float y, float z)
 	ENEMY *e = GetEnemyRE(0);
 
 	(e + ENo)->pos = Vector3(x, y, z);
-	EnemyRE[ENo].LoadObjectStatus((e + 0)->pos, (e + 0)->rot);
+	EnemyRE[ENo].LoadObjectStatus((e + ENo)->pos, (e + ENo)->rot);
 
 }
 
@@ -521,6 +555,21 @@ void TrapFactory(int apr, int num)
 
 }
 
+//=============================================================================
+// 稼働時間検査
+//============================================================================='
+void CheckUptime(int no)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	const int Uptime = 270;
+
+	if ((e + no)->timer >= Uptime)
+	{
+		VanisnEnenyRE(no);
+	}
+
+}
 
 //=============================================================================
 // テスト用
