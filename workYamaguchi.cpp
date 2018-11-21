@@ -15,6 +15,7 @@
 #include "timer.h"
 #include "score.h"
 #include "UIBonus.h"
+#include "startcount.h"
 
 #include "Resultlogo.h"
 
@@ -36,6 +37,7 @@ HRESULT InitWorkYamaguchi(void)
 		InitTimer();
 		InitScore();
 		InitUIBonus();
+		InitStartCount();
 
 		break;
 
@@ -71,6 +73,7 @@ void UninitWorkYamaguchi(void)
 		UninitTimer();
 		UninitScore();
 		UninitUIBonus();
+		UninitStartCount();
 		break;
 	}
 
@@ -93,6 +96,7 @@ void UpdateWorkYamaguchi(void)
 		UpdateTimer();
 		UpdateScore();
 		UpdateUIBonus();
+		UpdateStartCount();
 		break;
 
 
@@ -121,6 +125,7 @@ void DrawWorkYamaguchi(void)
 		DrawTimer();
 		DrawScore();
 		DrawUIBonus();
+		DrawStartCount();
 		break;
 
 

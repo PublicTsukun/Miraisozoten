@@ -38,6 +38,12 @@ void TestVL(void)
 
 	}
 
+	// テスト用、全滅
+	if (GetKeyboardTrigger(DIK_X))
+	{
+		VanisnAllEnenyRE();
+	}
+
 }
 
 //=============================================================================
