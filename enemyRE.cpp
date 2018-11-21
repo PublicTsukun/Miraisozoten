@@ -477,6 +477,11 @@ void SetParameter00(void)
 	TrapFactory(2160, 1);
 	TrapFactory(2280, 4);
 
+	TrapFactory(2520, 1);
+	TrapFactory(2580, 1);
+	TrapFactory(2640, 1);
+	TrapFactory(2700, 1);
+
 	TrapFactory(2760, 1);
 	TrapFactory(2820, 1);
 	TrapFactory(2880, 1);
@@ -484,7 +489,7 @@ void SetParameter00(void)
 	TrapFactory(3000, 1);
 
 	TrapFactory(3240, 4);
-	TrapFactory(3480, 4);
+	TrapFactory(3480, 8);
 
 }
 
@@ -542,12 +547,15 @@ void TrapFactory(int apr, int num)
 			{
 				(e + j)->apr = apr;
 
+				// í—Şİ’è
 				type = rand() % E_TEX_MAX;
-				SetType(j, type);		// í—Şİ’è
+				SetType(j, type);		
 
+				// ˆÊ’uİ’è
 				x = float(rand() % 560 - 280);
 				z = float(rand() % 600);
-				SetPos(j, x, 100, z);	// ˆÊ’uİ’è
+				SetPos(j, x, 100, z);	
+
 				break;
 			}
 		}

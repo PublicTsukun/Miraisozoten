@@ -46,4 +46,6 @@ void UpdateUIBonus(void);
 void AddGage(int no);
 bool GetFiver(void);
 
+int GetGauge(void);
+
 #endif
