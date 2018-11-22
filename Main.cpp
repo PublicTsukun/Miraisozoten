@@ -15,6 +15,7 @@
 #include "Library/Light.h"
 #include "Library/DebugProcess.h"
 #include "SceneManager.h"
+#include "GameSound.h"
 
 
 //****************************************************************
@@ -101,6 +102,9 @@ HRESULT Init()
 	// フェード
 	CSFade::MakeVertex();
 
+	//サウンド
+	InitGameSound();
+
 	// タイトルシーンにセット
 	Scene::SetScene(SCENE_GAME);
 
@@ -115,6 +119,9 @@ HRESULT Init()
 //=============================================================================
 void Uninit(void)
 {
+	//サウンド
+	UninitGameSound();
+
 	Scene::SetScene(SCENE_END);
 
 }
@@ -129,6 +136,10 @@ void Update(void)
 
 	// カメラの更新処理
 	UpdateCamera(Vector3());
+
+	//サウンド
+	UpdateGameSound();
+
 
 	if (GetKeyboardTrigger(DIK_F3))
 	{// デバッグ表示ON/OFF

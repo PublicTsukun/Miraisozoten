@@ -134,14 +134,7 @@ CEnemyRE EnemyRE[ENEMY_MAX];
 
 int YOUDEFEATED;
 
-#define		ENEMY_SOUND_MAX	(2)
-DirectSound EnemySound[ENEMY_SOUND_MAX];
 
-const char *EnemySoundFile[] =
-{
-	"data/SE/的（ネガティブな人）が元気になった音_通常点.wav",
-	"data/SE/ボーナスゲージがたまった音（1段階・2段階目）.wav"
-};
 
 //=============================================================================
 // 初期化処理
@@ -180,10 +173,6 @@ void InitEnemyRE(void)
 	SetParameter00();
 
 
-	for (int i = 0; i < ENEMY_SOUND_MAX; i++)
-	{
-		EnemySound[i].LoadSound(EnemySoundFile[i]);
-	}
 }
 
 //=============================================================================
@@ -196,10 +185,6 @@ void UninitEnemyRE(void)
 		EnemyRE[i].Release();
 	}
 
-	for (int i = 0; i < ENEMY_SOUND_MAX; i++)
-	{
-		EnemySound[i].Release();
-	}
 }
 
 //=============================================================================
@@ -356,7 +341,6 @@ void DamageDealEnemyRE(int Eno, int Vno)
 		// ゲージアップ
 		AddGage(ENEMY_GAUGEBONUS);
 	}
-		EnemySound[1].Play(E_DS8_FLAG_NONE, 0);
 
 }
 
@@ -382,7 +366,6 @@ void VanisnEnenyRE(int no)
 
 	// ゲージアップ
 	AddGage(ENEMY_D_GAUGEBONUS);
-	EnemySound[0].Play(E_DS8_FLAG_NONE, 0);
 
 
 	SetYouDefeated(1);

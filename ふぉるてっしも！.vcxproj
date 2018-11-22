@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="AimPointer.cpp" />
     <ClCompile Include="finishcount.cpp" />
+    <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="startcount.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemyRE.cpp" />
@@ -78,6 +79,7 @@
   <ItemGroup>
     <ClInclude Include="AimPointer.h" />
     <ClInclude Include="finishcount.h" />
+    <ClInclude Include="GameSound.h" />
     <ClInclude Include="startcount.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemyRE.h" />

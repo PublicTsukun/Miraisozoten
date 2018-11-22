@@ -178,7 +178,7 @@ void DirectSound::Stop()
 
 //----音量ボリューム設定を変更する--------
 /* volume : 設定したいヴォリューム(0～-10,000) */
-void DirectSound::Volume(LONG volume)
+void DirectSound::SetVolume(LONG volume)
 {
 	//! ボリューム設定を変更する.
 	this->SoundBuffer->SetVolume(volume);

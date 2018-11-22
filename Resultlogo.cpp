@@ -10,7 +10,6 @@
 #include "SceneManager.h"
 #include "score.h"
 #include "Library/MultiRendering.h" 
-#include "Library\Sound.h"
 //=============================================================================
 // マクロ定義
 //=============================================================================
@@ -70,15 +69,7 @@ int slotCount;
 int g_score;
 
 
-#define	RESULT_SOUND_MAX	(3)
-DirectSound ResultSound[RESULT_SOUND_MAX];
-const char *ResultSoundFile[]=
-{
-	"data/SE/リザルトスコア集計音（数字がひたすら高速で動いてる時の音）.wav",
-	"data/SE/リザルトスコア確定音（数字が全て確定しきった時の音）.wav",
-	"data/BGM/タイトル・リザルト・ランキング画面音源 (2).wav",
 
-};
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -124,12 +115,6 @@ HRESULT InitResultlogo(void)
 
 	DetailCount = 0;
 
-	for (int i = 0; i < RESULT_SOUND_MAX; i++)
-	{
-		ResultSound[i].LoadSound(ResultSoundFile[i]);
-	}
-	ResultSound[2].Play(E_DS8_FLAG_LOOP, 0);
-	ResultSound[2].Volume(-2000);
 	
 	return S_OK;
 }
@@ -154,10 +139,6 @@ void UninitResultlogo(void)
 		ScoreDetail[i].Release();
 	}
 
-	for (int i = 0; i < RESULT_SOUND_MAX; i++)
-	{
-		ResultSound[i].Release();
-	}
 }
 
 //=============================================================================
@@ -203,7 +184,6 @@ void UpdateResultlogo(void)
 	{
 		slotStart = true;//一定時間でスロットスタート
 		slotTimer = 0;
-		ResultSound[0].Play(E_DS8_FLAG_LOOP, 0);
 	}
 	if (slotStart == true)//スロットが動いてるとき
 	{
@@ -233,7 +213,7 @@ void UpdateResultlogo(void)
 				slotTimer = 0;
 				if (slotCount == NUM_PLACE)
 				{
-					ResultSound[1].Play(E_DS8_FLAG_NONE, 0);
+
 				}
 
 				if (slotCount == 5)
@@ -244,7 +224,6 @@ void UpdateResultlogo(void)
 		}
 		else if (slotCount == NUM_PLACE)
 		{
-			ResultSound[0].Stop();
 			g_score = g_maxscore;
 			slotStart = false;
 		}
@@ -307,3 +286,4 @@ void UpdateResultlogo(void)
 
 	}
 }
+

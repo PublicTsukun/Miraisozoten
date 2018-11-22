@@ -12,7 +12,6 @@
 #include "enemyRE.h"
 #include "UIBonus.h"
 
-#include "Library\Sound.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -46,13 +45,6 @@ void ResetStage(void);
 STAGE StageWk;		// ワーク
 
 
-#define GAME_SOUND_MAX	(2)
-const char *GameSoundFile[]=
-{
-	"data/BGM/秋葉原ステージ音源.wav",
-	"data/BGM/ライブハウスステージ音源（ボーナス）.wav",
-};
-DirectSound GameSound[GAME_SOUND_MAX];
 
 //=============================================================================
 // 取得
@@ -82,12 +74,6 @@ void InitStage(void)
 	s->timerLimit[2] = STAGE02_TIMELIMIT;
 
 
-	for (int i = 0; i < GAME_SOUND_MAX; i++)
-	{
-		GameSound[i].LoadSound(GameSoundFile[i]);
-	}
-	GameSound[0].Play(E_DS8_FLAG_LOOP, 0);
-	GameSound[0].Volume(-1000);
 }
 
 //=============================================================================
@@ -96,12 +82,6 @@ void InitStage(void)
 void UninitStage(void)
 {
 
-	GameSound[0].Stop();
-
-	for (int i = 0; i < GAME_SOUND_MAX; i++)
-	{
-		GameSound[i].Release();
-	}
 }
 
 //=============================================================================
@@ -274,11 +254,9 @@ void BasiliskTime(void)
 	if (s->fever == TRUE)
 	{
 		// 効果、ここで追加
-		GameSound[1].Play(E_DS8_FLAG_LOOP, 0);
 	}
 	else
 	{
-		GameSound[1].Stop();
 	}
 	//================================//================================
 }
