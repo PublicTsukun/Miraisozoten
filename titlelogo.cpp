@@ -9,6 +9,10 @@
 #include "Library/Input.h"
 #include "Library/DebugProcess.h"
 #include "SceneManager.h"
+
+#include "Library\Sound.h"
+
+
 //=============================================================================
 // マクロ定義
 //=============================================================================
@@ -93,7 +97,11 @@ const Vector2 MenuBgSize[] = {
 	Vector2(MULTI_WIDTH+92,MULTI_HEIGHT+20),
 	Vector2(RANKING_WIDTH+100,RANKING_HEIGHT+20)
 };
+
 C2DObject MenuBg[3];
+
+DirectSound TitleSound[3];
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -119,6 +127,11 @@ HRESULT InitTitlelogo(void)
 		MenuBg[i].Init(MenuBgPos[i].x, MenuBgPos[i].y, MenuBgSize[i].x, MenuBgSize[i].y, MenuBgTex[i]);
 	}
 	
+	TitleSound[0].LoadSound("data/BGM/タイトル・リザルト・ランキング画面音源 (2).wav");
+	TitleSound[0].Play(E_DS8_FLAG_LOOP);
+
+	TitleSound[1].LoadSound("data/SE/決定ボタン音（タイトル画面・メニュー画面・名前最終決定時・もどる、やめとくを押したとき等）.wav");
+	TitleSound[2].LoadSound("data/SE/選択カーソル移動音（メニュー選択・名前入力etc）.wav");
 	return S_OK;
 }
 
@@ -127,23 +140,26 @@ HRESULT InitTitlelogo(void)
 //=============================================================================
 void UninitTitlelogo(void)
 {
-		titlebg.Release();
-		titlename.Release();
+	titlebg.Release();
+	titlename.Release();
 
-		startbutton.Release();
-		singlemode.Release();
-		multimode.Release();
-		rankingmode.Release();
+	startbutton.Release();
+	singlemode.Release();
+	multimode.Release();
+	rankingmode.Release();
 
-		cursor[0].Release();
-		cursor[1].Release();
+	cursor[0].Release();
+	cursor[1].Release();
 
-		for (int i = 0; i < 3; i++)
-		{
-			MenuBg[i].Release();
-		}
+	for (int i = 0; i < 3; i++)
+	{
+		MenuBg[i].Release();
+	}
 
-
+	for (int i = 0; i < 3; i++)
+	{
+		TitleSound[i].Release();
+	}
 }
 
 //=============================================================================
@@ -201,6 +217,8 @@ void UpdateTitlelogo(void)
 	{
 		x = x + 1;
 		flagCount = 0;//カウントリセット
+		TitleSound[2].Play(E_DS8_FLAG_NONE);
+
 	}
 
 	//カーソルが一番下にある状態で↓入力すると一番上に戻る
@@ -214,6 +232,8 @@ void UpdateTitlelogo(void)
 	{
 		x = x - 1;
 		flagCount = 0;//カウントリセット
+		TitleSound[2].Play(E_DS8_FLAG_NONE);
+
 	}
 
 	//カーソルが一番上にある状態で↑入力すると一番下に戻る
@@ -269,23 +289,31 @@ void UpdateTitlelogo(void)
 		if(x == SINGLE)
 		{
 			Scene::SetScene(SCENE_GAME);
+			TitleSound[1].Play(E_DS8_FLAG_NONE);
+
 		}
 
 		else if (x == MULTI)
 		{
 			Scene::SetScene(SCENE_GAME);
+			TitleSound[1].Play(E_DS8_FLAG_NONE);
+
 		}
 
 		//リザルト(ランキング)画面に移行
 		else if (x == RANKING)
 		{
 			Scene::SetScene(SCENE_RANKING);
+			TitleSound[1].Play(E_DS8_FLAG_NONE);
+
 		}
 	}
 
 	else if (GetKeyboardTrigger(DIK_RETURN) && pop == true)
 	{
 		pop = false;
+		TitleSound[1].Play(E_DS8_FLAG_NONE);
+
 	}
 
 }
