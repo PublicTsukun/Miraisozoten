@@ -15,7 +15,7 @@
 //*****************************************************************************
 // É}ÉNÉçíËã`
 //*****************************************************************************
-#define STAGE00_TIMELIMIT	(90)
+#define STAGE00_TIMELIMIT	(3600)
 #define STAGE01_TIMELIMIT	(180)
 #define STAGE02_TIMELIMIT	(120)
 #define FEVER_TIMELIMIT		(120)
