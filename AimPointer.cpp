@@ -3,6 +3,16 @@
 #include "Library\Input.h"
 #include "Library\DebugProcess.h"
 
+
+Vector2 AimPointer::GlobalPosition = Vector2();
+
+Vector2 AimPointer::GetPosition(Vector2 set)
+{
+	if (set.x < 0 || set.y < 0)
+		GlobalPosition = set;
+	return GlobalPosition;
+}
+
 void AimPointer::Update()
 {
 	Vector3 gyro = GetGyro(0);
@@ -41,3 +51,4 @@ void AimPointer::Move(Vector2 v)
 
 	SetVertex();
 }
+

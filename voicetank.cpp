@@ -17,6 +17,11 @@ static Vector2 vtsBack = Vector2(70, 160);
 static Vector2 vtsTank = Vector2(100, 200);
 //static Vector2 vtsVolu = Vector2(59, 157);
 
+int CEnergyTankUI::GetVoiceVolume()
+{
+	return vtVolume;
+}
+
 void CEnergyTankUI::Init()
 {
 	MicTestInit();
@@ -157,3 +162,5 @@ void CEnergyTankUI::Uninit()
 	this->Volume.Release();
 	this->VoiceTen.Release();
 }
+
+
