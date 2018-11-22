@@ -38,6 +38,7 @@ typedef struct
 STAGE *GetStage(void);
 
 void InitStage(void);
+void UninitStage(void);
 void UpdateStage(void);
 
 void FreezeStage(void);

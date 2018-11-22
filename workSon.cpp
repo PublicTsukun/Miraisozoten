@@ -58,13 +58,14 @@ void UninitWorkSon(void)
 
 
 	case SCENE_GAME://タイトルで使ったソースのUninit
-		UninitVoiceten();
-		UninitMessageBox();
-		UninitEnemyRE();
+		UninitStage();
 		break;
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
+		UninitVoiceten();
+		UninitMessageBox();
+		UninitEnemyRE();
 
 		break;
 	}

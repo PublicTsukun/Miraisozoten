@@ -195,6 +195,11 @@ void UninitEnemyRE(void)
 	{
 		EnemyRE[i].Release();
 	}
+
+	for (int i = 0; i < ENEMY_SOUND_MAX; i++)
+	{
+		EnemySound[i].Release();
+	}
 }
 
 //=============================================================================
