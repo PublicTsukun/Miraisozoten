@@ -45,7 +45,7 @@ void Ranking(void)
 	}
 
 	// スコアを取得(一時的にスコアを6位にする)
-	rankingWk[SIXTH].score = 10000;//6位のスコアに今回のスコアをぶちこむ
+	rankingWk[SIXTH].score = Random(0,100000);//6位のスコアに今回のスコアをぶちこむ
 	rankingWk[SIXTH].id = max + 1;
 	// スコアをもとに5位のスコアと比較し、5位のスコアより低ければランキング更新
 	if (rankingWk[SIXTH].score >= rankingWk[FIFTH].score)
