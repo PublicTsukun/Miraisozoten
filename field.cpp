@@ -59,20 +59,26 @@ const Vector2 wallSize = Vector2(WALL_SIZE_X, WALL_SIZE_Y);
 const Vector3 wallPos = Vector3(WALL_POS_X, WALL_POS_Y, WALL_POS_Z);
 
 
+
+const char *WallTex[] =
+{
+	"data/TEXTURE/ステージ/アキバ/バック.png",
+	"data/TEXTURE/ステージ/アキバ/ミッド.png",
+	"data/TEXTURE/ステージ/アキバ/フロント.png",
+};
 //=============================================================================
 // 初期化処理
 //=============================================================================
 HRESULT InitField(void)
 {
 
-
 	wall[0].Init(wallPos, wallSize);
-	wall[0].LoadTexture("data/TEXTURE/ステージ/アキバ/フロント.png");
 	wall[1].Init(wallPos, wallSize);
-	wall[1].LoadTexture("data/TEXTURE/ステージ/アキバ/ミッド.png");
 	wall[2].Init(wallPos, wallSize);
-	wall[2].LoadTexture("data/TEXTURE/ステージ/アキバ/バック.png");
 
+	wall[0].LoadTexture(WallTex[0]);
+	wall[1].LoadTexture(WallTex[1]);
+	wall[2].LoadTexture(WallTex[2]);
 
 	return S_OK;
 }
@@ -87,7 +93,6 @@ void UninitField(void)
 	{
 		wall[i].Release();
 	}
-
 }
 
 //=============================================================================
@@ -107,49 +112,49 @@ void DrawField(void)
 void UpdateField(void)
 {
 
-	if (GetKeyboardPress(DIK_UP))
-	{
-		wall[0].MoveWallZ(10.0f);
-	}
-	if (GetKeyboardPress(DIK_DOWN))
-	{
-		wall[0].MoveWallZ(-10.0f);
-	}
-	if (GetKeyboardPress(DIK_LEFT))
-	{
-		wall[0].MoveWallX(-10.0f);
-	}
-	if (GetKeyboardPress(DIK_RIGHT))
-	{
-		wall[0].MoveWallX(10.0f);
-	}
-
-	if (GetKeyboardPress(DIK_Q))
-	{
-		wall[0].MoveWallY(-10.0f);
-	}
-	if (GetKeyboardPress(DIK_E))
-	{
-		wall[0].MoveWallY(10.0f);
-	}
-
-	if (GetKeyboardPress(DIK_W))
-	{
-		wall[0].SizeWallY(10.0f);
-	}
-	if (GetKeyboardPress(DIK_A))
-	{
-		wall[0].SizeWallX(-10.0f);
-	}
-	if (GetKeyboardPress(DIK_S))
-	{
-		wall[0].SizeWallY(-10.0f);
-	}
-	if (GetKeyboardPress(DIK_D))
-	{
-		wall[0].SizeWallX(10.0f);
-	}
-	wall[0].Print();
+	//if (GetKeyboardPress(DIK_UP))
+	//{
+	//	wall[0].MoveWallZ(10.0f);
+	//}
+	//if (GetKeyboardPress(DIK_DOWN))
+	//{
+	//	wall[0].MoveWallZ(-10.0f);
+	//}
+	//if (GetKeyboardPress(DIK_LEFT))
+	//{
+	//	wall[0].MoveWallX(-10.0f);
+	//}
+	//if (GetKeyboardPress(DIK_RIGHT))
+	//{
+	//	wall[0].MoveWallX(10.0f);
+	//}
+	//
+	//if (GetKeyboardPress(DIK_Q))
+	//{
+	//	wall[0].MoveWallY(-10.0f);
+	//}
+	//if (GetKeyboardPress(DIK_E))
+	//{
+	//	wall[0].MoveWallY(10.0f);
+	//}
+	//
+	//if (GetKeyboardPress(DIK_W))
+	//{
+	//	wall[0].SizeWallY(10.0f);
+	//}
+	//if (GetKeyboardPress(DIK_A))
+	//{
+	//	wall[0].SizeWallX(-10.0f);
+	//}
+	//if (GetKeyboardPress(DIK_S))
+	//{
+	//	wall[0].SizeWallY(-10.0f);
+	//}
+	//if (GetKeyboardPress(DIK_D))
+	//{
+	//	wall[0].SizeWallX(10.0f);
+	//}
+	//wall[0].Print();
 }
 
 
