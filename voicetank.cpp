@@ -17,6 +17,11 @@ static Vector2 vtsBack = Vector2(70, 160);
 static Vector2 vtsTank = Vector2(100, 200);
 //static Vector2 vtsVolu = Vector2(59, 157);
 
+int CEnergyTankUI::GetVoiceVolume()
+{
+	return vtVolume;
+}
+
 void CEnergyTankUI::Init()
 {
 	MicTestInit();
@@ -62,9 +67,9 @@ void CEnergyTankUI::Update()
 	vtVolume = sum / VTG_ARG;
 
 #ifdef _DEBUG
-	//if (IsMouseLeftPressed()) vtVolume += (int)GetMouseY();
-	//if (IsMouseCenterPressed()) vtPosi += Vector2((float)GetMouseX(), (float)GetMouseY());
-	//vtScale += (float)GetMouseZ() / 1200.0f;
+	if (IsMouseLeftPressed()) vtVolume += (int)GetMouseY();
+	if (IsMouseCenterPressed()) vtPosi += Vector2((float)GetMouseX(), (float)GetMouseY());
+	vtScale += (float)GetMouseZ() / 1200.0f;
 #endif // _DEBUG
 
 	if (vtVolume <       0) vtVolume =       0;
@@ -157,3 +162,5 @@ void CEnergyTankUI::Uninit()
 	this->Volume.Release();
 	this->VoiceTen.Release();
 }
+
+

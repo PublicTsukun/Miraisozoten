@@ -24,15 +24,15 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define ENEMY_HP			(2)
+#define ENEMY_HP			(2)		// 初期化用
 #define ENEMY_SCOREBONUS	(1)
 #define ENEMY_GAUGEBONUS	(50)
 #define ENEMY_D_SCOREBONUS	(10)
 #define ENEMY_D_GAUGEBONUS	(200)
 
-#define ENEMY_COLI_LEN		(24.0f)
-#define ENEMY_COLI_HEI		(24.0f)
-#define ENEMY_COLI_WID		(5.0f)
+#define ENEMY_COLI_LEN		(24.0f)	// 当たり判定 x
+#define ENEMY_COLI_HEI		(24.0f)	// 当たり判定 y
+#define ENEMY_COLI_WID		(5.0f)	// 当たり判定 z
 
 //*****************************************************************************
 // クラス定義
@@ -84,13 +84,13 @@ void CEnemyRE::ResetTexture(void)
 //*****************************************************************************
 // 列挙型
 //*****************************************************************************
-enum E_TEX
+enum E_TYPE
 {
-	E_TEX_CHILD = 0,
-	E_TEX_MAID,
-	E_TEX_OTAKU,
+	E_TYPE_CHILD = 0,
+	E_TYPE_MAID,
+	E_TYPE_OTAKU,
 
-	E_TEX_MAX,
+	E_TYPE_MAX,
 };
 
 //*****************************************************************************
@@ -119,6 +119,14 @@ char *FileEnemy[] =
 	"data/TEXTURE/character/01_01_child.png",
 	"data/TEXTURE/character/01_02_maid.png",
 	"data/TEXTURE/character/01_03_otaku.png",
+};
+
+// Enemy HP Database、E_TYPEに対応
+int EnemyHp[] =
+{
+	5,		// CHILD
+	50,		// MAID
+	15,		// OTAKU
 };
 
 ENEMY EnemyREWk[ENEMY_MAX];		// ワーク
@@ -568,13 +576,30 @@ void TrapFactory(int apr, int num)
 				(e + j)->apr = apr;
 
 				// 種類設定
-				type = rand() % E_TEX_MAX;
+				type = rand() % E_TYPE_MAX;
 				SetType(j, type);		
 
 				// 位置設定
 				x = float(rand() % 560 - 280);
 				z = float(rand() % 600);
 				SetPos(j, x, 100, z);	
+
+				// HP設定
+				switch (type)
+				{
+				case E_TYPE_CHILD:
+					(e + j)->hp = EnemyHp[E_TYPE_CHILD];
+					break;
+				case E_TYPE_MAID:
+					(e + j)->hp = EnemyHp[E_TYPE_MAID];
+					break;
+				case E_TYPE_OTAKU:
+					(e + j)->hp = EnemyHp[E_TYPE_OTAKU];
+					break;
+				default:
+					(e + j)->hp = ENEMY_HP;
+					break;
+				}
 
 				break;
 			}
@@ -641,6 +666,28 @@ void TestEnemyRE(void)
 	{
 		e->pos.y += vel;
 	}
+
+	if (GetKeyboardPress(DIK_NUMPAD3))
+	{
+		e->rot.y += 0.2f;
+	}
+
+
+	//if (GetKeyboardPress(DIK_NUMPAD3))
+	//{
+	//	tx->rot.y += 6 * (D3DX_PI / 180);
+	//}
+
+	//if (tx->rot.y >= 90 * (D3DX_PI / 180))
+	//{
+	//	tx->rot.y = -(90 * (D3DX_PI / 180));
+	//}
+
+	// 0 -> 90	-90 -> 90   -90 > 0
+	// 90 180 90
+	// 360 / vel = time
+	// if time rot = 0
+
 
 	PrintDebugProcess("pos: %f %f %f\n", e->pos.x, e->pos.y, e->pos.z);
 	PrintDebugProcess("pos: %f %f %f\n", (e + 1)->pos.x, (e + 1)->pos.y, (e + 1)->pos.z);
