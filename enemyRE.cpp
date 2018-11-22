@@ -647,6 +647,28 @@ void TestEnemyRE(void)
 		e->pos.y += vel;
 	}
 
+	if (GetKeyboardPress(DIK_NUMPAD3))
+	{
+		e->rot.y += 0.2f;
+	}
+
+
+	//if (GetKeyboardPress(DIK_NUMPAD3))
+	//{
+	//	tx->rot.y += 6 * (D3DX_PI / 180);
+	//}
+
+	//if (tx->rot.y >= 90 * (D3DX_PI / 180))
+	//{
+	//	tx->rot.y = -(90 * (D3DX_PI / 180));
+	//}
+
+	// 0 -> 90	-90 -> 90   -90 > 0
+	// 90 180 90
+	// 360 / vel = time
+	// if time rot = 0
+
+
 	PrintDebugProcess("pos: %f %f %f\n", e->pos.x, e->pos.y, e->pos.z);
 	PrintDebugProcess("pos: %f %f %f\n", (e + 1)->pos.x, (e + 1)->pos.y, (e + 1)->pos.z);
 	PrintDebugProcess("pos: %f %f %f\n", (e + 2)->pos.x, (e + 2)->pos.y, (e + 2)->pos.z);

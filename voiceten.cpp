@@ -14,9 +14,9 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define V_BLUE_ATK		(5)		// voiceten blue ATK 
-#define V_YELLOW_ATK	(15)	// voiceten yellow ATK	
-#define V_RED_ATK		(50)	// voiceten red ATK
+#define V_BLUE_ATK		(1)		// voiceten blue ATK 
+#define V_YELLOW_ATK	(3)		// voiceten yellow ATK	
+#define V_RED_ATK		(9)		// voiceten red ATK
 
 //*****************************************************************************
 // クラス定義
@@ -290,7 +290,7 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			(v + i)->pos = Self;
 			Voiceten[i].LoadObjectStatus((v + i)->pos);
 
-			// テクスチャ設定（ヴォイステンゲージに依存）
+			// テクスチャ、ATK設定（ヴォイステンゲージに依存）
 			if (CEnergyTankUI::GetVoiceVolume() < (140 * 3))
 			{
 				Voiceten[i].SetTexture(V_TYPE_BLUE);
