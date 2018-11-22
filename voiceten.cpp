@@ -11,6 +11,13 @@
 #include "UIBonus.h"
 
 //*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+#define V_BLUE_ATK		(5)		// voiceten blue ATK 
+#define V_YELLOW_ATK	(15)	// voiceten yellow ATK	
+#define V_RED_ATK		(50)	// voiceten red ATK
+
+//*****************************************************************************
 // 列挙型
 //*****************************************************************************
 enum V_TEX
@@ -21,7 +28,6 @@ enum V_TEX
 
 	V_TEX_MAX,
 };
-
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -248,15 +254,19 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			{
 			case 0:
 				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_BLUE]);
+				(v + i)->atk = V_BLUE_ATK;
 				break;
 			case 1:
 				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_YELLOW]);
+				(v + i)->atk = V_YELLOW_ATK;
 				break;
 			case 2:
 				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_RED]);
+				(v + i)->atk = V_RED_ATK;
 				break;
 			default:
 				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_BLUE]);
+				(v + i)->atk = V_BLUE_ATK;
 				break;
 			}
 
