@@ -30,7 +30,8 @@ public:
 	virtual void SetVertex(float sizeX, float sizeY, float posX, float posY);	// 頂点座標設定
 	virtual void SetVertex(float sizeX, float sizeY);
 	virtual void SetVertex(D3DXCOLOR color);
-	virtual void SetTexture(int num, int ix, int iy);	// テクスチャ座標設定
+	virtual void SetTexture(int no, float ix, float iy);	// テクスチャ座標設定
+	virtual void SetTexture(int num, int ix, int iy);
 
 	virtual LPDx3DTex9 GetTexture(LPDx3DTex9 *texture);
 
@@ -79,14 +80,16 @@ public:
 class UI2DNumber : public C2DObject
 {
 public:
+	void SetTexture(int num, int ix, int iy);
 	void SetNumber(int num);
 
 };
 
 
 /* 2DUIゲージバー */
-class UI2DPercentGauge
+class UI2DPercentGauge 
 {
+
 	Vector2 Position;
 	Vector2 Size;
 
@@ -95,10 +98,11 @@ public:
 	C2DObject   Gage;
 
 	void Init(const char *textureF, const char *textureG);
-	void Init(float sizeX, float sizeY, float posX, float posY);
+	void Init( float posX, float posY,float sizeX, float sizeY);
 	void Update(float per);
 	void Draw(void);
 	void Uninit(void);
+
 
 };
 

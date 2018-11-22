@@ -8,11 +8,35 @@
 
 #include "Library/ObjectBase3D.h"
 
+#include "UIBonus.h"
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+#define V_BLUE_ATK		(5)		// voiceten blue ATK 
+#define V_YELLOW_ATK	(15)	// voiceten yellow ATK	
+#define V_RED_ATK		(50)	// voiceten red ATK
+
+//*****************************************************************************
+// 列挙型
+//*****************************************************************************
+enum V_TEX
+{
+	V_TEX_BLUE = 0,
+	V_TEX_YELLOW,
+	V_TEX_RED,
+
+	V_TEX_MAX,
+};
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 void UpdateVoiMove(void);
-float DirectionCalc(D3DXVECTOR3 Self, D3DXVECTOR3 Tgt);
+void UpdateVoiMoveY(int no);
+
+void CheckUptimeVoi(int no);
+
 
 //*****************************************************************************
 // グローバル変数
@@ -21,12 +45,12 @@ VOICETEN VoicetenWk[VOICETEN_MAX];		// ワーク
 
 char *FileVoiceten[] =
 {
-	"data/作業/テスト画像02.jpg",
+	"data/TEXTURE/UI/voiceten_B.png",
+	"data/TEXTURE/UI/voiceten_Y.png",
+	"data/TEXTURE/UI/voiceten_R.png",
 };
 
 C3DPolygonObject Voiceten[VOICETEN_MAX];
-
-const float voi_duration = 60;
 
 //=============================================================================
 // 初期化処理
@@ -35,7 +59,7 @@ void InitVoiceten(void)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	const Vector2 size = Vector2(48, 48);
+	const Vector2 size = Vector2(22, 31);
 
 	for (int i = 0; i < VOICETEN_MAX; i++)
 	{
@@ -43,7 +67,7 @@ void InitVoiceten(void)
 		(v + i)->pos = Vector3(0.0f, 0.0f, 0.0f);
 		(v + i)->rot = Vector3(0.0f, 0.0f, 0.0f);
 
-		(v + i)->vel = 1.0f;
+		(v + i)->vel = 2.0f;
 
 		(v + i)->timer = 0;
 
@@ -53,7 +77,7 @@ void InitVoiceten(void)
 
 		(v + i)->nor = Vector3(0.0f, 0.0f, 0.0f);
 
-		(v + i)->hei = 60.0f;
+		(v + i)->atk = 1;
 
 		Voiceten[i].Init((v + i)->pos, size);
 		Voiceten[i].LoadTexture(FileVoiceten[0]);
@@ -91,8 +115,11 @@ void UpdateVoiceten(void)
 			// タイマー　カウントアップ
 			(v + i)->timer++;
 
+			// 稼働時間検査
+			CheckUptimeVoi(i);
+
 			// 消滅
-			VanishVoiceten(i);
+			//VanishVoiceten(i);
 		}
 	}
 }
@@ -133,26 +160,57 @@ void UpdateVoiMove(void)
 	{
 		if ((v + i)->use == TRUE)
 		{
-			
-			double g = (2 * (v + i)->vel) / (v + i)->dura;
-
 			//// 一般
 			//(v + i)->pos.x -= sinf((v + i)->rot.y) * (v + i)->vel;
 			//(v + i)->pos.z -= cosf((v + i)->rot.y) * (v + i)->vel;
 
 			// 目標指定
 			(v + i)->pos.x += (v + i)->nor.x;
+			(v + i)->pos.y += (v + i)->nor.y;
 			(v + i)->pos.z += (v + i)->nor.z;
 
-			(v + i)->pos.y += (v + i)->nor.y;
-
-			//(v + i)->pos.y += (v + i)->nor.y +
-			//	(-0.5 * g * (v + i)->timer * (v + i)->timer) +
-			//	((v + i)->vel * (v + i)->timer);
+			UpdateVoiMoveY(i);
 
 		}
-
 	}
+}
+
+//=============================================================================
+// 移動Y
+//=============================================================================
+void UpdateVoiMoveY(int no)
+{
+	VOICETEN *v = GetVoiceten(0);
+
+	// 高さ調整用
+	const float value = 20.0;
+
+	// 闇
+	// 処理時間 60 / 段落 20 = 3.0
+	// ベジェ曲線 4ポイント (0, 0) (2, 8) (4, 8) (8, 8) Y軸だけ使用
+
+	if (((v + no)->timer) >= 0 && ((v + no)->timer) < 3) { (v + no)->pos.y +=   float((1.14 - 0)    / 3.0 * value); }
+	if (((v + no)->timer) >= 3 && ((v + no)->timer) < 6) { (v + no)->pos.y +=   float((2.16 - 1.14) / 3.0 * value); }
+	if (((v + no)->timer) >= 6 && ((v + no)->timer) < 9) { (v + no)->pos.y +=   float((3.06 - 2.16) / 3.0 * value); }
+	if (((v + no)->timer) >= 9 && ((v + no)->timer) < 12) { (v + no)->pos.y +=  float((3.84 - 3.06) / 3.0 * value); }
+	if (((v + no)->timer) >= 12 && ((v + no)->timer) < 15) { (v + no)->pos.y += float((4.50 - 3.84) / 3.0 * value); }
+	if (((v + no)->timer) >= 15 && ((v + no)->timer) < 18) { (v + no)->pos.y += float((5.04 - 4.50) / 3.0 * value); }
+	if (((v + no)->timer) >= 18 && ((v + no)->timer) < 21) { (v + no)->pos.y += float((5.46 - 5.04) / 3.0 * value); }
+	if (((v + no)->timer) >= 21 && ((v + no)->timer) < 24) { (v + no)->pos.y += float((5.76 - 5.46) / 3.0 * value); }
+	if (((v + no)->timer) >= 24 && ((v + no)->timer) < 27) { (v + no)->pos.y += float((5.94 - 5.76) / 3.0 * value); }
+	if (((v + no)->timer) >= 27 && ((v + no)->timer) < 30) { (v + no)->pos.y += float((6.0 - 5.94)  / 3.0 * value); }
+
+	if (((v + no)->timer) >= 30 && ((v + no)->timer) < 33) { (v + no)->pos.y += float((5.94 - 6.0)  / 3.0 * value); }
+	if (((v + no)->timer) >= 33 && ((v + no)->timer) < 36) { (v + no)->pos.y += float((5.76 - 5.94) / 3.0 * value); }
+	if (((v + no)->timer) >= 36 && ((v + no)->timer) < 39) { (v + no)->pos.y += float((5.46 - 5.76) / 3.0 * value); }
+	if (((v + no)->timer) >= 39 && ((v + no)->timer) < 42) { (v + no)->pos.y += float((5.04 - 5.46) / 3.0 * value); }
+	if (((v + no)->timer) >= 42 && ((v + no)->timer) < 45) { (v + no)->pos.y += float((4.50 - 5.04) / 3.0 * value); }
+	if (((v + no)->timer) >= 45 && ((v + no)->timer) < 48) { (v + no)->pos.y += float((3.84 - 4.50) / 3.0 * value); }
+	if (((v + no)->timer) >= 48 && ((v + no)->timer) < 51) { (v + no)->pos.y += float((3.06 - 3.84) / 3.0 * value); }
+	if (((v + no)->timer) >= 51 && ((v + no)->timer) < 54) { (v + no)->pos.y += float((2.16 - 3.06) / 3.0 * value); }
+	if (((v + no)->timer) >= 54 && ((v + no)->timer) < 57) { (v + no)->pos.y += float((1.14 - 2.16) / 3.0 * value); }
+	if (((v + no)->timer) >= 57 && ((v + no)->timer) < 60) { (v + no)->pos.y += float((0.0 - 1.14)  / 3.0 * value); }
+
 }
 
 //=============================================================================
@@ -168,11 +226,51 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 	{
 		if ((v + i)->use == FALSE)
 		{
+			// 到達所要距離
+			(v + i)->dist =
+				sqrt(
+					pow((Tgt.x - Self.x), 2) +
+					pow((Tgt.y - Self.y), 2) +
+					pow((Tgt.z - Self.z), 2)
+					);
+
 			// 到達所要距離の正規化
 			(v + i)->nor = (Tgt - Self) / float((v + i)->dura);
 
-			(v + i)->pos = Self;
+			// 速度
+			(v + i)->vel =
+				sqrt(
+					pow(((v + i)->nor.x), 2) +
+					pow(((v + i)->nor.y), 2) +
+					pow(((v + i)->nor.z), 2)
+					);
 
+			// 位置初期化
+			(v + i)->pos = Self;
+			Voiceten[i].LoadObjectStatus((v + i)->pos);
+
+			// テクスチャ設定（ゲージの状態に依存）
+			switch (GetGauge())
+			{
+			case 0:
+				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_BLUE]);
+				(v + i)->atk = V_BLUE_ATK;
+				break;
+			case 1:
+				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_YELLOW]);
+				(v + i)->atk = V_YELLOW_ATK;
+				break;
+			case 2:
+				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_RED]);
+				(v + i)->atk = V_RED_ATK;
+				break;
+			default:
+				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_BLUE]);
+				(v + i)->atk = V_BLUE_ATK;
+				break;
+			}
+
+			// 顕現
 			(v + i)->use = TRUE;
 
 			break;
@@ -188,12 +286,35 @@ void VanishVoiceten(int no)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	if ((v + no)->timer >= (v + no)->dura)
-	{
-		// 消滅
-		(v + no)->use = FALSE;
+	//if ((v + no)->timer >= (v + no)->dura)
+	//{
 
-		// 初期化
-		(v + no)->timer = 0;
+	//}
+
+	// 消滅
+	(v + no)->use = FALSE;
+
+	// 初期化
+	(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
+	(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
+	(v + no)->timer = 0;
+
+	Voiceten[no].LoadObjectStatus((v + no)->pos);
+
+}
+
+//=============================================================================
+// 稼働時間検査
+//=============================================================================
+void CheckUptimeVoi(int no)
+{
+	VOICETEN *v = GetVoiceten(0);
+
+	const int Uptime = 60;
+
+	if ((v + no)->timer >= Uptime)
+	{
+		VanishVoiceten(no);
 	}
+
 }

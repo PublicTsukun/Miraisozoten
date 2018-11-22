@@ -30,10 +30,10 @@ HRESULT Direct3D::Init(HWND hWnd, bool bWindowMode)
 	dxD3Dpp.BackBufferCount  = 1;					// バックバッファの数
 	dxD3Dpp.BackBufferWidth  = SCREEN_WIDTH;		// ゲーム画面サイズ(幅)
 	dxD3Dpp.BackBufferHeight = SCREEN_HEIGHT;		// ゲーム画面サイズ(高さ)
-	dxD3Dpp.BackBufferFormat = d3ddm.Format;		// カラーモードの指定
-	dxD3Dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;	// 映像信号に同期してフリップする
-	dxD3Dpp.Windowed = bWindowMode;				// ウィンドウモード
-	dxD3Dpp.EnableAutoDepthStencil = TRUE;		// デプスバッファ（Ｚバッファ）とステンシルバッファを作成
+	dxD3Dpp.BackBufferFormat = d3ddm.Format;		// カラーモードの指定 (d3ddm.Format)
+	dxD3Dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;		// 映像信号に同期してフリップする
+	dxD3Dpp.Windowed = bWindowMode;					// ウィンドウモード
+	dxD3Dpp.EnableAutoDepthStencil = TRUE;			// デプスバッファ（Ｚバッファ）とステンシルバッファを作成
 	dxD3Dpp.AutoDepthStencilFormat = D3DFMT_D16;	// デプスバッファとして16bitを使う
 
 	if (bWindowMode)
@@ -129,3 +129,20 @@ LPDIRECT3DDEVICE9 Direct3D::GetD3DDevice()
 	return Direct3D::dx_pD3DDevice;
 }
 
+//void ChangeDisplayMode(void)
+//{
+//	// ウィンドウモード
+//	if (windowMode)
+//	{
+//		s_d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;						// バックバッファ
+//		s_d3dpp.FullScreen_RefreshRateInHz = 0;							// リフレッシュレート
+//		//s_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;	// インターバル
+//	}
+//	// フルスクリーンモード
+//	else
+//	{
+//		s_d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;						// バックバッファ
+//		s_d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;	// リフレッシュレート
+//		s_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;		// インターバル
+//	}
+//}

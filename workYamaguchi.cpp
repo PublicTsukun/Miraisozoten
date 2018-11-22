@@ -12,6 +12,12 @@
 
 //山口担当分インクルード
 #include "field.h"
+#include "timer.h"
+#include "score.h"
+#include "UIBonus.h"
+#include "startcount.h"
+#include "Resultlogo.h"
+
 
 //=============================================================================
 //初期化処理
@@ -27,11 +33,16 @@ HRESULT InitWorkYamaguchi(void)
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitField();
+		InitTimer();
+		InitScore();
+		InitUIBonus();
+		InitStartCount();
+
 		break;
 
 
 	case SCENE_RESULT://リザルトで使いたいソースのInit
-
+		InitResultlogo();
 		break;
 	}
 
@@ -47,7 +58,7 @@ void UninitWorkYamaguchi(void)
 	switch (Scene::SetScene(SCENE_MAX))
 	{
 	case SCENE_TITLE://リザルトで使ったソースのUninit
-
+		UninitResultlogo();
 		break;
 
 
@@ -58,6 +69,10 @@ void UninitWorkYamaguchi(void)
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
 		UninitField();
+		UninitTimer();
+		UninitScore();
+		UninitUIBonus();
+		UninitStartCount();
 		break;
 	}
 
@@ -77,12 +92,16 @@ void UpdateWorkYamaguchi(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
-
+		UpdateTimer();
+		UpdateScore();
+		UpdateUIBonus();
+		UpdateStartCount();
+		UpdateField();
 		break;
 
 
 	case SCENE_RESULT://リザルトで使うソースのUpdate
-
+		UpdateResultlogo();
 		break;
 	}
 
@@ -103,10 +122,15 @@ void DrawWorkYamaguchi(void)
 
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawField();
+		DrawTimer();
+		DrawScore();
+		DrawUIBonus();
+		DrawStartCount();
 		break;
 
 
 	case SCENE_RESULT://リザルトで使うソースのDraw
+		DrawResultlogo();
 
 		break;
 	}

@@ -15,7 +15,6 @@ class CNowLoading
 public:
 	UIBackGround     Back;
 	C2DObject        Text;
-	UI2DPercentGauge PercentGage;
 
 	void Init();
 	void Uninit(void);

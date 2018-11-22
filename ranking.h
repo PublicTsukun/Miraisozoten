@@ -1,64 +1,21 @@
 //=============================================================================
 //
-// ランキング処理 [ranking.h]
-// Author : 萩原奈歩
+// リザルト画面処理 [Game.h]
 //
 //=============================================================================
-#ifndef _RANKING_H_
-#define _RANKING_H_
-#include "workHagiwara.h"
+#ifndef _RANKING_INCLUDE_H_
+#define _RANKING_INCLUDE_H_
 
-//*****************************************************************************
-// マクロ定義
-//*****************************************************************************
-#define RANKING_CSV		_T("data/EXCEL_DATA/ranking.csv")	// サンプル用画像
-#define RANKING_MAX			(6)								// スコアの最大値
-#define BUFC_MAX			(1024)							// スコアの最大値
-#define NAME_MAX			(5)								// 名前の最大値
 
-//*****************************************************************************
-// クラス定義
-//*****************************************************************************
-class RANKING
-{
-public:
-	int			id;
-	int			rank;
-	int			score;
-	long long	name[NAME_MAX][2];//名前入力の(何文字目,子音,母音)
-};
+#include <Windows.h>
 
-//*****************************************************************************
-// 列挙型
-//*****************************************************************************
-
-enum
-{
-	RANKING_CSV_ID = 0,		// ID
-	RANKING_CSV_RANK,		// 順位
-	RANKING_CSV_SCORE,		// スコア
-	RANKING_CSV_NAME,		//名前
-	RANKING_CSV_MAX,
-};
-
-enum
-{	// 順位
-	FIRST = 0,		//1位
-	SECOND,			//2位
-	THIRD,			//3位
-	FOURTH,			//4位
-	FIFTH,			//5位
-	SIXTH,			//6位
-};
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-RANKING *GetRanking(int no);
-int GetRankingCnt(void);
-void WriteRankingCsv(void);
-void LoadRankingCsv(void);
-void Ranking(void);
-void DebugRank(void);
+HRESULT InitRanking(void);
+void UninitRanking(void);
+void UpdateRanking(void);
+void DrawRanking(void);
 
 #endif

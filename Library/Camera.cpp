@@ -143,6 +143,16 @@ void CCamera::Translation(Vector2 moveRate)
 
 }
 
+//----取得--------
+D3DXVECTOR3 CCamera::GetPosition()
+{
+	return Position;
+}
+D3DXVECTOR3 CCamera::GetGazeVector()
+{
+	return Gaze - Position;
+}
+
 //----マトリックス生成--------
 void CCamera::CreateMatrix(void)
 {
@@ -225,6 +235,7 @@ void UninitCamera(void)
 //=============================================================================
 void UpdateCamera(Vector3 target)
 {
+#if _DEBUG
 	if (GetKeyboardTrigger(DIK_C))
 	{
 		DebugCameraFlag = DebugCameraFlag ? false : true;
@@ -234,6 +245,8 @@ void UpdateCamera(Vector3 target)
 	DebugCamera.Translation(Vector2(MouseMovement.x, MouseMovement.y));
 	DebugCamera.Scaling(MouseMovement.z);
 	DebugCamera.Rotation(Vector2(MouseMovement.x, MouseMovement.y));
+#endif // _DEBUG
+
 }
 
 //=============================================================================
@@ -266,4 +279,11 @@ D3DXMATRIX GetMtxView(void)
 {
 	return GameCamera.GetViewMatrix();
 }
+
+#if _DEBUG
+CCamera *GetCamera()
+{
+	return &GameCamera;
+}
+#endif // _DEBUG
 

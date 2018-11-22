@@ -11,7 +11,13 @@
 
 
 //初担当分インクルード
+#include "Library\Common.h"
+#include "AimPointer.h"
+#include "voicetank.h"
+#include "finishcount.h"
 
+static AimPointer AimPoint;
+static CEnergyTankUI Tank;
 
 //=============================================================================
 //初期化処理
@@ -26,6 +32,9 @@ HRESULT InitWorkTsu(void)
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
+		AimPoint.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, 50, 50, "data/TEXTURE/UI/ターゲットカーソル.png");
+		Tank.Init();
+		InitFinishCount();
 
 		break;
 
@@ -57,6 +66,9 @@ void UninitWorkTsu(void)
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
+		AimPoint.Release();
+		Tank.Uninit();
+		UninitFinishCount();
 
 		break;
 	}
@@ -77,7 +89,9 @@ void UpdateWorkTsu(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
-
+		AimPoint.Update();
+		Tank.Update();
+		UpdateFinishCount();
 		break;
 
 
@@ -102,6 +116,9 @@ void DrawWorkTsu(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのDraw
+		AimPoint.Draw();
+		Tank.Draw();
+		DrawFinishCount();
 
 		break;
 

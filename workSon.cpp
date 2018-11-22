@@ -9,11 +9,12 @@
 #include "workSon.h"
 #include "SceneManager.h"
 
+// 宋担当分インクルード
 #include "voiceten.h"
 #include "voicetenTest.h"
-
-//宋担当分インクルード
-
+#include "messageBox.h"
+#include "enemyRE.h"
+#include "StageManager.h"
 
 //=============================================================================
 // 初期化処理
@@ -29,6 +30,9 @@ HRESULT InitWorkSon(void)
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitVoiceten();
+		InitMessageBox();
+		InitEnemyRE();
+		InitStage();
 		break;
 
 
@@ -55,6 +59,8 @@ void UninitWorkSon(void)
 
 	case SCENE_GAME://タイトルで使ったソースのUninit
 		UninitVoiceten();
+		UninitMessageBox();
+		UninitEnemyRE();
 		break;
 
 
@@ -79,8 +85,14 @@ void UpdateWorkSon(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
-		TestVL();
 		UpdateVoiceten();
+		UpdateMessageBox();
+		UpdateEnemyRE();
+		UpdateStage();
+
+		TestVL();
+		TestMB();
+		//TestCO();
 		break;
 
 
@@ -106,6 +118,8 @@ void DrawWorkSon(void)
 
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawVoiceten();
+		DrawMessagebox();
+		DrawEnemyRE();
 		break;
 
 

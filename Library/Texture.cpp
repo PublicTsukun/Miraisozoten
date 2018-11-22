@@ -22,7 +22,6 @@ LPDx3DTex9 Dx9Texture::LoadTexture(Dx9Texture *Dx9pTex, LPCSTR fileName)
 	return Dx9pTex->pDx9Texture;
 }
 
-
 Dx9Texture::Dx9Texture()
 {
 	this->pDx9Texture = NULL;

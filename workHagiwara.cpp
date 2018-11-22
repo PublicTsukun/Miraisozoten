@@ -11,7 +11,7 @@
 
 
 //萩原担当分インクルード
-#include "ranking.h"
+#include "saveranking.h"
 
 
 //=============================================================================
@@ -28,7 +28,6 @@ HRESULT InitWorkHagiwara(void)
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
-		Ranking();
 		break;
 
 
@@ -79,7 +78,6 @@ void UpdateWorkHagiwara(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
-		DebugRank();
 
 		break;
 

@@ -25,19 +25,22 @@ typedef struct
 	Vector3 pos;	// 位置
 	Vector3 rot;	// 回転
 
-	double vel;		// 速度
+	float len;		// size X
+	float hei;		// size Y
+	float wid;		// size Z
 
 	int timer;		// タイマー
 
 	Vector3 start;	// 発射位置
 	Vector3 tgt;	// 目標位置
-	Vector3 dist;	// 到達所要距離
+	double dist;	// 到達所要距離
 
 	int dura;		// 到達所要時間
+
 	Vector3 nor;	// 到達所要距離の正規化
-	float hei;		// 限界高度
+	double vel;		// 速度
 
-
+	int atk;
 
 } VOICETEN;
 

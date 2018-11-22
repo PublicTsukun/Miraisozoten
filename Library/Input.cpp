@@ -62,10 +62,10 @@ LPDIRECTINPUTDEVICE8	pGamePad[GAMEPADMAX] = {NULL,NULL,NULL,NULL};// ÉpÉbÉhÉfÉoÉ
 
 DWORD		padState[GAMEPADMAX];		// ÉpÉbÉhèÓïÒÅiï°êîëŒâûÅj
 DWORD		padTrigger[GAMEPADMAX];
+Vector3		padGyro[GAMEPADMAX];
 D3DXVECTOR2	padLsRoll[GAMEPADMAX];		// ç∂ÉXÉeÉBÉbÉNÇÃì|èÛë‘
 D3DXVECTOR2	padRsRoll[GAMEPADMAX];		// âEÉXÉeÉBÉbÉNÇÃì|èÛë‘
 int			padCount = 0;					// åüèoÇµÇΩÉpÉbÉhÇÃêî
-
 
 //=============================================================================
 // ì¸óÕèàóùÇÃèâä˙âª
@@ -629,28 +629,30 @@ void UpdatePad(void)
 		padTrigger[i] = ((lastPadState ^ padState[i])	// ëOâÒÇ∆à·Ç¡ÇƒÇ¢Çƒ
 			& padState[i]);					// ÇµÇ©Ç‡ç°ONÇÃÇ‚Ç¬
 
+		/* ÉWÉÉÉCÉçÉfÅ[É^ÇÃï€ë∂ */
+		padGyro[i] = Vector3((float)dijs.rglSlider[0], (float)dijs.rglSlider[1], (float)dijs.lRz);
+
 		// Rollê›íË
 //		padLsRoll[i] = D3DXVECTOR2(dijs.lX / (float)(RANGE_MAX), -(dijs.lY / (float)(RANGE_MAX)));
 //		padRsRoll[i] = D3DXVECTOR2(dijs.lRx / (float)(RANGE_MAX), dijs.lRy / (float)(RANGE_MAX));
 	}
-
 	//PrintDebugProcess("l   : (%ld)(%ld)(%ld)\n", dijs.lX, dijs.lY, dijs.lZ);
 	//PrintDebugProcess("lR  : (%ld)(%ld)(%ld)\n", dijs.lRx, dijs.lRy, dijs.lRz);
-	//	PrintDebugProcess("rS  : (%ld)(%ld)\n", dijs.rglSlider[0], dijs.rglSlider[1]);
-	//	PrintDebugProcess("è\éöÉLÅ[ : (%ld)", dijs.rgdwPOV[0]);
-	//	PrintDebugProcess("(%ld)", dijs.rgdwPOV[1]);
-	//	PrintDebugProcess("(%ld)", dijs.rgdwPOV[2]);
-	//	PrintDebugProcess("(%ld)\n", dijs.rgdwPOV[3]);
-	//	PrintDebugProcess("lV  : (%ld)(%ld)(%ld)\n", dijs.lVX, dijs.lVY, dijs.lVZ);
-	//	PrintDebugProcess("lVR : (%ld)(%ld)(%ld)\n", dijs.lVRx, dijs.lVRy, dijs.lVRz);
-	//	PrintDebugProcess("rVS : (%ld)(%ld)\n", dijs.rglVSlider[0], dijs.rglVSlider[1]);
-	//	PrintDebugProcess("lA  : (%ld)(%ld)(%ld)\n", dijs.lAX, dijs.lAY, dijs.lAZ);
-	//	PrintDebugProcess("lAR : (%ld)(%ld)(%ld)\n", dijs.lARx, dijs.lARy, dijs.lARz);
-	//	PrintDebugProcess("rAS : (%ld)(%ld)\n", dijs.rglASlider[0], dijs.rglASlider[1]);
-	//	PrintDebugProcess("lF  : (%ld)(%ld)(%ld)\n", dijs.lFX, dijs.lFY, dijs.lFZ);
-	//	PrintDebugProcess("lFR : (%ld)(%ld)(%ld)\n", dijs.lFRx, dijs.lFRy, dijs.lFRz);
-	//	PrintDebugProcess("rFS : (%ld)(%ld)\n", dijs.rglFSlider[0], dijs.rglFSlider[1]);
-	//	PrintDebugProcess("\n");
+	//PrintDebugProcess("rS  : (%ld)(%ld)\n", dijs.rglSlider[0], dijs.rglSlider[1]);
+	//PrintDebugProcess("è\éöÉLÅ[ : (%ld)", dijs.rgdwPOV[0]);
+	//PrintDebugProcess("(%ld)", dijs.rgdwPOV[1]);
+	//PrintDebugProcess("(%ld)", dijs.rgdwPOV[2]);
+	//PrintDebugProcess("(%ld)\n", dijs.rgdwPOV[3]);
+	//PrintDebugProcess("lV  : (%ld)(%ld)(%ld)\n", dijs.lVX, dijs.lVY, dijs.lVZ);
+	//PrintDebugProcess("lVR : (%ld)(%ld)(%ld)\n", dijs.lVRx, dijs.lVRy, dijs.lVRz);
+	//PrintDebugProcess("rVS : (%ld)(%ld)\n", dijs.rglVSlider[0], dijs.rglVSlider[1]);
+	//PrintDebugProcess("lA  : (%ld)(%ld)(%ld)\n", dijs.lAX, dijs.lAY, dijs.lAZ);
+	//PrintDebugProcess("lAR : (%ld)(%ld)(%ld)\n", dijs.lARx, dijs.lARy, dijs.lARz);
+	//PrintDebugProcess("rAS : (%ld)(%ld)\n", dijs.rglASlider[0], dijs.rglASlider[1]);
+	//PrintDebugProcess("lF  : (%ld)(%ld)(%ld)\n", dijs.lFX, dijs.lFY, dijs.lFZ);
+	//PrintDebugProcess("lFR : (%ld)(%ld)(%ld)\n", dijs.lFRx, dijs.lFRy, dijs.lFRz);
+	//PrintDebugProcess("rFS : (%ld)(%ld)\n", dijs.rglFSlider[0], dijs.rglFSlider[1]);
+	//PrintDebugProcess("\n");
 
 }
 //----------------------------------------------- åüç∏
@@ -658,7 +660,6 @@ BOOL IsButtonPressed(int padNo, DWORD button)
 {
 	return (button & padState[padNo]);
 }
-
 BOOL IsButtonTriggered(int padNo, DWORD button)
 {
 	return (button & padTrigger[padNo]);
@@ -668,9 +669,13 @@ D3DXVECTOR2 GetLStickVolume(int padNo)
 {
 	return padLsRoll[padNo];
 }
-
 D3DXVECTOR2 GetRStickVolume(int padNo)
 {
 	return padRsRoll[padNo];
+}
+
+Vector3 GetGyro(int no)
+{
+	return padGyro[no];
 }
 

@@ -25,6 +25,8 @@ bld/
 [Oo]bj/
 
 # LocalData
+/ローカル
+/[Ll]ocal
 ローカル/
 [Ll]ocal/
 
@@ -72,6 +74,7 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
+*.csv
 
 # Chutzpah Test files
 _Chutzpah*

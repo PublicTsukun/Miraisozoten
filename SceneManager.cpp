@@ -2,7 +2,9 @@
 #include "Library\Input.h"
 #include "Title.h"
 #include "Game.h"
+#include "GamePause.h"
 #include "Result.h"
+#include "Ranking.h"
 
 
 SCENE SceneManager::GameScene = SCENE_MAX;
@@ -19,7 +21,7 @@ int  SceneManager::Update()
 
 		if (GetKeyboardTrigger(DIK_RETURN))
 		{
-			SetScene(SCENE_GAME);
+			//SetScene(SCENE_GAME);
 		}
 		break;
 
@@ -31,6 +33,10 @@ int  SceneManager::Update()
 		{
 			SetScene(SCENE_RESULT);
 		}
+		if (GetKeyboardTrigger(DIK_ESCAPE))
+		{
+			SetScene(SCENE_PAUSE);
+		}
 		break;
 
 	case SCENE_RESULT:
@@ -41,6 +47,31 @@ int  SceneManager::Update()
 		{
 			SetScene(SCENE_TITLE);
 		}
+		break;
+
+	case SCENE_RANKING:
+		// ランキングシーンの更新
+		UpdateRanking();
+
+		if (GetKeyboardTrigger(DIK_RETURN))
+		{
+			SetScene(SCENE_TITLE);
+		}
+		break;
+
+	case SCENE_PAUSE:
+		// ゲーム中ポーズの更新
+		switch (GamePause::Update())
+		{
+		case GPR::BACKGAME:
+			SetScene(SCENE_GAME);
+			break;
+
+		case GPR::BACKTITLE:
+			SetScene(SCENE_TITLE);
+			break;
+		}
+
 		break;
 	}
 
@@ -69,6 +100,22 @@ void SceneManager::Draw()
 		DrawResult();
 
 		break;
+
+	case SCENE_RANKING:
+		// ランキングの描画処理
+		DrawRanking();
+
+		break;
+
+	case SCENE_PAUSE:
+		// ゲームシーンの描画処理
+		DrawGame();
+
+		// ゲーム中ポーズの描画処理
+		GamePause::Draw();
+
+		break;
+
 	}
 }
 
@@ -79,6 +126,21 @@ SCENE SceneManager::SetScene(SCENE scene)
 	if (scene == SCENE_MAX)
 	{
 		return GameScene;
+	}
+
+	/* ポーズ画面は例外処理方式で */
+	if (scene == SCENE_PAUSE)
+	{
+		scene = SCENE_PAUSE;
+		return SCENE_PAUSE;
+	}
+	if (GameScene == SCENE_PAUSE)
+	{
+		GameScene = SCENE_GAME;
+		if (scene == SCENE_GAME)
+		{
+			return SCENE_GAME;
+		}
 	}
 
 	/* 現在のシーンのお片付け */
@@ -93,12 +155,19 @@ SCENE SceneManager::SetScene(SCENE scene)
 	case SCENE_GAME:
 		// ゲームシーンの終了
 		UninitGame();
+		GamePause::Uninit();
 
 		break;
 
 	case SCENE_RESULT:
 		// リザルトシーンの終了
 		UninitResult();
+
+		break;
+
+	case SCENE_RANKING:
+		// ランキングシーンの終了
+		UninitRanking();
 
 		break;
 	}
@@ -118,6 +187,7 @@ SCENE SceneManager::SetScene(SCENE scene)
 	case SCENE_GAME:
 		// ゲームシーンの初期化
 		InitGame();
+		GamePause::Init();
 
 		break;
 
@@ -127,11 +197,22 @@ SCENE SceneManager::SetScene(SCENE scene)
 
 		break;
 
+	case SCENE_RANKING:
+		// ランキングシーンの初期化
+		InitRanking();
+
+		break;
+
 	default:
 		return GameScene;
 		break;
 	}
 
+	return GameScene;
+}
+
+SCENE SceneManager::GetScene()
+{
 	return GameScene;
 }
 

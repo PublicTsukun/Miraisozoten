@@ -1,14 +1,14 @@
 #include "WindowClass.h"
 #include "Common.h"
-//#include "../resource.h"
-
+#include "../resource.h"
+#include "../SceneManager.h"
 
 HINSTANCE   WindowClass::Instance = NULL;
 HWND        WindowClass::Handle = NULL;
 MSG         WindowClass::Message;
 bool        WindowClass::WindowMode = true;
-char       *WindowClass::ClassName = (char*)"TsuApplication";
-char       *WindowClass::WindowName = (char*)"ツールテスト";
+char       *WindowClass::ClassName = (char*)"hal2018FCEgameApplication";
+char       *WindowClass::WindowName = (char*)"ふぉるてっしも！";
 
 
 //----Windowsの初期化処理--------
@@ -26,7 +26,7 @@ HRESULT WindowClass::Init(HINSTANCE hInstance)
 	wcex.lpszClassName = ClassName;
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_BACKGROUND + 1);
-	//wcex.hIcon         = LoadIcon(Instance, MAKEINTRESOURCE(IDI_ICON1));
+	wcex.hIcon = LoadIcon(Instance, MAKEINTRESOURCE(IDI_ICON1));
 
 	// ウィンドウクラスの登録
 	RegisterClassEx(&wcex);
@@ -76,11 +76,9 @@ LRESULT CALLBACK WindowClass::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 	switch (uMsg)
 	{
 	case WM_CLOSE:
-		if (true)
-		{// 終了処理を実行
-			DestroyWindow(hWnd);	// ウィンドウを破棄するよう指示する
-		}
+		DestroyWindow(hWnd);	// ウィンドウを破棄するよう指示する
 		break;
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -89,7 +87,10 @@ LRESULT CALLBACK WindowClass::WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LP
 		switch (wParam)
 		{
 		case VK_ESCAPE:
-			DestroyWindow(hWnd);
+			if (Scene::GetScene() == SCENE_TITLE)
+			{// 終了処理を実行
+				DestroyWindow(hWnd);
+			}
 			break;
 		}
 	}
