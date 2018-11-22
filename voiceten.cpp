@@ -18,15 +18,56 @@
 #define V_RED_ATK		(50)	// voiceten red ATK
 
 //*****************************************************************************
+// クラス定義
+//*****************************************************************************
+class CVoiceten : public C3DPolygonObject
+{
+public:
+	void ChangeTexture(float row, float col, float rowMax, float colMax);
+	void SetTexture(void);
+	void SetTexture(int no);
+};
+
+void CVoiceten::ChangeTexture(float row, float col, float rowMax, float colMax)
+{
+	const float rowN = (1.0f / rowMax);		// 行を等分に分ける
+	const float colN = (1.0f / colMax);		// 列を等分に分ける
+
+	VERTEX_3D *pVtx;
+
+	// 頂点データの範囲をロックし、頂点バッファへのポインタSetを取得
+	VtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+	// 頂点座標の設定
+	pVtx[0].uv = Vector2(col * colN, row * rowN);
+	pVtx[1].uv = Vector2((col + 1) * colN, row * rowN);
+	pVtx[2].uv = Vector2(col * colN, ((row + 1) * rowN));
+	pVtx[3].uv = Vector2((col + 1) * colN, ((row + 1) * rowN));
+
+	// 頂点データをアンロックする
+	VtxBuff->Unlock();
+}
+
+void CVoiceten::SetTexture(void)
+{
+	CVoiceten::ChangeTexture(0, 0, 1, 3);
+}
+
+void CVoiceten::SetTexture(int no)
+{
+	CVoiceten::ChangeTexture(0, float(no), 1, 3);
+}
+
+//*****************************************************************************
 // 列挙型
 //*****************************************************************************
-enum V_TEX
+enum V_TYPE
 {
-	V_TEX_BLUE = 0,
-	V_TEX_YELLOW,
-	V_TEX_RED,
+	V_TYPE_BLUE = 0,
+	V_TYPE_YELLOW,
+	V_TYPE_RED,
 
-	V_TEX_MAX,
+	V_TYPE_MAX,
 };
 
 //*****************************************************************************
@@ -45,12 +86,11 @@ VOICETEN VoicetenWk[VOICETEN_MAX];		// ワーク
 
 char *FileVoiceten[] =
 {
-	"data/TEXTURE/UI/voiceten_B.png",
-	"data/TEXTURE/UI/voiceten_Y.png",
-	"data/TEXTURE/UI/voiceten_R.png",
+	"data/TEXTURE/UI/voiceten.png",
+
 };
 
-C3DPolygonObject Voiceten[VOICETEN_MAX];
+CVoiceten Voiceten[VOICETEN_MAX];
 
 //=============================================================================
 // 初期化処理
@@ -59,7 +99,7 @@ void InitVoiceten(void)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	const Vector2 size = Vector2(22, 31);
+	const Vector2 size = Vector2(20.5, 21.5);
 
 	for (int i = 0; i < VOICETEN_MAX; i++)
 	{
@@ -253,19 +293,19 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			switch (GetGauge())
 			{
 			case 0:
-				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_BLUE]);
+				Voiceten[i].SetTexture(V_TYPE_BLUE);
 				(v + i)->atk = V_BLUE_ATK;
 				break;
 			case 1:
-				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_YELLOW]);
+				Voiceten[i].SetTexture(V_TYPE_YELLOW);
 				(v + i)->atk = V_YELLOW_ATK;
 				break;
 			case 2:
-				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_RED]);
+				Voiceten[i].SetTexture(V_TYPE_RED);
 				(v + i)->atk = V_RED_ATK;
 				break;
 			default:
-				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_BLUE]);
+				Voiceten[i].SetTexture(V_TYPE_BLUE);
 				(v + i)->atk = V_BLUE_ATK;
 				break;
 			}
