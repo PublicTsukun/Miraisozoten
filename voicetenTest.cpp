@@ -17,20 +17,26 @@
 #include "messageBox.h"
 #include "enemyRE.h"
 
+/* 初追加分 */
+#include "voicetank.h"
+#include "AimPointer.h"
+
 //=============================================================================
 // Voiceten Launcher
 //=============================================================================
 void TestVL(void)
 {
-	if (GetKeyboardTrigger(DIK_J))
+	if (CEnergyTankUI::GetVoiceVolume() > 30)	// 30 : 一定値以下を無視
 	{
 		//SetVoiceten(
 		//	Vector3(200.0f, 200.0f, 0.0f),			// 発射位置
 		//	Vector3(-200.0f, 200.0f, 200.0f));			// 目標位置
 
+		Vector2 direction = AimPointer::GetPosition();
+
 		SetVoiceten(
-			Vector3(200.0f, 200.0f, 0.0f),			// 発射位置
-			Vector3(-300.0f, 100.0f, 0.0f));			// 目標位置
+			Vector3(0.0f, 100.0f, -200.0f),			// 発射位置
+			Vector3(direction.x, direction.y, 0.0f));			// 目標位置
 
 		//SetVoiceten(
 		//	Vector3(200.0f, 200.0f, 0.0f),			// 発射位置

@@ -10,11 +10,12 @@
 #include "Library/Input.h"
 
 #include "enemyRE.h"
+#include "UIBonus.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define STAGE00_TIMELIMIT	(90)
+#define STAGE00_TIMELIMIT	(3600)
 #define STAGE01_TIMELIMIT	(180)
 #define STAGE02_TIMELIMIT	(120)
 #define FEVER_TIMELIMIT		(120)
@@ -62,7 +63,6 @@ void InitStage(void)
 	s->freeze = TRUE;
 	s->end = FALSE;
 
-	s->timerF = 0;
 	s->fever = FALSE;
 
 	// パラメータ設定
@@ -116,7 +116,6 @@ void UpdateStage(void)
 	PrintDebugProcess("End: %d\n", s->end);
 
 	PrintDebugProcess("Fever: %d\n", s->fever);
-	PrintDebugProcess("TimerF: %d\n", s->timerF);
 
 
 }
@@ -205,7 +204,6 @@ void ResetStage(void)
 
 	s->timer = 0;
 	s->end = FALSE;
-	s->timerF = 0;
 	s->fever = FALSE;
 }
 
@@ -224,18 +222,16 @@ void BasiliskTime(void)
 {
 	STAGE *s = GetStage();
 
+	s->fever = GetFiver();//フィーバー状態の取得
+
 	//================================//================================
 	// 通常
 	//================================
-	if (s->fever == FALSE)
-	{
-		// 発動条件、ここで調整
-		if (GetKeyboardTrigger(DIK_F))
-		{
-			s->fever = TRUE;
-		}
+	
+	// 効果、ここで追加
 
-	}
+
+
 	//================================//================================
 
 
@@ -249,18 +245,6 @@ void BasiliskTime(void)
 
 
 
-		// タイマーカウントアップ
-		s->timerF++;
-
-		// 時間制限で終了
-		if (s->timerF >= FEVER_TIMELIMIT)
-		{
-			// 終了
-			s->fever = FALSE;
-
-			// 初期化
-			s->timerF = 0;
-		}
 	}
 	//================================//================================
 }

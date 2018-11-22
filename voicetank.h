@@ -15,6 +15,9 @@ class CEnergyTankUI
 	float     BubbleState[3];
 
 public:
+	static int GetVoiceVolume();
+
+public:
 	void Init();
 	void Update();
 	void Draw();

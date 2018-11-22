@@ -114,7 +114,6 @@ short MicTest()
 	//const short L2 = 0x8000; //  128
 	//const short L3 = 0x0180; // -32768
 
-	// ファイルに書き出す
 	short val = (data1 < 0) ? (-data1 - 32768) : (32767 - data1);
 
 	// ロックの解除

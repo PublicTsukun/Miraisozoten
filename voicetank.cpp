@@ -2,12 +2,13 @@
 #include "Library\Input.h"
 #include "Library\/DebugProcess.h"
 #include "MicTest.h"
+#include "UIBonus.h"
 
 #define VTG_MAX (1000)
 #define VTG_ARG (30)
 
-static Vector2 vtPosi   = Vector2(90, 570);
-static float   vtScale  = 0.6f;
+static Vector2 vtPosi   = Vector2(95, 550);
+static float   vtScale  = 0.8f;
 static float   vtValue  = 0.0f;
 static int     vtVolume = 0;
 static int     vtArg[VTG_ARG] = { 0 };
@@ -15,6 +16,11 @@ static int     vtArg[VTG_ARG] = { 0 };
 static Vector2 vtsBack = Vector2(70, 160);
 static Vector2 vtsTank = Vector2(100, 200);
 //static Vector2 vtsVolu = Vector2(59, 157);
+
+int CEnergyTankUI::GetVoiceVolume()
+{
+	return vtVolume;
+}
 
 void CEnergyTankUI::Init()
 {
@@ -45,7 +51,14 @@ void CEnergyTankUI::Update()
 	}
 
 	int sum = 0;
-	vtArg[VTG_ARG - 1] = (int)Absolute(MicTest()) / 10;	// Œã‚É’Ç‰Á (30 = ’l‚Ì’²® 32,768 -> 1000)
+	if (GetFiver())
+	{
+		vtArg[VTG_ARG - 1] = 3000;
+	}
+	else
+	{
+		vtArg[VTG_ARG - 1] = (int)Absolute(MicTest()) / 10;	// Œã‚É’Ç‰Á (30 = ’l‚Ì’²® 32,768 -> 1000)
+	}
 	for (int i = 0; i < VTG_ARG - 1; i++)
 	{
 		vtArg[i] = vtArg[i + 1];
@@ -53,9 +66,11 @@ void CEnergyTankUI::Update()
 	}
 	vtVolume = sum / VTG_ARG;
 
-	//if (IsMouseLeftPressed()) vtVolume += (int)GetMouseY();
-	//if (IsMouseCenterPressed()) vtPosi += Vector2((float)GetMouseX(), (float)GetMouseY());
-	//vtScale += (float)GetMouseZ() / 1200.0f;
+#ifdef _DEBUG
+	if (IsMouseLeftPressed()) vtVolume += (int)GetMouseY();
+	if (IsMouseCenterPressed()) vtPosi += Vector2((float)GetMouseX(), (float)GetMouseY());
+	vtScale += (float)GetMouseZ() / 1200.0f;
+#endif // _DEBUG
 
 	if (vtVolume <       0) vtVolume =       0;
 	if (vtVolume > VTG_MAX) vtVolume = VTG_MAX;
@@ -147,3 +162,5 @@ void CEnergyTankUI::Uninit()
 	this->Volume.Release();
 	this->VoiceTen.Release();
 }
+
+

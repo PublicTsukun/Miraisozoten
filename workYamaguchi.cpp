@@ -16,7 +16,6 @@
 #include "score.h"
 #include "UIBonus.h"
 #include "startcount.h"
-
 #include "Resultlogo.h"
 
 
@@ -97,6 +96,7 @@ void UpdateWorkYamaguchi(void)
 		UpdateScore();
 		UpdateUIBonus();
 		UpdateStartCount();
+		UpdateField();
 		break;
 
 

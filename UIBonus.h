@@ -28,7 +28,7 @@
 
 #define POS_COR_ANG			((75.0f/180.0f)*PI)//’¸“_1&2‚ÌŠp“x
 
-#define VALUE_MAX			(1000)
+#define VALUE_MAX			(2000)
 
 #define GAGE_EFF_COR		(27.0f*SCREEN_SCALE)
 #define GAGE_EFF_SIZE_X		(222*SCREEN_SCALE)
@@ -45,5 +45,7 @@ void UpdateUIBonus(void);
 
 void AddGage(int no);
 bool GetFiver(void);
+
+int GetGauge(void);
 
 #endif

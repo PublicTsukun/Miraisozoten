@@ -8,11 +8,29 @@
 
 #include "Library/ObjectBase3D.h"
 
+#include "UIBonus.h"
+
+//*****************************************************************************
+// 列挙型
+//*****************************************************************************
+enum V_TEX
+{
+	V_TEX_BLUE = 0,
+	V_TEX_YELLOW,
+	V_TEX_RED,
+
+	V_TEX_MAX,
+};
+
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 void UpdateVoiMove(void);
 void UpdateVoiMoveY(int no);
+
+void CheckUptimeVoi(int no);
+
 
 //*****************************************************************************
 // グローバル変数
@@ -21,7 +39,9 @@ VOICETEN VoicetenWk[VOICETEN_MAX];		// ワーク
 
 char *FileVoiceten[] =
 {
-	"data/作業/voiceten00.png",
+	"data/TEXTURE/UI/voiceten_B.png",
+	"data/TEXTURE/UI/voiceten_Y.png",
+	"data/TEXTURE/UI/voiceten_R.png",
 };
 
 C3DPolygonObject Voiceten[VOICETEN_MAX];
@@ -33,7 +53,7 @@ void InitVoiceten(void)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	const Vector2 size = Vector2(48, 48);
+	const Vector2 size = Vector2(22, 31);
 
 	for (int i = 0; i < VOICETEN_MAX; i++)
 	{
@@ -88,6 +108,9 @@ void UpdateVoiceten(void)
 
 			// タイマー　カウントアップ
 			(v + i)->timer++;
+
+			// 稼働時間検査
+			CheckUptimeVoi(i);
 
 			// 消滅
 			//VanishVoiceten(i);
@@ -216,9 +239,28 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 					pow(((v + i)->nor.z), 2)
 					);
 
+			// 位置初期化
 			(v + i)->pos = Self;
 			Voiceten[i].LoadObjectStatus((v + i)->pos);
 
+			// テクスチャ設定（ゲージの状態に依存）
+			switch (GetGauge())
+			{
+			case 0:
+				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_BLUE]);
+				break;
+			case 1:
+				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_YELLOW]);
+				break;
+			case 2:
+				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_RED]);
+				break;
+			default:
+				Voiceten[i].LoadTexture(FileVoiceten[V_TEX_BLUE]);
+				break;
+			}
+
+			// 顕現
 			(v + i)->use = TRUE;
 
 			break;
@@ -248,5 +290,21 @@ void VanishVoiceten(int no)
 	(v + no)->timer = 0;
 
 	Voiceten[no].LoadObjectStatus((v + no)->pos);
+
+}
+
+//=============================================================================
+// 稼働時間検査
+//=============================================================================
+void CheckUptimeVoi(int no)
+{
+	VOICETEN *v = GetVoiceten(0);
+
+	const int Uptime = 60;
+
+	if ((v + no)->timer >= Uptime)
+	{
+		VanishVoiceten(no);
+	}
 
 }

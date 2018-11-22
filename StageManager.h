@@ -27,7 +27,7 @@ typedef struct
 	bool end;
 	int timerLimit[STAGE_MAX];
 
-	int timerF;
+	//int timerF;
 	bool fever;
 
 } STAGE;
