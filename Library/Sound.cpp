@@ -159,8 +159,9 @@ LPDIRECTSOUNDBUFFER8 DirectSound::LoadSound(const char *soundFile)
 
 //----‰¹‚ð–Â‚ç‚·--------
 /* flag : 1(E_DS8_FLAG_LOOP)‚È‚çƒ‹[ƒvÄ¶ */
-void DirectSound::Play(int flag)
+void DirectSound::Play(int flag,DWORD start)
 {	// ‘±‚«‚©‚ç–Â‚ç‚·‚Ì‚ÅAÅ‰‚©‚ç–Â‚ç‚µ‚½‚¢ê‡‚ÍSetCurrentPosition(0)‚ð‚·‚é‚±‚Æ
+	this->SoundBuffer->SetCurrentPosition(start);
 	this->SoundBuffer->Play(0, 0, flag);
 }
 

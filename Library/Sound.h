@@ -34,7 +34,7 @@ public:
 	static void    Uninit(void);
 
 	LPDIRECTSOUNDBUFFER8 LoadSound(const char *soundFile);
-	void Play(int flag);
+	void Play(int flag,DWORD start);
 	void Stop();
 	void Volume(LONG volume);
 	bool CheckPlaying();

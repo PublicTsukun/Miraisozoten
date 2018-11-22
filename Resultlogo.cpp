@@ -90,6 +90,15 @@ HRESULT InitResultlogo(void)
 	g_score = 0;
 	g_maxscore = GetScore();
 
+	for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++)
+	{
+		int number;
+
+		number = (g_score % (int)(powf(10.0f, (float)(NUM_PLACE - nCntPlace)))) / (int)(powf(10.0f, (float)(NUM_PLACE - nCntPlace - 1)));
+		resultscr[nCntPlace].SetTexture(number, 10, 1);
+	}
+
+
 	resultlogo.Init(SCREEN_CENTER_X, RESULT_LOGO_SIZE_Y + 10.0f, RESULT_LOGO_SIZE_X, RESULT_LOGO_SIZE_Y, TEXTURE_RESULT_LOGO);
 	
 

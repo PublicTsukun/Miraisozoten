@@ -11,6 +11,8 @@
 
 #include "StageManager.h"
 
+#include "Library\Sound.h"
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -23,7 +25,17 @@ bool LogoTimerUse;
 float LogoAlpha;
 float LogoScale;
 
+int SoundCount;
+int CountInter;
+DirectSound StartSound[4];
 
+const char *StartSoundFile[]=
+{
+	"data/SE/ゲームスタート音.wav",
+	"data/SE/カウント音_1.wav",
+	"data/SE/カウント音_2.wav",
+	"data/SE/カウント音_3.wav",
+};
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -37,7 +49,15 @@ HRESULT InitStartCount(void)
 	LogoTimerUse = false;
 	LogoAlpha = 1.0;
 	LogoScale = 0.0f;
+	
+	for (int i = 0; i < 4; i++)
+	{
+		StartSound[i].LoadSound(StartSoundFile[i]);
+	}		
 
+
+	SoundCount = 4;
+	CountInter = 10;
 	return S_OK;
 }
 
@@ -76,6 +96,17 @@ void UpdateStartCount(void)
 {
 
 	StartCount.Animation();
+
+	if (SoundCount)
+	{
+		CountInter--;
+	}
+	if (CountInter == 0)
+	{
+		SoundCount--;
+		StartSound[SoundCount].Play(E_DS8_FLAG_NONE,0);
+		CountInter = 60;
+	}
 
 	if (StartCount.ActiveCheck() == false)
 	{

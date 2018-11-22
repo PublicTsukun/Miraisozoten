@@ -62,9 +62,9 @@ void CEnergyTankUI::Update()
 	vtVolume = sum / VTG_ARG;
 
 #ifdef _DEBUG
-	if (IsMouseLeftPressed()) vtVolume += (int)GetMouseY();
-	if (IsMouseCenterPressed()) vtPosi += Vector2((float)GetMouseX(), (float)GetMouseY());
-	vtScale += (float)GetMouseZ() / 1200.0f;
+	//if (IsMouseLeftPressed()) vtVolume += (int)GetMouseY();
+	//if (IsMouseCenterPressed()) vtPosi += Vector2((float)GetMouseX(), (float)GetMouseY());
+	//vtScale += (float)GetMouseZ() / 1200.0f;
 #endif // _DEBUG
 
 	if (vtVolume <       0) vtVolume =       0;
