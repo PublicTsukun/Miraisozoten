@@ -9,6 +9,7 @@
 #include "Library/ObjectBase3D.h"
 
 #include "UIBonus.h"
+#include "voicetank.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -289,25 +290,25 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			(v + i)->pos = Self;
 			Voiceten[i].LoadObjectStatus((v + i)->pos);
 
-			// テクスチャ設定（ゲージの状態に依存）
-			switch (GetGauge())
+			// テクスチャ設定（ヴォイステンゲージに依存）
+			if (CEnergyTankUI::GetVoiceVolume() < (140 * 3))
 			{
-			case 0:
 				Voiceten[i].SetTexture(V_TYPE_BLUE);
 				(v + i)->atk = V_BLUE_ATK;
-				break;
-			case 1:
+
+			}
+			else if (CEnergyTankUI::GetVoiceVolume() >= (140 * 3) &&
+					CEnergyTankUI::GetVoiceVolume() < (140 * 6))
+			{
 				Voiceten[i].SetTexture(V_TYPE_YELLOW);
 				(v + i)->atk = V_YELLOW_ATK;
-				break;
-			case 2:
+
+			}
+			else if (CEnergyTankUI::GetVoiceVolume() >= (140 * 6))
+			{
 				Voiceten[i].SetTexture(V_TYPE_RED);
 				(v + i)->atk = V_RED_ATK;
-				break;
-			default:
-				Voiceten[i].SetTexture(V_TYPE_BLUE);
-				(v + i)->atk = V_BLUE_ATK;
-				break;
+
 			}
 
 			// 顕現
