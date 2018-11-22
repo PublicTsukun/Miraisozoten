@@ -5,23 +5,10 @@
 #include "GamePause.h"
 #include "Result.h"
 #include "Ranking.h"
-#include "Library\DebugProcess.h"
+
 
 SCENE SceneManager::GameScene = SCENE_MAX;
 
-enum testInitCnt
-{
-	TitleInit,
-	TitleUninit,
-	GameInit,
-	GameUninit,
-	ResultInit,
-	ResultUninit,
-	RankingInit,
-	RankingUninit,
-	test_Max
-};
-static int uiCnt[test_Max] = { 0 };
 
 //----更新--------
 int  SceneManager::Update()
@@ -86,11 +73,6 @@ int  SceneManager::Update()
 		}
 
 		break;
-	}
-
-	for (int i = 0; i < test_Max; i++)
-	{
-		PrintDebugProcess("初期化回数 : %d\n", uiCnt[i]);
 	}
 
 	return 0;
@@ -167,28 +149,25 @@ SCENE SceneManager::SetScene(SCENE scene)
 	case SCENE_TITLE:
 		// タイトルシーンの終了
 		UninitTitle();
-		uiCnt[TitleUninit]++;
+
 		break;
 
 	case SCENE_GAME:
 		// ゲームシーンの終了
 		UninitGame();
 		GamePause::Uninit();
-		uiCnt[GameUninit]++;
 
 		break;
 
 	case SCENE_RESULT:
 		// リザルトシーンの終了
 		UninitResult();
-		uiCnt[ResultUninit]++;
 
 		break;
 
 	case SCENE_RANKING:
 		// ランキングシーンの終了
 		UninitRanking();
-		uiCnt[RankingUninit]++;
 
 		break;
 	}
@@ -202,7 +181,6 @@ SCENE SceneManager::SetScene(SCENE scene)
 	case SCENE_TITLE:
 		// タイトルシーンの初期化
 		InitTitle();
-		uiCnt[TitleInit]++;
 
 		break;
 
@@ -210,21 +188,18 @@ SCENE SceneManager::SetScene(SCENE scene)
 		// ゲームシーンの初期化
 		InitGame();
 		GamePause::Init();
-		uiCnt[GameInit]++;
 
 		break;
 
 	case SCENE_RESULT:
 		// リザルトシーンの初期化
 		InitResult();
-		uiCnt[ResultInit]++;
 
 		break;
 
 	case SCENE_RANKING:
 		// ランキングシーンの初期化
 		InitRanking();
-		uiCnt[RankingInit]++;
 
 		break;
 
