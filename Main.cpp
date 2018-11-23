@@ -14,6 +14,7 @@
 #include "Library/Camera.h"
 #include "Library/Light.h"
 #include "Library/DebugProcess.h"
+#include "FadeCurtain.h"
 #include "SceneManager.h"
 
 
@@ -79,7 +80,24 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			case SCENE_END:     PrintDebugProcess("終了処理です(表示されないはずだよ)\n");   break;
 			}
 
-			Update();	// 更新処理
+			switch (Scene::GetFadeState())
+			{
+			case CLOSS:
+				if (Scene::UpdateFade())
+				{
+					Scene::SetScene(SCENE_GAME);
+				}
+				break;
+			case OPEN:
+				if (Scene::UpdateFade())
+				{
+					Scene::SetFadeState(SLEEP);
+				}
+				break;
+			case SLEEP:
+				Update();	// 更新処理
+				break;
+			}
 			Draw();		// 描画処理
 		}
 	}
@@ -100,9 +118,10 @@ HRESULT Init()
 {
 	// フェード
 	CSFade::MakeVertex();
+	FadeCurtain::Init();
 
 	// タイトルシーンにセット
-	Scene::SetScene(SCENE_TITLE);
+	Scene::SetScene(SCENE_TITLE, false);
 
 	// カメラ
 	InitCamera();
@@ -115,6 +134,9 @@ HRESULT Init()
 //=============================================================================
 void Uninit(void)
 {
+	// フェード
+	FadeCurtain::Uninit();
+
 	Scene::SetScene(SCENE_END);
 
 }
