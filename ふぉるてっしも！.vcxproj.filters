@@ -204,7 +204,7 @@
     <ClCompile Include="finishcount.cpp">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="FadeCurtain.cpp">
+    <ClCompile Include="GameSound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -386,7 +386,7 @@
     <ClInclude Include="finishcount.h">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
-    <ClInclude Include="FadeCurtain.h">
+    <ClInclude Include="GameSound.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
