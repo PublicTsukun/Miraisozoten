@@ -46,7 +46,7 @@
 // 文字盤の表示位置を元にカーソル位置を決めています。
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // もじばん
-#define MOJIBAN_TEX		("data/作業/文字ボード.jpg")
+#define MOJIBAN_TEX		("data/テスト用画像/文字ボード.jpg")
 #define MOJIBAN_WIDTH	(400.0)
 #define MOJIBAN_HEIGHT	(200.0)
 #define MOJIBAN_POS_X	(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
@@ -57,7 +57,7 @@
 
 
 // もじばん２(選択された文字を出すときに使うやつ）
-#define SENTAKUMOJI_TEX		("data/作業/文字ボード.jpg")
+#define SENTAKUMOJI_TEX		("data/テスト用画像/文字ボード.jpg")
 #define SENTAKUMOJI_WIDTH	(70.0)
 #define SENTAKUMOJI_HEIGHT	(70.0)
 #define SENTAKUMOJI_POS_X	(SCREEN_CENTER_X-(SENTAKUMOJI_WIDTH*4))//(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
@@ -418,6 +418,16 @@ void move_cursole(void)
 			rankdata[0].cursole_X = MOJIBAN_MASUMAX_X;
 		}
 	}
+
+	// 文字の削除(不要な場合削除お願いします(＞＜))
+	if (GetKeyboardTrigger(DIK_BACKSPACE))
+	{	// 名前入力フラグの削除
+		select_moji[namechar-1].Release();
+		rankdata[0].selected[namechar-1] = false;
+		namechar--;
+		rankdata[0].name_position = namechar;
+
+	}
 	// 決定キーが入力された場合今のカーソル位置の文字を格納
 	if (GetKeyboardTrigger(DIK_SPACE) && namechar<NAMEMAX)
 	{
@@ -445,6 +455,8 @@ void move_cursole(void)
 			namechar++;
 		}
 	}
+	// 上書き処理(ここに書く必要はあるのだろうか…)
+	//if()
 }
 
 //********************************************************************
