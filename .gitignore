@@ -44,7 +44,7 @@ TestResult.xml
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
-# EXCEL_DATA/
+EXCEL_DATA/
 dlldata.c
 
 # DNX
@@ -75,7 +75,7 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
-# .csv
+*.csv
 
 # Chutzpah Test files
 _Chutzpah*
