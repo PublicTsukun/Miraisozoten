@@ -18,6 +18,8 @@
 
 #include <time.h>
 
+#include "Library\Sound.h"
+
 
 //*****************************************************************************
 // マクロ定義
@@ -96,13 +98,13 @@ enum E_TYPE
 //*****************************************************************************
 void CollisionEnemyRE(void);
 void DamageDealEnemyRE(int Eno, int Vno);
-void ResetEnemyRE(void);
+//void ResetEnemyRE(void);
 
 void SetType(int ENo, int type);
 void SetPos(int ENo, float x, float y, float z);
 void SetAppear(int ENo, int time);
 void SetParameter00(void);
-void SetParameter01(void);
+//void SetParameter01(void);
 
 void TestEnemyRE(void);
 void TrapFactory(int apr, int num);
@@ -131,6 +133,8 @@ ENEMY EnemyREWk[ENEMY_MAX];		// ワーク
 CEnemyRE EnemyRE[ENEMY_MAX];
 
 int YOUDEFEATED;
+
+
 
 //=============================================================================
 // 初期化処理
@@ -168,6 +172,7 @@ void InitEnemyRE(void)
 
 	SetParameter00();
 
+
 }
 
 //=============================================================================
@@ -179,6 +184,7 @@ void UninitEnemyRE(void)
 	{
 		EnemyRE[i].Release();
 	}
+
 }
 
 //=============================================================================
@@ -299,6 +305,7 @@ void CollisionEnemyRE(void)
 				// 弾消滅
 				VanishVoiceten(j);
 
+
 			}
 
 		}
@@ -359,6 +366,7 @@ void VanisnEnenyRE(int no)
 
 	// ゲージアップ
 	AddGage(ENEMY_D_GAUGEBONUS);
+
 
 	SetYouDefeated(1);
 }
@@ -646,6 +654,28 @@ void TestEnemyRE(void)
 	{
 		e->pos.y += vel;
 	}
+
+	if (GetKeyboardPress(DIK_NUMPAD3))
+	{
+		e->rot.y += 0.2f;
+	}
+
+
+	//if (GetKeyboardPress(DIK_NUMPAD3))
+	//{
+	//	tx->rot.y += 6 * (D3DX_PI / 180);
+	//}
+
+	//if (tx->rot.y >= 90 * (D3DX_PI / 180))
+	//{
+	//	tx->rot.y = -(90 * (D3DX_PI / 180));
+	//}
+
+	// 0 -> 90	-90 -> 90   -90 > 0
+	// 90 180 90
+	// 360 / vel = time
+	// if time rot = 0
+
 
 	PrintDebugProcess("pos: %f %f %f\n", e->pos.x, e->pos.y, e->pos.z);
 	PrintDebugProcess("pos: %f %f %f\n", (e + 1)->pos.x, (e + 1)->pos.y, (e + 1)->pos.z);

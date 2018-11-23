@@ -67,6 +67,9 @@ int slotTimer;
 bool slotStart;
 int slotCount;
 int g_score;
+
+
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -90,6 +93,15 @@ HRESULT InitResultlogo(void)
 	g_score = 0;
 	g_maxscore = GetScore();
 
+	for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++)
+	{
+		int number;
+
+		number = (g_score % (int)(powf(10.0f, (float)(NUM_PLACE - nCntPlace)))) / (int)(powf(10.0f, (float)(NUM_PLACE - nCntPlace - 1)));
+		resultscr[nCntPlace].SetTexture(number, 10, 1);
+	}
+
+
 	resultlogo.Init(SCREEN_CENTER_X, RESULT_LOGO_SIZE_Y + 10.0f, RESULT_LOGO_SIZE_X, RESULT_LOGO_SIZE_Y, TEXTURE_RESULT_LOGO);
 	
 
@@ -102,6 +114,8 @@ HRESULT InitResultlogo(void)
 	DrawCount = 0;
 
 	DetailCount = 0;
+
+	
 	return S_OK;
 }
 
@@ -113,17 +127,18 @@ void UninitResultlogo(void)
 	resultbg[0].Release();
 	resultbg[1].Release();
 
-		for (int i = 0; i < NUM_PLACE; i++)
-		{
-			resultscr[i].Release();
-		}
-		resultlogo.Release();
-		DetailWindow.Release();
+	for (int i = 0; i < NUM_PLACE; i++)
+	{
+		resultscr[i].Release();
+	}
+	resultlogo.Release();
+	DetailWindow.Release();
 
-		for (int i = 0; i < DETAIL_MAX; i++)
-		{
-			ScoreDetail[i].Release();
-		}
+	for (int i = 0; i < DETAIL_MAX; i++)
+	{
+		ScoreDetail[i].Release();
+	}
+
 }
 
 //=============================================================================
@@ -172,6 +187,7 @@ void UpdateResultlogo(void)
 	}
 	if (slotStart == true)//スロットが動いてるとき
 	{
+
 		for (int i = 0; i < NUM_PLACE - slotCount; i++)//指定の桁をスロット
 		{
 
@@ -195,6 +211,10 @@ void UpdateResultlogo(void)
 			{
 				slotCount++;
 				slotTimer = 0;
+				if (slotCount == NUM_PLACE)
+				{
+
+				}
 
 				if (slotCount == 5)
 				{
@@ -266,3 +286,4 @@ void UpdateResultlogo(void)
 
 	}
 }
+

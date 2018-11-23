@@ -11,6 +11,7 @@
 
 #include "StageManager.h"
 
+
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************
@@ -23,6 +24,8 @@ bool LogoTimerUse;
 float LogoAlpha;
 float LogoScale;
 
+int SoundCount;
+int CountInter;
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -37,7 +40,11 @@ HRESULT InitStartCount(void)
 	LogoTimerUse = false;
 	LogoAlpha = 1.0;
 	LogoScale = 0.0f;
+	
 
+
+	SoundCount = 4;
+	CountInter = 10;
 	return S_OK;
 }
 
@@ -76,6 +83,16 @@ void UpdateStartCount(void)
 {
 
 	StartCount.Animation();
+
+	if (SoundCount)
+	{
+		CountInter--;
+	}
+	if (CountInter == 0)
+	{
+		SoundCount--;
+		CountInter = 60;
+	}
 
 	if (StartCount.ActiveCheck() == false)
 	{
