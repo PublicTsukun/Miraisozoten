@@ -164,14 +164,14 @@ void UpdateUIBonus(void)
 		pos.y = BONUSGAGE_POS_Y - (BONUSGAGE_SIZE_Y);//Yはそのまま
 		pos.z = 0.0f;
 		BonusGage.Gage.SetVertex(1, pos);//頂点1の調整
-		poseff.x = GAGE_EFF_POS_X + ((GAGE_EFF_SIZE_X)) + cor*1.6;
+		poseff.x = GAGE_EFF_POS_X + ((GAGE_EFF_SIZE_X)) + cor*1.6f;
 		poseff.y = BONUSGAGE_POS_Y - (GAGE_EFF_SIZE_Y);//Yはそのまま
 		poseff.z = 0.0f;
 		GageEff.SetVertex(1, poseff);//頂点1の調整
 
 		pos.x = BONUSGAGE_POS_X + cor;//Xを再調整
 		BonusGage.Gage.SetVertex(0, pos);//頂点0を調整
-		poseff.x = GAGE_EFF_POS_X - ((GAGE_EFF_SIZE_X)) + cor*1.6;
+		poseff.x = GAGE_EFF_POS_X - ((GAGE_EFF_SIZE_X)) + cor*1.6f;
 		poseff.z = 0.0f;
 		GageEff.SetVertex(0, poseff);//頂点1の調整
 
@@ -185,7 +185,7 @@ void UpdateUIBonus(void)
 
 		if (gagenum == 3 || fiverf == true)
 		{
-			effa += 0.06;
+			effa += 0.06f;
 			GageEff.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, fabs(sinf(effa)) + 0.2f));
 		}
 		else

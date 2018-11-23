@@ -16,7 +16,7 @@
 #include "Library/DebugProcess.h"
 #include "FadeCurtain.h"
 #include "SceneManager.h"
-
+#include <time.h>
 
 //****************************************************************
 // マクロ定義
@@ -47,6 +47,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);	// 無くても良いけど、警告が出る（未使用宣言）
 	UNREFERENCED_PARAMETER(lpCmdLine);		// 無くても良いけど、警告が出る（未使用宣言）
+
+	// 乱数をセット
+	srand((unsigned)time(NULL));
 
 	// TSUシステムを初期化
 	if (FAILED(TsuSystem::Initialize(hInstance)))
