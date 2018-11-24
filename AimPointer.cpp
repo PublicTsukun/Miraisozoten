@@ -8,7 +8,7 @@ Vector2 AimPointer::GlobalPosition = Vector2();
 
 Vector2 AimPointer::GetPosition(Vector2 set)
 {
-	if (set.x < 0 || set.y < 0)
+	if (set.x > 0 && set.y > 0)
 		GlobalPosition = set;
 	return GlobalPosition;
 }
@@ -32,13 +32,15 @@ void AimPointer::Update()
 
 	Vector2 value;
 	value.x = -(gyro.z - 32767.0f) / v;
-	value.y =  (gyro.x - 32767.0f) / v;
+	value.y = (gyro.x - 32767.0f) / v;
 	if (value.x <= c && value.x >= -c)	value.x = 0.0f;
 	if (value.y <= c && value.y >= -c)	value.y = 0.0f;
 
 	PrintDebugProcess("X = %f, Y = %f\n", value.x, value.y);
 
-	Move(value);
+	//Move(value);
+	if (IsMouseLeftPressed())
+		Move(Vector2((float)GetMouseX(), (float)GetMouseY()));
 }
 
 void AimPointer::Move(Vector2 v)
@@ -48,7 +50,7 @@ void AimPointer::Move(Vector2 v)
 	if (Position.x < 0.0f)			Position.x = 0.0f;
 	if (Position.y > SCREEN_HEIGHT)	Position.y = SCREEN_HEIGHT;
 	if (Position.y < 0.0f)			Position.y = 0.0f;
-
+	GetPosition(Position);
 	SetVertex();
 }
 

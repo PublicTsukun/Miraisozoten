@@ -32,7 +32,7 @@ HRESULT InitWorkTsu(void)
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
-		AimPoint.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, 50, 50, "data/TEXTURE/UI/ターゲットカーソル.png");
+		AimPoint.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, 100, 100, "data/TEXTURE/UI/ターゲットカーソル.png");
 		Tank.Init();
 		InitFinishCount();
 
