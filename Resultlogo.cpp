@@ -11,6 +11,7 @@
 #include "score.h"
 #include "Library/MultiRendering.h" 
 #include "GameSound.h"
+#include "SceneManager.h"
 //=============================================================================
 // マクロ定義
 //=============================================================================
@@ -172,6 +173,12 @@ void DrawResultlogo(void)
 //=============================================================================
 void UpdateResultlogo(void)
 {
+	if (slotCount >= NUM_PLACE
+		&& GetKeyboardTrigger(DIK_RETURN))
+	{
+		Scene::SetScene(SCENE_TITLE);
+	}
+
 
 	//===========================================================================
 	//取得スコア表示
@@ -212,23 +219,25 @@ void UpdateResultlogo(void)
 
 		if (slotCount < NUM_PLACE)
 		{
+			if (GetKeyboardTrigger(DIK_RETURN))
+			{
+				slotCount = NUM_PLACE;
+				StopSE(SCORE_SLOT);
+				PlaySE(SCORE_DECISION);
+			}
 			if (slotTimer > SLOT_INTERVAL && number == number2)//演出ストップ処理
 			{
 				slotCount++;
 				slotTimer = 0;
+
 				if (slotCount == NUM_PLACE)
 				{
 					StopSE(SCORE_SLOT);
 					PlaySE(SCORE_DECISION);
 				}
-
-				if (slotCount == 5)
-				{
-					int a = 0;
-				}
 			}
 		}
-		else if (slotCount == NUM_PLACE)
+		else if (slotCount >= NUM_PLACE)
 		{
 			g_score = g_maxscore;
 			slotStart = false;
@@ -291,5 +300,6 @@ void UpdateResultlogo(void)
 		DrawCount--;
 
 	}
+
 }
 

@@ -18,7 +18,7 @@
 
 #include <time.h>
 
-#include "Library\Sound.h"
+#include "GameSound.h"
 
 
 //*****************************************************************************
@@ -329,17 +329,22 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	if ((e + Eno)->hp <= 0)
 	{
 		VanisnEnenyRE(Eno);
+
+		// テクスチャ変更
+		EnemyRE[Eno].ChangeTexture(0, 1, 1, 2);
+
+		PlaySE(VIGOR);
+
 	}
 	else
 	{
-		// テクスチャ変更
-		EnemyRE[Eno].ChangeTexture(0, 1, 1, 2);
 
 		// スコアアップ
 		AddScore(ENEMY_SCOREBONUS);
 
 		// ゲージアップ
 		AddGage(ENEMY_GAUGEBONUS);
+
 	}
 
 }
@@ -365,7 +370,7 @@ void VanisnEnenyRE(int no)
 	AddScore(ENEMY_D_SCOREBONUS);
 
 	// ゲージアップ
-	AddGage(ENEMY_D_GAUGEBONUS);
+	//AddGage(ENEMY_D_GAUGEBONUS);
 
 
 	SetYouDefeated(1);
