@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AimPointer.cpp" />
+    <ClCompile Include="FadeCurtain.cpp" />
     <ClCompile Include="finishcount.cpp" />
     <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="startcount.cpp" />
@@ -78,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimPointer.h" />
+    <ClInclude Include="FadeCurtain.h" />
     <ClInclude Include="finishcount.h" />
     <ClInclude Include="GameSound.h" />
     <ClInclude Include="startcount.h" />

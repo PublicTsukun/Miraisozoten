@@ -46,7 +46,7 @@
 // 文字盤の表示位置を元にカーソル位置を決めています。
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // もじばん
-#define MOJIBAN_TEX		("data/作業/文字ボード.jpg")
+#define MOJIBAN_TEX		("data/TEXTURE/UI/リザルト/五十音プログラム表記用.png")
 #define MOJIBAN_WIDTH	(400.0)
 #define MOJIBAN_HEIGHT	(200.0)
 #define MOJIBAN_POS_X	(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
@@ -57,7 +57,7 @@
 
 
 // もじばん２(選択された文字を出すときに使うやつ）
-#define SENTAKUMOJI_TEX		("data/作業/文字ボード.jpg")
+#define SENTAKUMOJI_TEX		("data/TEXTURE/UI/リザルト/五十音プログラム表記用.png")
 #define SENTAKUMOJI_WIDTH	(70.0)
 #define SENTAKUMOJI_HEIGHT	(70.0)
 #define SENTAKUMOJI_POS_X	(SCREEN_CENTER_X-(SENTAKUMOJI_WIDTH*4))//(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
@@ -309,16 +309,16 @@ void Update_Name(void)
 		SaveRanking(player_score,name_number);
 	}
 
-	// 入力済みの文字をカーソルで移動
-	if (GetKeyboardTrigger(DIK_LEFT))
-	{
-		if (namechar != 0)
-		{
-			namechar--;
-		}
-		rankdata[0].namechar[namechar] = EMPTY_NO;
-		rankdata[0].selected[namechar] = false;
-	}
+	//// 入力済みの文字をカーソルで移動
+	//if (GetKeyboardTrigger(DIK_LEFT))
+	//{
+	//	if (namechar != 0)
+	//	{
+	//		namechar--;
+	//	}
+	//	rankdata[0].namechar[namechar] = EMPTY_NO;
+	//	rankdata[0].selected[namechar] = false;
+	//}
 
 	// 文字盤を変えるよ
 	if (GetKeyboardTrigger(DIK_X))
@@ -418,33 +418,72 @@ void move_cursole(void)
 			rankdata[0].cursole_X = MOJIBAN_MASUMAX_X;
 		}
 	}
-	// 決定キーが入力された場合今のカーソル位置の文字を格納
-	if (GetKeyboardTrigger(DIK_SPACE) && namechar<NAMEMAX)
-	{
-		// 1フラグをtrueに
-		rankdata[0].selected[namechar] = true;
 
-		// 数字で文字を格納
-		if (char_type == HIRAGANA)
-		{
-			rankdata[0].namechar[namechar] = rankdata[0].cursole_X + (rankdata[0].cursole_Y * 10);
-		}
-		else
-		{
-			rankdata[0].namechar[namechar] = rankdata[0].cursole_X + ((rankdata[0].cursole_Y+5) * 10);
-		}
-		// テクスチャのセット
-		select_moji[namechar].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*namechar), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-		//select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
-		// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
+	// 文字の削除(不要な場合削除お願いします(＞＜))
+	if (GetKeyboardTrigger(DIK_BACKSPACE))
+	{	// 名前入力フラグの削除
+		select_moji[namechar-1].Release();	//テクスチャ解放
+		rankdata[0].selected[namechar-1] = false;	// 入力文字のフラグをオフに
+		rankdata[0].namechar[namechar] = 00;		// 文字入力フラグ初期化(あの位置へ）
+		namechar--;									// 現在入力中の文字数を減らすよ
+		rankdata[0].name_position = namechar;		
 
-		// 文字入力されたので現在入力中の名前を加算
-		if (namechar < NAMEMAX)
-		{
-			rankdata[0].name_position = namechar;
-			namechar++;
-		}
 	}
+
+
+	// 決定キーが入力された場合今のカーソル位置の文字を格納
+	if (GetKeyboardTrigger(DIK_SPACE))
+	{
+		if (namechar<NAMEMAX)
+		{
+			// 1フラグをtrueに
+			rankdata[0].selected[namechar] = true;
+
+			// 数字で文字を格納
+			if (char_type == HIRAGANA)
+			{
+				rankdata[0].namechar[namechar] = rankdata[0].cursole_X + (rankdata[0].cursole_Y * 10);
+			}
+			else
+			{
+				rankdata[0].namechar[namechar] = rankdata[0].cursole_X + ((rankdata[0].cursole_Y + 5) * 10);
+			}
+			// テクスチャのセット
+			select_moji[namechar].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*namechar), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
+			//select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
+			// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
+
+			// 文字入力されたので現在入力中の名前を加算
+			if (namechar < NAMEMAX)
+			{
+				rankdata[0].name_position = namechar;
+				namechar++;
+			}
+		}
+
+		// 上書き処理
+		// もし入力済の文字だった場合
+		else 
+		{
+			// 数字で文字を格納
+			if (char_type == HIRAGANA)
+			{
+				rankdata[0].namechar[rankdata[0].name_position] = rankdata[0].cursole_X + (rankdata[0].cursole_Y * 10);
+			}
+			else
+			{
+				rankdata[0].namechar[rankdata[0].name_position] = rankdata[0].cursole_X + ((rankdata[0].cursole_Y + 5) * 10);
+			}
+			// テクスチャのセット
+			select_moji[rankdata[0].name_position].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*rankdata[0].name_position), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
+			
+
+		
+		}
+
+		
+	}
+
 }
 
 //********************************************************************

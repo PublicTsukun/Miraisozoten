@@ -103,7 +103,7 @@ void UpdateStartCount(void)
 	if (LogoTimerUse)
 	{
 		
-		LogoAlpha -= 0.015;
+		LogoAlpha -= 0.015f;
 		LogoScale += 0.05f;
 		StartLogo.SetStatus(LogoScale, 0.0f);
 		StartLogo.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, LogoAlpha));

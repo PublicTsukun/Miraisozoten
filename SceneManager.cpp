@@ -8,7 +8,9 @@
 
 
 SCENE SceneManager::GameScene = SCENE_MAX;
-
+SCENE SceneManager::FadeSceneKeep = SCENE_MAX;
+FADE_CURTAIN_STATE SceneManager::InFade = SLEEP;	// フェード状態
+FadeCurtain SceneManager::SceneFade;
 
 //----更新--------
 int  SceneManager::Update()
@@ -115,12 +117,12 @@ void SceneManager::Draw()
 		GamePause::Draw();
 
 		break;
-
 	}
+	SceneFade.Draw();
 }
 
 //----ゲームシーンの更新・取得--------
-SCENE SceneManager::SetScene(SCENE scene)
+SCENE SceneManager::SetScene(SCENE scene, bool set)
 {
 	/* 指定シーンが同じ場合は戻る */
 	if (scene == SCENE_MAX)
@@ -140,6 +142,27 @@ SCENE SceneManager::SetScene(SCENE scene)
 		if (scene == SCENE_GAME)
 		{
 			return SCENE_GAME;
+		}
+	}
+
+	/* フェード設定 */
+	if (set)
+	{
+		switch (InFade)
+		{
+		case CLOSS:
+			scene = FadeSceneKeep;
+			InFade = OPEN;
+			SceneFade.SetFade(OPEN);
+			break;
+		case OPEN:
+			break;
+		case SLEEP:
+			FadeSceneKeep = scene;
+			InFade = CLOSS;
+			SceneFade.SetFade(CLOSS);
+			return scene;
+			break;
 		}
 	}
 
@@ -210,11 +233,27 @@ SCENE SceneManager::SetScene(SCENE scene)
 
 	return GameScene;
 }
-
 SCENE SceneManager::GetScene()
 {
 	return GameScene;
 }
+
+//----フェード状態--------
+void SceneManager::SetFadeState(FADE_CURTAIN_STATE state)
+{
+	InFade = state;
+}
+FADE_CURTAIN_STATE SceneManager::GetFadeState()
+{
+	return InFade;
+}
+
+//----フェードを進める--------
+bool SceneManager::UpdateFade()
+{
+	return SceneFade.Update() ? true : false;
+}
+
 
 
 

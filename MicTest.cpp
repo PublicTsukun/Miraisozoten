@@ -80,13 +80,18 @@ int MicTestInit()
 void MicTestUninit()
 {
 	// キャプチャバッファストップ
-	g_pDSBCapture->Stop();
-
-	// オブジェクトのリリース。まあ、DirectSoundオブジェクトの後始末。
-	g_pDSBCapture->Release();
-	g_pDSBCapture = NULL;
-	g_pDSCapture->Release();
-	g_pDSCapture = NULL;
+	// オブジェクトのリリース。DirectSoundオブジェクトの後始末。
+	if (g_pDSBCapture != NULL)
+	{
+		g_pDSBCapture->Stop();
+		g_pDSBCapture->Release();
+		g_pDSBCapture = NULL;
+	}
+	if (g_pDSCapture != NULL)
+	{
+		g_pDSCapture->Release();
+		g_pDSCapture = NULL;
+	}
 
 	CoUninitialize();
 }

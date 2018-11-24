@@ -470,7 +470,7 @@ void SetParameter00(void)
 	//SetAppear(ENo, apr);			// 出現タイミング設定
 	////================================
 
-	srand((unsigned)time(NULL));
+	// srand()はメインに移しました
 
 	TrapFactory(120, 1);
 	TrapFactory(240, 1);

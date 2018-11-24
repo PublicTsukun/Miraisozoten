@@ -118,7 +118,7 @@ void UpdateFinishCount(void)
 			FinishCount.FinishScale = 1.0f;
 		}
 			
-		FinishAngle = (D3DX_PI / 8.0) - (D3DX_PI / 4.0)*(float)(FinishCount.GetTime() % 2);
+		FinishAngle = (D3DX_PI / 8.0f) - (D3DX_PI / 4.0f)*(float)(FinishCount.GetTime() % 2);
 		FinishCount.SetStatus(FinishCount.FinishScale, FinishAngle);
 		FinishCount.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.8f));
 	}

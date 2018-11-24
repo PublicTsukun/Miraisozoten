@@ -207,6 +207,9 @@
     <ClCompile Include="GameSound.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="FadeCurtain.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -387,6 +390,9 @@
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
     <ClInclude Include="GameSound.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeCurtain.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
