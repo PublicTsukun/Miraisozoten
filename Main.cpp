@@ -141,12 +141,12 @@ HRESULT Init()
 void Uninit(void)
 {
 
-	UninitGameSound();
 	// フェード
 	FadeCurtain::Uninit();
 
 	Scene::SetScene(SCENE_END);
 
+	UninitGameSound();
 
 }
 

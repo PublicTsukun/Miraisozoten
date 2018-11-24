@@ -70,7 +70,7 @@ bool slotStart;
 int slotCount;
 int g_score;
 
-
+bool excellentf;
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -117,7 +117,7 @@ HRESULT InitResultlogo(void)
 
 	DetailCount = 0;
 
-	
+	excellentf = false;
 	return S_OK;
 }
 
@@ -241,6 +241,12 @@ void UpdateResultlogo(void)
 		{
 			g_score = g_maxscore;
 			slotStart = false;
+
+			if (!PlayCheckSE(SCORE_DECISION)&& excellentf==false)
+			{
+				PlaySE(EXCELLENT);
+				excellentf = true;
+			}
 		}
 
 	}

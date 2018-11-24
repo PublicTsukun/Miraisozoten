@@ -219,7 +219,11 @@ void AddGage(int no)
 				gagenum++;
 				if (gagenum < 3)
 				{
-					//PlaySE();
+					PlaySE(GAGE_1ST2ND);
+				}
+				else if (gagenum > 3)
+				{
+					PlaySE(GAGE_LAST);
 				}
 			}
 
