@@ -10,6 +10,8 @@
 #include "timer.h"
 
 #include "StageManager.h"
+#include "GameSound.h"
+
 
 //*****************************************************************************
 // ÉOÉçÅ[ÉoÉãïœêî
@@ -23,6 +25,8 @@ bool LogoTimerUse;
 float LogoAlpha;
 float LogoScale;
 
+int SoundCount;
+int CountInter;
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -37,7 +41,11 @@ HRESULT InitStartCount(void)
 	LogoTimerUse = false;
 	LogoAlpha = 1.0;
 	LogoScale = 0.0f;
+	
 
+
+	SoundCount = 4;
+	CountInter = 10;
 	return S_OK;
 }
 
@@ -77,6 +85,17 @@ void UpdateStartCount(void)
 
 	StartCount.Animation();
 
+	if (SoundCount)
+	{
+		CountInter--;
+	}
+	if (CountInter == 0)
+	{
+		SoundCount--;
+		CountInter = 60;
+		PlaySE(START + SoundCount);
+	}
+
 	if (StartCount.ActiveCheck() == false)
 	{
 		TimerSet(COUNT);
@@ -86,7 +105,7 @@ void UpdateStartCount(void)
 	if (LogoTimerUse)
 	{
 		
-		LogoAlpha -= 0.015;
+		LogoAlpha -= 0.015f;
 		LogoScale += 0.05f;
 		StartLogo.SetStatus(LogoScale, 0.0f);
 		StartLogo.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, LogoAlpha));

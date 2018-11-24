@@ -5,10 +5,12 @@
 #include "GamePause.h"
 #include "Result.h"
 #include "Ranking.h"
-
+#include "GameSound.h"
 
 SCENE SceneManager::GameScene = SCENE_MAX;
-
+SCENE SceneManager::FadeSceneKeep = SCENE_MAX;
+FADE_CURTAIN_STATE SceneManager::InFade = SLEEP;	// フェード状態
+FadeCurtain SceneManager::SceneFade;
 
 //----更新--------
 int  SceneManager::Update()
@@ -19,10 +21,10 @@ int  SceneManager::Update()
 		// タイトルシーンの更新
 		UpdateTitle();
 
-		if (GetKeyboardTrigger(DIK_RETURN))
-		{
-			//SetScene(SCENE_GAME);
-		}
+		//if (GetKeyboardTrigger(DIK_RETURN))
+		//{
+		//	SetScene(SCENE_GAME);
+		//}
 		break;
 
 	case SCENE_GAME:
@@ -43,10 +45,10 @@ int  SceneManager::Update()
 		// リザルトシーンの更新
 		UpdateResult();
 
-		if (GetKeyboardTrigger(DIK_RETURN))
-		{
-			SetScene(SCENE_TITLE);
-		}
+		//if (GetKeyboardTrigger(DIK_RETURN))
+		//{
+		//	SetScene(SCENE_TITLE);
+		//}
 		break;
 
 	case SCENE_RANKING:
@@ -115,12 +117,12 @@ void SceneManager::Draw()
 		GamePause::Draw();
 
 		break;
-
 	}
+	SceneFade.Draw();
 }
 
 //----ゲームシーンの更新・取得--------
-SCENE SceneManager::SetScene(SCENE scene)
+SCENE SceneManager::SetScene(SCENE scene, bool set)
 {
 	/* 指定シーンが同じ場合は戻る */
 	if (scene == SCENE_MAX)
@@ -140,6 +142,29 @@ SCENE SceneManager::SetScene(SCENE scene)
 		if (scene == SCENE_GAME)
 		{
 			return SCENE_GAME;
+		}
+	}
+
+	/* フェード設定 */
+	if (set)
+	{
+		switch (InFade)
+		{
+		case CLOSS:
+			scene = FadeSceneKeep;
+			InFade = OPEN;
+			SceneFade.SetFade(OPEN);
+			PlaySE(CURTAIN);
+			break;
+		case OPEN:
+			break;
+		case SLEEP:
+			FadeSceneKeep = scene;
+			InFade = CLOSS;
+			SceneFade.SetFade(CLOSS);
+			PlaySE(CURTAIN);
+			return scene;
+			break;
 		}
 	}
 
@@ -210,11 +235,27 @@ SCENE SceneManager::SetScene(SCENE scene)
 
 	return GameScene;
 }
-
 SCENE SceneManager::GetScene()
 {
 	return GameScene;
 }
+
+//----フェード状態--------
+void SceneManager::SetFadeState(FADE_CURTAIN_STATE state)
+{
+	InFade = state;
+}
+FADE_CURTAIN_STATE SceneManager::GetFadeState()
+{
+	return InFade;
+}
+
+//----フェードを進める--------
+bool SceneManager::UpdateFade()
+{
+	return SceneFade.Update() ? true : false;
+}
+
 
 
 

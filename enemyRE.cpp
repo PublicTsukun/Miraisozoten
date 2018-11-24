@@ -18,6 +18,8 @@
 
 #include <time.h>
 
+#include "Library\Sound.h"
+
 
 //*****************************************************************************
 // マクロ定義
@@ -96,13 +98,13 @@ enum E_TYPE
 //*****************************************************************************
 void CollisionEnemyRE(void);
 void DamageDealEnemyRE(int Eno, int Vno);
-void ResetEnemyRE(void);
+//void ResetEnemyRE(void);
 
 void SetType(int ENo, int type);
 void SetPos(int ENo, float x, float y, float z);
 void SetAppear(int ENo, int time);
 void SetParameter00(void);
-void SetParameter01(void);
+//void SetParameter01(void);
 
 void TestEnemyRE(void);
 void TrapFactory(int apr, int num);
@@ -131,6 +133,8 @@ ENEMY EnemyREWk[ENEMY_MAX];		// ワーク
 CEnemyRE EnemyRE[ENEMY_MAX];
 
 int YOUDEFEATED;
+
+
 
 //=============================================================================
 // 初期化処理
@@ -168,6 +172,7 @@ void InitEnemyRE(void)
 
 	SetParameter00();
 
+
 }
 
 //=============================================================================
@@ -179,6 +184,7 @@ void UninitEnemyRE(void)
 	{
 		EnemyRE[i].Release();
 	}
+
 }
 
 //=============================================================================
@@ -299,6 +305,7 @@ void CollisionEnemyRE(void)
 				// 弾消滅
 				VanishVoiceten(j);
 
+
 			}
 
 		}
@@ -359,6 +366,7 @@ void VanisnEnenyRE(int no)
 
 	// ゲージアップ
 	AddGage(ENEMY_D_GAUGEBONUS);
+
 
 	SetYouDefeated(1);
 }
@@ -462,7 +470,7 @@ void SetParameter00(void)
 	//SetAppear(ENo, apr);			// 出現タイミング設定
 	////================================
 
-	srand((unsigned)time(NULL));
+	// srand()はメインに移しました
 
 	TrapFactory(120, 1);
 	TrapFactory(240, 1);

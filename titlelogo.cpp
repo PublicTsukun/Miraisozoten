@@ -9,8 +9,7 @@
 #include "Library/Input.h"
 #include "Library/DebugProcess.h"
 #include "SceneManager.h"
-
-#include "Library\Sound.h"
+#include "GameSound.h"
 
 
 //=============================================================================
@@ -60,6 +59,8 @@
 
 #define	COUNT_WAIT_DEMO			(60 * 5)	// デモまでの待ち時間
 
+#define TITLE_SOUND_MAX				(4)
+
 //=============================================================================
 // プロトタイプ宣言
 //=============================================================================
@@ -86,6 +87,7 @@ const char *MenuBgTex[] = {
 	"data/TEXTURE/UI/タイトル/メニュー画面_黄.png",
 };
 
+
 const Vector2 MenuBgPos[] = {
 	Vector2(SINGLE_POS_X,SINGLE_POS_Y),
 	Vector2(MULTI_POS_X,MULTI_POS_Y),
@@ -100,7 +102,7 @@ const Vector2 MenuBgSize[] = {
 
 C2DObject MenuBg[3];
 
-DirectSound TitleSound[3];
+
 
 //=============================================================================
 // 初期化処理
@@ -127,11 +129,7 @@ HRESULT InitTitlelogo(void)
 		MenuBg[i].Init(MenuBgPos[i].x, MenuBgPos[i].y, MenuBgSize[i].x, MenuBgSize[i].y, MenuBgTex[i]);
 	}
 	
-	TitleSound[0].LoadSound("data/BGM/タイトル・リザルト・ランキング画面音源 (2).wav");
-	TitleSound[0].Play(E_DS8_FLAG_LOOP);
 
-	TitleSound[1].LoadSound("data/SE/決定ボタン音（タイトル画面・メニュー画面・名前最終決定時・もどる、やめとくを押したとき等）.wav");
-	TitleSound[2].LoadSound("data/SE/選択カーソル移動音（メニュー選択・名前入力etc）.wav");
 	return S_OK;
 }
 
@@ -156,10 +154,7 @@ void UninitTitlelogo(void)
 		MenuBg[i].Release();
 	}
 
-	for (int i = 0; i < 3; i++)
-	{
-		TitleSound[i].Release();
-	}
+
 }
 
 //=============================================================================
@@ -168,12 +163,12 @@ void UninitTitlelogo(void)
 void DrawTitlelogo(void)
 {
 		titlebg.Draw();
-		titlename.Draw();
 
 		//スタートボタンが表示されている状態でEnterを押すとメニューが表示される
 		if (pop == true)
 		{
 			startbutton.Draw();
+			titlename.Draw();
 		}
 
 		if (pop == false)
@@ -210,41 +205,41 @@ void UpdateTitlelogo(void)
 		}
 		PrintDebugProcess("flagCount: (%d)\n", flagCount);
 
+
+
+		//↓入力でカーソルを下に移動
+		if (GetKeyboardTrigger(DIK_DOWN))
+		{
+			x = x + 1;
+			flagCount = 0;//カウントリセット
+			PlaySE(CURSOL);
+
+		}
+
+		//カーソルが一番下にある状態で↓入力すると一番上に戻る
+		if (x >= CURSORMAX)
+		{
+			x = 0;
+		}
+
+		//↑入力でカーソルを上に移動
+		if (GetKeyboardTrigger(DIK_UP))
+		{
+			x = x - 1;
+			flagCount = 0;//カウントリセット
+			PlaySE(CURSOL);
+
+		}
+
+		//カーソルが一番上にある状態で↑入力すると一番下に戻る
+		if (x < 0)
+		{
+			x = CURSORMAX - 1;
+		}
+
+		//デバッグ表示
+		PrintDebugProcess("x : (%d)\n", x);
 	}
-
-	//↓入力でカーソルを下に移動
-	if (GetKeyboardTrigger(DIK_DOWN))
-	{
-		x = x + 1;
-		flagCount = 0;//カウントリセット
-		TitleSound[2].Play(E_DS8_FLAG_NONE);
-
-	}
-
-	//カーソルが一番下にある状態で↓入力すると一番上に戻る
-	if (x >= CURSORMAX)
-	{
-		x = 0;
-	}
-
-	//↑入力でカーソルを上に移動
-	if (GetKeyboardTrigger(DIK_UP))
-	{
-		x = x - 1;
-		flagCount = 0;//カウントリセット
-		TitleSound[2].Play(E_DS8_FLAG_NONE);
-
-	}
-
-	//カーソルが一番上にある状態で↑入力すると一番下に戻る
-	if (x < 0)
-	{
-		x = CURSORMAX-1;
-	}
-	
-	//デバッグ表示
-	PrintDebugProcess("x : (%d)\n", x);
-
 	switch (x)//カーソルの座標に各モードロゴのＹ座標を合わせる
 	{
 	case SINGLE:
@@ -286,34 +281,30 @@ void UpdateTitlelogo(void)
 	//ゲーム画面に移行
 	if (GetKeyboardTrigger(DIK_RETURN)&& pop == false)
 	{
+
+		PlaySE(DECIDE);
+
 		if(x == SINGLE)
 		{
 			Scene::SetScene(SCENE_GAME);
-			TitleSound[1].Play(E_DS8_FLAG_NONE);
-
 		}
 
 		else if (x == MULTI)
 		{
 			Scene::SetScene(SCENE_GAME);
-			TitleSound[1].Play(E_DS8_FLAG_NONE);
-
 		}
 
 		//リザルト(ランキング)画面に移行
 		else if (x == RANKING)
 		{
 			Scene::SetScene(SCENE_RANKING);
-			TitleSound[1].Play(E_DS8_FLAG_NONE);
-
 		}
 	}
 
 	else if (GetKeyboardTrigger(DIK_RETURN) && pop == true)
 	{
 		pop = false;
-		TitleSound[1].Play(E_DS8_FLAG_NONE);
-
+		PlaySE(MODE);
 	}
 
 }

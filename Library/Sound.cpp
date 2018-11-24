@@ -159,8 +159,9 @@ LPDIRECTSOUNDBUFFER8 DirectSound::LoadSound(const char *soundFile)
 
 //----音を鳴らす--------
 /* flag : 1(E_DS8_FLAG_LOOP)ならループ再生 */
-void DirectSound::Play(int flag)
+void DirectSound::Play(int flag,DWORD start)
 {	// 続きから鳴らすので、最初から鳴らしたい場合はSetCurrentPosition(0)をすること
+	this->SoundBuffer->SetCurrentPosition(start);
 	this->SoundBuffer->Play(0, 0, flag);
 }
 
@@ -177,10 +178,10 @@ void DirectSound::Stop()
 
 //----音量ボリューム設定を変更する--------
 /* volume : 設定したいヴォリューム(0～-10,000) */
-void DirectSound::Volume(LONG volume)
+void DirectSound::SetVolume(void)
 {
 	//! ボリューム設定を変更する.
-	this->SoundBuffer->SetVolume(volume);
+	this->SoundBuffer->SetVolume(this->Volume);
 }
 
 //----再生中かどうか調べる--------

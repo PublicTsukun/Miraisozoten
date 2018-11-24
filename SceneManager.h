@@ -2,6 +2,9 @@
 #define _MANAGER_SCENE_H_INCLUDE_
 
 
+#include "FadeCurtain.h"
+
+
 /* ÉQÅ[ÉÄèÛë‘ÇÃéÌóﬁ */
 enum SCENE
 {
@@ -18,12 +21,19 @@ enum SCENE
 typedef class SceneManager
 {
 	static SCENE GameScene;
+	static SCENE FadeSceneKeep;
+	static FADE_CURTAIN_STATE InFade;
+	static FadeCurtain SceneFade;
 
 public:
 	static int  Update();
 	static void Draw();
-	static SCENE SetScene(SCENE scene);
+	static SCENE SetScene(SCENE scene, bool set = true);
 	static SCENE GetScene();
+
+	static void SetFadeState(FADE_CURTAIN_STATE state);
+	static FADE_CURTAIN_STATE GetFadeState();
+	static bool UpdateFade();
 
 }Scene;
 
