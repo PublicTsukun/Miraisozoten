@@ -21,10 +21,10 @@ int  SceneManager::Update()
 		// タイトルシーンの更新
 		UpdateTitle();
 
-		if (GetKeyboardTrigger(DIK_RETURN))
-		{
-			//SetScene(SCENE_GAME);
-		}
+		//if (GetKeyboardTrigger(DIK_RETURN))
+		//{
+		//	SetScene(SCENE_GAME);
+		//}
 		break;
 
 	case SCENE_GAME:
@@ -45,10 +45,10 @@ int  SceneManager::Update()
 		// リザルトシーンの更新
 		UpdateResult();
 
-		if (GetKeyboardTrigger(DIK_RETURN))
-		{
-			SetScene(SCENE_TITLE);
-		}
+		//if (GetKeyboardTrigger(DIK_RETURN))
+		//{
+		//	SetScene(SCENE_TITLE);
+		//}
 		break;
 
 	case SCENE_RANKING:
