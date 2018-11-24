@@ -61,13 +61,13 @@ void UninitWorkTsu(void)
 
 
 	case SCENE_GAME://タイトルで使ったソースのUninit
+		Tank.Uninit();
 
 		break;
 
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
 		AimPoint.Release();
-		Tank.Uninit();
 		UninitFinishCount();
 
 		break;

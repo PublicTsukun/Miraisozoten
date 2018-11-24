@@ -9,7 +9,7 @@
 #include "Library/Input.h"
 #include "Library/DebugProcess.h"
 #include "SceneManager.h"
-
+#include "GameSound.h"
 
 
 //=============================================================================
@@ -212,6 +212,7 @@ void UpdateTitlelogo(void)
 		{
 			x = x + 1;
 			flagCount = 0;//カウントリセット
+			PlaySE(CURSOL);
 
 		}
 
@@ -226,6 +227,7 @@ void UpdateTitlelogo(void)
 		{
 			x = x - 1;
 			flagCount = 0;//カウントリセット
+			PlaySE(CURSOL);
 
 		}
 
@@ -280,6 +282,7 @@ void UpdateTitlelogo(void)
 	if (GetKeyboardTrigger(DIK_RETURN)&& pop == false)
 	{
 
+		PlaySE(DECIDE);
 
 		if(x == SINGLE)
 		{
@@ -296,13 +299,12 @@ void UpdateTitlelogo(void)
 		{
 			Scene::SetScene(SCENE_RANKING);
 		}
-
 	}
 
 	else if (GetKeyboardTrigger(DIK_RETURN) && pop == true)
 	{
 		pop = false;
-
+		PlaySE(MODE);
 	}
 
 }

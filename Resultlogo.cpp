@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "score.h"
 #include "Library/MultiRendering.h" 
+#include "GameSound.h"
 //=============================================================================
 // マクロ定義
 //=============================================================================
@@ -180,10 +181,14 @@ void UpdateResultlogo(void)
 	slotTimer++;				//タイマー加算
 
 	//if (DetailCount == DETAIL_MAX && !slotStart)
-	if (slotTimer>=60)
+	if (slotTimer >= 120)
 	{
 		slotStart = true;//一定時間でスロットスタート
 		slotTimer = 0;
+		if (slotCount < NUM_PLACE)
+		{
+			PlaySE(SCORE_SLOT);
+		}
 	}
 	if (slotStart == true)//スロットが動いてるとき
 	{
@@ -213,7 +218,8 @@ void UpdateResultlogo(void)
 				slotTimer = 0;
 				if (slotCount == NUM_PLACE)
 				{
-
+					StopSE(SCORE_SLOT);
+					PlaySE(SCORE_DECISION);
 				}
 
 				if (slotCount == 5)

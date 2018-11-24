@@ -8,11 +8,11 @@
 
 #include <Windows.h>
 
-#define BGM_VOLUME_MIN		(-8000)
+#define BGM_VOLUME_MIN		(-9000)
 #define BGM_VOLUME_MAX		(-500)
 
-#define VOLUME_CONTROL_DOWN	(20)
-#define VOLUME_CONTROL_UP	(120)
+#define VOLUME_CONTROL_DOWN	(50)
+#define VOLUME_CONTROL_UP	(300)
 
 enum BGM_NO
 {
@@ -37,6 +37,7 @@ enum SE_NO
 	SCORE_SLOT,
 	SCORE_DECISION,
 	VIGOR,
+	MODE,
 	SE_MAX
 };
 //=============================================================================

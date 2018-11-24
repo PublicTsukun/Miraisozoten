@@ -4,18 +4,18 @@
 #include "GameSound.h"
 #include "Library\Sound.h"
 #include "SceneManager.h"
+#include "Library\DebugProcess.h"
 
 class BGM : public DirectSound
 {
 public:
-	long Volume;
 	void FadeVolume(bool flag);
 };
 
 BGM SoundBGM[BGM_MAX];
 DirectSound SoundSE[SE_MAX];
 
-
+//ファイル配列の作成　※ヘッダーのenumと順番を合わせること（PlayやStopに影響が出る）
 const char *BGMFile[BGM_MAX]=
 {
 	"data/BGM/タイトル・リザルト・ランキング画面音源 (2).wav",
@@ -38,6 +38,7 @@ const char *SEFile[SE_MAX] =
 	"data/SE/リザルトスコア集計音（数字がひたすら高速で動いてる時の音）.wav",
 	"data/SE/リザルトスコア確定音（数字が全て確定しきった時の音）.wav",
 	"data/SE/的（ネガティブな人）が元気になった音_通常点.wav",
+	"data/SE/タイトル画面からメニュー画面にいったとき（モードを選んでね！音）.wav",
 };
 
 
@@ -143,7 +144,7 @@ void BGM::FadeVolume(bool flag)
 	switch (flag)
 	{
 	case true:
-		if (this->Volume < BGM_VOLUME_MAX);
+		if (this->Volume < BGM_VOLUME_MAX)
 		{
 			this->Volume += VOLUME_CONTROL_UP;
 			if (this->Volume >= BGM_VOLUME_MAX)
@@ -155,7 +156,7 @@ void BGM::FadeVolume(bool flag)
 		break;
 
 	case false:
-		if (this->Volume > BGM_VOLUME_MIN);
+		if (this->Volume > BGM_VOLUME_MIN)
 		{
 			this->Volume -= VOLUME_CONTROL_DOWN;
 			if (this->Volume <= BGM_VOLUME_MIN)
@@ -167,9 +168,12 @@ void BGM::FadeVolume(bool flag)
 		break;
 
 	}
-	this->SetVolume(Volume);
+	this->SetVolume();
 }
 
+//=============================================================================
+//BGMアップデート処理
+//=============================================================================
 void UpdateGameSound(void)
 {
 
@@ -192,7 +196,9 @@ void UpdateGameSound(void)
 		SoundBGM[GAME_AKIBA].FadeVolume(false);
 		SoundBGM[RESULT].FadeVolume(true);
 		break;
-
-
 	}
+	PrintDebugProcess("\nTITLE%d\n", SoundBGM[TITLE].Volume);
+	PrintDebugProcess("GAME%d\n", SoundBGM[GAME_AKIBA].Volume);
+	PrintDebugProcess("RESULT%d\n", SoundBGM[RESULT].Volume);
+
 }
