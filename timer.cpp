@@ -50,6 +50,20 @@ HRESULT InitTimer(void)
 
 	TimerSet(RESET);
 	TimerSet(STOP);
+
+	for (int i = 0; i < MAX_DIGIT; i++)
+	{
+		int num;
+
+		num = (Time / (int)(pow(10, i)));
+		num %= 10;
+
+
+		number[i].SetNumber(num);
+
+
+	}
+
 	return S_OK;
 }
 

@@ -8,6 +8,7 @@
 #include "Library\ObjectBase2D.h"
 
 #include "timer.h"
+#include "GameSound.h"
 
 
 class CountEff : public CountDown
@@ -35,6 +36,8 @@ public:
 			if (this->Time == 0)
 			{
 				this->Use = false;
+				PlaySE(FINISH);
+
 			}
 
 		}

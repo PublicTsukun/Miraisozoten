@@ -9,7 +9,7 @@
 #include <Windows.h>
 
 #define BGM_VOLUME_MIN		(-9000)
-#define BGM_VOLUME_MAX		(-500)
+#define BGM_VOLUME_MAX		(-2000)
 
 #define VOLUME_CONTROL_DOWN	(50)
 #define VOLUME_CONTROL_UP	(300)
@@ -28,10 +28,10 @@ enum SE_NO
 {
 	CURSOL,
 	DECIDE,
+	START,
 	COUNT_1,
 	COUNT_2,
 	COUNT_3,
-	START,
 	FINISH,
 	SHOOT_BULLET,
 	SCORE_SLOT,

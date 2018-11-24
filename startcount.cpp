@@ -10,6 +10,7 @@
 #include "timer.h"
 
 #include "StageManager.h"
+#include "GameSound.h"
 
 
 //*****************************************************************************
@@ -92,6 +93,7 @@ void UpdateStartCount(void)
 	{
 		SoundCount--;
 		CountInter = 60;
+		PlaySE(START + SoundCount);
 	}
 
 	if (StartCount.ActiveCheck() == false)

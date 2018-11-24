@@ -29,10 +29,10 @@ const char *SEFile[SE_MAX] =
 {
 	"data/SE/選択カーソル移動音（メニュー選択・名前入力etc）.wav",
 	"data/SE/決定ボタン音（タイトル画面・メニュー画面・名前最終決定時・もどる、やめとくを押したとき等）.wav",
+	"data/SE/ゲームスタート音.wav",
 	"data/SE/カウント音_1.wav",
 	"data/SE/カウント音_2.wav",
 	"data/SE/カウント音_3.wav",
-	"data/SE/ゲームスタート音.wav",
 	"data/SE/ゲームセット音.wav",
 	"data/SE/ボイステン発射音.wav",
 	"data/SE/リザルトスコア集計音（数字がひたすら高速で動いてる時の音）.wav",
