@@ -5,7 +5,7 @@
 #include "GamePause.h"
 #include "Result.h"
 #include "Ranking.h"
-
+#include "GameSound.h"
 
 SCENE SceneManager::GameScene = SCENE_MAX;
 SCENE SceneManager::FadeSceneKeep = SCENE_MAX;
@@ -154,6 +154,7 @@ SCENE SceneManager::SetScene(SCENE scene, bool set)
 			scene = FadeSceneKeep;
 			InFade = OPEN;
 			SceneFade.SetFade(OPEN);
+			PlaySE(CURTAIN);
 			break;
 		case OPEN:
 			break;
@@ -161,6 +162,7 @@ SCENE SceneManager::SetScene(SCENE scene, bool set)
 			FadeSceneKeep = scene;
 			InFade = CLOSS;
 			SceneFade.SetFade(CLOSS);
+			PlaySE(CURTAIN);
 			return scene;
 			break;
 		}
