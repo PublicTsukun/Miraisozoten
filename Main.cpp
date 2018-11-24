@@ -127,7 +127,7 @@ HRESULT Init()
 	InitGameSound();
 
 	// タイトルシーンにセット
-	Scene::SetScene(SCENE_TITLE, false);
+	Scene::SetScene(SCENE_GAME, false);
 
 	// カメラ
 	InitCamera();
@@ -141,12 +141,12 @@ HRESULT Init()
 void Uninit(void)
 {
 
-	UninitGameSound();
 	// フェード
 	FadeCurtain::Uninit();
 
 	Scene::SetScene(SCENE_END);
 
+	UninitGameSound();
 
 }
 

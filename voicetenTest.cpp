@@ -20,6 +20,7 @@
 /* 初追加分 */
 #include "voicetank.h"
 #include "AimPointer.h"
+#include "GameSound.h"
 
 //=============================================================================
 // Voiceten Launcher
@@ -42,7 +43,9 @@ void TestVL(void)
 		//	Vector3(200.0f, 200.0f, 0.0f),			// 発射位置
 		//	Vector3(-100.0f, 100.0f, -100.0f));			// 目標位置
 
+		PlaySE(SHOOT_BULLET);
 	}
+
 
 	// テスト用、全滅
 	if (GetKeyboardTrigger(DIK_X))

@@ -5,6 +5,7 @@
 #include "GamePause.h"
 #include "Result.h"
 #include "Ranking.h"
+
 #include "GameSound.h"
 
 SCENE SceneManager::GameScene = SCENE_MAX;
@@ -45,10 +46,10 @@ int  SceneManager::Update()
 		// リザルトシーンの更新
 		UpdateResult();
 
-		//if (GetKeyboardTrigger(DIK_RETURN))
-		//{
-		//	SetScene(SCENE_TITLE);
-		//}
+		if (GetKeyboardTrigger(DIK_RETURN))
+		{
+			//SetScene(SCENE_TITLE);
+		}
 		break;
 
 	case SCENE_RANKING:

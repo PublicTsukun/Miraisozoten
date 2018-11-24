@@ -39,6 +39,10 @@ enum SE_NO
 	VIGOR,
 	MODE,
 	CURTAIN,
+	GAGE_1ST2ND,
+	GAGE_LAST,
+	THANKYOU,
+	EXCELLENT,
 	SE_MAX
 };
 //=============================================================================

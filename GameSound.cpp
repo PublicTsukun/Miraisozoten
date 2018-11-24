@@ -39,7 +39,11 @@ const char *SEFile[SE_MAX] =
 	"data/SE/リザルトスコア確定音（数字が全て確定しきった時の音）.wav",
 	"data/SE/的（ネガティブな人）が元気になった音_通常点.wav",
 	"data/SE/タイトル画面からメニュー画面にいったとき（モードを選んでね！音）.wav",
-	"data/SE/カーテン.wav",
+	"data/SE/カウント音_5.wav",
+	"data/SE/ボーナスゲージがたまった音（1段階・2段階目）.wav",
+	"data/SE/ボーナスゲージがMAXになった時の音.wav",
+	"data/SE/タイトルに戻るときの音（ランキングの後・オプションからタイトルもどる選択後）.wav",
+	"data/SE/ランキング入賞時（おめでとう！音）.wav",
 };
 
 
@@ -56,10 +60,9 @@ HRESULT InitGameSound(void)
 		SoundBGM[i].LoadSound(BGMFile[i]);
 		SoundBGM[i].Volume = BGM_VOLUME_MIN;
 	}
-	SoundBGM[TITLE].Play(E_DS8_FLAG_LOOP, 0);
-	SoundBGM[GAME_AKIBA].Play(E_DS8_FLAG_LOOP, 0);
-	SoundBGM[RESULT].Play(E_DS8_FLAG_LOOP, 0);
-
+	PlayBGM(TITLE);
+	PlayBGM(GAME_AKIBA);
+	PlayBGM(RESULT);
 
 	for (int i = 0; i < SE_MAX; i++)
 	{

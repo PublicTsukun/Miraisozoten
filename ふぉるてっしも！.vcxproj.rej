@@ -1,0 +1,9 @@
+diff a/ふぉるてっしも！.vcxproj b/ふぉるてっしも！.vcxproj	(rejected hunks)
+@@ -63,6 +63,7 @@
+     <ClCompile Include="Title.cpp" />
+     <ClCompile Include="titlelogo.cpp" />
+     <ClCompile Include="UIBonus.cpp" />
++    <ClCompile Include="VLauncher.cpp" />
+     <ClCompile Include="voicetank.cpp" />
+     <ClCompile Include="voiceten.cpp" />
+     <ClCompile Include="voicetenTest.cpp" />

@@ -1,0 +1,11 @@
+diff a/ふぉるてっしも！.vcxproj.filters b/ふぉるてっしも！.vcxproj.filters	(rejected hunks)
+@@ -204,6 +204,9 @@
+     <ClCompile Include="finishcount.cpp">
+       <Filter>ソース ファイル\Game\UI</Filter>
+     </ClCompile>
++    <ClCompile Include="VLauncher.cpp">
++      <Filter>ソース ファイル\Game</Filter>
++    </ClCompile>
+   </ItemGroup>
+   <ItemGroup>
+     <ClInclude Include="Library\Camera.h">

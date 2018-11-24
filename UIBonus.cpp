@@ -10,6 +10,7 @@
 #include "Library\DebugProcess.h"
 #include "Library\Color.h"
 #include "timer.h"
+#include "GameSound.h"
 
 //*****************************************************************************
 // グローバル変数
@@ -95,7 +96,7 @@ void UpdateUIBonus(void)
 	if (StateTimer() == COUNT)
 	{
 
-	//	if (GetKeyboardPress(DIK_9) && fiverf == false)
+		if (GetKeyboardPress(DIK_9) && fiverf == false)
 		{
 			AddGage(3);//９が押されているときはゲージを伸ばす
 		}
@@ -114,22 +115,6 @@ void UpdateUIBonus(void)
 			fiverf = true;
 		}
 	}
-		if (gageper >= LAST_GAGE)//ゲージが100%以上なら
-		{
-			gagenum = 3;//フラグを3に
-		}
-		else if (gageper > SECOND_GAGE)//最終ゲージなら
-		{
-			gagenum = 2;//フラグを2に
-		}
-		else if (gageper > FIRST_GAGE)//2番目のゲージなら
-		{
-			gagenum = 1;//フラグを1に
-		}
-		else if (gageper < FIRST_GAGE)//最初のゲージなら
-		{
-			gagenum = 0;//フラグを0に
-		}
 		PrintDebugProcess("フラグ%d", gagenum);
 
 
@@ -222,12 +207,26 @@ void AddGage(int no)
 		else
 		{
 			gagelong += no;//フィーバー状態なら問答無用で加算
+
 		}
 	}
 	else
 	{
 		if (fiverf == false)//フィーバー状態でなければ
 		{
+			if ((int)(((gagelong + no)/(float)VALUE_MAX) / 0.333f) > (int)(((gagelong) / (float)VALUE_MAX) / 0.333f))
+			{
+				gagenum++;
+				if (gagenum < 3)
+				{
+					PlaySE(GAGE_1ST2ND);
+				}
+				else if (gagenum > 3)
+				{
+					PlaySE(GAGE_LAST);
+				}
+			}
+
 			gagelong += no;//プラスでも問答無用で加算
 		}
 	}
@@ -245,6 +244,7 @@ void AddGage(int no)
 		gageper = 0.0f;//0%に調整して
 		gagelong = 0;
 		fiverf = false;//フィーバー状態終了
+		gagenum = 0;
 	}
 	PrintDebugProcess("フィーバー状態　[%d]\n", fiverf);
 	PrintDebugProcess("gageper [%d]\n", gagelong);
