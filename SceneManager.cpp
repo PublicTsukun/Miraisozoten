@@ -147,6 +147,7 @@ SCENE SceneManager::SetScene(SCENE scene, bool set)
 	}
 
 	/* フェード設定 */
+	bool fadeSE = false;
 	if (set)
 	{
 		switch (InFade)
@@ -155,7 +156,7 @@ SCENE SceneManager::SetScene(SCENE scene, bool set)
 			scene = FadeSceneKeep;
 			InFade = OPEN;
 			SceneFade.SetFade(OPEN);
-			PlaySE(CURTAIN);
+			fadeSE = true;
 			break;
 		case OPEN:
 			break;
@@ -232,6 +233,11 @@ SCENE SceneManager::SetScene(SCENE scene, bool set)
 	default:
 		return GameScene;
 		break;
+	}
+
+	if (fadeSE)
+	{// カーテンオープンSE
+		PlaySE(CURTAIN);
 	}
 
 	return GameScene;

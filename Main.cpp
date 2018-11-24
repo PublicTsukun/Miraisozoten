@@ -127,7 +127,7 @@ HRESULT Init()
 	InitGameSound();
 
 	// タイトルシーンにセット
-	Scene::SetScene(SCENE_GAME, false);
+	Scene::SetScene(SCENE_TITLE, false);
 
 	// カメラ
 	InitCamera();
