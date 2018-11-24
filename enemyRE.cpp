@@ -370,7 +370,7 @@ void VanisnEnenyRE(int no)
 	AddScore(ENEMY_D_SCOREBONUS);
 
 	// ゲージアップ
-	//AddGage(ENEMY_D_GAUGEBONUS);
+	AddGage(ENEMY_D_GAUGEBONUS);
 
 
 	SetYouDefeated(1);

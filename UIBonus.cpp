@@ -10,6 +10,7 @@
 #include "Library\DebugProcess.h"
 #include "Library\Color.h"
 #include "timer.h"
+#include "GameSound.h"
 
 //*****************************************************************************
 // グローバル変数
@@ -114,22 +115,6 @@ void UpdateUIBonus(void)
 			fiverf = true;
 		}
 	}
-		//if (gageper >= LAST_GAGE)//ゲージが100%以上なら
-		//{
-		//	gagenum = 3;//フラグを3に
-		//}
-		//else if (gageper > SECOND_GAGE)//最終ゲージなら
-		//{
-		//	gagenum = 2;//フラグを2に
-		//}
-		//else if (gageper > FIRST_GAGE)//2番目のゲージなら
-		//{
-		//	gagenum = 1;//フラグを1に
-		//}
-		//else if (gageper < FIRST_GAGE)//最初のゲージなら
-		//{
-		//	gagenum = 0;//フラグを0に
-		//}
 		PrintDebugProcess("フラグ%d", gagenum);
 
 
@@ -232,23 +217,11 @@ void AddGage(int no)
 			if ((int)(((gagelong + no)/(float)VALUE_MAX) / 0.333f) > (int)(((gagelong) / (float)VALUE_MAX) / 0.333f))
 			{
 				gagenum++;
+				if (gagenum < 3)
+				{
+					//PlaySE();
+				}
 			}
-			//if (gageper >= LAST_GAGE)//ゲージが100%以上なら
-			//{
-			//	gagenum = 3;//フラグを3に
-			//}
-			//else if (gageper > SECOND_GAGE)//最終ゲージなら
-			//{
-			//	gagenum = 2;//フラグを2に
-			//}
-			//else if (gageper > FIRST_GAGE)//2番目のゲージなら
-			//{
-			//	gagenum = 1;//フラグを1に
-			//}
-			//else if (gageper < FIRST_GAGE)//最初のゲージなら
-			//{
-			//	gagenum = 0;//フラグを0に
-			//}
 
 			gagelong += no;//プラスでも問答無用で加算
 		}

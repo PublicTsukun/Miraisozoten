@@ -20,9 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AimPointer.cpp" />
-    <ClCompile Include="FadeCurtain.cpp" />
     <ClCompile Include="finishcount.cpp" />
-    <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="startcount.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemyRE.cpp" />
@@ -65,6 +63,7 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="titlelogo.cpp" />
     <ClCompile Include="UIBonus.cpp" />
+    <ClCompile Include="VLauncher.cpp" />
     <ClCompile Include="voicetank.cpp" />
     <ClCompile Include="voiceten.cpp" />
     <ClCompile Include="voicetenTest.cpp" />
@@ -79,9 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimPointer.h" />
-    <ClInclude Include="FadeCurtain.h" />
     <ClInclude Include="finishcount.h" />
-    <ClInclude Include="GameSound.h" />
     <ClInclude Include="startcount.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemyRE.h" />
@@ -126,6 +123,7 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="titlelogo.h" />
     <ClInclude Include="UIBonus.h" />
+    <ClInclude Include="VLauncher.h" />
     <ClInclude Include="voicetank.h" />
     <ClInclude Include="voiceten.h" />
     <ClInclude Include="voicetenTest.h" />

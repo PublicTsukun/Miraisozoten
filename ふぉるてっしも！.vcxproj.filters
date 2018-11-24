@@ -204,11 +204,8 @@
     <ClCompile Include="finishcount.cpp">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="GameSound.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FadeCurtain.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="VLauncher.cpp">
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,11 +386,8 @@
     <ClInclude Include="finishcount.h">
       <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
-    <ClInclude Include="GameSound.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FadeCurtain.h">
-      <Filter>ソース ファイル</Filter>
+    <ClInclude Include="VLauncher.h">
+      <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
