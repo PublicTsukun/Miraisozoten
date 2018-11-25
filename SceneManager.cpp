@@ -157,6 +157,10 @@ SCENE SceneManager::SetScene(SCENE scene, bool set)
 			InFade = OPEN;
 			SceneFade.SetFade(OPEN);
 			fadeSE = true;
+			if (scene == SCENE_TITLE)
+			{
+				PlaySE(THANKYOU);
+			}
 			break;
 		case OPEN:
 			break;
@@ -165,6 +169,7 @@ SCENE SceneManager::SetScene(SCENE scene, bool set)
 			InFade = CLOSS;
 			SceneFade.SetFade(CLOSS);
 			PlaySE(CURTAIN);
+
 			return scene;
 			break;
 		}

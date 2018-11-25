@@ -64,6 +64,7 @@
 //=============================================================================
 // プロトタイプ宣言
 //=============================================================================
+void SetScale(int no);
 
 //=============================================================================
 // グローバル変数
@@ -80,6 +81,8 @@ int position;			//カーソルの位置　positionの宣言
 int x;
 
 int flagCount;
+
+float	ButtonAlpha;
 
 const char *MenuBgTex[] = {
 	"data/TEXTURE/UI/タイトル/メニュー画面_青.png",
@@ -102,6 +105,7 @@ const Vector2 MenuBgSize[] = {
 
 C2DObject MenuBg[3];
 
+float Scale[3] = { 1.0f,1.0f,1.0f };
 
 
 //=============================================================================
@@ -129,7 +133,7 @@ HRESULT InitTitlelogo(void)
 		MenuBg[i].Init(MenuBgPos[i].x, MenuBgPos[i].y, MenuBgSize[i].x, MenuBgSize[i].y, MenuBgTex[i]);
 	}
 	
-
+	ButtonAlpha = 0.0f;
 	return S_OK;
 }
 
@@ -265,6 +269,7 @@ void UpdateTitlelogo(void)
 	default:
 		break;
 	}
+	SetScale(x);
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -307,4 +312,45 @@ void UpdateTitlelogo(void)
 		PlaySE(MODE);
 	}
 
+
+	ButtonAlpha += 0.06;
+	startbutton.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(ButtonAlpha)) + 0.3f));
+}
+
+void SetScale(int no)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		if (i == no)
+		{
+			Scale[i] += 0.02f;
+
+			if (Scale[i] >= 1.0f)
+			{
+				Scale[i] = 1.0f;
+			}
+		}
+		else
+		{
+			Scale[i] -= 0.01f;
+		
+			if (Scale[i] <= 0.8f)
+			{
+				Scale[i] = 0.8f;
+			}
+		
+		}
+		PrintDebugProcess("Scale[%d] %f\n", i, Scale[i]);
+	}
+
+
+
+		singlemode.SetStatus(Scale[0],0.0f);
+		multimode.SetStatus(Scale[1], 0.0f);
+		rankingmode.SetStatus(Scale[2], 0.0f);
+		MenuBg[0].SetStatus(Scale[0], 0.0f);
+		MenuBg[1].SetStatus(Scale[1], 0.0f);
+		MenuBg[2].SetStatus(Scale[2], 0.0f);
+
+	
 }

@@ -130,6 +130,11 @@ void UpdateTimer(void)
 
 	}
 
+	if (GetKeyboardTrigger(DIK_SPACE))
+	{
+		Time = 10;
+		TimerSet(COUNT);
+	}
 
 }
 
