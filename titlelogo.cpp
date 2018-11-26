@@ -212,7 +212,7 @@ void UpdateTitlelogo(void)
 
 
 		//↓入力でカーソルを下に移動
-		if (GetKeyboardTrigger(DIK_DOWN))
+		if (GetKeyboardTrigger(DIK_DOWN) || IsButtonTriggered(LSTICK_DOWN))
 		{
 			x = x + 1;
 			flagCount = 0;//カウントリセット
@@ -227,7 +227,7 @@ void UpdateTitlelogo(void)
 		}
 
 		//↑入力でカーソルを上に移動
-		if (GetKeyboardTrigger(DIK_UP))
+		if (GetKeyboardTrigger(DIK_UP) || IsButtonTriggered(LSTICK_UP))
 		{
 			x = x - 1;
 			flagCount = 0;//カウントリセット
@@ -284,7 +284,7 @@ void UpdateTitlelogo(void)
 
 
 	//ゲーム画面に移行
-	if (GetKeyboardTrigger(DIK_RETURN)&& pop == false)
+	if ((GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))&& pop == false)
 	{
 
 		PlaySE(DECIDE);
@@ -306,7 +306,7 @@ void UpdateTitlelogo(void)
 		}
 	}
 
-	else if (GetKeyboardTrigger(DIK_RETURN) && pop == true)
+	else if ((GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP)) && pop == true)
 	{
 		pop = false;
 		PlaySE(MODE);

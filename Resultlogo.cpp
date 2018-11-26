@@ -174,7 +174,7 @@ void DrawResultlogo(void)
 void UpdateResultlogo(void)
 {
 	if (slotCount >= NUM_PLACE
-		&& GetKeyboardTrigger(DIK_RETURN))
+		&& GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 	{
 		Scene::SetScene(SCENE_TITLE);
 	}
@@ -219,7 +219,7 @@ void UpdateResultlogo(void)
 
 		if (slotCount < NUM_PLACE)
 		{
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 				slotCount = NUM_PLACE;
 				StopSE(SCORE_SLOT);
