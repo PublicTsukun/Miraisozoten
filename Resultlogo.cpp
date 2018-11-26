@@ -248,7 +248,8 @@ void UpdateResultlogo(void)
 
 			if (!PlayCheckSE(SCORE_DECISION)&& excellentf==false)
 			{
-				PlaySE(EXCELLENT);
+				//PlaySE(EXCELLENT);
+				PlaySE(AORI);
 				excellentf = true;
 			}
 		}

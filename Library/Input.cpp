@@ -65,7 +65,7 @@ DWORD		padTrigger[GAMEPADMAX];
 Vector3		padGyro[GAMEPADMAX];
 D3DXVECTOR2	padLsRoll[GAMEPADMAX];		// 左スティックの倒状態
 D3DXVECTOR2	padRsRoll[GAMEPADMAX];		// 右スティックの倒状態
-int			padCount = 0;					// 検出したパッドの数
+int			padCount = 0;				// 検出したパッドの数
 
 //=============================================================================
 // 入力処理の初期化
@@ -561,18 +561,6 @@ void UpdatePad(void)
 		if (dijs.lX < 0)				padState[i] |= LSTICK_LEFT;
 		//* x-axis (Lright)
 		if (dijs.lX > 0)				padState[i] |= LSTICK_RIGHT;
-		//* z-axis (lefttrigger)
-		if (dijs.lZ > 0)				padState[i] |= TRIGGER_LEFT;
-		//* z-axis (righttrigger)
-		if (dijs.lZ < 0)				padState[i] |= TRIGGER_RIGHT;
-		//* y-axis (Rforward)
-		if (dijs.lRy < 0)				padState[i] |= RSTICK_UP;
-		//* y-axis (Rbackward)
-		if (dijs.lRy > 0)				padState[i] |= RSTICK_DOWN;
-		//* x-axis (Rleft)
-		if (dijs.lRx < 0)				padState[i] |= RSTICK_LEFT;
-		//* x-axis (Rright)
-		if (dijs.lRx > 0)				padState[i] |= RSTICK_RIGHT;
 #else
 		//* y-axis (Lforward)
 		if (dijs.lY < 0x7FFF)				padState[i] |= LSTICK_UP;
@@ -582,48 +570,50 @@ void UpdatePad(void)
 		if (dijs.lX < 0x7FFF)				padState[i] |= LSTICK_LEFT;
 		//* x-axis (Lright)
 		if (dijs.lX > 0x7FFF)				padState[i] |= LSTICK_RIGHT;
-		//* z-axis (lefttrigger)
-		if (dijs.lZ > 0x7FFF)				padState[i] |= TRIGGER_LEFT;
-		//* z-axis (righttrigger)
-		if (dijs.lZ < 0x7FFF)				padState[i] |= TRIGGER_RIGHT;
-		//* y-axis (Rforward)
-		if (dijs.lRy < 0x7FFF)				padState[i] |= RSTICK_UP;
-		//* y-axis (Rbackward)
-		if (dijs.lRy > 0x7FFF)				padState[i] |= RSTICK_DOWN;
-		//* x-axis (Rleft)
-		if (dijs.lRx < 0x7FFF)				padState[i] |= RSTICK_LEFT;
-		//* x-axis (Rright)
-		if (dijs.lRx > 0x7FFF)				padState[i] |= RSTICK_RIGHT;
 #endif // RANGE_LIMIT
 
-		//* 十字キー上
-		if (dijs.rgdwPOV[0] == 0)			padState[i] |= POV_UP;
-		//* 十字キー右
-		if (dijs.rgdwPOV[0] == 9000)		padState[i] |= POV_RIGHT;
-		//* 十字キー下
-		if (dijs.rgdwPOV[0] == 18000)		padState[i] |= POV_DOWN;
-		//* 十字キー左
-		if (dijs.rgdwPOV[0] == 27000)		padState[i] |= POV_LEFT;
-		//* Ａボタン
-		if (dijs.rgbButtons[0] & 0x80)		padState[i] |= BUTTON_A;
-		//* Ｂボタン
-		if (dijs.rgbButtons[1] & 0x80)		padState[i] |= BUTTON_B;
-		//* Ｘボタン
-		if (dijs.rgbButtons[2] & 0x80)		padState[i] |= BUTTON_X;
-		//* Ｙボタン
-		if (dijs.rgbButtons[3] & 0x80)		padState[i] |= BUTTON_Y;
-		//* LBボタン
-		if (dijs.rgbButtons[4] & 0x80)		padState[i] |= BUTTON_L;
-		//* RBボタン
-		if (dijs.rgbButtons[5] & 0x80)		padState[i] |= BUTTON_R;
-		//* BACKボタン
-		if (dijs.rgbButtons[6] & 0x80)		padState[i] |= BUTTON_BACK;
-		//* STARTボタン
-		if (dijs.rgbButtons[7] & 0x80)		padState[i] |= BUTTON_START;
-		//* 左スティックボタン
-		if (dijs.rgbButtons[8] & 0x80)		padState[i] |= BUTTON_LS;
-		//* 右スティックボタン
-		if (dijs.rgbButtons[9] & 0x80)		padState[i] |= BUTTON_RS;
+		//* ボタン00
+		if (dijs.rgbButtons[0] & 0x80)		padState[i] |= BUTTON_00;
+		//* ボタン01
+		if (dijs.rgbButtons[1] & 0x80)		padState[i] |= BUTTON_01;
+		//* ボタン02
+		if (dijs.rgbButtons[2] & 0x80)		padState[i] |= BUTTON_02;
+		//* ボタン03
+		if (dijs.rgbButtons[3] & 0x80)		padState[i] |= BUTTON_03;
+		//* ボタン04
+		if (dijs.rgbButtons[4] & 0x80)		padState[i] |= BUTTON_04;
+		//* ボタン05
+		if (dijs.rgbButtons[5] & 0x80)		padState[i] |= BUTTON_05;
+		//* ボタン06
+		if (dijs.rgbButtons[6] & 0x80)		padState[i] |= BUTTON_06;
+		//* ボタン07
+		if (dijs.rgbButtons[7] & 0x80)		padState[i] |= BUTTON_07;
+		//* ボタン08
+		if (dijs.rgbButtons[8] & 0x80)		padState[i] |= BUTTON_08;
+		//* ボタン09
+		if (dijs.rgbButtons[9] & 0x80)		padState[i] |= BUTTON_09;
+		//* ボタン10
+		if (dijs.rgbButtons[10] & 0x80)		padState[i] |= BUTTON_10;
+		//* ボタン11
+		if (dijs.rgbButtons[11] & 0x80)		padState[i] |= BUTTON_11;
+		//* ボタン12
+		if (dijs.rgbButtons[12] & 0x80)		padState[i] |= BUTTON_12;
+		//* ボタン13
+		if (dijs.rgbButtons[13] & 0x80)		padState[i] |= BUTTON_13;
+		//* ボタン14
+		if (dijs.rgbButtons[14] & 0x80)		padState[i] |= BUTTON_14;
+		//* ボタン15
+		if (dijs.rgbButtons[15] & 0x80)		padState[i] |= BUTTON_15;
+
+		// 左右のジョイコンに対応させる
+		if (true)
+		{
+
+		}
+		else
+		{
+
+		}
 
 		// Trigger設定
 		padTrigger[i] = ((lastPadState ^ padState[i])	// 前回と違っていて

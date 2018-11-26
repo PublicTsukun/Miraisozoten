@@ -45,6 +45,8 @@ const char *SEFile[SE_MAX] =
 	"data/SE/タイトルに戻るときの音（ランキングの後・オプションからタイトルもどる選択後）.wav",
 	"data/SE/ランキング入賞時（おめでとう！音）.wav",
 	"data/SE/1桁ごとのスコア確定音.wav",
+	"data/SE/終了カウントの音.wav",
+	"data/SE/すごいすごい.wav",
 };
 
 //=============================================================================
@@ -57,7 +59,7 @@ HRESULT InitGameSound(void)
 
 	for (int i = 0; i < BGM_MAX; i++)
 	{
-		SoundBGM[i].Volume = BGM_VOLUME_MIN;
+		SoundBGM[i].Volume = -10000;
 		SoundBGM[i].LoadSound(BGMFile[i]);
 	}
 	PlayBGM(TITLE);

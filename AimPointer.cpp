@@ -19,11 +19,16 @@ void AimPointer::Update()
 
 	PrintDebugProcess("X = %f, Y = %f, Z = %f\n", gyro.x, gyro.y, gyro.z);
 
-	static float v = 100.0f;
-	if (GetKeyboardTrigger(DIK_LBRACKET))	v -= 10.0f;
-	if (GetKeyboardTrigger(DIK_RBRACKET))	v += 10.0f;
-	PrintDebugProcess("感度 : %d\n", (int)v);
+	// 感度
+	static float vX = 100.0f;
+	static float vY = 50.0f;
+	if (GetKeyboardTrigger(DIK_4))	vX -= 10.0f;
+	if (GetKeyboardTrigger(DIK_6))	vX += 10.0f;
+	if (GetKeyboardTrigger(DIK_8))	vY -= 10.0f;
+	if (GetKeyboardTrigger(DIK_2))	vY += 10.0f;
+	PrintDebugProcess("感度 : %d, %d\n", (int)vX, (int)vY);
 
+	// 一定値以下を無効
 	static float c = 1.0f;
 	if (GetKeyboardTrigger(DIK_MINUS))	c -= 0.5f;
 	if (GetKeyboardTrigger(DIK_ADD))	c += 0.5f;
@@ -31,14 +36,14 @@ void AimPointer::Update()
 
 
 	Vector2 value;
-	value.x = -(gyro.z - 32767.0f) / v;
-	value.y = (gyro.x - 32767.0f) / v;
+	value.x = -(gyro.z - 32767.0f) / vX;
+	value.y = -(gyro.x - 32767.0f) / vY;
 	if (value.x <= c && value.x >= -c)	value.x = 0.0f;
 	if (value.y <= c && value.y >= -c)	value.y = 0.0f;
 
 	PrintDebugProcess("X = %f, Y = %f\n", value.x, value.y);
 
-	//Move(value);
+	Move(value);
 	if (IsMouseLeftPressed())
 		Move(Vector2((float)GetMouseX(), (float)GetMouseY()));
 }

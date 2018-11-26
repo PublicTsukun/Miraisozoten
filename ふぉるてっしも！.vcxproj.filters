@@ -207,13 +207,14 @@
     <ClCompile Include="VLauncher.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="GameSound.cpp">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClCompile>
     <ClCompile Include="FadeCurtain.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="S-Editor.cpp">
+=======
+    <ClCompile Include="GameSound.cpp">
+>>>>>>> 13a581134b696102ac81ecd5d49cea35a5a1214d
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -398,13 +399,14 @@
     <ClInclude Include="VLauncher.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
-    <ClInclude Include="GameSound.h">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClInclude>
     <ClInclude Include="FadeCurtain.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="S-Editor.h">
+=======
+    <ClInclude Include="GameSound.h">
+>>>>>>> 13a581134b696102ac81ecd5d49cea35a5a1214d
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
