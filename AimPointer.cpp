@@ -43,7 +43,7 @@ void AimPointer::Update()
 
 	PrintDebugProcess("X = %f, Y = %f\n", value.x, value.y);
 
-	Move(value);
+	//Move(value);
 	if (IsMouseLeftPressed())
 		Move(Vector2((float)GetMouseX(), (float)GetMouseY()));
 }
