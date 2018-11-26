@@ -33,9 +33,8 @@ void UpdateVLauncher(void)
 		if (timerVL % V_FREQ == 0)
 		{
 			SetVoiceten(
-				Vector3(0.0f, 100.0f, -200.0f),					// 発射位置
+				Vector3(0.0f, 250.0f, -800.0f),					// 発射位置
 				Vector3(direction.x, direction.y, 0.0f));		// 目標位置
-
 		}
 
 		// タイマーカウントアップ
