@@ -98,7 +98,7 @@ void UpdateStartCount(void)
 
 	if (StartCount.ActiveCheck() == false)
 	{
-		TimerSet(COUNT);
+		//TimerSet(COUNT);
 		LogoTimerUse = true;
 	}
 

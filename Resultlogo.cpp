@@ -235,6 +235,10 @@ void UpdateResultlogo(void)
 					StopSE(SCORE_SLOT);
 					PlaySE(SCORE_DECISION);
 				}
+				else
+				{
+					PlaySE(SLOT_STOP);
+				}
 			}
 		}
 		else if (slotCount >= NUM_PLACE)

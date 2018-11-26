@@ -98,7 +98,7 @@ void UpdateUIBonus(void)
 
 		if (GetKeyboardPress(DIK_9) && fiverf == false)
 		{
-			AddGage(3);//‚X‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚Æ‚«‚ÍƒQ[ƒW‚ðL‚Î‚·
+			AddGage(50);//‚X‚ª‰Ÿ‚³‚ê‚Ä‚¢‚é‚Æ‚«‚ÍƒQ[ƒW‚ðL‚Î‚·
 		}
 		//else
 		{
@@ -221,7 +221,7 @@ void AddGage(int no)
 				{
 					PlaySE(GAGE_1ST2ND);
 				}
-				else if (gagenum > 3)
+				else if (gagenum >= 3)
 				{
 					PlaySE(GAGE_LAST);
 				}

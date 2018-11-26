@@ -44,8 +44,8 @@ const char *SEFile[SE_MAX] =
 	"data/SE/ボーナスゲージがMAXになった時の音.wav",
 	"data/SE/タイトルに戻るときの音（ランキングの後・オプションからタイトルもどる選択後）.wav",
 	"data/SE/ランキング入賞時（おめでとう！音）.wav",
+	"data/SE/1桁ごとのスコア確定音.wav",
 };
-
 
 //=============================================================================
 //初期化
@@ -57,8 +57,8 @@ HRESULT InitGameSound(void)
 
 	for (int i = 0; i < BGM_MAX; i++)
 	{
-		SoundBGM[i].LoadSound(BGMFile[i]);
 		SoundBGM[i].Volume = BGM_VOLUME_MIN;
+		SoundBGM[i].LoadSound(BGMFile[i]);
 	}
 	PlayBGM(TITLE);
 	PlayBGM(GAME_AKIBA);

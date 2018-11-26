@@ -21,7 +21,7 @@
 
 #define FRAME_TEX		("data/TEXTURE/UI/タイマー・スコア用枠2_白.png")
 
-#define START_TIME		(6)
+#define START_TIME		(99)
 
 enum
 {

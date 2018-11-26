@@ -43,6 +43,7 @@ enum SE_NO
 	GAGE_LAST,
 	THANKYOU,
 	EXCELLENT,
+	SLOT_STOP,
 	SE_MAX
 };
 //=============================================================================
