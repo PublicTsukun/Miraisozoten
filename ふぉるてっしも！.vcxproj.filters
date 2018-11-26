@@ -210,11 +210,10 @@
     <ClCompile Include="FadeCurtain.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="S-Editor.cpp">
-=======
     <ClCompile Include="GameSound.cpp">
->>>>>>> 13a581134b696102ac81ecd5d49cea35a5a1214d
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="S-Editor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -402,11 +401,10 @@
     <ClInclude Include="FadeCurtain.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="S-Editor.h">
-=======
     <ClInclude Include="GameSound.h">
->>>>>>> 13a581134b696102ac81ecd5d49cea35a5a1214d
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="S-Editor.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
