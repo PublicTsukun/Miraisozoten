@@ -43,7 +43,7 @@ void TestVL(void)
 		//	Vector3(200.0f, 200.0f, 0.0f),			// ”­ŽËˆÊ’u
 		//	Vector3(-100.0f, 100.0f, -100.0f));			// –Ú•WˆÊ’u
 
-		PlaySE(SHOOT_BULLET);
+		//PlaySE(SHOOT_BULLET);
 	}
 
 

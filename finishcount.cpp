@@ -9,7 +9,7 @@
 
 #include "timer.h"
 #include "GameSound.h"
-
+#include "SceneManager.h"
 
 class CountEff : public CountDown
 {
@@ -39,6 +39,10 @@ public:
 				PlaySE(FINISH);
 
 			}
+			else
+			{
+				PlaySE(FINISH_COUNT);
+			}
 
 		}
 	}
@@ -56,6 +60,7 @@ int FinishTimer;
 bool FinishTimerUse;
 float FinishAngle;
 
+int ChangeCount;
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -63,7 +68,7 @@ float FinishAngle;
 HRESULT InitFinishCount(void)
 {
 
-	FinishCount.Set(60, 5, SCREEN_CENTER_X, SCREEN_CENTER_Y, RS_X(0.1), RS_Y(0.4), FINISHCOUNT_TEX);
+	FinishCount.Set(60, 6, SCREEN_CENTER_X, SCREEN_CENTER_Y, RS_X(0.1), RS_Y(0.4), FINISHCOUNT_TEX);
 	FinishLogo.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, 650.0 , 150.0 , FINISHLOGO_TEX);
 	FinishCount.Use = false;
 
@@ -72,6 +77,8 @@ HRESULT InitFinishCount(void)
 	FinishAngle = 0.0;
 	FinishCount.FinishScale = 0.0f;
 
+
+	ChangeCount = 0;
 	return S_OK;
 }
 
@@ -91,7 +98,7 @@ void UninitFinishCount(void)
 //=============================================================================
 void DrawFinishCount(void)
 {
-	if (FinishCount.Use)
+	if (FinishCount.Use&&RestTimer()<=5)
 	{
 		FinishCount.Draw();
 	}
@@ -107,7 +114,7 @@ void DrawFinishCount(void)
 //=============================================================================
 void UpdateFinishCount(void)
 {
-	if (RestTimer() == 5)
+	if (RestTimer() == 6)
 	{
 		FinishCount.Use=true;
 	}
@@ -141,5 +148,14 @@ void UpdateFinishCount(void)
 		}
 		FinishLogo.SetStatus(FinishCount.FinishScale, 0.0f);
 		FinishLogo.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	}
+
+	if (FinishTimerUse&&RestTimer() <= 0)
+	{
+		ChangeCount++;
+		if (ChangeCount > 180)
+		{
+			Scene::SetScene(SCENE_RESULT);
+		}
 	}
 }
