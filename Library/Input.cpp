@@ -15,7 +15,6 @@
 #define DEADZONE		(1000)			// 各軸の10%を無効ゾーンとする
 #define RANGE_MAX		 RANGE_VALUE	// 有効範囲の最大値
 #define RANGE_MIN		-RANGE_VALUE	// 有効範囲の最小値 (*上より代用中)
-#define RANGE_LIMIT		(1)				//* 有効範囲規定ON/OFF
 
 
 //*****************************************************************************
@@ -65,6 +64,7 @@ DWORD		padTrigger[GAMEPADMAX];
 Vector3		padGyro[GAMEPADMAX];
 D3DXVECTOR2	padLsRoll[GAMEPADMAX];		// 左スティックの倒状態
 D3DXVECTOR2	padRsRoll[GAMEPADMAX];		// 右スティックの倒状態
+bool		padNowUseSide = true;		// 現在使用している(true = 左 : false = 右)
 int			padCount = 0;				// 検出したパッドの数
 
 //=============================================================================
@@ -449,7 +449,6 @@ HRESULT InitializePad(void)			// パッド初期化
 //		if ( FAILED(result) )
 //			return false; // モードの設定に失敗
 
-#if RANGE_LIMIT
 		// 軸の値の範囲を設定
 		// X軸、Y軸のそれぞれについて、オブジェクトが報告可能な値の範囲をセットする。
 		// (max-min)は、最大10,000(?)。(max-min)/2が中央値になる。
@@ -476,8 +475,14 @@ HRESULT InitializePad(void)			// パッド初期化
 		// Y回転の範囲を設定
 		diprg.diph.dwObj = DIJOFS_RY;
 		pGamePad[i]->SetProperty(DIPROP_RANGE, &diprg.diph);
-#endif // RANGE_LIMIT
-
+		// Z回転の範囲を設定
+		diprg.diph.dwObj = DIJOFS_RZ;
+		pGamePad[i]->SetProperty(DIPROP_RANGE, &diprg.diph);
+		// Sliderの範囲を設定
+		diprg.diph.dwObj = DIJOFS_SLIDER(0);
+		pGamePad[i]->SetProperty(DIPROP_RANGE, &diprg.diph);
+		diprg.diph.dwObj = DIJOFS_SLIDER(1);
+		pGamePad[i]->SetProperty(DIPROP_RANGE, &diprg.diph);
 
 
 		// 各軸ごとに、無効のゾーン値を設定する。
@@ -507,6 +512,8 @@ HRESULT InitializePad(void)			// パッド初期化
 		//ジョイスティック入力制御開始
 		pGamePad[i]->Acquire();
 	}
+
+	padNowUseSide = true;
 
 	return true;
 
@@ -552,7 +559,6 @@ void UpdatePad(void)
 		}
 
 		// ３２の各ビットに意味を持たせ、ボタン押下に応じてビットをオンにする
-#if RANGE_LIMIT
 		//* y-axis (Lforward)
 		if (dijs.lY < 0)				padState[i] |= LSTICK_UP;
 		//* y-axis (Lbackward)
@@ -561,16 +567,6 @@ void UpdatePad(void)
 		if (dijs.lX < 0)				padState[i] |= LSTICK_LEFT;
 		//* x-axis (Lright)
 		if (dijs.lX > 0)				padState[i] |= LSTICK_RIGHT;
-#else
-		//* y-axis (Lforward)
-		if (dijs.lY < 0x7FFF)				padState[i] |= LSTICK_UP;
-		//* y-axis (Lbackward)
-		if (dijs.lY > 0x7FFF)				padState[i] |= LSTICK_DOWN;
-		//* x-axis (Lleft)
-		if (dijs.lX < 0x7FFF)				padState[i] |= LSTICK_LEFT;
-		//* x-axis (Lright)
-		if (dijs.lX > 0x7FFF)				padState[i] |= LSTICK_RIGHT;
-#endif // RANGE_LIMIT
 
 		//* ボタン00
 		if (dijs.rgbButtons[0] & 0x80)		padState[i] |= BUTTON_00;
@@ -605,14 +601,29 @@ void UpdatePad(void)
 		//* ボタン15
 		if (dijs.rgbButtons[15] & 0x80)		padState[i] |= BUTTON_15;
 
-		// 左右のジョイコンに対応させる
-		if (true)
+		if (dijs.rgbButtons[13] & 0x80)
 		{
+			padNowUseSide = true;
+		}
+		else if (dijs.rgbButtons[12] & 0x80)
+		{
+			padNowUseSide = false;
+		}
 
+		// 左右のジョイコンに対応させる
+		if (padNowUseSide)
+		{
+			if (dijs.rgbButtons[0] & 0x80)	padState[i] |= BUTTON_DOWN;
+			if (dijs.rgbButtons[1] & 0x80)	padState[i] |= BUTTON_UP;
+			if (dijs.rgbButtons[2] & 0x80)	padState[i] |= BUTTON_RIGHT;
+			if (dijs.rgbButtons[3] & 0x80)	padState[i] |= BUTTON_LEFT;
 		}
 		else
 		{
-
+			if (dijs.rgbButtons[0] & 0x80)	padState[i] |= BUTTON_LEFT;
+			if (dijs.rgbButtons[1] & 0x80)	padState[i] |= BUTTON_UP;
+			if (dijs.rgbButtons[2] & 0x80)	padState[i] |= BUTTON_DOWN;
+			if (dijs.rgbButtons[3] & 0x80)	padState[i] |= BUTTON_RIGHT;
 		}
 
 		// Trigger設定
@@ -646,26 +657,21 @@ void UpdatePad(void)
 
 }
 //----------------------------------------------- 検査
-BOOL IsButtonPressed(int padNo, DWORD button)
+BOOL IsButtonPressed(DWORD button)
 {
-	return (button & padState[padNo]);
+	return (button & padState[padNowUseSide ? 0 : 1]);
 }
-BOOL IsButtonTriggered(int padNo, DWORD button)
+BOOL IsButtonTriggered(DWORD button)
 {
-	return (button & padTrigger[padNo]);
-}
-
-D3DXVECTOR2 GetLStickVolume(int padNo)
-{
-	return padLsRoll[padNo];
-}
-D3DXVECTOR2 GetRStickVolume(int padNo)
-{
-	return padRsRoll[padNo];
+	return (button & padTrigger[padNowUseSide ? 0 : 1]);
 }
 
-Vector3 GetGyro(int no)
+Vector3 GetGyro()
 {
-	return padGyro[no];
+	if (padNowUseSide)
+	{// -がついているのは入力値と画面方向を合わせるため
+		return Vector3(padGyro[0].x, padGyro[0].y, -padGyro[0].z);
+	}
+	return Vector3(-padGyro[1].x, padGyro[1].y, -padGyro[1].z);
 }
 
