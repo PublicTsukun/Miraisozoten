@@ -109,5 +109,28 @@ void UpdateStartCount(void)
 		LogoScale += 0.05f;
 		StartLogo.SetStatus(LogoScale, 0.0f);
 		StartLogo.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, LogoAlpha));
+
+		if (LogoAlpha <= 0.0f)
+		{
+			LogoTimerUse = false;
+		}
 	}
+}
+
+void SetStartCount(int no)
+{
+	StartCount.Set(60, no, RS_X(0.1), RS_Y(0.2));
+	SoundCount = 4;
+	LogoAlpha = 1.0;
+	LogoScale = 0.0f;
+	CountInter = 10;
+}
+
+bool CheckLogoUse(void)
+{
+	return LogoTimerUse;
+}
+bool CheckCountActive(void)
+{
+	return StartCount.ActiveCheck();
 }

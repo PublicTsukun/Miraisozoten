@@ -25,6 +25,7 @@ HRESULT InitWorkKimura(void)
 		InitTitlelogo();//タイトルロゴ
 		break;
 
+	case SCENE_PAUSE:
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitENEMY();
 		break;

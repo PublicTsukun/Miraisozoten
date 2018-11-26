@@ -134,7 +134,7 @@ SCENE SceneManager::SetScene(SCENE scene, bool set)
 	/* ポーズ画面は例外処理方式で */
 	if (scene == SCENE_PAUSE)
 	{
-		scene = SCENE_PAUSE;
+		GameScene = SCENE_PAUSE;
 		return SCENE_PAUSE;
 	}
 	if (GameScene == SCENE_PAUSE)

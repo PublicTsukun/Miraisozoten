@@ -10,6 +10,7 @@
 
 #define BGM_VOLUME_MIN		(-9000)
 #define BGM_VOLUME_MAX		(-2000)
+#define BGM_VOLUME_HALF		(-3000)
 
 #define VOLUME_CONTROL_DOWN	(50)
 #define VOLUME_CONTROL_UP	(300)
@@ -47,6 +48,13 @@ enum SE_NO
 	FINISH_COUNT,
 	AORI,
 	SE_MAX
+};
+
+enum Fade
+{
+	SOUND_FADE_IN,
+	SOUND_FADE_OUT,
+	SOUND_FADE_HALF,
 };
 //=============================================================================
 //プロトタイプ宣言

@@ -15,7 +15,6 @@
 #include "messageBox.h"
 #include "enemyRE.h"
 #include "StageManager.h"
-#include "VLauncher.h"
 
 //=============================================================================
 // 初期化処理
@@ -91,7 +90,6 @@ void UpdateWorkSon(void)
 		UpdateMessageBox();
 		UpdateEnemyRE();
 		UpdateStage();
-		UpdateVLauncher();
 
 		TestVL();
 		TestMB();
@@ -118,7 +116,7 @@ void DrawWorkSon(void)
 
 		break;
 
-
+	case SCENE_PAUSE:
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawVoiceten();
 		DrawMessagebox();

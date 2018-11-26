@@ -9,6 +9,7 @@ typedef enum GAMEPAUSERESULT
 	GAMEPAUSERESULT_MAX
 }GPR;
 
+
 namespace GamePause
 {
 	void Init();

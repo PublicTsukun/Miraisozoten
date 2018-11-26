@@ -111,6 +111,7 @@ void DrawWorkYamamoto(void)
 		break;
 
 
+	case SCENE_PAUSE:
 	case SCENE_GAME://ゲームで使うソースのDraw
 
 		break;

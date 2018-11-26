@@ -21,6 +21,10 @@ void UninitStartCount(void);
 void DrawStartCount(void);
 void UpdateStartCount(void);
 
+void SetStartCount(int no);
+bool CheckLogoUse(void);
+bool CheckCountActive(void);
+
 
 #endif
 
