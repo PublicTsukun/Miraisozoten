@@ -193,6 +193,11 @@ D3DXMATRIX CCamera::GetViewMatrix(void)
 	return this->ViewMatrix;
 }
 
+D3DXMATRIX CCamera::GetProjMatrix(void)
+{
+	return this->ProjectionMatrix;
+}
+
 
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
@@ -278,6 +283,11 @@ void SetCamera(void)
 D3DXMATRIX GetMtxView(void)
 {
 	return GameCamera.GetViewMatrix();
+}
+
+D3DXMATRIX GetMtxProj(void)
+{
+	return GameCamera.GetProjMatrix();
 }
 
 #if _DEBUG
