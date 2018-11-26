@@ -30,9 +30,9 @@
 #define ENEMY_D_SCOREBONUS	(10)
 #define ENEMY_D_GAUGEBONUS	(200)
 
-#define ENEMY_COLI_LEN		(24.0f)	// “–‚½‚è”»’è x
-#define ENEMY_COLI_HEI		(24.0f)	// “–‚½‚è”»’è y
-#define ENEMY_COLI_WID		(5.0f)	// “–‚½‚è”»’è z
+#define ENEMY_COLI_LEN		(48.0f)	// “–‚½‚è”»’è x
+#define ENEMY_COLI_HEI		(48.0f)	// “–‚½‚è”»’è y
+#define ENEMY_COLI_WID		(10.0f)	// “–‚½‚è”»’è z
 
 //*****************************************************************************
 // ƒNƒ‰ƒX’è‹`
