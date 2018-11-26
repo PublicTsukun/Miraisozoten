@@ -337,9 +337,12 @@ void CollisionEnemyRE(void)
 				// ダメージ計算
 				DamageDealEnemyRE(i, j);
 
-				// 弾消滅
-				VanishVoiceten(j);
 
+				if (e->status == E_STATUS_NORMAL)
+				{
+					// 弾消滅
+					VanishVoiceten(j);
+				}
 
 			}
 
@@ -361,10 +364,9 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	(e + Eno)->hp -= (v + Vno)->atk;
 
 	// 撃破判定
-	if ((e + Eno)->hp <= 0)
+	if ((e + Eno)->hp <= 0 &&
+		(e + Eno)->status == E_STATUS_NORMAL)
 	{
-		//VanisnEnenyRE(Eno);
-
 		(e + Eno)->status = E_STATUS_DEFEATED;
 
 		(e + Eno)->timer = 0;
@@ -373,6 +375,17 @@ void DamageDealEnemyRE(int Eno, int Vno)
 		EnemyRE[Eno].ChangeTexture(0, 1, 1, 2);
 
 		PlaySE(VIGOR);
+
+		//================================
+		// ボーナス
+		//================================
+		// スコアアップ
+		AddScore(ENEMY_D_SCOREBONUS);
+
+		// ゲージアップ
+		AddGage(ENEMY_D_GAUGEBONUS);
+
+		SetYouDefeated(1);
 
 	}
 	else
@@ -401,18 +414,6 @@ void VanisnEnenyRE(int no)
 	// 初期化
 	(e + no)->hp = ENEMY_HP;
 	(e + no)->timer = 0;
-
-	//================================
-	// ボーナス
-	//================================
-	// スコアアップ
-	AddScore(ENEMY_D_SCOREBONUS);
-
-	// ゲージアップ
-	AddGage(ENEMY_D_GAUGEBONUS);
-
-
-	SetYouDefeated(1);
 }
 
 //=============================================================================

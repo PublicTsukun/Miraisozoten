@@ -160,7 +160,7 @@ void UpdateVoiceten(void)
 			CheckUptimeVoi(i);
 
 			// Á–Å
-			//VanishVoiceten(i);
+			VanishVoiceten(i);
 		}
 	}
 }
@@ -342,15 +342,24 @@ void VanishVoiceten(int no)
 
 	//}
 
-	// Á–Å
-	(v + no)->use = FALSE;
 
-	// ‰Šú‰»
-	(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
-	(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
-	(v + no)->timer = 0;
 
-	Voiceten[no].LoadObjectStatus((v + no)->pos);
+	if ((v + no)->pos.z >= 2000.0f ||
+		(v + no)->pos.y <= 0.0f)
+	{
+		// Á–Å
+		(v + no)->use = FALSE;
+
+		// ‰Šú‰»
+		(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
+		(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
+		(v + no)->timer = 0;
+
+		Voiceten[no].LoadObjectStatus((v + no)->pos);
+
+	}
+
+
 
 }
 
