@@ -44,6 +44,8 @@ enum SE_NO
 	THANKYOU,
 	EXCELLENT,
 	SLOT_STOP,
+	FINISH_COUNT,
+	AORI,
 	SE_MAX
 };
 //=============================================================================
