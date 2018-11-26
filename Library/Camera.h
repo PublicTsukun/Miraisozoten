@@ -68,6 +68,7 @@ public:
 
 	void CreateMatrix(void);
 	D3DXMATRIX GetViewMatrix(void);
+	D3DXMATRIX GetProjMatrix(void);
 
 };
 
@@ -80,6 +81,8 @@ void UpdateCamera(Vector3 target);
 void SetCamera(void);
 
 D3DXMATRIX GetMtxView(void);
+D3DXMATRIX GetMtxProj(void);
+
 #if _DEBUG
 CCamera *GetCamera();
 #endif // _DEBUG

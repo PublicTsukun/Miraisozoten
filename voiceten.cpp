@@ -160,7 +160,7 @@ void UpdateVoiceten(void)
 			CheckUptimeVoi(i);
 
 			// 消滅
-			//VanishVoiceten(i);
+			VanishVoiceten(i);
 		}
 	}
 }
@@ -210,7 +210,12 @@ void UpdateVoiMove(void)
 			(v + i)->pos.y += (v + i)->nor.y;
 			(v + i)->pos.z += (v + i)->nor.z;
 
-			UpdateVoiMoveY(i);
+			(v + i)->pos.y += (0.005) * (-9.8) * (v + i)->timer;
+
+
+
+
+			//UpdateVoiMoveY(i);
 
 		}
 	}
@@ -276,15 +281,20 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 					);
 
 			// 到達所要距離の正規化
-			(v + i)->nor = (Tgt - Self) / float((v + i)->dura);
+			//(v + i)->nor = (Tgt - Self) / float((v + i)->dura);
 
-			// 速度
-			(v + i)->vel =
-				sqrt(
-					pow(((v + i)->nor.x), 2) +
-					pow(((v + i)->nor.y), 2) +
-					pow(((v + i)->nor.z), 2)
-					);
+			(v + i)->nor = (Tgt - Self) / (v + i)->dist * 32.0f;
+
+
+			// 速度（未使用）
+			//(v + i)->vel =
+			//	sqrt(
+			//		pow(((v + i)->nor.x), 2) +
+			//		pow(((v + i)->nor.y), 2) +
+			//		pow(((v + i)->nor.z), 2)
+			//		);
+
+			//(v + i)->nor.y -= Tgt.z / (Tgt.z / 2) ;
 
 			// 位置初期化
 			(v + i)->pos = Self;
@@ -332,15 +342,24 @@ void VanishVoiceten(int no)
 
 	//}
 
-	// 消滅
-	(v + no)->use = FALSE;
 
-	// 初期化
-	(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
-	(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
-	(v + no)->timer = 0;
 
-	Voiceten[no].LoadObjectStatus((v + no)->pos);
+	if ((v + no)->pos.z >= 2000.0f ||
+		(v + no)->pos.y <= 0.0f)
+	{
+		// 消滅
+		(v + no)->use = FALSE;
+
+		// 初期化
+		(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
+		(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
+		(v + no)->timer = 0;
+
+		Voiceten[no].LoadObjectStatus((v + no)->pos);
+
+	}
+
+
 
 }
 
@@ -351,7 +370,7 @@ void CheckUptimeVoi(int no)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	const int Uptime = 60;
+	const int Uptime = 600;
 
 	if ((v + no)->timer >= Uptime)
 	{

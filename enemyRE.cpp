@@ -30,9 +30,9 @@
 #define ENEMY_D_SCOREBONUS	(10)
 #define ENEMY_D_GAUGEBONUS	(200)
 
-#define ENEMY_COLI_LEN		(24.0f)	// 当たり判定 x
-#define ENEMY_COLI_HEI		(24.0f)	// 当たり判定 y
-#define ENEMY_COLI_WID		(5.0f)	// 当たり判定 z
+#define ENEMY_COLI_LEN		(48.0f)	// 当たり判定 x
+#define ENEMY_COLI_HEI		(48.0f)	// 当たり判定 y
+#define ENEMY_COLI_WID		(10.0f)	// 当たり判定 z
 
 //*****************************************************************************
 // クラス定義
@@ -91,6 +91,15 @@ enum E_TYPE
 	E_TYPE_OTAKU,
 
 	E_TYPE_MAX,
+};
+
+enum E_STATUS
+{
+	E_STATUS_NULL = 0,
+	E_STATUS_NORMAL,
+	E_STATUS_DEFEATED,
+
+	E_STATUS_MAX,
 };
 
 //*****************************************************************************
@@ -160,6 +169,8 @@ void InitEnemyRE(void)
 
 		(e + i)->hp = ENEMY_HP;
 
+		(e + i)->status = 0;
+
 		EnemyRE[i].Init((e + i)->pos, size);
 		EnemyRE[i].LoadTexture(FileEnemy[0]);
 
@@ -204,17 +215,41 @@ void UpdateEnemyRE(void)
 	{
 		if ((e + i)->use == TRUE)
 		{
-			// 衝突判定
-			CollisionEnemyRE();
-
 			// 更新処理（位置、回転）
 			EnemyRE[i].LoadObjectStatus((e + i)->pos, (e + i)->rot);
 			
 			// タイマーカウントアップ
 			(e + i)->timer++;
 
-			// 稼働時間検査
-			CheckUptime(i);
+
+			switch ((e + i)->status)
+			{
+			case E_STATUS_NULL:
+				break;
+
+			case E_STATUS_NORMAL:
+
+				// 衝突判定
+				CollisionEnemyRE();
+
+				// 稼働時間検査
+				CheckUptime(i);
+				break;
+
+			case E_STATUS_DEFEATED:
+
+				// アニメーション
+
+
+				// 稼働時間検査
+				CheckUptime(i);
+				break;
+
+			default:
+				break;
+
+			}
+
 
 		}
 	}
@@ -302,9 +337,12 @@ void CollisionEnemyRE(void)
 				// ダメージ計算
 				DamageDealEnemyRE(i, j);
 
-				// 弾消滅
-				VanishVoiceten(j);
 
+				if (e->status == E_STATUS_NORMAL)
+				{
+					// 弾消滅
+					VanishVoiceten(j);
+				}
 
 			}
 
@@ -326,14 +364,28 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	(e + Eno)->hp -= (v + Vno)->atk;
 
 	// 撃破判定
-	if ((e + Eno)->hp <= 0)
+	if ((e + Eno)->hp <= 0 &&
+		(e + Eno)->status == E_STATUS_NORMAL)
 	{
-		VanisnEnenyRE(Eno);
+		(e + Eno)->status = E_STATUS_DEFEATED;
+
+		(e + Eno)->timer = 0;
 
 		// テクスチャ変更
 		EnemyRE[Eno].ChangeTexture(0, 1, 1, 2);
 
 		PlaySE(VIGOR);
+
+		//================================
+		// ボーナス
+		//================================
+		// スコアアップ
+		AddScore(ENEMY_D_SCOREBONUS);
+
+		// ゲージアップ
+		AddGage(ENEMY_D_GAUGEBONUS);
+
+		SetYouDefeated(1);
 
 	}
 	else
@@ -362,18 +414,6 @@ void VanisnEnenyRE(int no)
 	// 初期化
 	(e + no)->hp = ENEMY_HP;
 	(e + no)->timer = 0;
-
-	//================================
-	// ボーナス
-	//================================
-	// スコアアップ
-	AddScore(ENEMY_D_SCOREBONUS);
-
-	// ゲージアップ
-	AddGage(ENEMY_D_GAUGEBONUS);
-
-
-	SetYouDefeated(1);
 }
 
 //=============================================================================
@@ -385,12 +425,32 @@ void VanisnAllEnenyRE(void)
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		// 消滅
-		(e + i)->use = FALSE;
+		//// 消滅
+		//(e + i)->use = FALSE;
 
-		// 初期化
-		(e + i)->hp = ENEMY_HP;
-		(e + i)->timer = 0;
+		//// 初期化
+		//(e + i)->hp = ENEMY_HP;
+		//(e + i)->timer = 0;
+
+		if ((e + i)->use == FALSE) continue;
+
+		(e + i)->hp -= 32767;
+
+		// 撃破判定
+		if ((e + i)->hp <= 0)
+		{
+			//VanisnEnenyRE(Eno);
+
+			(e + i)->status = E_STATUS_DEFEATED;
+
+			(e + i)->timer = 0;
+
+			// テクスチャ変更
+			EnemyRE[i].ChangeTexture(0, 1, 1, 2);
+
+			PlaySE(VIGOR);
+
+		}
 
 	}
 
@@ -425,6 +485,7 @@ void EnemyREOnStage(int no)
 	ENEMY *e = GetEnemyRE(0);
 
 	(e + no)->use = TRUE;
+	(e + no)->status = E_STATUS_NORMAL;
 }
 
 //=============================================================================

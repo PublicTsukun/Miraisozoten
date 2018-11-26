@@ -54,17 +54,17 @@
 #define BUTTON_15		0x00080000l	// (.rgbButtons[15]&0x80)
 #define GAMEPADMAX		4			// 同時に接続するジョイパッドの最大数をセット
 
-#define BUTTON_LEFT		0x00010000l	// RYボタン
-#define BUTTON_UP		0x00020000l	// RXボタン
-#define BUTTON_DOWN		0x00040000l	// RBボタン
-#define BUTTON_RIGHT	0x00080000l	// RAボタン
-#define BUTTON_SR		0x00100000l	// SRボタン
-#define BUTTON_SL		0x00200000l	// SLボタン
-#define BUTTON_RorL		0x00400000l	// RorLボタン
-#define BUTTON_ZRorZL	0x00800000l	// ZRorZLボタン
-#define BUTTON_PM		0x02000000l	// 記号(+ro-)ボタン
-#define BUTTON_STICK	0x04000000l	// スティックボタン
-#define BUTTON_HOME		0x10000000l	// ホームボタン
+#define BUTTON_LEFT		0x00100000l	// Y or < ボタン    ( 3 : 0 )(L : R)
+#define BUTTON_UP		0x00200000l	// X or ^ ボタン    ( 1 : 1 )
+#define BUTTON_DOWN		0x00400000l	// B or v ボタン    ( 0 : 2 )
+#define BUTTON_RIGHT	0x00800000l	// A or > ボタン    ( 2 : 3 )
+#define BUTTON_SR		0x01000000l	// SRボタン         ( 4 : 4 )
+#define BUTTON_SL		0x02000000l	// SLボタン         ( 5 : 5 )
+#define BUTTON_RxL		0x04000000l	// R or L ボタン    ( 6 : 6 )
+#define BUTTON_ZRxZL	0x08000000l	// ZR or ZL ボタン  ( 7 : 7 )
+#define BUTTON_PxM		0x10000000l	// + or - ボタン    ( 8 : 9 )
+#define BUTTON_STICK	0x20000000l	// スティックボタン ( 11 : 10 )
+#define BUTTON_HOME		0x40000000l	// ホームボタン     ( 13 : 12 )
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -92,11 +92,9 @@ long GetMouseZ(void);               // マウスホイールが動いた相対値
 POINT GetMousePoint(void);          // マウスの座標
 
 //---------------------------- game pad
-BOOL IsButtonPressed(int padNo, DWORD button);
-BOOL IsButtonTriggered(int padNo, DWORD button);
-D3DXVECTOR2 GetLStickVolume(int padNo);
-D3DXVECTOR2 GetRStickVolume(int padNo);
-Vector3 GetGyro(int no);
+BOOL IsButtonPressed(DWORD button);
+BOOL IsButtonTriggered(DWORD button);
+Vector3 GetGyro();
 
 HRESULT InitializePad(void);			// パッド初期化
 
