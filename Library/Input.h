@@ -36,21 +36,35 @@
 #define LSTICK_DOWN		0x00000002l	// スティック下(.IY>0)
 #define LSTICK_LEFT		0x00000004l	// スティック左(.IX<0)
 #define LSTICK_RIGHT	0x00000008l	// スティック右(.IX>0)
-#define BUTTON_LEFT		0x00000010l	// Yボタン(.rgbButtons[0]&0x80)
-#define BUTTON_UP		0x00000020l	// Xボタン(.rgbButtons[1]&0x80)
-#define BUTTON_DOWN		0x00000040l	// Bボタン(.rgbButtons[2]&0x80)
-#define BUTTON_RIGHT	0x00000080l	// Aボタン(.rgbButtons[3]&0x80)
-#define BUTTON_SR		0x00000100l	// SRボタン(.rgbButtons[4]&0x80)
-#define BUTTON_SL		0x00000200l	// SLボタン(.rgbButtons[5]&0x80)
-#define BUTTON_RorL		0x00000400l	// RorLボタン(.rgbButtons[6]&0x80)
-#define BUTTON_ZRorZL	0x00000800l	// ZRorZLボタン(.rgbButtons[7]&0x80)
-#define BUTTON_08		0x00001000l	// NULL(.rgbButtons[8]&0x80)
-#define BUTTON_PM		0x00002000l	// 記号(+ro-)ボタン(.rgbButtons[9]&0x80)
-#define BUTTON_STICK	0x00004000l	// スティックボタン(.rgbButtons[10]&0x80)
-#define BUTTON_11		0x00008000l	// NULL(.rgbButtons[11]&0x80)
-#define BUTTON_HOME		0x00010000l	// ホームボタン(.rgbButtons[12]&0x80)
+#define BUTTON_00		0x00000010l	// (.rgbButtons[0]&0x80)
+#define BUTTON_01		0x00000020l	// (.rgbButtons[1]&0x80)
+#define BUTTON_02		0x00000040l	// (.rgbButtons[2]&0x80)
+#define BUTTON_03		0x00000080l	// (.rgbButtons[3]&0x80)
+#define BUTTON_04		0x00000100l	// (.rgbButtons[4]&0x80)
+#define BUTTON_05		0x00000200l	// (.rgbButtons[5]&0x80)
+#define BUTTON_06		0x00000400l	// (.rgbButtons[6]&0x80)
+#define BUTTON_07		0x00000800l	// (.rgbButtons[7]&0x80)
+#define BUTTON_08		0x00001000l	// (.rgbButtons[8]&0x80)
+#define BUTTON_09		0x00002000l	// (.rgbButtons[9]&0x80)
+#define BUTTON_10		0x00004000l	// (.rgbButtons[10]&0x80)
+#define BUTTON_11		0x00008000l	// (.rgbButtons[11]&0x80)
+#define BUTTON_12		0x00010000l	// (.rgbButtons[12]&0x80)
+#define BUTTON_13		0x00020000l	// (.rgbButtons[13]&0x80)
+#define BUTTON_14		0x00040000l	// (.rgbButtons[14]&0x80)
+#define BUTTON_15		0x00080000l	// (.rgbButtons[15]&0x80)
 #define GAMEPADMAX		4			// 同時に接続するジョイパッドの最大数をセット
 
+#define BUTTON_LEFT		0x00010000l	// RYボタン
+#define BUTTON_UP		0x00020000l	// RXボタン
+#define BUTTON_DOWN		0x00040000l	// RBボタン
+#define BUTTON_RIGHT	0x00080000l	// RAボタン
+#define BUTTON_SR		0x00100000l	// SRボタン
+#define BUTTON_SL		0x00200000l	// SLボタン
+#define BUTTON_RorL		0x00400000l	// RorLボタン
+#define BUTTON_ZRorZL	0x00800000l	// ZRorZLボタン
+#define BUTTON_PM		0x02000000l	// 記号(+ro-)ボタン
+#define BUTTON_STICK	0x04000000l	// スティックボタン
+#define BUTTON_HOME		0x10000000l	// ホームボタン
 
 //*****************************************************************************
 // プロトタイプ宣言
