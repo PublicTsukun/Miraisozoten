@@ -170,6 +170,8 @@ void InitEnemyRE(void)
 
 		(e + i)->apr = -1;
 
+		(e + i)->type = 0;
+
 		(e + i)->hp = ENEMY_HP;
 
 		(e + i)->status = 0;
@@ -359,7 +361,6 @@ void DamageDealEnemyRE(int Eno, int Vno)
 {
 	VOICETEN *v = GetVoiceten(0);
 	ENEMY *e = GetEnemyRE(0);
-	STAGE *s = GetStage();
 
 	// ダメージ計算
 	(e + Eno)->hp -= (v + Vno)->atk;
@@ -368,30 +369,7 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	if ((e + Eno)->hp <= 0 &&
 		(e + Eno)->status == E_STATUS_NORMAL)
 	{
-		(e + Eno)->status = E_STATUS_DEFEATED;
-
-		(e + Eno)->timer = 0;
-
-		// テクスチャ変更
-		EnemyRE[Eno].ChangeTexture(0, 1, 1, 2);
-
-		PlaySE(VIGOR);
-
-		//================================
-		// ボーナス
-		//================================
-		// スコアアップ
-		AddScore((e + Eno)->score);
-
-		// ゲージアップ
-		AddGage(ENEMY_D_GAUGEBONUS);
-
-		SetYouDefeated(1);
-
-		//================================
-		// 再生成
-		//================================
-		TrapFactory02((s->timer + 120), (e + Eno)->type);
+		DefeatEnemyRE(Eno);
 	}
 	else
 	{
@@ -403,6 +381,40 @@ void DamageDealEnemyRE(int Eno, int Vno)
 		AddGage(ENEMY_GAUGEBONUS);
 
 	}
+
+}
+
+//=============================================================================
+// 撃破処理
+//=============================================================================
+void DefeatEnemyRE(int no)
+{
+	ENEMY *e = GetEnemyRE(0);
+	STAGE *s = GetStage();
+
+	// 状態変更
+	(e + no)->status = E_STATUS_DEFEATED;
+
+	// タイマー再設定
+	(e + no)->timer = 0;
+
+	// テクスチャ変更
+	EnemyRE[no].ChangeTexture(0, 1, 1, 2);
+
+	// 音声
+	PlaySE(VIGOR);
+
+	// スコアアップ
+	AddScore((e + no)->score);
+
+	// ゲージアップ
+	AddGage(ENEMY_D_GAUGEBONUS);
+
+	// 撃破数カウントアップ
+	SetYouDefeated(1);
+
+	// 再生成
+	TrapFactory02((s->timer + 120), (e + no)->type);
 
 }
 
@@ -419,6 +431,7 @@ void VanisnEnenyRE(int no)
 	// 初期化
 	(e + no)->hp = ENEMY_HP;
 	(e + no)->timer = 0;
+	(e + no)->status = E_STATUS_NORMAL;
 }
 
 //=============================================================================
@@ -431,34 +444,17 @@ void VanisnAllEnenyRE(void)
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		//// 消滅
-		//(e + i)->use = FALSE;
-
-		//// 初期化
-		//(e + i)->hp = ENEMY_HP;
-		//(e + i)->timer = 0;
-
 		if ((e + i)->use == FALSE) continue;
 
 		(e + i)->hp -= 32767;
 
 		// 撃破判定
-		if ((e + i)->hp <= 0)
+		if ((e + i)->hp <= 0 &&
+			(e + i)->status == E_STATUS_NORMAL)
 		{
-			//VanisnEnenyRE(Eno);
-
-			(e + i)->status = E_STATUS_DEFEATED;
-
-			(e + i)->timer = 0;
-
-			// テクスチャ変更
-			EnemyRE[i].ChangeTexture(0, 1, 1, 2);
-
-			PlaySE(VIGOR);
-			
-			TrapFactory02((s->timer + 120), (e + i)->type);
-
+			DefeatEnemyRE(i);
 		}
+
 
 	}
 
@@ -738,6 +734,8 @@ void TrapFactory02(int apr, int num)
 	float x;
 	float z;
 
+	e->type = num;
+
 	// 未使用のオブジェクトを捜す
 		for (int j = 0; j < ENEMY_MAX; j++)
 		{
@@ -747,7 +745,7 @@ void TrapFactory02(int apr, int num)
 
 				// 種類設定
 				type = num;
-				SetType(j, type);
+				SetType(j, e->type);
 
 				// 位置設定
 				x = float(rand() % 560 - 280);
