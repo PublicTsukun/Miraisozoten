@@ -60,6 +60,10 @@ void VanisnAllEnenyRE(void);
 void SetEnemyRE(int no);
 void EnemyREOnStage(int no);
 
+void DefeatEnemyRE(int no);
+
+
+
 int GetYouDefeated(void);
 void SetYouDefeated(int value);
 void ResetYouDefeated(void);
