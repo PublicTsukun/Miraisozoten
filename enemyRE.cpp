@@ -231,6 +231,9 @@ void UpdateEnemyRE(void)
 			// â“ì≠éûä‘åüç∏
 			CheckUptime(i);
 
+			// è’ìÀîªíË
+			CollisionEnemyRE();
+
 			switch ((e + i)->status)
 			{
 			case E_STATUS_NULL:
@@ -239,7 +242,7 @@ void UpdateEnemyRE(void)
 			case E_STATUS_NORMAL:
 
 				// è’ìÀîªíË
-				CollisionEnemyRE();
+				//CollisionEnemyRE();
 				break;
 
 			case E_STATUS_DEFEATED:
