@@ -730,11 +730,8 @@ void TrapFactory02(int apr, int num)
 {
 	ENEMY *e = GetEnemyRE(0);
 
-	int type;
 	float x;
 	float z;
-
-	e->type = num;
 
 	// 未使用のオブジェクトを捜す
 		for (int j = 0; j < ENEMY_MAX; j++)
@@ -744,8 +741,8 @@ void TrapFactory02(int apr, int num)
 				(e + j)->apr = apr;
 
 				// 種類設定
-				type = num;
-				SetType(j, e->type);
+				(e + j)->type = num;
+				SetType(j, (e + j)->type);
 
 				// 位置設定
 				x = float(rand() % 560 - 280);
@@ -753,7 +750,7 @@ void TrapFactory02(int apr, int num)
 				SetPos(j, x, 100, z);
 
 				// HP設定
-				switch (type)
+				switch ((e + j)->type)
 				{
 				case E_TYPE_CHILD:
 					(e + j)->hp = EnemyHp[E_TYPE_CHILD];
@@ -789,7 +786,7 @@ void CheckUptime(int no)
 
 	int Uptime = -1;
 
-	switch (e->status)
+	switch ((e + no)->status)
 	{
 	case 0:
 		break;
