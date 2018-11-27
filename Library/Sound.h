@@ -23,14 +23,9 @@ enum
 
 typedef class DirectSound
 {
-
 	static IDirectSound8 *DirectSoundInterface;	// サウンドインターフェース
 
 	LPDIRECTSOUNDBUFFER8 SoundBuffer;
-
-protected:
-	void SetVolume(void);
-
 
 public:
 	DirectSound();
@@ -43,6 +38,7 @@ public:
 	void Stop();
 	bool CheckPlaying();
 	void Release();
+	void SetVolume(void);
 	long Volume;
 
 

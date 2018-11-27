@@ -29,6 +29,8 @@ int  SceneManager::Update()
 		break;
 
 	case SCENE_GAME:
+		SetCursorPos(100, 100);
+
 		// ゲームシーンの更新
 		UpdateGame();
 

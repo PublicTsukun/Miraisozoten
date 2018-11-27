@@ -218,6 +218,9 @@ void UpdateEnemyRE(void)
 
 #endif
 
+			// è’ìÀîªíË
+			CollisionEnemyRE();
+
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		if ((e + i)->use == TRUE)
@@ -239,7 +242,7 @@ void UpdateEnemyRE(void)
 			case E_STATUS_NORMAL:
 
 				// è’ìÀîªíË
-				CollisionEnemyRE();
+				//CollisionEnemyRE();
 				break;
 
 			case E_STATUS_DEFEATED:
@@ -300,6 +303,7 @@ void CollisionEnemyRE(void)
 	for(int i = 0; i < ENEMY_MAX; i++, e++)
 	{
 		if (e->use == FALSE) continue;
+		v = GetVoiceten(0);
 
 		for (int j = 0; j < VOICETEN_MAX; j++, v++)
 		{

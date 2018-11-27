@@ -132,6 +132,8 @@ HRESULT Init()
 	// ÉJÉÅÉâ
 	InitCamera();
 
+	ShowCursor(FALSE);
+
 	return S_OK;
 }
 
@@ -148,6 +150,7 @@ void Uninit(void)
 
 	UninitGameSound();
 
+	ShowCursor(TRUE);
 }
 
 //=============================================================================
