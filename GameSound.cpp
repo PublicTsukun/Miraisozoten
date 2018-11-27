@@ -70,7 +70,7 @@ HRESULT InitGameSound(void)
 	{
 		SoundSE[i].LoadSound(SEFile[i]);
 	}
-	SoundSE[SHOOT_BULLET].Volume = -1000;
+	SoundSE[SHOOT_BULLET].Volume = -9000L;
 
 	return S_OK;
 }
