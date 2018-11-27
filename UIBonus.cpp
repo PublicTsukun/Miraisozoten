@@ -110,7 +110,7 @@ void UpdateUIBonus(void)
 			}
 		}
 
-		if (GetKeyboardTrigger(DIK_8) && gagenum == 3)
+		if ((GetKeyboardTrigger(DIK_8) || IsButtonTriggered(BUTTON_09, 1)) && gagenum == 3)
 		{
 			fiverf = true;
 		}
