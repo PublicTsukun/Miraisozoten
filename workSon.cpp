@@ -15,6 +15,7 @@
 #include "messageBox.h"
 #include "enemyRE.h"
 #include "StageManager.h"
+#include "VLauncher.h"
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -90,6 +91,7 @@ void UpdateWorkSon(void)
 		UpdateMessageBox();
 		UpdateEnemyRE();
 		UpdateStage();
+		UpdateVLauncher();
 
 		TestVL();
 		TestMB();

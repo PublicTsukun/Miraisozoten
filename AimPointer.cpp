@@ -20,16 +20,16 @@ void AimPointer::Update()
 	PrintDebugProcess("X = %f, Y = %f, Z = %f\n", gyro.x, gyro.y, gyro.z);
 
 	// ä¥ìx
-	static float vX = 5.0f;
-	static float vY = 5.0f;
-	if (GetKeyboardTrigger(DIK_4))	vX -= 1.0f;
-	if (GetKeyboardTrigger(DIK_6))	vX += 1.0f;
-	if (GetKeyboardTrigger(DIK_8))	vY -= 1.0f;
-	if (GetKeyboardTrigger(DIK_2))	vY += 1.0f;
+	static float vX = 4.0f;
+	static float vY = 6.0f;
+	if (GetKeyboardTrigger(DIK_4))	vX -= 0.5f;
+	if (GetKeyboardTrigger(DIK_6))	vX += 0.5f;
+	if (GetKeyboardTrigger(DIK_8))	vY -= 0.5f;
+	if (GetKeyboardTrigger(DIK_2))	vY += 0.5f;
 	PrintDebugProcess("ä¥ìx : %d, %d\n", (int)vX, (int)vY);
 
 	// àÍíËílà»â∫Çñ≥å¯
-	static float c = 1.0f;
+	static float c = 0.0f;
 	if (GetKeyboardTrigger(DIK_MINUS))	c -= 0.5f;
 	if (GetKeyboardTrigger(DIK_ADD))	c += 0.5f;
 	PrintDebugProcess("ï‚ê≥ : %f\n", c);

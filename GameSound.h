@@ -9,7 +9,7 @@
 #include <Windows.h>
 
 #define BGM_VOLUME_MIN		(-9000)
-#define BGM_VOLUME_MAX		(-2000)
+#define BGM_VOLUME_MAX		(-1000)
 #define BGM_VOLUME_HALF		(-3000)
 
 #define VOLUME_CONTROL_DOWN	(50)

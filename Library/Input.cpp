@@ -657,13 +657,21 @@ void UpdatePad(void)
 
 }
 //----------------------------------------------- åüç∏
-BOOL IsButtonPressed(DWORD button)
+BOOL IsButtonPressed(DWORD button, int no)
 {
-	return (button & padState[padNowUseSide ? 0 : 1]);
+	if (no < 0)
+	{
+		return (button & padState[padNowUseSide ? 0 : 1]);
+	}
+	return (button & padState[no]);
 }
-BOOL IsButtonTriggered(DWORD button)
+BOOL IsButtonTriggered(DWORD button, int no)
 {
-	return (button & padTrigger[padNowUseSide ? 0 : 1]);
+	if (no < 0)
+	{
+		return (button & padTrigger[padNowUseSide ? 0 : 1]);
+	}
+	return (button & padTrigger[no]);
 }
 
 Vector3 GetGyro()

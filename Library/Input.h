@@ -92,8 +92,8 @@ long GetMouseZ(void);               // マウスホイールが動いた相対値
 POINT GetMousePoint(void);          // マウスの座標
 
 //---------------------------- game pad
-BOOL IsButtonPressed(DWORD button);
-BOOL IsButtonTriggered(DWORD button);
+BOOL IsButtonPressed(DWORD button, int no = -1);
+BOOL IsButtonTriggered(DWORD button, int no = -1);
 Vector3 GetGyro();
 
 HRESULT InitializePad(void);			// パッド初期化

@@ -93,7 +93,7 @@ float effa=0.0f;
 //=============================================================================
 void UpdateUIBonus(void)
 {
-	if (StateTimer() == COUNT)
+	//if (StateTimer() == COUNT)
 	{
 
 		if (GetKeyboardPress(DIK_9) && fiverf == false)
