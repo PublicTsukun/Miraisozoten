@@ -12,6 +12,7 @@
 #include "AimPointer.h"
 
 #include "Library\Camera.h"
+#include "GameSound.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -53,7 +54,7 @@ int timerVL;
 //=============================================================================
 void UpdateVLauncher(void)
 {
-	if (CEnergyTankUI::GetVoiceVolume() > 1)				// 30 : 一定値以下を無視
+	if (CEnergyTankUI::GetVoiceVolume() > 45)				// 45 : 一定値以下を無視
 	{
 		Vector2 direction = AimPointer::GetPosition();
 
@@ -77,6 +78,7 @@ void UpdateVLauncher(void)
 			SetVoiceten(
 				Vector3(0.0f, 250.0f, -800.0f),				// 発射位置
 				Vector3(pout->x, pout->y, pout->z));		// 目標位置
+			PlaySE(SHOOT_BULLET);
 		}
 
 		// タイマーカウントアップ

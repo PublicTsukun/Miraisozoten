@@ -93,7 +93,7 @@ float effa=0.0f;
 //=============================================================================
 void UpdateUIBonus(void)
 {
-	if (StateTimer() == COUNT)
+	//if (StateTimer() == COUNT)
 	{
 
 		if (GetKeyboardPress(DIK_9) && fiverf == false)
@@ -110,7 +110,7 @@ void UpdateUIBonus(void)
 			}
 		}
 
-		if (GetKeyboardTrigger(DIK_8) && gagenum == 3)
+		if ((GetKeyboardTrigger(DIK_8) || IsButtonTriggered(BUTTON_09, 1)) && gagenum == 3)
 		{
 			fiverf = true;
 		}

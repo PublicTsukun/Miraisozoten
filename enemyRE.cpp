@@ -20,6 +20,8 @@
 
 #include "GameSound.h"
 
+#include "StageManager.h"
+
 
 //*****************************************************************************
 // マクロ定義
@@ -117,6 +119,7 @@ void SetParameter00(void);
 
 void TestEnemyRE(void);
 void TrapFactory(int apr, int num);
+void TrapFactory02(int apr, int num);
 
 void CheckUptime(int no);
 
@@ -167,9 +170,13 @@ void InitEnemyRE(void)
 
 		(e + i)->apr = -1;
 
+		(e + i)->type = 0;
+
 		(e + i)->hp = ENEMY_HP;
 
 		(e + i)->status = 0;
+
+		(e + i)->score = 0;
 
 		EnemyRE[i].Init((e + i)->pos, size);
 		EnemyRE[i].LoadTexture(FileEnemy[0]);
@@ -211,6 +218,9 @@ void UpdateEnemyRE(void)
 
 #endif
 
+			// 衝突判定
+			CollisionEnemyRE();
+
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		if ((e + i)->use == TRUE)
@@ -221,6 +231,8 @@ void UpdateEnemyRE(void)
 			// タイマーカウントアップ
 			(e + i)->timer++;
 
+			// 稼働時間検査
+			CheckUptime(i);
 
 			switch ((e + i)->status)
 			{
@@ -230,19 +242,12 @@ void UpdateEnemyRE(void)
 			case E_STATUS_NORMAL:
 
 				// 衝突判定
-				CollisionEnemyRE();
-
-				// 稼働時間検査
-				CheckUptime(i);
+				//CollisionEnemyRE();
 				break;
 
 			case E_STATUS_DEFEATED:
 
 				// アニメーション
-
-
-				// 稼働時間検査
-				CheckUptime(i);
 				break;
 
 			default:
@@ -298,6 +303,7 @@ void CollisionEnemyRE(void)
 	for(int i = 0; i < ENEMY_MAX; i++, e++)
 	{
 		if (e->use == FALSE) continue;
+		v = GetVoiceten(0);
 
 		for (int j = 0; j < VOICETEN_MAX; j++, v++)
 		{
@@ -367,37 +373,52 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	if ((e + Eno)->hp <= 0 &&
 		(e + Eno)->status == E_STATUS_NORMAL)
 	{
-		(e + Eno)->status = E_STATUS_DEFEATED;
-
-		(e + Eno)->timer = 0;
-
-		// テクスチャ変更
-		EnemyRE[Eno].ChangeTexture(0, 1, 1, 2);
-
-		PlaySE(VIGOR);
-
-		//================================
-		// ボーナス
-		//================================
-		// スコアアップ
-		AddScore(ENEMY_D_SCOREBONUS);
-
-		// ゲージアップ
-		AddGage(ENEMY_D_GAUGEBONUS);
-
-		SetYouDefeated(1);
-
+		DefeatEnemyRE(Eno);
 	}
 	else
 	{
-
+#ifdef _DEBUG
 		// スコアアップ
 		AddScore(ENEMY_SCOREBONUS);
-
+#endif
 		// ゲージアップ
 		AddGage(ENEMY_GAUGEBONUS);
 
 	}
+
+}
+
+//=============================================================================
+// 撃破処理
+//=============================================================================
+void DefeatEnemyRE(int no)
+{
+	ENEMY *e = GetEnemyRE(0);
+	STAGE *s = GetStage();
+
+	// 状態変更
+	(e + no)->status = E_STATUS_DEFEATED;
+
+	// タイマー再設定
+	(e + no)->timer = 0;
+
+	// テクスチャ変更
+	EnemyRE[no].ChangeTexture(0, 1, 1, 2);
+
+	// 音声
+	PlaySE(VIGOR);
+
+	// スコアアップ
+	AddScore((e + no)->score);
+
+	// ゲージアップ
+	AddGage(ENEMY_D_GAUGEBONUS);
+
+	// 撃破数カウントアップ
+	SetYouDefeated(1);
+
+	// 再生成
+	TrapFactory02((s->timer + 120), (e + no)->type);
 
 }
 
@@ -414,6 +435,7 @@ void VanisnEnenyRE(int no)
 	// 初期化
 	(e + no)->hp = ENEMY_HP;
 	(e + no)->timer = 0;
+	(e + no)->status = E_STATUS_NORMAL;
 }
 
 //=============================================================================
@@ -422,35 +444,21 @@ void VanisnEnenyRE(int no)
 void VanisnAllEnenyRE(void)
 {
 	ENEMY *e = GetEnemyRE(0);
+	STAGE *s = GetStage();
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		//// 消滅
-		//(e + i)->use = FALSE;
-
-		//// 初期化
-		//(e + i)->hp = ENEMY_HP;
-		//(e + i)->timer = 0;
-
 		if ((e + i)->use == FALSE) continue;
 
 		(e + i)->hp -= 32767;
 
 		// 撃破判定
-		if ((e + i)->hp <= 0)
+		if ((e + i)->hp <= 0 &&
+			(e + i)->status == E_STATUS_NORMAL)
 		{
-			//VanisnEnenyRE(Eno);
-
-			(e + i)->status = E_STATUS_DEFEATED;
-
-			(e + i)->timer = 0;
-
-			// テクスチャ変更
-			EnemyRE[i].ChangeTexture(0, 1, 1, 2);
-
-			PlaySE(VIGOR);
-
+			DefeatEnemyRE(i);
 		}
+
 
 	}
 
@@ -538,40 +546,94 @@ void SetParameter00(void)
 
 	// srand()はメインに移しました
 
-	TrapFactory(120, 1);
-	TrapFactory(240, 1);
-	TrapFactory(360, 1);
-	TrapFactory(480, 1);
-	TrapFactory(600, 1);
+	//TrapFactory(120, 1);
+	//TrapFactory(240, 1);
+	//TrapFactory(360, 1);
+	//TrapFactory(480, 1);
+	//TrapFactory(600, 1);
 
-	TrapFactory(720, 1);
-	TrapFactory(840, 2);
+	//TrapFactory(720, 1);
+	//TrapFactory(840, 2);
 
-	TrapFactory(1080, 1);
-	TrapFactory(1200, 2);
+	//TrapFactory(1080, 1);
+	//TrapFactory(1200, 2);
 
-	TrapFactory(1440, 1);
-	TrapFactory(1560, 2);
+	//TrapFactory(1440, 1);
+	//TrapFactory(1560, 2);
 
-	TrapFactory(1800, 1);
-	TrapFactory(1920, 2);
+	//TrapFactory(1800, 1);
+	//TrapFactory(1920, 2);
 
-	TrapFactory(2160, 1);
-	TrapFactory(2280, 4);
+	//TrapFactory(2160, 1);
+	//TrapFactory(2280, 4);
 
-	TrapFactory(2520, 1);
-	TrapFactory(2580, 1);
-	TrapFactory(2640, 1);
-	TrapFactory(2700, 1);
+	//TrapFactory(2520, 1);
+	//TrapFactory(2580, 1);
+	//TrapFactory(2640, 1);
+	//TrapFactory(2700, 1);
 
-	TrapFactory(2760, 1);
-	TrapFactory(2820, 1);
-	TrapFactory(2880, 1);
-	TrapFactory(2940, 1);
-	TrapFactory(3000, 1);
+	//TrapFactory(2760, 1);
+	//TrapFactory(2820, 1);
+	//TrapFactory(2880, 1);
+	//TrapFactory(2940, 1);
+	//TrapFactory(3000, 1);
 
-	TrapFactory(3240, 4);
-	TrapFactory(3480, 8);
+	//TrapFactory(3240, 4);
+	//TrapFactory(3480, 8);
+
+	TrapFactory02(60, 0);
+	TrapFactory02(90, 1);
+	TrapFactory02(120, 2);
+
+	//TrapFactory02(360, 0);
+	//TrapFactory02(390, 1);
+	//TrapFactory02(420, 2);
+
+	//TrapFactory02(660, 0);
+	//TrapFactory02(690, 1);
+	//TrapFactory02(720, 2);
+
+	//TrapFactory02(960, 0);
+	//TrapFactory02(990, 1);
+	//TrapFactory02(1020, 2);
+
+	//TrapFactory02(1260, 0);
+	//TrapFactory02(1290, 1);
+	//TrapFactory02(1320, 2);
+
+	//TrapFactory02(1560, 0);
+	//TrapFactory02(1590, 1);
+	//TrapFactory02(1620, 2);
+
+	//TrapFactory02(1860, 0);
+	//TrapFactory02(1890, 1);
+	//TrapFactory02(1920, 2);
+
+	//TrapFactory02(1860, 0);
+	//TrapFactory02(1890, 1);
+	//TrapFactory02(1920, 2);
+
+	//TrapFactory02(2160, 0);
+	//TrapFactory02(2190, 1);
+	//TrapFactory02(2220, 2);
+
+	//TrapFactory02(2460, 0);
+	//TrapFactory02(2490, 1);
+	//TrapFactory02(2520, 2);
+
+	//TrapFactory02(2760, 0);
+	//TrapFactory02(2790, 1);
+	//TrapFactory02(2820, 2);
+
+	//TrapFactory02(3060, 0);
+	//TrapFactory02(3090, 1);
+	//TrapFactory02(3120, 2);
+
+	//TrapFactory02(3360, 0);
+	//TrapFactory02(3390, 1);
+	//TrapFactory02(3420, 2);
+
+
 
 }
 
@@ -643,12 +705,15 @@ void TrapFactory(int apr, int num)
 				{
 				case E_TYPE_CHILD:
 					(e + j)->hp = EnemyHp[E_TYPE_CHILD];
+					(e + j)->score = 500;
 					break;
 				case E_TYPE_MAID:
 					(e + j)->hp = EnemyHp[E_TYPE_MAID];
+					(e + j)->score = 100;
 					break;
 				case E_TYPE_OTAKU:
 					(e + j)->hp = EnemyHp[E_TYPE_OTAKU];
+					(e + j)->score = 1000;
 					break;
 				default:
 					(e + j)->hp = ENEMY_HP;
@@ -663,18 +728,89 @@ void TrapFactory(int apr, int num)
 }
 
 //=============================================================================
+// エネミー生成（応急措置）
+//============================================================================='
+void TrapFactory02(int apr, int num)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	float x;
+	float z;
+
+	// 未使用のオブジェクトを捜す
+		for (int j = 0; j < ENEMY_MAX; j++)
+		{
+			if ((e + j)->apr == -1)
+			{
+				(e + j)->apr = apr;
+
+				// 種類設定
+				(e + j)->type = num;
+				SetType(j, (e + j)->type);
+
+				// 位置設定
+				x = float(rand() % 560 - 280);
+				z = float(rand() % 600);
+				SetPos(j, x, 100, z);
+
+				// HP設定
+				switch ((e + j)->type)
+				{
+				case E_TYPE_CHILD:
+					(e + j)->hp = EnemyHp[E_TYPE_CHILD];
+					(e + j)->score = 500;
+					break;
+				case E_TYPE_MAID:
+					(e + j)->hp = EnemyHp[E_TYPE_MAID];
+					(e + j)->score = 100;
+					break;
+				case E_TYPE_OTAKU:
+					(e + j)->hp = EnemyHp[E_TYPE_OTAKU];
+					(e + j)->score = 1000;
+					break;
+				default:
+					(e + j)->hp = ENEMY_HP;
+					(e + j)->score = 0;
+					break;
+				}
+
+				break;
+			}
+	}
+
+}
+
+
+//=============================================================================
 // 稼働時間検査
 //============================================================================='
 void CheckUptime(int no)
 {
 	ENEMY *e = GetEnemyRE(0);
 
-	const int Uptime = 270;
+	int Uptime = -1;
 
-	if ((e + no)->timer >= Uptime)
+	switch ((e + no)->status)
 	{
-		VanisnEnenyRE(no);
+	case 0:
+		break;
+	case E_STATUS_NORMAL:
+		break;
+	case E_STATUS_DEFEATED:
+		Uptime = 120;
+
+		if ((e + no)->timer >= Uptime)
+		{
+			VanisnEnenyRE(no);
+		}
+
+		break;
+	default:
+		break;
 	}
+
+
+
 
 }
 
