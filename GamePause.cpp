@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "startcount.h"
 #include "GameSound.h"
+#include "Library\DebugProcess.h"
 
 static C2DObject PauseFade;
 static C2DObject Back;
@@ -19,6 +20,13 @@ bool	BackTitleF;
 bool	BackCheckF;
 int		ChoiceNo;
 int		ChoiceNoT;
+
+float	BackTitleScl;
+float	BackGameScl;
+float	OptionScl;
+float	YesScl;
+float	NoScl;
+
 
 void GamePause::Init()
 {
@@ -37,6 +45,12 @@ void GamePause::Init()
 	BackCheckF = false;
 	ChoiceNo = 0;
 	ChoiceNoT = 0;
+
+
+	BackTitleScl = 0.0f;
+	BackGameScl = 0.0f;
+	YesScl = 0.0f;
+	NoScl = 0.0f;
 }
 
 GPR GamePause::Update()
@@ -49,22 +63,35 @@ GPR GamePause::Update()
 	{
 		if (GetKeyboardTrigger(DIK_UP))
 		{
-			ChoiceNo += 1;
+			ChoiceNo -= 1;
 			PlaySE(CURSOL);
 		}
 		else if (GetKeyboardTrigger(DIK_DOWN))
 		{
-			ChoiceNo -= 1;
+			ChoiceNo += 1;
 			PlaySE(CURSOL);
 
 		}
-		ChoiceNo += 2;
-		ChoiceNo %= 2;
+		ChoiceNo += 3;
+		ChoiceNo %= 3;
 
 		if (ChoiceNo == 0)
 		{
 			BackGame.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
 			BackTitle.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			Option.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+			float Scale;
+			BackGameScl += 0.05f;
+			BackTitleScl = 0.0f;
+			OptionScl = 0.0f;
+
+			Scale = (sinf(BackGameScl) / 8.0) + 1.125f;
+			BackGame.SetStatus(Scale, 0.0f);
+			BackTitle.SetStatus(1.0f, 0.0f);
+			Option.SetStatus(1.0f, 0.0f);
+
+			PrintDebugProcess("Scale %f\n", Scale);
 
 			if (GetKeyboardTrigger(DIK_RETURN))
 			{
@@ -81,12 +108,45 @@ GPR GamePause::Update()
 		{
 			BackTitle.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
 			BackGame.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			Option.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+			float Scale;
+			BackTitleScl += 0.05f;
+			BackGameScl = 0.0f;
+			OptionScl = 0.0f;
+
+			Scale = (sinf(BackTitleScl) / 8.0) + 1.125f;
+			BackTitle.SetStatus(Scale, 0.0f);
+			BackGame.SetStatus(1.0f, 0.0f);
+			Option.SetStatus(1.0f, 0.0f);
+
+			PrintDebugProcess("Scale %f\n", Scale);
+
 			if (GetKeyboardTrigger(DIK_RETURN))
 			{
 				PlaySE(DECIDE);
 				BackTitleF = true;
 				BackCheckF = true;
 			}
+		}
+		else if (ChoiceNo == 2)
+		{
+			BackTitle.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			BackGame.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			Option.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+
+			float Scale;
+			BackTitleScl = 0.0f;
+			BackGameScl = 0.0f;
+			OptionScl += 0.05f;
+
+			Scale = (sinf(OptionScl) / 8.0) + 1.125f;
+			BackTitle.SetStatus(1.0f, 0.0f);
+			BackGame.SetStatus(1.0f, 0.0f);
+			Option.SetStatus(Scale, 0.0f);
+
+			PrintDebugProcess("Scale %f\n", Scale);
+
 		}
 	}
 
@@ -112,6 +172,17 @@ GPR GamePause::Update()
 		{
 			Yes.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
 			No.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+			float Scale;
+			YesScl += 0.05f;
+			NoScl = 0.0f;
+
+			Scale = (sinf(YesScl) / 8.0) + 1.125f;
+			Yes.SetStatus(Scale, 0.0f);
+			No.SetStatus(1.0f, 0.0f);
+			PrintDebugProcess("Scale %f\n", Scale);
+
+
 			if (GetKeyboardTrigger(DIK_RETURN))
 			{
 
@@ -121,6 +192,15 @@ GPR GamePause::Update()
 		}
 		else if (ChoiceNoT == 0)
 		{
+			float Scale;
+			NoScl += 0.05f;
+			YesScl = 0.0f;
+
+			Scale = (sinf(NoScl) / 8.0) + 1.125f;
+			No.SetStatus(Scale, 0.0f);
+			Yes.SetStatus(1.0f, 0.0f);
+			PrintDebugProcess("Scale %f\n", Scale);
+
 			No.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
 			Yes.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			if (GetKeyboardTrigger(DIK_RETURN))
@@ -146,7 +226,7 @@ void GamePause::Draw()
 	{
 		BackGame.Draw();
 		BackTitle.Draw();
-		//Option.Draw();
+		Option.Draw();
 	}
 	if (BackTitleF)
 	{

@@ -6,6 +6,8 @@
 #include "SceneManager.h"
 #include "Library\DebugProcess.h"
 
+#include "StageManager.h"
+
 class BGM : public DirectSound
 {
 public:
@@ -62,9 +64,6 @@ HRESULT InitGameSound(void)
 		SoundBGM[i].Volume = BGM_VOLUME_MIN;
 		SoundBGM[i].LoadSound(BGMFile[i]);
 	}
-	PlayBGM(TITLE);
-	PlayBGM(GAME_AKIBA);
-	PlayBGM(RESULT);
 
 	for (int i = 0; i < SE_MAX; i++)
 	{
@@ -194,35 +193,66 @@ void BGM::FadeVolume(int flag)
 //=============================================================================
 void UpdateGameSound(void)
 {
+		STAGE *stage = GetStage();
 
 	switch (Scene::SetScene(SCENE_MAX))
 	{
 	case SCENE_TITLE:
 		SoundBGM[TITLE].FadeVolume(SOUND_FADE_IN);
 		SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_OUT);
+		SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_OUT);
+		SoundBGM[GAME_BONUS].FadeVolume(SOUND_FADE_OUT);
 		SoundBGM[RESULT].FadeVolume(SOUND_FADE_OUT);
 		break;
 
 	case SCENE_GAME:
-		SoundBGM[TITLE].FadeVolume(SOUND_FADE_OUT);
-		SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_IN);
-		SoundBGM[RESULT].FadeVolume(SOUND_FADE_OUT);
+		switch (stage->no)
+		{
+		case 0:
+			SoundBGM[TITLE].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_IN);
+			SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_BONUS].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[RESULT].FadeVolume(SOUND_FADE_OUT);
+			break;
+		case 1:
+			SoundBGM[TITLE].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_IN);
+			SoundBGM[GAME_BONUS].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[RESULT].FadeVolume(SOUND_FADE_OUT);
+			break;
+		case 2:
+			SoundBGM[TITLE].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_BONUS].FadeVolume(SOUND_FADE_IN);
+			SoundBGM[RESULT].FadeVolume(SOUND_FADE_OUT);
+			break;
+
+		}
 		break;
 
 	case SCENE_PAUSE:
 		SoundBGM[TITLE].FadeVolume(SOUND_FADE_OUT);
-		SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_HALF);
+		SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_OUT);
+		SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_OUT);
+		SoundBGM[GAME_BONUS].FadeVolume(SOUND_FADE_OUT);
 		SoundBGM[RESULT].FadeVolume(SOUND_FADE_OUT);
 		break;
 
 	case SCENE_RESULT:
 		SoundBGM[TITLE].FadeVolume(SOUND_FADE_OUT);
 		SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_OUT);
+		SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_OUT);
+		SoundBGM[GAME_BONUS].FadeVolume(SOUND_FADE_OUT);
 		SoundBGM[RESULT].FadeVolume(SOUND_FADE_IN);
 		break;
 	}
 	PrintDebugProcess("\nTITLE%d\n", SoundBGM[TITLE].Volume);
-	PrintDebugProcess("GAME%d\n", SoundBGM[GAME_AKIBA].Volume);
+	PrintDebugProcess("GAME AKIBA%d\n", SoundBGM[GAME_AKIBA].Volume);
+	PrintDebugProcess("GAME SPACE%d\n", SoundBGM[GAME_SPACE].Volume);
+	PrintDebugProcess("GAME BONUS%d\n", SoundBGM[GAME_BONUS].Volume);
 	PrintDebugProcess("RESULT%d\n", SoundBGM[RESULT].Volume);
 
 }

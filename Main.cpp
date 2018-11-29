@@ -132,6 +132,10 @@ HRESULT Init()
 	// ÉJÉÅÉâ
 	InitCamera();
 
+	PlayBGM(TITLE);
+	PlayBGM(GAME_AKIBA);
+	PlayBGM(RESULT);
+
 	return S_OK;
 }
 
