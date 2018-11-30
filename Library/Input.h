@@ -95,6 +95,7 @@ POINT GetMousePoint(void);          // マウスの座標
 BOOL IsButtonPressed(DWORD button, int no = -1);
 BOOL IsButtonTriggered(DWORD button, int no = -1);
 Vector3 GetGyro();
+int  GetGamePad();
 
 HRESULT InitializePad(void);			// パッド初期化
 

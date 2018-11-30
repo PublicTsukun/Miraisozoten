@@ -656,6 +656,7 @@ void UpdatePad(void)
 	//PrintDebugProcess("\n");
 
 }
+
 //----------------------------------------------- åüç∏
 BOOL IsButtonPressed(DWORD button, int no)
 {
@@ -673,7 +674,6 @@ BOOL IsButtonTriggered(DWORD button, int no)
 	}
 	return (button & padTrigger[no]);
 }
-
 Vector3 GetGyro()
 {
 	if (padNowUseSide)
@@ -681,5 +681,9 @@ Vector3 GetGyro()
 		return Vector3(padGyro[0].x, padGyro[0].y, -padGyro[0].z);
 	}
 	return Vector3(-padGyro[1].x, padGyro[1].y, -padGyro[1].z);
+}
+int  GetGamePad()
+{
+	return padCount;
 }
 

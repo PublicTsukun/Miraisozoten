@@ -11,6 +11,7 @@
 
 
 #include "Library\ObjectBase3D.h"
+#include "Library\Common.h"
 
 // エネミー種類列挙
 enum ENEMYTYPE

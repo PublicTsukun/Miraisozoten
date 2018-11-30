@@ -15,37 +15,44 @@ Vector2 AimPointer::GetPosition(Vector2 set)
 
 void AimPointer::Update()
 {
-	Vector3 gyro = GetGyro();
+	if (GetGamePad())
+	{
+		SetCursorPos(100, 100);
 
-	PrintDebugProcess("X = %f, Y = %f, Z = %f\n", gyro.x, gyro.y, gyro.z);
+		Vector3 gyro = GetGyro();
 
-	// 感度
-	static float vX = 4.0f;
-	static float vY = 6.0f;
-	if (GetKeyboardTrigger(DIK_4))	vX -= 0.5f;
-	if (GetKeyboardTrigger(DIK_6))	vX += 0.5f;
-	if (GetKeyboardTrigger(DIK_8))	vY -= 0.5f;
-	if (GetKeyboardTrigger(DIK_2))	vY += 0.5f;
-	PrintDebugProcess("感度 : %d, %d\n", (int)vX, (int)vY);
+		PrintDebugProcess("X = %f, Y = %f, Z = %f\n", gyro.x, gyro.y, gyro.z);
 
-	// 一定値以下を無効
-	static float c = 0.0f;
-	if (GetKeyboardTrigger(DIK_MINUS))	c -= 0.5f;
-	if (GetKeyboardTrigger(DIK_ADD))	c += 0.5f;
-	PrintDebugProcess("補正 : %f\n", c);
+		// 感度
+		static float vX = 4.0f;
+		static float vY = 6.0f;
+		if (GetKeyboardTrigger(DIK_4))	vX -= 0.5f;
+		if (GetKeyboardTrigger(DIK_6))	vX += 0.5f;
+		if (GetKeyboardTrigger(DIK_8))	vY -= 0.5f;
+		if (GetKeyboardTrigger(DIK_2))	vY += 0.5f;
+		PrintDebugProcess("感度 : %d, %d\n", (int)vX, (int)vY);
 
+		// 一定値以下を無効
+		static float c = 0.0f;
+		if (GetKeyboardTrigger(DIK_MINUS))	c -= 0.5f;
+		if (GetKeyboardTrigger(DIK_ADD))	c += 0.5f;
+		PrintDebugProcess("補正 : %f\n", c);
 
-	Vector2 value;
-	value.x = gyro.z / vX;
-	value.y = gyro.x / vY;
-	if (value.x <= c && value.x >= -c)	value.x = 0.0f;
-	if (value.y <= c && value.y >= -c)	value.y = 0.0f;
+		Vector2 value;
+		value.x = gyro.z / vX;
+		value.y = gyro.x / vY;
+		if (value.x <= c && value.x >= -c)	value.x = 0.0f;
+		if (value.y <= c && value.y >= -c)	value.y = 0.0f;
 
-	PrintDebugProcess("X = %f, Y = %f\n", value.x, value.y);
+		PrintDebugProcess("X = %f, Y = %f\n", value.x, value.y);
 
-	Move(value);
-	//if (IsMouseLeftPressed())
-	//	Move(Vector2((float)GetMouseX(), (float)GetMouseY()));
+		/* 移動 */
+		Move(value);
+	}
+	else if (IsMouseLeftPressed())
+	{
+		Move(Vector2((float)GetMouseX(), (float)GetMouseY()));
+	}
 }
 
 void AimPointer::Move(Vector2 v)

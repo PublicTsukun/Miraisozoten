@@ -174,7 +174,7 @@ void DrawResultlogo(void)
 void UpdateResultlogo(void)
 {
 	if (slotCount >= NUM_PLACE
-		&& GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
+		&& (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP)))
 	{
 		Scene::SetScene(SCENE_TITLE);
 	}
