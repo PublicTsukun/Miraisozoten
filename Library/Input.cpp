@@ -682,8 +682,4 @@ Vector3 GetGyro()
 	}
 	return Vector3(-padGyro[1].x, padGyro[1].y, -padGyro[1].z);
 }
-int  GetGamePad()
-{
-	return padCount;
-}
 

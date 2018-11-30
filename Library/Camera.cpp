@@ -25,12 +25,6 @@ CCamera::CCamera()
 	Sensitivity = GAZE_MOVE_VALUE;
 }
 
-//----デストラクタ--------
-CCamera::~CCamera()
-{
-
-}
-
 //----初期化--------
 void CCamera::Init(void)
 {
@@ -64,11 +58,6 @@ void CCamera::Scaling(float moveRate)
 	Position.y = 0.0f;
 	Position.z = -500.0f;
 	Position += Gaze;
-
-#ifdef _DEBUG
-	PrintDebugProcess("デバッグカメラ位置 : (%v)\n", Position);
-	PrintDebugProcess("デバッグカメラ視線 : (%v)\n", Gaze);
-#endif // _DEBUG
 
 	Interval -= moveRate;
 }
@@ -134,13 +123,6 @@ void CCamera::Translation(Vector2 moveRate)
 		Gaze += LeftVec *  moveRate.x * CAMERA_MOVE_VALUE;
 		Gaze += FrontVec * moveRate.y * CAMERA_MOVE_VALUE;
 	}
-
-#ifdef _DEBUG
-	PrintDebugProcess("デバッグカメラ位置 : (%v)\n", Position);
-	PrintDebugProcess("デバッグカメラ視線 : (%v)\n", Gaze);
-	PrintDebugProcess("デバッグカメラAngl : (%v)\n", Angle);
-#endif // _DEBUG
-
 }
 
 //----取得--------

@@ -56,7 +56,6 @@ public:
 
 public:
 	CCamera();
-	~CCamera();
 
 	void Init(void);
 	void Translation(Vector2 moveRate);

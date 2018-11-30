@@ -15,13 +15,21 @@ Vector2 AimPointer::GetPosition(Vector2 set)
 
 void AimPointer::Update()
 {
-	if (GetGamePad())
+	static bool joyconORmouse = true;
+	if (GetKeyboardTrigger(DIK_M))
 	{
+		joyconORmouse = joyconORmouse ? false : true;
+	}
+
+	if (joyconORmouse)
+	{
+		PrintDebugProcess("ポインター操作方法(M) : ジャイロ\n");
+
 		SetCursorPos(100, 100);
 
 		Vector3 gyro = GetGyro();
 
-		PrintDebugProcess("X = %f, Y = %f, Z = %f\n", gyro.x, gyro.y, gyro.z);
+		PrintDebugProcess("ジョイコン : (%f, %f, %f)\n", gyro.x, gyro.y, gyro.z);
 
 		// 感度
 		static float vX = 4.0f;
@@ -44,13 +52,14 @@ void AimPointer::Update()
 		if (value.x <= c && value.x >= -c)	value.x = 0.0f;
 		if (value.y <= c && value.y >= -c)	value.y = 0.0f;
 
-		PrintDebugProcess("X = %f, Y = %f\n", value.x, value.y);
+		PrintDebugProcess("ポインター移動量 : (%f, %f)\n", value.x, value.y);
 
 		/* 移動 */
 		Move(value);
 	}
 	else if (IsMouseLeftPressed())
 	{
+		PrintDebugProcess("ポインター操作方法(M) : マウス\n");
 		Move(Vector2((float)GetMouseX(), (float)GetMouseY()));
 	}
 }

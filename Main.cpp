@@ -132,6 +132,10 @@ HRESULT Init()
 	// カメラ
 	InitCamera();
 
+	PlayBGM(TITLE);
+	PlayBGM(GAME_AKIBA);
+	PlayBGM(RESULT);
+
 	ShowCursor(FALSE);
 
 	return S_OK;
@@ -169,6 +173,7 @@ void Update(void)
 	if (GetKeyboardTrigger(DIK_F3))
 	{// デバッグ表示ON/OFF
 		DispDebug = DispDebug ? false : true;
+		ShowCursor(DispDebug);
 	}
 
 	// シーンの更新
