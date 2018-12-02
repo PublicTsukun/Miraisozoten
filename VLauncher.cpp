@@ -54,7 +54,7 @@ int timerVL;
 //=============================================================================
 void UpdateVLauncher(void)
 {
-	if (VoiceTankUI::GetVoiceVolume() > 45)				// 45 : ˆê’è’lˆÈ‰º‚ð–³Ž‹
+	if (VoiceTankUI::GetVoiceVolume())
 	{
 		Vector2 direction = AimPointer::GetPosition();
 

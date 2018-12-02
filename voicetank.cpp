@@ -39,14 +39,16 @@ void VoiceTankUI::Update()
 	}
 
 	int sum = 0;
-	if (GetFiver())
+	vtArg[VTG_ARG - 1] = (int)Absolute(MicTest()) / 10;	// 10 = ílÇÃí≤êÆ (âπó íl60Å`3000ä‘)
+	if (vtArg[VTG_ARG - 1] < VoiceVolumeMIN)
+	{
+		vtArg[VTG_ARG - 1] = 0;
+	}
+	else if (GetFiver())
 	{
 		vtArg[VTG_ARG - 1] = 3000;
 	}
-	else
-	{
-		vtArg[VTG_ARG - 1] = (int)Absolute(MicTest()) / 10;	// å„Ç…í«â¡ (30 = ílÇÃí≤êÆ 32,768 -> 1000)
-	}
+
 	for (int i = 0; i < VTG_ARG - 1; i++)
 	{
 		vtArg[i] = vtArg[i + 1];
