@@ -219,6 +219,9 @@
     <ClCompile Include="Library\Particle.cpp">
       <Filter>Library</Filter>
     </ClCompile>
+    <ClCompile Include="UIEnergyTank.cpp">
+      <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -412,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="Library\Particle.h">
       <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="UIEnergyTank.h">
+      <Filter>ソース ファイル\Game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

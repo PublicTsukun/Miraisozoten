@@ -67,6 +67,7 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="titlelogo.cpp" />
     <ClCompile Include="UIBonus.cpp" />
+    <ClCompile Include="UIEnergyTank.cpp" />
     <ClCompile Include="VLauncher.cpp" />
     <ClCompile Include="voicetank.cpp" />
     <ClCompile Include="voiceten.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="titlelogo.h" />
     <ClInclude Include="UIBonus.h" />
+    <ClInclude Include="UIEnergyTank.h" />
     <ClInclude Include="VLauncher.h" />
     <ClInclude Include="voicetank.h" />
     <ClInclude Include="voiceten.h" />

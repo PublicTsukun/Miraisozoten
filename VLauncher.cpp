@@ -54,7 +54,7 @@ int timerVL;
 //=============================================================================
 void UpdateVLauncher(void)
 {
-	if (CEnergyTankUI::GetVoiceVolume() > 45)				// 45 : ˆê’è’lˆÈ‰º‚ð–³Ž‹
+	if (VoiceTankUI::GetVoiceVolume() > 45)				// 45 : ˆê’è’lˆÈ‰º‚ð–³Ž‹
 	{
 		Vector2 direction = AimPointer::GetPosition();
 
@@ -65,10 +65,10 @@ void UpdateVLauncher(void)
 			CalcScreenToXZ
 			(
 				pout,
-				direction.x,
-				direction.y,
-				SCREEN_WIDTH,
-				SCREEN_HEIGHT,
+				(int)direction.x,
+				(int)direction.y,
+				(int)SCREEN_WIDTH,
+				(int)SCREEN_HEIGHT,
 				&(GetMtxView)(),
 				&(GetMtxProj)()
 			);

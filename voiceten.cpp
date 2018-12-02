@@ -210,7 +210,7 @@ void UpdateVoiMove(void)
 			(v + i)->pos.y += (v + i)->nor.y;
 			(v + i)->pos.z += (v + i)->nor.z;
 
-			(v + i)->pos.y += (0.005) * (-9.8) * (v + i)->timer;
+			(v + i)->pos.y += (0.005f) * (-9.8f) * (v + i)->timer;
 
 
 
@@ -229,7 +229,7 @@ void UpdateVoiMoveY(int no)
 	VOICETEN *v = GetVoiceten(0);
 
 	// 高さ調整用
-	const float value = 20.0;
+	const float value = 20.0f;
 
 	// 闇
 	// 処理時間 60 / 段落 20 = 3.0
@@ -301,20 +301,20 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			Voiceten[i].LoadObjectStatus((v + i)->pos);
 
 			// テクスチャ、ATK設定（ヴォイステンゲージに依存）
-			if (CEnergyTankUI::GetVoiceVolume() < (140 * 3))
+			if (VoiceTankUI::GetVoiceVolume() < (140 * 3))
 			{
 				Voiceten[i].SetTexture(V_TYPE_BLUE);
 				(v + i)->atk = V_BLUE_ATK;
 
 			}
-			else if (CEnergyTankUI::GetVoiceVolume() >= (140 * 3) &&
-					CEnergyTankUI::GetVoiceVolume() < (140 * 6))
+			else if (VoiceTankUI::GetVoiceVolume() >= (140 * 3) &&
+				VoiceTankUI::GetVoiceVolume() < (140 * 6))
 			{
 				Voiceten[i].SetTexture(V_TYPE_YELLOW);
 				(v + i)->atk = V_YELLOW_ATK;
 
 			}
-			else if (CEnergyTankUI::GetVoiceVolume() >= (140 * 6))
+			else if (VoiceTankUI::GetVoiceVolume() >= (140 * 6))
 			{
 				Voiceten[i].SetTexture(V_TYPE_RED);
 				(v + i)->atk = V_RED_ATK;

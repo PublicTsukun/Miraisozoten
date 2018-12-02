@@ -17,7 +17,7 @@
 #include "finishcount.h"
 
 static AimPointer AimPoint;
-static CEnergyTankUI Tank;
+static VoiceTankUI Tank;
 
 //=============================================================================
 //‰Šú‰»ˆ—
