@@ -45,7 +45,7 @@ void VoiceTankUI::Update()
 		vtArg[VTG_ARG - 1] = 0;
 	}
 	else if (GetFiver())
-	{
+	{// フィーバー中発声時->MAX
 		vtArg[VTG_ARG - 1] = 3000;
 	}
 
