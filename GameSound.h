@@ -12,6 +12,9 @@
 #define BGM_VOLUME_MAX		(-1000)
 #define BGM_VOLUME_HALF		(-3000)
 
+#define SE_VOLUME_MAX		(0)
+#define SE_VOLUME_MIN		(-10000)
+
 #define VOLUME_CONTROL_DOWN	(50)
 #define VOLUME_CONTROL_UP	(300)
 
@@ -19,6 +22,7 @@ enum BGM_NO
 {
 	TITLE,
 	GAME_AKIBA,
+	GAME_AMERICA,
 	GAME_SPACE,
 	GAME_BONUS,
 	RESULT,
@@ -66,9 +70,15 @@ void PlaySE(int no);
 void PlayBGM(int no);
 void StopSE(int no);
 void StopBGM(int no);
+long VolumeCheckSE(void);
+long VolumeCheckBGM(void);
 bool PlayCheckSE(int no);
 bool PlayCheckBGM(int no);
 
 void UpdateGameSound(void);
+
+void SEVolumeTurning(void);
+void BGMVolumeTurning(void);
+
 
 #endif

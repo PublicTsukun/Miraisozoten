@@ -16,17 +16,31 @@ static C2DObject Yes;
 static C2DObject No;
 static C2DObject Option;
 
+
+enum {
+	LOGO,
+	GAGE,
+	GAGE_FRAME,
+	TUNE_MAX,
+};
+static C2DObject Sound;
+static C2DObject BGMTune[TUNE_MAX];
+static C2DObject SETune[TUNE_MAX];
+static C2DObject SoundBack;
+
 bool	BackTitleF;
 bool	BackCheckF;
+bool	OptionF;
 int		ChoiceNo;
 int		ChoiceNoT;
+int		ChoiceNoS;
 
 float	BackTitleScl;
 float	BackGameScl;
 float	OptionScl;
 float	YesScl;
 float	NoScl;
-
+float	SoundBackScl;
 
 void GamePause::Init()
 {
@@ -40,17 +54,29 @@ void GamePause::Init()
 	BackCheck.Init(RS_X(0.5f), RS_Y(0.4f), RS_X(0.2f), RS_Y(0.1f), "data/TEXTURE/UI/ポーズ画面/ほんとにもどる.png");
 	Yes.Init(RS_X(0.35f), RS_Y(0.6f), RS_X(0.2f), RS_Y(0.1f), "data/TEXTURE/UI/ポーズ画面/もどる.png");
 	No.Init(RS_X(0.6f), RS_Y(0.6f), RS_X(0.2f), RS_Y(0.1f), "data/TEXTURE/UI/ポーズ画面/やめとく.png");
+	Sound.Init(RS_X(0.5f), RS_Y(0.25f), RS_X(0.2f), RS_Y(0.1f), "data/TEXTURE/UI/ポーズ画面/サウンド調整.png");
+
+	BGMTune[LOGO].Init(RS_X(0.35f), RS_Y(0.4f), RS_X(0.2f), RS_Y(0.1f), "data/TEXTURE/UI/ポーズ画面/BGM.png");
+	BGMTune[GAGE].Init(RS_X(0.6f), RS_Y(0.4f), RS_X(0.15f), RS_Y(0.2f), "data/TEXTURE/UI/ポーズ画面/音量中身.png");
+	BGMTune[GAGE_FRAME].Init(RS_X(0.6f), RS_Y(0.4f), RS_X(0.15f), RS_Y(0.2f), "data/TEXTURE/UI/ポーズ画面/音量バー.png");
+	SETune[LOGO].Init(RS_X(0.35f), RS_Y(0.6f), RS_X(0.2f), RS_Y(0.1f), "data/TEXTURE/UI/ポーズ画面/SE.png");
+	SETune[GAGE].Init(RS_X(0.6f), RS_Y(0.6f), RS_X(0.15f), RS_Y(0.2f), "data/TEXTURE/UI/ポーズ画面/音量中身.png");
+	SETune[GAGE_FRAME].Init(RS_X(0.6f), RS_Y(0.6f), RS_X(0.15f), RS_Y(0.2f), "data/TEXTURE/UI/ポーズ画面/音量バー.png");
+
+	SoundBack.Init(RS_X(0.5f), RS_Y(0.75f), RS_X(0.2f), RS_Y(0.1f), "data/TEXTURE/UI/ポーズ画面/もどる.png");
 
 	BackTitleF = false;
 	BackCheckF = false;
+	OptionF = false;
 	ChoiceNo = 0;
 	ChoiceNoT = 0;
-
+	ChoiceNoS = 0;
 
 	BackTitleScl = 0.0f;
 	BackGameScl = 0.0f;
 	YesScl = 0.0f;
 	NoScl = 0.0f;
+	SoundBackScl = 0.0f;
 }
 
 GPR GamePause::Update()
@@ -59,7 +85,8 @@ GPR GamePause::Update()
 	//タイトルに戻る　ゲームに戻る　オプション
 	//========================================================
 	if (!BackTitleF
-		&& !BackCheckF)
+		&& !BackCheckF
+		&& !OptionF)
 	{
 		if (GetKeyboardTrigger(DIK_UP))
 		{
@@ -147,6 +174,13 @@ GPR GamePause::Update()
 
 			PrintDebugProcess("Scale %f\n", Scale);
 
+			if (GetKeyboardTrigger(DIK_RETURN))
+			{
+				PlaySE(DECIDE);
+				OptionF = true;
+			}
+
+
 		}
 	}
 
@@ -212,6 +246,92 @@ GPR GamePause::Update()
 
 		}
 	}
+
+	//==============================================================
+	//音調整
+	//==============================================================
+	else if (OptionF)
+	{
+		if (GetKeyboardTrigger(DIK_UP))
+		{
+			ChoiceNoS -= 1;
+			PlaySE(CURSOL);
+		}
+		else if (GetKeyboardTrigger(DIK_DOWN))
+		{
+			ChoiceNoS += 1;
+			PlaySE(CURSOL);
+		}
+		ChoiceNoS += 3;
+		ChoiceNoS %= 3;
+
+		if (ChoiceNoS == 0)
+		{
+			BGMTune[LOGO].SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+			SETune[LOGO].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			SoundBack.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			SoundBack.SetStatus(1.0f, 0.0f);
+			BGMVolumeTurning();
+		}
+		else if (ChoiceNoS == 1)
+		{
+			BGMTune[LOGO].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			SETune[LOGO].SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+			SoundBack.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			SoundBack.SetStatus(1.0f, 0.0f);
+			SEVolumeTurning();
+		}
+		else if (ChoiceNoS == 2)
+		{
+			BGMTune[LOGO].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			SETune[LOGO].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			SoundBack.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+
+			float Scale;
+			SoundBackScl += 0.05f;
+
+			Scale = (sinf(SoundBackScl) / 8.0) + 1.125f;
+			SoundBack.SetStatus(Scale, 0.0f);
+			PrintDebugProcess("Scale %f\n", Scale);
+
+			if (GetKeyboardTrigger(DIK_RETURN))
+			{
+				PlaySE(DECIDE);
+				OptionF = false;
+			}
+
+
+		}
+
+		//=======================================================================
+		//ゲージ更新
+		//=======================================================================
+		float SESoundPer;
+		Vector3 SEGagePos[2];
+
+		SESoundPer = (SE_VOLUME_MIN - (float)VolumeCheckSE()) / (SE_VOLUME_MIN - SE_VOLUME_MAX);
+		SEGagePos[0].y = RS_Y(0.6f) - RS_Y(0.2f);
+		SEGagePos[1].y = RS_Y(0.6f) + RS_Y(0.2f);
+		SEGagePos[0].x = (RS_X(0.6f) - RS_X(0.15f)) + RS_X(0.3)*SESoundPer;
+		SEGagePos[1].x = (RS_X(0.6f) - RS_X(0.15f)) + RS_X(0.3)*SESoundPer;
+		SEGagePos[0].z = 0.0f;
+		SEGagePos[1].z = 0.0f;
+		SETune[GAGE].SetVertex(1, SEGagePos[0]);
+		SETune[GAGE].SetVertex(3, SEGagePos[1]);
+
+		float BGMSoundPer;
+		Vector3 BGMGagePos[2];
+
+		BGMSoundPer = ((BGM_VOLUME_MIN+100) - (float)VolumeCheckBGM()) / (BGM_VOLUME_MIN - BGM_VOLUME_MAX);
+		BGMGagePos[0].y = RS_Y(0.4f) - RS_Y(0.2f);
+		BGMGagePos[1].y = RS_Y(0.4f) + RS_Y(0.2f);
+		BGMGagePos[0].x = (RS_X(0.6f) - RS_X(0.15f)) + RS_X(0.3)*BGMSoundPer;
+		BGMGagePos[1].x = (RS_X(0.6f) - RS_X(0.15f)) + RS_X(0.3)*BGMSoundPer;
+		BGMGagePos[0].z = 0.0f;
+		BGMGagePos[1].z = 0.0f;
+		BGMTune[GAGE].SetVertex(1, BGMGagePos[0]);
+		BGMTune[GAGE].SetVertex(3, BGMGagePos[1]);
+	}
 	return GPR::GAMEPAUSERESULT_MAX;
 }
 
@@ -222,7 +342,8 @@ void GamePause::Draw()
 	Back.Draw();
 
 	if (	!BackTitleF
-		&&	!BackCheckF)
+		&&	!BackCheckF
+		&&	!OptionF)
 	{
 		BackGame.Draw();
 		BackTitle.Draw();
@@ -238,6 +359,18 @@ void GamePause::Draw()
 		Yes.Draw();
 		No.Draw();
 	}
+
+	if (OptionF)
+	{
+		Sound.Draw();
+		for (int i = 0; i < TUNE_MAX; i++)
+		{
+			BGMTune[i].Draw();
+			SETune[i].Draw();
+			SoundBack.Draw();
+		}
+
+	}
 }
 
 
@@ -251,5 +384,11 @@ void GamePause::Uninit()
 	BackCheck.Release();
 	Yes.Release();
 	No.Release();
-
+	Sound.Release();
+	SoundBack.Release();
+	for (int i = 0; i < TUNE_MAX; i++)
+	{
+		BGMTune[i].Release();
+		SETune[i].Release();
+	}
 }
