@@ -31,6 +31,9 @@
     <Filter Include="ソース ファイル\Result">
       <UniqueIdentifier>{98f21a7e-a410-40d5-be89-9cf78a140aa9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Pause">
+      <UniqueIdentifier>{48d8ee9f-ca22-4edb-8171-9fa9f8393a9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Library\Camera.cpp">
@@ -180,9 +183,6 @@
     <ClCompile Include="MicTest.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="GamePause.cpp">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClCompile>
     <ClCompile Include="enemyRE.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
@@ -221,6 +221,12 @@
     </ClCompile>
     <ClCompile Include="UIEnergyTank.cpp">
       <Filter>ソース ファイル\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePause.cpp">
+      <Filter>ソース ファイル\Pause</Filter>
+    </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>ソース ファイル\Pause</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +383,6 @@
     <ClInclude Include="MicTest.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
-    <ClInclude Include="GamePause.h">
-      <Filter>ソース ファイル\Game</Filter>
-    </ClInclude>
     <ClInclude Include="enemyRE.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
@@ -418,6 +421,12 @@
     </ClInclude>
     <ClInclude Include="UIEnergyTank.h">
       <Filter>ソース ファイル\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePause.h">
+      <Filter>ソース ファイル\Pause</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>ソース ファイル\Pause</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,7 @@
     <ClCompile Include="finishcount.cpp" />
     <ClCompile Include="GameSound.cpp" />
     <ClCompile Include="Library\Particle.cpp" />
+    <ClCompile Include="Option.cpp" />
     <ClCompile Include="S-Editor.cpp" />
     <ClCompile Include="startcount.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="finishcount.h" />
     <ClInclude Include="GameSound.h" />
     <ClInclude Include="Library\Particle.h" />
+    <ClInclude Include="Option.h" />
     <ClInclude Include="S-Editor.h" />
     <ClInclude Include="startcount.h" />
     <ClInclude Include="enemy.h" />
