@@ -42,6 +42,10 @@ void SaveRanking(int score,long long name_num)
 		if (max < rankingWk[i].id)max = rankingWk[i].id;
 	}
 
+	//修正箇所１
+	//ここからの処理は6位ではなく5位に行う
+	//5位よりスコアがいい場合のみこの関数が呼ばれるため
+
 	// スコアを取得(一時的にスコアを6位にする)
 	rankingWk[SIXTH].score = score;//6位のスコアに今回のスコアをぶちこむ
 	rankingWk[SIXTH].id = max + 1;//IDは最大
@@ -52,6 +56,10 @@ void SaveRanking(int score,long long name_num)
 		rankingWk[SIXTH].name[i][0] = name_num % 10;
 		name_num /= 10;
 	}
+
+	//修正箇所２
+	//if文は不要
+	//5位よりスコアがいい場合のみこの関数が呼ばれるため
 
 	// スコアをもとに5位のスコアと比較し、5位のスコアより低ければランキング更新しない
 	if (rankingWk[SIXTH].score >= rankingWk[FIFTH].score)
