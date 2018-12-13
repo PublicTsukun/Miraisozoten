@@ -228,6 +228,9 @@
     <ClCompile Include="Option.cpp">
       <Filter>ソース ファイル\Pause</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyHP.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="Option.h">
       <Filter>ソース ファイル\Pause</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHP.h">
+      <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define ENEMY_MAX (64)	// enemy最大数
+#define ENEMY_MAX (10)	// enemy最大数
 
 //*****************************************************************************
 // 構造体定義
@@ -57,7 +57,6 @@ ENEMY *GetEnemyRE(int no);
 void VanisnEnenyRE(int no);
 void VanisnAllEnenyRE(void);
 
-void SetEnemyRE(int no);
 void EnemyREOnStage(int no);
 
 void DefeatEnemyRE(int no);

@@ -109,13 +109,12 @@ enum E_STATUS
 //*****************************************************************************
 void CollisionEnemyRE(void);
 void DamageDealEnemyRE(int Eno, int Vno);
-//void ResetEnemyRE(void);
 
 void SetType(int ENo, int type);
 void SetPos(int ENo, float x, float y, float z);
-void SetAppear(int ENo, int time);
+bool SetPosCheckX(float x);
+
 void SetParameter00(void);
-//void SetParameter01(void);
 
 void TestEnemyRE(void);
 void TrapFactory(int apr, int num);
@@ -185,11 +184,7 @@ void InitEnemyRE(void)
 
 	ResetYouDefeated();
 
-	//(e + 1)->pos = Vector3(-400.0f, 150.0f, -50.0f);
-	//(e + 2)->pos = Vector3(-200.0f, 50.0f, 50.0f);
-
 	SetParameter00();
-
 
 }
 
@@ -215,6 +210,11 @@ void UpdateEnemyRE(void)
 #ifdef _DEBUG
 
 	TestEnemyRE();
+
+	PrintDebugProcess("撃破数: %d\n", YOUDEFEATED);
+
+
+
 
 #endif
 
@@ -259,7 +259,17 @@ void UpdateEnemyRE(void)
 		}
 	}
 
-	PrintDebugProcess("撃破数: %d\n", YOUDEFEATED);
+	PrintDebugProcess("00: %f\n", (e + 0)->pos.x);
+	PrintDebugProcess("01: %f\n", (e + 1)->pos.x);
+	PrintDebugProcess("02: %f\n", (e + 2)->pos.x);
+	PrintDebugProcess("03: %f\n", (e + 3)->pos.x);
+	PrintDebugProcess("04: %f\n", (e + 4)->pos.x);
+	PrintDebugProcess("05: %f\n", (e + 5)->pos.x);
+	PrintDebugProcess("06: %f\n", (e + 6)->pos.x);
+	PrintDebugProcess("07: %f\n", (e + 7)->pos.x);
+	PrintDebugProcess("08: %f\n", (e + 8)->pos.x);
+	PrintDebugProcess("09: %f\n", (e + 9)->pos.x);
+
 }
 
 //=============================================================================
@@ -465,27 +475,6 @@ void VanisnAllEnenyRE(void)
 }
 
 //=============================================================================
-// パラメータ設定
-//=============================================================================
-void SetEnemyRE(int StageNO)
-{
-	ENEMY *e = GetEnemyRE(0);
-
-	switch (StageNO)
-	{
-	case 0:
-		break;
-	case 1:
-		break;
-	case 2:
-		break;
-	default:
-		break;
-	}
-
-}
-
-//=============================================================================
 // 登場
 //=============================================================================
 void EnemyREOnStage(int no)
@@ -525,113 +514,79 @@ void ResetYouDefeated(void)
 //============================================================================='
 void SetParameter00(void)
 {
-	//int ENo;	// エネミー番号
-
-	//int apr;	// 出現タイミング
-	//int type;	// 0 - E_TEX_MAX
-	//float x;	// -280 - 280
-	//float z;	// 0 - 600
-
-	////================================//================================
-	//ENo = 0;					// 指定
-	//apr = 30;
-	//type = rand() % E_TEX_MAX;
-
-
-
-	//SetType(ENo, type);	// 種類設定
-	//SetPos(ENo, -260, 100, 0);	// 位置設定
-	//SetAppear(ENo, apr);			// 出現タイミング設定
-	////================================
-
-	// srand()はメインに移しました
-
-	//TrapFactory(120, 1);
-	//TrapFactory(240, 1);
-	//TrapFactory(360, 1);
-	//TrapFactory(480, 1);
-	//TrapFactory(600, 1);
-
-	//TrapFactory(720, 1);
-	//TrapFactory(840, 2);
-
-	//TrapFactory(1080, 1);
-	//TrapFactory(1200, 2);
-
-	//TrapFactory(1440, 1);
-	//TrapFactory(1560, 2);
-
-	//TrapFactory(1800, 1);
-	//TrapFactory(1920, 2);
-
-	//TrapFactory(2160, 1);
-	//TrapFactory(2280, 4);
-
-	//TrapFactory(2520, 1);
-	//TrapFactory(2580, 1);
-	//TrapFactory(2640, 1);
-	//TrapFactory(2700, 1);
-
-	//TrapFactory(2760, 1);
-	//TrapFactory(2820, 1);
-	//TrapFactory(2880, 1);
-	//TrapFactory(2940, 1);
-	//TrapFactory(3000, 1);
-
-	//TrapFactory(3240, 4);
-	//TrapFactory(3480, 8);
-
 	TrapFactory02(60, 0);
 	TrapFactory02(90, 1);
 	TrapFactory02(120, 2);
+	TrapFactory02(150, 0);
+	TrapFactory02(180, 2);
+	TrapFactory02(210, 0);
+	TrapFactory02(240, 1);
+	TrapFactory02(270, 2);
+	TrapFactory02(300, 0);
+	TrapFactory02(330, 2);
 
-	//TrapFactory02(360, 0);
-	//TrapFactory02(390, 1);
-	//TrapFactory02(420, 2);
 
-	//TrapFactory02(660, 0);
-	//TrapFactory02(690, 1);
-	//TrapFactory02(720, 2);
+	//ENEMY *e = GetEnemyRE(0);
 
-	//TrapFactory02(960, 0);
-	//TrapFactory02(990, 1);
-	//TrapFactory02(1020, 2);
+	//float z1 = 0.0f;
 
-	//TrapFactory02(1260, 0);
-	//TrapFactory02(1290, 1);
-	//TrapFactory02(1320, 2);
+	//SetType(0, E_TYPE_OTAKU);
+	//SetPos(0, -280, 100, z1);
+	//(e + 0)->apr = 0;
 
-	//TrapFactory02(1560, 0);
-	//TrapFactory02(1590, 1);
-	//TrapFactory02(1620, 2);
+	//SetType(1, E_TYPE_OTAKU);
+	//SetPos(1, -180, 100, z1);
+	//(e + 1)->apr = 0;
 
-	//TrapFactory02(1860, 0);
-	//TrapFactory02(1890, 1);
-	//TrapFactory02(1920, 2);
+	//SetType(2, E_TYPE_OTAKU);
+	//SetPos(2, -80, 100, z1);
+	//(e + 2)->apr = 0;
 
-	//TrapFactory02(1860, 0);
-	//TrapFactory02(1890, 1);
-	//TrapFactory02(1920, 2);
+	//SetType(3, E_TYPE_OTAKU);
+	//SetPos(3, 20, 100, z1);
+	//(e + 3)->apr = 0;
 
-	//TrapFactory02(2160, 0);
-	//TrapFactory02(2190, 1);
-	//TrapFactory02(2220, 2);
+	//SetType(4, E_TYPE_OTAKU);
+	//SetPos(4, 120, 100, z1);
+	//(e + 4)->apr = 0;
 
-	//TrapFactory02(2460, 0);
-	//TrapFactory02(2490, 1);
-	//TrapFactory02(2520, 2);
+	//SetType(5, E_TYPE_OTAKU);
+	//SetPos(5, 220, 100, z1);
+	//(e + 5)->apr = 0;
 
-	//TrapFactory02(2760, 0);
-	//TrapFactory02(2790, 1);
-	//TrapFactory02(2820, 2);
+	//SetType(6, E_TYPE_OTAKU);
+	//SetPos(6, 320, 100, z1);
+	//(e + 6)->apr = 0;
 
-	//TrapFactory02(3060, 0);
-	//TrapFactory02(3090, 1);
-	//TrapFactory02(3120, 2);
+	//float z2 = 600.0f;
 
-	//TrapFactory02(3360, 0);
-	//TrapFactory02(3390, 1);
-	//TrapFactory02(3420, 2);
+	//SetType(7, E_TYPE_OTAKU);
+	//SetPos(7, -280, 100, z2);
+	//(e + 7)->apr = 0;
+
+	//SetType(8, E_TYPE_OTAKU);
+	//SetPos(8, -180, 100, z2);
+	//(e + 8)->apr = 0;
+
+	//SetType(9, E_TYPE_OTAKU);
+	//SetPos(9, -80, 100, z2);
+	//(e + 9)->apr = 0;
+
+	//SetType(10, E_TYPE_OTAKU);
+	//SetPos(10, 20, 100, z2);
+	//(e + 10)->apr = 0;
+
+	//SetType(11, E_TYPE_OTAKU);
+	//SetPos(11, 120, 100, z2);
+	//(e + 11)->apr = 0;
+
+	//SetType(12, E_TYPE_OTAKU);
+	//SetPos(12, 220, 100, z2);
+	//(e + 12)->apr = 0;
+
+	//SetType(13, E_TYPE_OTAKU);
+	//SetPos(13, 320, 100, z2);
+	//(e + 13)->apr = 0;
 
 
 
@@ -661,14 +616,29 @@ void SetPos(int ENo, float x, float y, float z)
 
 }
 
-//=============================================================================
-// 出現タイミング設定
-//============================================================================='
-void SetAppear(int ENo, int time)
+bool SetPosCheckX(float x)
 {
 	ENEMY *e = GetEnemyRE(0);
 
-	(e + ENo)->apr = time;
+	float v = 40.0f;
+	bool check = FALSE;
+
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		if ((e + i)->use == TRUE)
+		{
+			if (x <= ((e + i)->pos.x + v) &&
+				x >= ((e + i)->pos.x - v)
+				)
+			{
+				check = TRUE;
+				break;
+			}
+			
+		}
+	}
+
+	return check;
 }
 
 //=============================================================================
@@ -734,8 +704,8 @@ void TrapFactory02(int apr, int num)
 {
 	ENEMY *e = GetEnemyRE(0);
 
-	float x;
-	float z;
+	float x = 0.0f;
+	float z = 0.0f;
 
 	// 未使用のオブジェクトを捜す
 		for (int j = 0; j < ENEMY_MAX; j++)
