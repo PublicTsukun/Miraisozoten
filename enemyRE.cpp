@@ -107,21 +107,20 @@ enum E_STATUS
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+//=================
+// 衝突判定、撃破
+//=================
 void CollisionEnemyRE(void);
 void DamageDealEnemyRE(int Eno, int Vno);
+void DefeatEnemyRE(int no);
+void VanisnEnenyRE(int no);
 
-void SetType(int ENo, int type);
-void SetPos(int ENo, float x, float y, float z);
-bool SetPosCheckX(float x);
-
-void SetParameter00(void);
+//=================
+// 生成
+//=================
+void SetParameter00(void);				
 void SetParameter01(void);
 
-void TestEnemyRE(void);
-
-//=================
-// エネミー生成
-//=================
 void TrapFactory(int apr, int num);
 void TrapFactory02(int apr, int num);
 void TrapFactory03(int apr);
@@ -129,8 +128,20 @@ void TrapFactory03(int apr);
 void TFType(int no);
 void TFPos(int no);
 
+void SetType(int ENo, int type);
+void SetPos(int ENo, float x, float y, float z);
 
+bool SetPosCheckX(float x);
+
+//=================
+// 演出
+//=================
 void CheckUptime(int no);
+
+//=================
+// テスト用
+//=================
+void TestEnemyRE(void);
 
 //*****************************************************************************
 // グローバル変数
@@ -150,12 +161,12 @@ int EnemyHp[] =
 	15,		// OTAKU
 };
 
-ENEMY EnemyREWk[ENEMY_MAX];		// ワーク
+// ワーク
+ENEMY EnemyREWk[ENEMY_MAX];		
 CEnemyRE EnemyRE[ENEMY_MAX];
 
+// 撃破数
 int YOUDEFEATED;
-
-
 
 //=============================================================================
 // 初期化処理
@@ -175,7 +186,6 @@ void InitEnemyRE(void)
 		(e + i)->rot = Vector3(0.0f, 0.0f, 0.0f);
 
 		(e + i)->timer = 0;
-		(e + i)->ptn = 0;
 
 		(e + i)->apr = -1;
 
@@ -456,6 +466,7 @@ void VanisnEnenyRE(int no)
 	// 初期化
 	(e + no)->hp = ENEMY_HP;
 	(e + no)->timer = 0;
+	(e + no)->apr = -1;
 	(e + no)->status = E_STATUS_NORMAL;
 }
 
