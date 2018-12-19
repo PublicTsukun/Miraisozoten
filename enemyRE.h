@@ -14,7 +14,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define ENEMY_MAX (64)	// enemy最大数
+#define ENEMY_MAX (10)	// enemy最大数
 
 //*****************************************************************************
 // 構造体定義
@@ -27,20 +27,18 @@ typedef struct
 
 	float len;		// size X
 	float hei;		// size Y
-	float wid;		// size Z
+	//float wid;		// size Z
 
-	int timer;		// タイマー
-	int ptn;		// 行動パターン
-
-	int apr;		// 出現タイミング
-
-	int type;		// 種類
-
-	int hp;			// HP
+	int apr;		// 出現タイミング（再）
 
 	int status;		// 状態
-
+	int timer;		// タイマー
+	
+	int type;		// 種類
+	int hp;			// HP
 	int score;		// 点数
+
+	
 
 } ENEMY;
 
@@ -51,21 +49,17 @@ void InitEnemyRE(void);
 void UninitEnemyRE(void);
 void UpdateEnemyRE(void);
 void DrawEnemyRE(void);
-
 ENEMY *GetEnemyRE(int no);
 
-void VanisnEnenyRE(int no);
-void VanisnAllEnenyRE(void);
-
-void SetEnemyRE(int no);
+// 登場／退場
 void EnemyREOnStage(int no);
 
-void DefeatEnemyRE(int no);
-
-
-
+// 撃破数
 int GetYouDefeated(void);
 void SetYouDefeated(int value);
 void ResetYouDefeated(void);
+
+// テスト用
+void VanisnAllEnenyRE(void);
 
 #endif
