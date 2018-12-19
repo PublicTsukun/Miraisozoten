@@ -79,8 +79,8 @@ GPR GamePause::Update()
 			PlaySE(CURSOL);
 
 		}
-		ChoiceNo += 3;
-		ChoiceNo %= 3;
+		ChoiceNo += 6;
+		ChoiceNo %= 6;
 
 		if (ChoiceNo == 0)
 		{
@@ -233,7 +233,7 @@ GPR GamePause::Update()
 	//==============================================================
 	else if (OptionF)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN)&& GetCursol()==2)
+		if (GetKeyboardTrigger(DIK_RETURN)&& GetCursol()==5)
 		{
 			PlaySE(DECIDE);
 			OptionF = false;

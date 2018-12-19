@@ -225,7 +225,7 @@ void BGM::FadeVolume(int flag)
 //=============================================================================
 void UpdateGameSound(void)
 {
-		STAGE *stage = GetStage();
+	STAGE *stage = GetStage();
 
 	switch (Scene::SetScene(SCENE_MAX))
 	{

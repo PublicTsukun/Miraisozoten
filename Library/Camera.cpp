@@ -29,13 +29,13 @@ CCamera::CCamera()
 void CCamera::Init(void)
 {
 	// ÉJÉÅÉâÇÃèâä˙âª
-	Gaze = D3DXVECTOR3(0.0f, 250.0f, 0.0f);
+	Gaze = D3DXVECTOR3(0.0f, 460.0f, 0.0f);
 
 	Interval = CtoA_INTERVAL_MAX;
 	Sensitivity = GAZE_MOVE_VALUE;
 
 	Position.x = 0.0f;
-	Position.y = 200.0f;
+	Position.y = 460.0f;
 	Position.z = -600.0f;
 	//Position += Gaze;
 
