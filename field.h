@@ -17,7 +17,7 @@
 
 
 #define WALL_POS_X	(0.00f)
-#define WALL_POS_Y	(460.00f)
+#define WALL_POS_Y	(200.00f)
 #define WALL_POS_Z	(2000.00f)
 
 

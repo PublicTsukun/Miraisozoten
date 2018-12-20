@@ -122,7 +122,7 @@ void DrawWorkSon(void)
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawVoiceten();
 		DrawMessagebox();
-		DrawEnemyRE();
+		//DrawEnemyRE();
 		break;
 
 

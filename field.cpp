@@ -43,7 +43,8 @@ public:
 
 	void Print(void)
 	{
-		PrintDebugProcess("\nPOSITION X[%f]Y[%f]Z[%f]\n", this->Position.x, this->Position.y, this->Position.z);
+		PrintDebugProcess("\n”wŒiî•ñ\n", this->Position.x, this->Position.y, this->Position.z);
+		PrintDebugProcess("POSITION X[%f]Y[%f]Z[%f]\n", this->Position.x, this->Position.y, this->Position.z);
 		PrintDebugProcess("SIZE X[%f]Y[%f]\n\n", this->Size.x, this->Size.y);
 	}
 
@@ -73,7 +74,8 @@ HRESULT InitField(void)
 {
 
 	wall[0].Init(wallPos, wallSize);
-	wall[1].Init(wallPos, wallSize);
+	//wall[1].Init(wallPos, wallSize);
+	wall[1].Init(Vector3(wallPos.x, wallPos .y, 2600*0.75-600), wallSize*0.75);
 	wall[2].Init(wallPos, wallSize);
 
 	wall[0].LoadTexture(WallTex[0]);
@@ -111,15 +113,16 @@ void DrawField(void)
 
 void UpdateField(void)
 {
+	wall[1].Print();
 
-	//if (GetKeyboardPress(DIK_UP))
-	//{
-	//	wall[0].MoveWallZ(10.0f);
-	//}
-	//if (GetKeyboardPress(DIK_DOWN))
-	//{
-	//	wall[0].MoveWallZ(-10.0f);
-	//}
+	if (GetKeyboardPress(DIK_UP))
+	{
+		wall[1].MoveWallZ(1.0f);
+	}
+	if (GetKeyboardPress(DIK_DOWN))
+	{
+		wall[1].MoveWallZ(-1.0f);
+	}
 	//if (GetKeyboardPress(DIK_LEFT))
 	//{
 	//	wall[0].MoveWallX(-10.0f);
@@ -129,14 +132,14 @@ void UpdateField(void)
 	//	wall[0].MoveWallX(10.0f);
 	//}
 	//
-	//if (GetKeyboardPress(DIK_Q))
-	//{
-	//	wall[0].MoveWallY(-10.0f);
-	//}
-	//if (GetKeyboardPress(DIK_E))
-	//{
-	//	wall[0].MoveWallY(10.0f);
-	//}
+	if (GetKeyboardPress(DIK_Q))
+	{
+		wall[1].MoveWallY(-1.0f);
+	}
+	if (GetKeyboardPress(DIK_E))
+	{
+		wall[1].MoveWallY(1.0f);
+	}
 	//
 	//if (GetKeyboardPress(DIK_W))
 	//{
