@@ -2,7 +2,6 @@
 #define _OPTION_H_
 
 
-
 void InitOption();
 void UninitOption();
 void UpdateOption();

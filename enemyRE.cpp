@@ -107,20 +107,41 @@ enum E_STATUS
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+//=================
+// 衝突判定、撃破
+//=================
 void CollisionEnemyRE(void);
 void DamageDealEnemyRE(int Eno, int Vno);
+void DefeatEnemyRE(int no);
+void VanisnEnenyRE(int no);
+
+//=================
+// 生成
+//=================
+void SetParameter00(void);				
+void SetParameter01(void);
+
+void TrapFactory(int apr, int num);
+void TrapFactory02(int apr, int num);
+void TrapFactory03(int apr);
+
+void TFType(int no);
+void TFPos(int no);
 
 void SetType(int ENo, int type);
 void SetPos(int ENo, float x, float y, float z);
+
 bool SetPosCheckX(float x);
 
-void SetParameter00(void);
-
-void TestEnemyRE(void);
-void TrapFactory(int apr, int num);
-void TrapFactory02(int apr, int num);
-
+//=================
+// 演出
+//=================
 void CheckUptime(int no);
+
+//=================
+// テスト用
+//=================
+void TestEnemyRE(void);
 
 //*****************************************************************************
 // グローバル変数
@@ -140,12 +161,12 @@ int EnemyHp[] =
 	15,		// OTAKU
 };
 
-ENEMY EnemyREWk[ENEMY_MAX];		// ワーク
+// ワーク
+ENEMY EnemyREWk[ENEMY_MAX];		
 CEnemyRE EnemyRE[ENEMY_MAX];
 
+// 撃破数
 int YOUDEFEATED;
-
-
 
 //=============================================================================
 // 初期化処理
@@ -165,7 +186,6 @@ void InitEnemyRE(void)
 		(e + i)->rot = Vector3(0.0f, 0.0f, 0.0f);
 
 		(e + i)->timer = 0;
-		(e + i)->ptn = 0;
 
 		(e + i)->apr = -1;
 
@@ -184,7 +204,8 @@ void InitEnemyRE(void)
 
 	ResetYouDefeated();
 
-	SetParameter00();
+	//SetParameter00();
+	SetParameter01();
 
 }
 
@@ -445,6 +466,7 @@ void VanisnEnenyRE(int no)
 	// 初期化
 	(e + no)->hp = ENEMY_HP;
 	(e + no)->timer = 0;
+	(e + no)->apr = -1;
 	(e + no)->status = E_STATUS_NORMAL;
 }
 
@@ -510,53 +532,292 @@ void ResetYouDefeated(void)
 }
 
 //=============================================================================
-// パラメータ設定（ここで調整）
+// パラメータ設定
 //============================================================================='
 void SetParameter00(void)
 {
-	TrapFactory02(60, 0);
-	TrapFactory02(90, 1);
-	TrapFactory02(120, 2);
-	TrapFactory02(150, 0);
-	TrapFactory02(180, 2);
-	TrapFactory02(210, 0);
-	TrapFactory02(240, 1);
-	TrapFactory02(270, 2);
-	TrapFactory02(300, 0);
-	TrapFactory02(330, 2);
+	//TrapFactory02(60, 0);
+	//TrapFactory02(90, 1);
+	//TrapFactory02(120, 2);
+	//TrapFactory02(150, 0);
+	//TrapFactory02(180, 2);
+	//TrapFactory02(210, 0);
+	//TrapFactory02(240, 1);
+	//TrapFactory02(270, 2);
+	//TrapFactory02(300, 0);
+	//TrapFactory02(330, 2);
 
 
-	//ENEMY *e = GetEnemyRE(0);
+	ENEMY *e = GetEnemyRE(0);
 
-	//float z1 = 0.0f;
+	int i = 0;
+	float j = -280.0f;
+	float z1 = 0.0f;
 
-	//SetType(0, E_TYPE_OTAKU);
-	//SetPos(0, -280, 100, z1);
-	//(e + 0)->apr = 0;
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+	
 
-	//SetType(1, E_TYPE_OTAKU);
-	//SetPos(1, -180, 100, z1);
-	//(e + 1)->apr = 0;
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
 
-	//SetType(2, E_TYPE_OTAKU);
-	//SetPos(2, -80, 100, z1);
-	//(e + 2)->apr = 0;
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
 
-	//SetType(3, E_TYPE_OTAKU);
-	//SetPos(3, 20, 100, z1);
-	//(e + 3)->apr = 0;
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
 
-	//SetType(4, E_TYPE_OTAKU);
-	//SetPos(4, 120, 100, z1);
-	//(e + 4)->apr = 0;
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
 
-	//SetType(5, E_TYPE_OTAKU);
-	//SetPos(5, 220, 100, z1);
-	//(e + 5)->apr = 0;
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
 
-	//SetType(6, E_TYPE_OTAKU);
-	//SetPos(6, 320, 100, z1);
-	//(e + 6)->apr = 0;
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	z1 = 100.0f;
+	j = -280.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	z1 = 200.0f;
+	j = -280.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	z1 = 300.0f;
+	j = -280.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	z1 = 400.0f;
+	j = -280.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	z1 = 500.0f;
+	j = -280.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	z1 = 600.0f;
+	j = -280.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	SetType(i, E_TYPE_OTAKU);
+	SetPos(i, j, 100, z1);
+	(e + i)->apr = 0;
+	i++; j += 100.0f;
+
+	//SetType(i, E_TYPE_OTAKU);
+	//SetPos(i, j, 100, z1);
+	//(e + i)->apr = 0;
+	i++; j += 100.0f;
 
 	//float z2 = 600.0f;
 
@@ -590,6 +851,23 @@ void SetParameter00(void)
 
 
 
+}
+
+//=============================================================================
+// パラメータ設定（ここで調整）
+//============================================================================='
+void SetParameter01(void)
+{
+	TrapFactory02(60, 0);
+	TrapFactory02(90, 1);
+	TrapFactory02(120, 2);
+	TrapFactory02(150, 0);
+	TrapFactory02(180, 2);
+	TrapFactory02(210, 0);
+	TrapFactory02(240, 1);
+	TrapFactory02(270, 2);
+	TrapFactory02(300, 0);
+	TrapFactory02(330, 2);
 }
 
 //=============================================================================

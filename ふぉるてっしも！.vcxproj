@@ -20,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AimPointer.cpp" />
+    <ClCompile Include="EffectFeelBetter.cpp" />
+    <ClCompile Include="EffectVoicetenHit.cpp" />
+    <ClCompile Include="EnemyDB.cpp" />
     <ClCompile Include="EnemyHP.cpp" />
     <ClCompile Include="FadeCurtain.cpp" />
     <ClCompile Include="finishcount.cpp" />
@@ -85,6 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimPointer.h" />
+    <ClInclude Include="EffectFeelBetter.h" />
+    <ClInclude Include="EffectVoicetenHit.h" />
+    <ClInclude Include="EnemyDB.h" />
     <ClInclude Include="EnemyHP.h" />
     <ClInclude Include="FadeCurtain.h" />
     <ClInclude Include="finishcount.h" />

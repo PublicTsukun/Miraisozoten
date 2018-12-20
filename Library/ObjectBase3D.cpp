@@ -1,6 +1,7 @@
 #include "ObjectBase3D.h"
 #include "Direct3D.h"
 #include "Matrix.h"
+#include "Camera.h"
 #include <math.h>
 
 
@@ -79,24 +80,53 @@ void C3DPolygonObject::Init(Vector3 pos, Vector3 rot, Vector2 size)
 }
 
 //----描画処理--------
-void C3DPolygonObject::Draw(const char* order)
+void C3DPolygonObject::Draw(UINT state, const char* order)
 {
 	LPDIRECT3DDEVICE9 pDevice = Direct3D::GetD3DDevice();
 	D3DXMATRIX mtxRot, mtxTranslate, mtxWorld;
 
 	// αテストを有効に
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);		// ON
-	pDevice->SetRenderState(D3DRS_ALPHAREF, 125);				// 比較するαの値
-	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);	// 条件(GREATER : 以上)
+	if (!(state & DRAWSTATE_OFFALPHATEST))
+	{
+		pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);		// ON
+		pDevice->SetRenderState(D3DRS_ALPHAREF, 128);				// 比較するαの値
+		pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);	// 条件(GREATER : 大なり)
+	}
 
-	// ラインティングを無効にする (ライトを当てると変になる)
-	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	// ラインティング切り替え
+	DWORD light;
+	pDevice->GetRenderState(D3DRS_LIGHTING, &light);
+	if ((state & DRAWSTATE_BILLBOARD) ||
+		(state & DRAWSTATE_OFFLIGHTING))
+	{
+		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	}
 
 	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&mtxWorld);
 
 	// マトリックスの生成
-	CreateMatrix(&mtxWorld, 1.0f, Rotation, Position, order);
+	if ((state & DRAWSTATE_BILLBOARD))
+	{
+		// ビューマトリックスを取得
+		D3DXMATRIX mtxView = GetMtxView();
+
+		/* ポリゴンを正面に向ける (逆行列を作る 圧倒的に速い/拡張性に欠ける) */
+		mtxWorld._11 = mtxView._11;
+		mtxWorld._12 = mtxView._21;
+		mtxWorld._13 = mtxView._31;
+		mtxWorld._21 = mtxView._12;
+		mtxWorld._22 = mtxView._22;
+		mtxWorld._23 = mtxView._32;
+		mtxWorld._31 = mtxView._13;
+		mtxWorld._32 = mtxView._23;
+		mtxWorld._33 = mtxView._33;
+		CreateMatrix(&mtxWorld, Scale, Vector3(), Position, order);
+	}
+	else
+	{
+		CreateMatrix(&mtxWorld, Scale, Rotation, Position, order);
+	}
 
 	// ワールドマトリックスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
@@ -113,8 +143,8 @@ void C3DPolygonObject::Draw(const char* order)
 	// ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, RECT_NUM_POLYGON);
 
-	// ラインティングを有効に戻す
-	//pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	// ラインティング復元
+	pDevice->SetRenderState(D3DRS_LIGHTING, light);
 
 	// αテストを無効に
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
@@ -219,7 +249,7 @@ void C3DPolygonObject::SetVertex(D3DXCOLOR color)
 //----テクスチャ情報書き込み--------
 void C3DPolygonObject::LoadTextureStatus(float sizX, float sizY, float scale, int ptnX, int ptnY, int time)
 {
-	Size = { sizX, sizY };
+	Size = Vector2(sizX, sizY);
 	Scale = scale;
 	TexPattern_X = ptnX;
 	TexPattern_Y = ptnY;
@@ -227,7 +257,7 @@ void C3DPolygonObject::LoadTextureStatus(float sizX, float sizY, float scale, in
 }
 void C3DPolygonObject::LoadTextureStatus(float sizX, float sizY, float scale)
 {
-	Size = { sizX, sizY };
+	Size = Vector2(sizX, sizY);
 	Scale = scale;
 	TexPattern_X = 1;
 	TexPattern_Y = 1;

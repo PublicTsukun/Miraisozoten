@@ -231,6 +231,15 @@
     <ClCompile Include="EnemyHP.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyDB.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectFeelBetter.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectVoicetenHit.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -432,6 +441,15 @@
       <Filter>ソース ファイル\Pause</Filter>
     </ClInclude>
     <ClInclude Include="EnemyHP.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDB.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectFeelBetter.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectVoicetenHit.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>

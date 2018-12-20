@@ -1,0 +1,23 @@
+< エフェクト系の使い方 >
+
+＠初期処理 : int Init(void);
+	・返り値 : 0が返ります。
+
+＠終了処理 : void Uninit(void);
+
+＠更新処理 : int Update(void);
+	・返り値 : 残留時間[Counter] <= 0 : (1)、それ以外(0)
+	// 残留時間 : エフェクトの残り時間、0になると消えます。
+
+＠描画処理 : void Draw(bool mode = true);
+	・引数 : mode // ブレンドモード
+			true : 加算, false : 通常, 無指定はtrue
+
+＠召喚処理 : void Call(Vector3 pos, float rng);
+	・引数 : pos // エフェクトを出現させる座標
+		 rng // エフェクトの範囲
+
+※注意
+・Initialize();
+・Uninitialize();
+に関してはこのコードにかかわらず、呼ばないでください。

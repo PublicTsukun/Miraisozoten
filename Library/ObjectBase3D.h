@@ -6,6 +6,11 @@
 #include "Polygon.h"
 
 
+#define DRAWSTATE_BILLBOARD     (0x00000001L)
+#define DRAWSTATE_OFFLIGHTING   (0x00000002L)
+#define DRAWSTATE_OFFALPHATEST  (0x00000004L)
+
+
 /* 3Dオブジェクト基礎クラス */
 class _ObjectBase3D
 {
@@ -53,7 +58,7 @@ public:
 	virtual void Init(float posX, float posY, float posZ, float sizX, float sizY);
 	virtual void Init(Vector3 pos, Vector2 size);
 	virtual void Init(Vector3 pos, Vector3 rot, Vector2 size);
-	virtual void Draw(const char* order = "SRT");
+	virtual void Draw(UINT state = 0x0L, const char* order = "SRT");
 
 	virtual void LoadTextureStatus(float sizX, float sizY, float scale, int ptnX, int ptnY, int time);
 	virtual void LoadTextureStatus(float sizX, float sizY, float scale);
