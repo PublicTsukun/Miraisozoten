@@ -15,6 +15,9 @@
 #include "AimPointer.h"
 #include "voicetank.h"
 #include "finishcount.h"
+#include "EffectVoicetenHit.h"
+#include "EffectFeelBetter.h"
+#include "Library\Input.h"
 
 static AimPointer AimPoint;
 static VoiceTankUI Tank;
@@ -32,6 +35,8 @@ HRESULT InitWorkTsu(void)
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
+		EffectVoicetenHit::Initialize();
+		EffectFeelBetter::Initialize();
 		AimPoint.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, 100, 100, "data/TEXTURE/UI/ターゲットカーソル.png");
 		Tank.Init();
 		InitFinishCount();
@@ -69,7 +74,8 @@ void UninitWorkTsu(void)
 	case SCENE_RESULT://ゲームで使ったソースのUninit
 		AimPoint.Release();
 		UninitFinishCount();
-
+		EffectVoicetenHit::Uninitialize();
+		EffectFeelBetter::Uninitialize();
 		break;
 	}
 
@@ -92,6 +98,7 @@ void UpdateWorkTsu(void)
 		AimPoint.Update();
 		Tank.Update();
 		UpdateFinishCount();
+
 		break;
 
 
@@ -120,7 +127,6 @@ void DrawWorkTsu(void)
 		AimPoint.Draw();
 		Tank.Draw();
 		DrawFinishCount();
-
 		break;
 
 
