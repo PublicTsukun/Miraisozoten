@@ -1,33 +1,43 @@
 //=============================================================================
 //
-// エネミーデータベース [EnemyDB.h]
+// [EnemyPosData.h]
 // Author : 宋彦霖
 //
 //=============================================================================
-#ifndef _ENEMYDB_INCLUDE_H_
-#define _ENEMYDB_INCLUDE_H_
+#ifndef _ENEMYPOSDATA_INCLUDE_H_
+#define _ENEMYPOSDATA_INCLUDE_H_
+
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+#define ENEMYPOS_MAX (27)
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EnemyDB
+class EnemyPosData
 {
 private:
-	int hp;
-	int score;
-	
-public:
-	void SetHP(int hp);
-	void SetScore(int score);
+	bool use;
+	float x;
+	float z;
 
-	int GetHP(void);
-	int GetScore(void);
+public:
+	EnemyPosData();
+
+	void SetUse(bool use);
+	void SetPos(float x, float z);
+
+	bool GetUse(void);
+	float GetPosX(void);
+	float GetPosZ(void);
+	
 };
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-EnemyDB *GetEnemyDB(int no);
-void InitEnemyDB(void);
+EnemyPosData *GetEnemyPosData(int no);
+void InitEnemyPosData(void);
 
 #endif
