@@ -24,6 +24,7 @@
     <ClCompile Include="EffectVoicetenHit.cpp" />
     <ClCompile Include="EnemyDB.cpp" />
     <ClCompile Include="EnemyHP.cpp" />
+    <ClCompile Include="EnemyPosData.cpp" />
     <ClCompile Include="FadeCurtain.cpp" />
     <ClCompile Include="finishcount.cpp" />
     <ClCompile Include="GameSound.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="EffectVoicetenHit.h" />
     <ClInclude Include="EnemyDB.h" />
     <ClInclude Include="EnemyHP.h" />
+    <ClInclude Include="EnemyPosData.h" />
     <ClInclude Include="FadeCurtain.h" />
     <ClInclude Include="finishcount.h" />
     <ClInclude Include="GameSound.h" />

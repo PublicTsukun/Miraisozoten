@@ -240,6 +240,9 @@
     <ClCompile Include="EffectVoicetenHit.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyPosData.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -450,6 +453,9 @@
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="EffectVoicetenHit.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPosData.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,6 +16,8 @@
 #include "enemyRE.h"
 #include "StageManager.h"
 #include "VLauncher.h"
+#include "EnemyDB.h"
+#include "EnemyPosData.h"
 
 //=============================================================================
 // 初期化処理
@@ -32,6 +34,8 @@ HRESULT InitWorkSon(void)
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitVoiceten();
 		InitMessageBox();
+		InitEnemyPosData();
+		InitEnemyDB();
 		InitEnemyRE();
 		InitStage();
 		break;
@@ -122,7 +126,7 @@ void DrawWorkSon(void)
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawVoiceten();
 		DrawMessagebox();
-		//DrawEnemyRE();
+		DrawEnemyRE();
 		break;
 
 
