@@ -184,6 +184,7 @@ void _ObjectBase2D::Release(void)
 {
 	this->Texture.Release();
 }
+
 void _ObjectBase2D::LoadTexture(const char *texture)
 {
 	this->Texture.LoadTexture(texture);

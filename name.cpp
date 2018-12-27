@@ -532,31 +532,31 @@ void move_cursole(void)
 		//if (namechar < NAMEMAX)
 		{
 			// 既に選択されている場合上書き処理
-			if (rankdata[0].selected[rankdata[0].name_position] == true)
+			//if (rankdata[0].selected[rankdata[0].name_position] == true)
 			{ // 上書き処理
 
-			  // 数字で文字を格納
-				if (char_type == HIRAGANA)
-				{
-					rankdata[0].namechar[rankdata[0].name_position] = rankdata[0].cursole_X + (rankdata[0].cursole_Y * 10);
-				}
-				else
-				{
-					rankdata[0].namechar[rankdata[0].name_position] = rankdata[0].cursole_X + ((rankdata[0].cursole_Y + 5) * 10);
-				}
-				// テクスチャのセット
-				select_moji[rankdata[0].name_position].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*rankdata[0].name_position), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-				//select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
-				// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
+			 // // 数字で文字を格納
+				//if (char_type == HIRAGANA)
+				//{
+				//	rankdata[0].namechar[rankdata[0].name_position] = rankdata[0].cursole_X + (rankdata[0].cursole_Y * 10);
+				//}
+				//else
+				//{
+				//	rankdata[0].namechar[rankdata[0].name_position] = rankdata[0].cursole_X + ((rankdata[0].cursole_Y + 5) * 10);
+				//}
+				//// テクスチャのセット
+				//select_moji[rankdata[0].name_position].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*rankdata[0].name_position), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
+				////select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
+				//// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
 
-				// 文字入力されたので現在入力中の名前を加算
-				if (namechar < NAMEMAX)
-				{
-					//rankdata[0].name_position = namechar;
-					//namechar++;
-				}
+				//// 文字入力されたので現在入力中の名前を加算
+				//if (namechar < NAMEMAX)
+				//{
+				//	//rankdata[0].name_position = namechar;
+				//	//namechar++;
+				//}
 			}
-			else if (namechar < NAMEMAX)
+			/*else*/ if (namechar < NAMEMAX)
 			{
 				// 指定位置
 				// 1フラグをtrueに
@@ -577,18 +577,20 @@ void move_cursole(void)
 				// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
 
 				// 文字入力されたので現在入力中の名前を加算
+			}
 				if (namechar < NAMEMAX)
 				{
 					namechar++;
 					rankdata[0].name_position = namechar;
+
 				}
-			}
 		}
 
 
 
 
 	}
+					PrintDebugProcess("namechar %d", namechar);
 
 }
 
