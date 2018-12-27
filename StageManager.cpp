@@ -12,11 +12,12 @@
 #include "enemyRE.h"
 #include "UIBonus.h"
 
+#include "field.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define STAGE00_TIMELIMIT	(3600 * 5)
+#define STAGE00_TIMELIMIT	(360)
 #define STAGE01_TIMELIMIT	(180)
 #define STAGE02_TIMELIMIT	(120)
 #define FEVER_TIMELIMIT		(120)
@@ -197,6 +198,8 @@ void EndOfStage(void)
 		{
 			// NEXT STAGE or GAME OVER
 			s->no += 1;
+			s->no %= 3;
+			LoadFeildTex(s->no);
 
 			// パラメータリセット
 			ResetStage();

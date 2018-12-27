@@ -49,8 +49,6 @@ protected:
 	int ChangeAnimeTime;	// アニメーション切り替え待時間
 
 	virtual int  MakeVertex(void);
-	virtual void SetVertex(void);				// 頂点座標設定@頂点位置のみ
-	virtual void SetVertex(D3DXCOLOR color);	// 頂点座標設定@頂点色込み
 
 public:
 	C3DPolygonObject();
@@ -64,6 +62,11 @@ public:
 	virtual void LoadTextureStatus(float sizX, float sizY, float scale);
 	virtual void LoadObjectStatus(Vector3 pos);
 	virtual void LoadObjectStatus(Vector3 pos, Vector3 rot);
+
+
+	virtual void SetVertex(void);				// 頂点座標設定@頂点位置のみ
+	virtual void SetVertex(D3DXCOLOR color);	// 頂点座標設定@頂点色込み
+	virtual void SetTexture(int num, int ix, int iy);
 };
 
 

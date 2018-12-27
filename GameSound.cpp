@@ -252,16 +252,16 @@ void UpdateGameSound(void)
 		case 1:
 			SoundBGM[TITLE].FadeVolume(SOUND_FADE_OUT);
 			SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_OUT);
-			SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_IN);
-			SoundBGM[GAME_AMERICA].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_OUT);
+			SoundBGM[GAME_AMERICA].FadeVolume(SOUND_FADE_IN);
 			SoundBGM[GAME_BONUS].FadeVolume(SOUND_FADE_OUT);
 			SoundBGM[RESULT].FadeVolume(SOUND_FADE_OUT);
 			break;
 		case 2:
 			SoundBGM[TITLE].FadeVolume(SOUND_FADE_OUT);
 			SoundBGM[GAME_AKIBA].FadeVolume(SOUND_FADE_OUT);
-			SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_OUT);
-			SoundBGM[GAME_AMERICA].FadeVolume(SOUND_FADE_IN);
+			SoundBGM[GAME_SPACE].FadeVolume(SOUND_FADE_IN);
+			SoundBGM[GAME_AMERICA].FadeVolume(SOUND_FADE_OUT);
 			SoundBGM[GAME_BONUS].FadeVolume(SOUND_FADE_OUT);
 			SoundBGM[RESULT].FadeVolume(SOUND_FADE_OUT);
 			break;

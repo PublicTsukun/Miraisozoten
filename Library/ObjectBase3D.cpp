@@ -246,6 +246,28 @@ void C3DPolygonObject::SetVertex(D3DXCOLOR color)
 	}
 }
 
+void C3DPolygonObject::SetTexture(int num, int ix, int iy)
+{
+	{//頂点バッファの中身を埋める
+		VERTEX_3D *pVtx;
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		VtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+
+		int x = num % ix;
+		int y = num / ix;
+		float sizeX = 1.0f / ix;
+		float sizeY = 1.0f / iy;
+		pVtx[0].uv = Vector2((float)(x)* sizeX, (float)(y)* sizeY);
+		pVtx[1].uv = Vector2((float)(x)* sizeX + sizeX, (float)(y)* sizeY);
+		pVtx[2].uv = Vector2((float)(x)* sizeX, (float)(y)* sizeY + sizeY);
+		pVtx[3].uv = Vector2((float)(x)* sizeX + sizeX, (float)(y)* sizeY + sizeY);
+		// 頂点データをアンロックする
+		VtxBuff->Unlock();
+	}
+}
+
+
 //----テクスチャ情報書き込み--------
 void C3DPolygonObject::LoadTextureStatus(float sizX, float sizY, float scale, int ptnX, int ptnY, int time)
 {

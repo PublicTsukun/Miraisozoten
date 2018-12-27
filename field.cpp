@@ -59,14 +59,25 @@ const Vector2 wallSize = Vector2(WALL_SIZE_X, WALL_SIZE_Y);
 
 const Vector3 wallPos = Vector3(WALL_POS_X, WALL_POS_Y, WALL_POS_Z);
 
-
+C3DPolygonObject LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
+const Vector3 LivewallPos = Vector3(WALL_POS_X - (LIVEWALL_SIZE_X * 2 * (WALL_LIVE_NUM_X / 2)),
+									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)),
+									WALL_POS_Z);
 
 const char *WallTex[] =
 {
 	"data/TEXTURE/ステージ/アキバ/バック.png",
 	"data/TEXTURE/ステージ/アキバ/ミッド.png",
 	"data/TEXTURE/ステージ/アキバ/フロント.png",
+	"data/TEXTURE/ステージ/アメリカ/バック.jpg",
+	"data/TEXTURE/ステージ/アメリカ/ミッド.png",
+	"data/TEXTURE/ステージ/アメリカ/フロント.png",
+	"data/TEXTURE/ステージ/宇宙/バック.jpg",
+	"data/TEXTURE/ステージ/宇宙/ミッド.png",
+	"data/TEXTURE/ステージ/宇宙/フロント.png",
 };
+
+Dx9Texture LiveTex;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -75,12 +86,30 @@ HRESULT InitField(void)
 
 	wall[0].Init(wallPos, wallSize);
 	//wall[1].Init(wallPos, wallSize);
-	wall[1].Init(Vector3(wallPos.x, wallPos .y, 2600*0.75-600), wallSize*0.75);
-	wall[2].Init(wallPos, wallSize);
+	wall[1].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.75 - 600), wallSize*0.75);
+	wall[2].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.5 - 600), wallSize*0.5);
 
 	wall[0].LoadTexture(WallTex[0]);
 	wall[1].LoadTexture(WallTex[1]);
 	wall[2].LoadTexture(WallTex[2]);
+
+	LiveTex.LoadTexture("data/TEXTURE/UI/リザルト/りざると背景.png");
+
+	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+	{
+		Vector3 Pos;
+		Pos.x = LivewallPos.x + LIVEWALL_SIZE_X*2*(i%WALL_LIVE_NUM_X);
+		Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y*2*(i / WALL_LIVE_NUM_X);
+		Pos.z = LivewallPos.z;
+
+		Vector2 Size;
+		Size.x = LIVEWALL_SIZE_X;
+		Size.y = LIVEWALL_SIZE_Y;
+		LiveWall[i].Init(Pos, Size);
+		LiveWall[i].LoadTexture(LiveTex);
+		LiveWall[i].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
+		LiveWall[i].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_X);
+	}
 
 	return S_OK;
 }
@@ -95,6 +124,13 @@ void UninitField(void)
 	{
 		wall[i].Release();
 	}
+
+	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+	{
+		LiveWall[i].ReleaseVertex();
+	}
+
+	LiveTex.Release();
 }
 
 //=============================================================================
@@ -105,7 +141,12 @@ void DrawField(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-		wall[i].Draw();
+		//wall[i].Draw();
+	}
+
+	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+	{
+		LiveWall[i].Draw();
 	}
 
 
@@ -113,16 +154,16 @@ void DrawField(void)
 
 void UpdateField(void)
 {
-	wall[1].Print();
+	//wall[1].Print();
 
-	if (GetKeyboardPress(DIK_UP))
-	{
-		wall[1].MoveWallZ(1.0f);
-	}
-	if (GetKeyboardPress(DIK_DOWN))
-	{
-		wall[1].MoveWallZ(-1.0f);
-	}
+	//if (GetKeyboardPress(DIK_UP))
+	//{
+	//	wall[1].MoveWallZ(1.0f);
+	//}
+	//if (GetKeyboardPress(DIK_DOWN))
+	//{
+	//	wall[1].MoveWallZ(-1.0f);
+	//}
 	//if (GetKeyboardPress(DIK_LEFT))
 	//{
 	//	wall[0].MoveWallX(-10.0f);
@@ -132,14 +173,14 @@ void UpdateField(void)
 	//	wall[0].MoveWallX(10.0f);
 	//}
 	//
-	if (GetKeyboardPress(DIK_Q))
-	{
-		wall[1].MoveWallY(-1.0f);
-	}
-	if (GetKeyboardPress(DIK_E))
-	{
-		wall[1].MoveWallY(1.0f);
-	}
+	//if (GetKeyboardPress(DIK_Q))
+	//{
+	//	wall[1].MoveWallY(-1.0f);
+	//}
+	//if (GetKeyboardPress(DIK_E))
+	//{
+	//	wall[1].MoveWallY(1.0f);
+	//}
 	//
 	//if (GetKeyboardPress(DIK_W))
 	//{
@@ -161,3 +202,10 @@ void UpdateField(void)
 }
 
 
+void LoadFeildTex(int StageNo)
+{
+	wall[0].LoadTexture(WallTex[StageNo*3+0]);
+	wall[1].LoadTexture(WallTex[StageNo*3+1]);
+	wall[2].LoadTexture(WallTex[StageNo*3+2]);
+	
+}
