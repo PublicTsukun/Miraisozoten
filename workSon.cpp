@@ -18,6 +18,7 @@
 #include "VLauncher.h"
 #include "EnemyDB.h"
 #include "EnemyPosData.h"
+#include "EnemyHP.h"
 
 //=============================================================================
 // 初期化処理
@@ -36,6 +37,7 @@ HRESULT InitWorkSon(void)
 		InitMessageBox();
 		InitEnemyPosData();
 		InitEnemyDB();
+		InitEnemyHP();
 		InitEnemyRE();
 		InitStage();
 		break;
@@ -70,6 +72,7 @@ void UninitWorkSon(void)
 	case SCENE_RESULT://ゲームで使ったソースのUninit
 		UninitVoiceten();
 		UninitMessageBox();
+		UninitEnemyHP();
 		UninitEnemyRE();
 
 		break;
@@ -93,6 +96,7 @@ void UpdateWorkSon(void)
 	case SCENE_GAME://ゲームで使うソースのUpdate
 		UpdateVoiceten();
 		UpdateMessageBox();
+		UpdateEnemyHP();
 		UpdateEnemyRE();
 		UpdateStage();
 		UpdateVLauncher();
@@ -126,6 +130,7 @@ void DrawWorkSon(void)
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawVoiceten();
 		DrawMessagebox();
+		DrawEnemyHP();
 		DrawEnemyRE();
 		break;
 

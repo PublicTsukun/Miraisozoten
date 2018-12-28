@@ -24,6 +24,7 @@
 
 #include "EnemyDB.h"
 #include "EnemyPosData.h"
+#include "EnemyHP.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -132,8 +133,6 @@ void TF_Pos(int no);
 
 void SetType(int ENo, int type);
 void SetPos(int ENo, float x, float y, float z);
-
-bool SetPosCheckX(float x);
 
 //=================
 // 演出
@@ -405,6 +404,12 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	// ダメージ計算
 	(e + Eno)->hp -= (v + Vno)->atk;
 
+	// HP修正
+	if ((e + Eno)->hp < 0)
+	{
+		(e + Eno)->hp = 0;
+	}
+	
 	// 撃破判定
 	if ((e + Eno)->hp <= 0 &&
 		(e + Eno)->status == E_STATUS_NORMAL)
@@ -509,9 +514,12 @@ void VanisnAllEnenyRE(void)
 void EnemyREOnStage(int no)
 {
 	ENEMY *e = GetEnemyRE(0);
+	EnemyHP *EnemyHP = GetEnemyHP(0);
 
 	(e + no)->use = TRUE;
 	(e + no)->status = E_STATUS_NORMAL;
+
+	(EnemyHP + no)->Enable();
 }
 
 //=============================================================================
@@ -916,31 +924,6 @@ void SetPos(int ENo, float x, float y, float z)
 
 }
 
-bool SetPosCheckX(float x)
-{
-	ENEMY *e = GetEnemyRE(0);
-
-	float v = 40.0f;
-	bool check = FALSE;
-
-	for (int i = 0; i < ENEMY_MAX; i++)
-	{
-		if ((e + i)->use == TRUE)
-		{
-			if (x <= ((e + i)->pos.x + v) &&
-				x >= ((e + i)->pos.x - v)
-				)
-			{
-				check = TRUE;
-				break;
-			}
-			
-		}
-	}
-
-	return check;
-}
-
 //=============================================================================
 // エネミー生成（応急措置）
 //============================================================================='
@@ -1055,6 +1038,7 @@ void TrapFactory02(int apr, int num)
 //============================================================================='
 void TrapFactory03(int no, int apr)
 {
+	// 出現タイミング
 	ENEMY *e = GetEnemyRE(no);
 	e->apr = apr;
 
@@ -1063,6 +1047,16 @@ void TrapFactory03(int no, int apr)
 
 	// 位置
 	TF_Pos(no);
+
+	// パーツ・HPゲージ
+	EnemyHP *EnemyHP = GetEnemyHP(no);
+	Vector3 tempPos = e->pos;
+	//// 位置調整
+	tempPos.x += -32.0f;
+	tempPos.y += -88.0f;
+	//// 位置設定
+	EnemyHP->LoadObjectStatus(tempPos);
+
 }
 
 //=============================================================================
