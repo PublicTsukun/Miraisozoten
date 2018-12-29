@@ -150,7 +150,6 @@ HRESULT Init()
 //=============================================================================
 void Uninit(void)
 {
-	ReleaseTexture();
 
 	// フェード
 	FadeCurtain::Uninit();
@@ -160,6 +159,8 @@ void Uninit(void)
 	UninitGameSound();
 
 	ShowCursor(TRUE);
+
+	ReleaseTexture();
 }
 
 //=============================================================================
