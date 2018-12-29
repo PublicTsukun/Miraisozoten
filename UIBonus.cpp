@@ -93,7 +93,7 @@ float effa=0.0f;
 //=============================================================================
 void UpdateUIBonus(void)
 {
-	//if (StateTimer() == COUNT)
+	if (StateTimer() == COUNT)
 	{
 
 		if (GetKeyboardPress(DIK_9) && fiverf == false)
@@ -106,7 +106,7 @@ void UpdateUIBonus(void)
 
 			if (fiverf == true)
 			{
-				AddGage(-1);//フィーバー状態ならもっと減らす
+				AddGage(-2);//フィーバー状態ならもっと減らす
 			}
 		}
 
