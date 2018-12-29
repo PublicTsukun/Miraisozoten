@@ -79,18 +79,10 @@ void UpdateVoiMoveY(int no);
 
 void CheckUptimeVoi(int no);
 
-
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 VOICETEN VoicetenWk[VOICETEN_MAX];		// ワーク
-
-char *FileVoiceten[] =
-{
-	"data/TEXTURE/UI/voiceten.png",
-
-};
-
 CVoiceten Voiceten[VOICETEN_MAX];
 
 //=============================================================================
@@ -121,8 +113,6 @@ void InitVoiceten(void)
 		(v + i)->atk = 1;
 
 		Voiceten[i].Init((v + i)->pos, size);
-		Voiceten[i].LoadTexture(FileVoiceten[0]);
-		
 	}
 }
 
@@ -301,6 +291,8 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			Voiceten[i].LoadObjectStatus((v + i)->pos);
 
 			// テクスチャ、ATK設定（ヴォイステンゲージに依存）
+			Voiceten[i].LoadTexture("data/TEXTURE/UI/voiceten.png");
+
 			if (VoiceTankUI::GetVoiceVolume() < (140 * 3))
 			{
 				Voiceten[i].SetTexture(V_TYPE_BLUE);

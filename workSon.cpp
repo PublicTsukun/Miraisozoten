@@ -19,6 +19,7 @@
 #include "EnemyDB.h"
 #include "EnemyPosData.h"
 #include "EnemyHP.h"
+#include "S-Tester.h"
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -101,9 +102,12 @@ void UpdateWorkSon(void)
 		UpdateStage();
 		UpdateVLauncher();
 
+		#ifdef _DEBUG
+		TesterDC();
 		TestVL();
 		TestMB();
 		//TestCO();
+		#endif
 		break;
 
 
