@@ -89,11 +89,6 @@ HRESULT InitField(void)
 	wall[1].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.75 - 600), wallSize*0.75);
 	wall[2].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.5 - 600), wallSize*0.5);
 
-	wall[0].LoadTexture(WallTex[0]);
-	wall[1].LoadTexture(WallTex[1]);
-	wall[2].LoadTexture(WallTex[2]);
-
-	LiveTex.LoadTexture("data/TEXTURE/UI/ƒŠƒUƒ‹ƒg/‚è‚´‚é‚Æ”wŒi.png");
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
@@ -114,6 +109,28 @@ HRESULT InitField(void)
 	return S_OK;
 }
 
+
+//=============================================================================
+//
+//===============================================================================
+void LoadFieldTex(void)
+{
+	wall[0].LoadTexture(WallTex[0]);
+	wall[1].LoadTexture(WallTex[1]);
+	wall[2].LoadTexture(WallTex[2]);
+
+	LiveTex.LoadTexture("data/TEXTURE/UI/ƒŠƒUƒ‹ƒg/‚è‚´‚é‚Æ”wŒi.png");
+
+}
+
+void ReleaseTex(void)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		wall[i].Release();
+	}
+	LiveTex.Release();
+}
 //=============================================================================
 // I—¹ˆ—
 //=============================================================================
@@ -122,7 +139,7 @@ void UninitField(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-		wall[i].Release();
+		wall[i].ReleaseVertex();
 	}
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
@@ -130,7 +147,6 @@ void UninitField(void)
 		LiveWall[i].ReleaseVertex();
 	}
 
-	LiveTex.Release();
 }
 
 //=============================================================================
@@ -141,12 +157,12 @@ void DrawField(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-		//wall[i].Draw();
+		wall[i].Draw();
 	}
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		LiveWall[i].Draw();
+		//LiveWall[i].Draw();
 	}
 
 
@@ -202,7 +218,7 @@ void UpdateField(void)
 }
 
 
-void LoadFeildTex(int StageNo)
+void SetFeildTex(int StageNo)
 {
 	wall[0].LoadTexture(WallTex[StageNo*3+0]);
 	wall[1].LoadTexture(WallTex[StageNo*3+1]);

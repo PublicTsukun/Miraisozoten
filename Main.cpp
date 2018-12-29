@@ -17,6 +17,7 @@
 #include "FadeCurtain.h"
 #include "SceneManager.h"
 #include "GameSound.h"
+#include "game.h"
 #include <time.h>
 
 //****************************************************************
@@ -120,6 +121,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 //=============================================================================
 HRESULT Init()
 {
+
+	LoadTexture();
+
 	// フェード
 	CSFade::MakeVertex();
 	FadeCurtain::Init();
@@ -146,6 +150,7 @@ HRESULT Init()
 //=============================================================================
 void Uninit(void)
 {
+	ReleaseTexture();
 
 	// フェード
 	FadeCurtain::Uninit();

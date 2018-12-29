@@ -199,7 +199,7 @@ void EndOfStage(void)
 			// NEXT STAGE or GAME OVER
 			s->no += 1;
 			s->no %= 3;
-			LoadFeildTex(s->no);
+			SetFeildTex(s->no);
 
 			// パラメータリセット
 			ResetStage();
