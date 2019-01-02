@@ -12,13 +12,15 @@
 #include "Library/MultiRendering.h" 
 #include "GameSound.h"
 #include "SceneManager.h"
+#include "DefeatCounter.h"
+
 //=============================================================================
 // マクロ定義
 //=============================================================================
 
-class ScoreDetailMove : public C2DObject
+class ObjectMove : public C2DObject
 {
-public:
+public:		//演出用
 	void MoveY(float move)
 	{
 		this->Position.y += move;
@@ -38,6 +40,27 @@ public:
 	{
 		return this->Position;
 	}
+
+
+
+};
+
+class DETAIL
+{
+public:
+
+	ObjectMove DetailBg;//背景
+	ObjectMove Closs;	//かける
+	ObjectMove Equal;	//イコール
+	ObjectMove Knock[2];	//撃破数
+	ObjectMove CharTex;	//倒したキャラ
+	ObjectMove GetPoint[5];//獲得スコア
+
+	void ScoreInit(int no);
+	void ScoreUninit(void);
+	void ScoreDraw(void);
+	void ScoreUpdate(void);
+
 };
 
 //=============================================================================
@@ -52,16 +75,48 @@ C2DObject resultbg[2];		//タイトル背景
 C2DObject resultscr[NUM_PLACE];
 C2DObject resultlogo;
 					
-RenderBuffer DetailWindow;
-C2DObject	Detail;
-ScoreDetailMove	ScoreDetail[DETAIL_MAX];
+RenderBuffer DetailWindow;	//詳細のテクスチャの生成
+C2DObject	Detail;			//詳細のテクスチャ表示用
+DETAIL	ScoreDetail[DETAIL_MAX];
+
 const char *ScoreDetailTex[] = {
 	"data/TEXTURE/UI/タイトル/メニュー画面_青.png",
 	"data/TEXTURE/UI/タイトル/メニュー画面_赤.png",
 	"data/TEXTURE/UI/タイトル/メニュー画面_黄.png",
 };
-int DrawCount ;
-int DetailCount;
+
+const char *CharctorTex[] = {
+	"data/TEXTURE/Character/01_01_child.png",
+	"data/TEXTURE/Character/01_03_otaku.png",
+	"data/TEXTURE/Character/01_02_maid.png",
+
+	"data/TEXTURE/Character/aa.png",
+	"data/TEXTURE/Character/JK.png",
+	"data/TEXTURE/Character/あめりか人.png",
+
+	"data/TEXTURE/Character/UFO.png",
+	"data/TEXTURE/Character/宇宙飛行士.png",
+	"data/TEXTURE/Character/宇宙人.png",
+};
+
+int CharactorScore[] = {
+
+	100,
+	500,
+	1000,
+
+	100,
+	500,
+	1000,
+
+	100,
+	500,
+	1000,
+
+};
+
+int DrawCount ;		//画面内に何枚出たか
+int DetailCount;	//合計何枚表示しようとしたか
 
 int g_maxscore;
 
@@ -106,18 +161,16 @@ HRESULT InitResultlogo(void)
 
 	resultlogo.Init(SCREEN_CENTER_X, RESULT_LOGO_SIZE_Y + 10.0f, RESULT_LOGO_SIZE_X, RESULT_LOGO_SIZE_Y, TEXTURE_RESULT_LOGO);
 	
-
-	for (int i = 0; i < DETAIL_MAX; i++)
-	{
-		ScoreDetail[i].Init(SCREEN_WIDTH+400.0, 140 + 200.0*i, 400.0, 100.0, ScoreDetailTex[i%3]);
-		ScoreDetail[i].Use = true;
-		ScoreDetail[i].Move = false;
-	}
 	DrawCount = 0;
 
 	DetailCount = 0;
 
 	excellentf = false;
+
+	for (int i = 0; i < DETAIL_MAX; i++)
+	{
+		ScoreDetail[i].ScoreInit(i);
+	}
 	return S_OK;
 }
 
@@ -134,12 +187,14 @@ void UninitResultlogo(void)
 		resultscr[i].Release();
 	}
 	resultlogo.Release();
-	DetailWindow.Release();
 
 	for (int i = 0; i < DETAIL_MAX; i++)
 	{
-		ScoreDetail[i].Release();
+		ScoreDetail[i].ScoreUninit();
 	}
+
+	DetailWindow.Release();
+
 
 }
 
@@ -156,16 +211,17 @@ void DrawResultlogo(void)
 		resultlogo.Draw();
 
 		DetailWindow.BeginDraw();
-		//resultbg[1].Draw();
+		resultbg[1].Draw();
 
 		for (int i = 0; i < DETAIL_MAX; i++)
 		{
-			//ScoreDetail[i].Draw();
+			ScoreDetail[i].ScoreDraw();
 		}
+
 
 		DetailWindow.EndDraw();
 
-		//Detail.Draw(DetailWindow.GetTexture());
+		Detail.Draw(DetailWindow.GetTexture());
 }
 
 //=============================================================================
@@ -187,8 +243,8 @@ void UpdateResultlogo(void)
 
 	slotTimer++;				//タイマー加算
 
-	//if (DetailCount == DETAIL_MAX && !slotStart)
-	if (slotTimer >= 120)
+	if (DetailCount == DETAIL_MAX && !slotStart)
+		//if (slotTimer >= 120)
 	{
 		slotStart = true;//一定時間でスロットスタート
 		slotTimer = 0;
@@ -246,7 +302,7 @@ void UpdateResultlogo(void)
 			g_score = g_maxscore;
 			slotStart = false;
 
-			if (!PlayCheckSE(SCORE_DECISION)&& excellentf==false)
+			if (!PlayCheckSE(SCORE_DECISION) && excellentf == false)
 			{
 				//PlaySE(EXCELLENT);
 				PlaySE(AORI);
@@ -263,54 +319,199 @@ void UpdateResultlogo(void)
 		resultscr[nCntPlace].SetTexture(number, 10, 1);
 	}
 
+
 	//===========================================================================
 	//スコア詳細
 	//===========================================================================
-	for (int i = 0; i < DETAIL_MAX; i++)
+
+	if (GetKeyboardTrigger(DIK_RETURN) && ScoreDetail[0].DetailBg.GetPosition().x > SCREEN_CENTER_X)
 	{
-		if (GetMouseZ() > 0)
-		{
-			if (ScoreDetail[0].GetPosition().y < 140.0)
-			{
-				ScoreDetail[DETAIL_MAX - i - 1].MoveY(GetMouseZ());
-			}
-		}
-		else if (GetMouseZ() < 0)
-		{
-			if (ScoreDetail[DETAIL_MAX - 1].GetPosition().y > SCREEN_HEIGHT - 140.0)
-
-				ScoreDetail[i].MoveY(GetMouseZ());
-
-		}
-		if (ScoreDetail[i].Move)
-		{
-			ScoreDetail[i].MoveX(-30.0);
-
-			if (ScoreDetail[i].GetPosition().x <= SCREEN_CENTER_X)
-			{
-				ScoreDetail[i].Move = false;
-
-				if (ScoreDetail[i + 1].Use && ((i + 1) < DETAIL_MAX))
-				{
-					ScoreDetail[i + 1].Move = true;
-					DrawCount++;
-				}
-				DetailCount++;
-			}
-		}
+		ScoreDetail[0].DetailBg.Move = true;
 	}
 
-
-	if (DrawCount >= 3)
+	for (int i = 0; i < DETAIL_MAX; i++)
 	{
-		for (int j = 0; j < DETAIL_MAX; j++)
+		if (ScoreDetail[i].DetailBg.Move)
 		{
-			ScoreDetail[j].MoveY(-200.0);
+			ScoreDetail[i].DetailBg.MoveX(-30.0);
 
 		}
-		DrawCount--;
 
+
+		if (ScoreDetail[i].DetailBg.GetPosition().x <= SCREEN_CENTER_X
+			&&ScoreDetail[i].DetailBg.Move == true)
+		{
+			ScoreDetail[i].DetailBg.Move = false;
+
+			if (ScoreDetail[i + 1].DetailBg.Use && ((i + 1) < DETAIL_MAX))
+			{
+				ScoreDetail[i + 1].DetailBg.Move = true;
+				DrawCount++;
+			}
+			DetailCount++;
+
+		}
+
+
+		if (DrawCount >= 3)//3マイ出てきたらスクロール
+		{
+			for (int j = 0; j < DETAIL_MAX; j++)
+			{
+				ScoreDetail[j].DetailBg.MoveY(-200.0);
+
+			}
+			DrawCount--;
+
+		}
+
+		//スクロール処理
+		if (DetailCount == DETAIL_MAX)
+		{
+			if (GetMouseZ() > 0)
+			{
+				if (ScoreDetail[0].DetailBg.GetPosition().y < 140.0)
+				{
+					ScoreDetail[DETAIL_MAX - i - 1].DetailBg.MoveY(GetMouseZ());//下から変えていく　上から変えるとバグる
+				}
+			}
+			else if (GetMouseZ() < 0)
+			{
+				if (ScoreDetail[DETAIL_MAX - 1].DetailBg.GetPosition().y > SCREEN_HEIGHT - 140.0)
+				{
+					ScoreDetail[i].DetailBg.MoveY(GetMouseZ());
+				}
+			}
+		}
+		PrintDebugProcess("%f  %f\n", ScoreDetail[i].DetailBg.GetPosition().x, ScoreDetail[i].DetailBg.GetPosition().y);
+
+		ScoreDetail[i].ScoreUpdate();
 	}
 
 }
 
+
+//=========================================================
+//クラス内関数
+//=========================================================
+//初期化
+void DETAIL::ScoreInit(int no)
+{
+	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
+
+
+	DetailBg.Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 400.0, 100.0, ScoreDetailTex[no % 3]);
+	DetailBg.Use = true;
+	DetailBg.Move = false;
+
+	Closs.Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 400.0, 100.0, "data/TEXTURE/UI/リザルト/×.png");
+	Closs.Use = false;
+	Closs.Move = false;
+
+	Equal.Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 400.0, 100.0, "data/TEXTURE/UI/リザルト/=.png");
+	Equal.Use = false;
+	Equal.Move = false;
+
+	CharTex.Init(SCREEN_WIDTH + 100.0, 140 + no * 200, 100.0, 100.0, CharctorTex[no]);
+	CharTex.Use = false;
+	CharTex.Move = false;
+	CharTex.SetTexture(1, 2, 1);
+
+
+	for (int i = 0; i < 2; i++)
+	{
+		Knock[i].Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 39.0, 80.0, "data/TEXTURE/UI/スコア数字.png");
+		Knock[i].Use = false;
+		Knock[i].Move = false;
+
+		int num;
+		num = (DefeatCounter + no)->GetCount();
+		num /= pow(10, i);
+		num %= 10;
+		Knock[i].SetTexture(num, 10, 1);
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		GetPoint[i].Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 39.0, 80.0, "data/TEXTURE/UI/スコア数字.png");
+		GetPoint[i].Use = false;
+		GetPoint[i].Move = false;
+
+		int num;
+		num = CharactorScore[no]*(DefeatCounter + no)->GetCount();
+		num /= pow(10, i);
+		num %= 10;
+		GetPoint[i].SetTexture(num, 10, 1);
+	}
+}
+//終了処理
+void DETAIL::ScoreUninit(void)
+{
+	//ObjectMove DetailBg;//背景
+	//ObjectMove Closs;	//かける
+	//ObjectMove Equal;	//イコール
+	//ObjectMove Knock;	//撃破数
+	//ObjectMove CharTex;	//倒したキャラ
+	//ObjectMove GetPoint;//獲得スコア
+
+	DetailBg.Release();
+	Closs.Release();
+	Equal.Release();
+	CharTex.Release();
+
+	for (int i = 0; i < 2; i++)
+	{
+		Knock[i].Release();
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		GetPoint[i].Release();
+	}
+}
+//描画処理
+void DETAIL::ScoreDraw(void)
+{
+	DetailBg.Draw();
+	Closs.Draw();
+	Equal.Draw();
+	CharTex.Draw();
+
+	for (int i = 0; i < 2; i++)
+	{
+		Knock[i].Draw();
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		GetPoint[i].Draw();
+	}
+
+}
+//更新処理
+void DETAIL::ScoreUpdate(void)
+{
+
+	Vector2 ClossPos = Vector2(CLOSS_POS_X, CLOSS_POS_Y);
+	Closs.SetStatus(DetailBg.GetPosition() + ClossPos, Vector2(400.0, 100.0));
+	Closs.SetVertex();
+	Vector2 EqualPos = Vector2(EQUAL_POS_X, EQUAL_POS_Y);
+	Equal.SetStatus(DetailBg.GetPosition() + EqualPos, Vector2(400.0, 100.0));
+	Equal.SetVertex();
+	Vector2 CharPos = Vector2(CHAR_POS_X, CHAR_POS_Y);
+	CharTex.SetStatus(DetailBg.GetPosition() + CharPos, Vector2(100.0, 100.0));
+	CharTex.SetVertex();
+
+	for (int i = 0; i < 2; i++)
+	{
+		Vector2 KnockPos = Vector2(KNOCK_POS_X + KNOCK_INTER*i, KNOCK_POS_Y);
+		Knock[i].SetStatus(DetailBg.GetPosition() + KnockPos, Vector2(39.0, 80.0));
+		Knock[i].SetVertex();
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		Vector2 GetPointPos = Vector2(GETPOINT_POS_X + GETPOINT_INTER*i, GETPOINT_POS_Y);
+		GetPoint[i].SetStatus(DetailBg.GetPosition() + GetPointPos, Vector2(39.0, 80.0));
+		GetPoint[i].SetVertex();
+	}
+}
