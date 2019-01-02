@@ -69,13 +69,12 @@ void UpdateEnemyRE(void);
 void DrawEnemyRE(void);
 ENEMY *GetEnemyRE(int no);
 
-// “oê^‘Şê
+// “oê
+void SetEnemyRE(int time);
 void EnemyREOnStage(int no);
 
-// Œ‚”j”
-int GetYouDefeated(void);
-void SetYouDefeated(int value);
-void ResetYouDefeated(void);
+void ClearAllEnemyRE(void);
+void ResetAllEnemyRE(void);
 
 // ƒeƒXƒg—p
 void VanisnAllEnenyRE(void);

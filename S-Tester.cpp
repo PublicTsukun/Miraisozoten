@@ -30,7 +30,7 @@ void TesterDC(void)
 	PrintDebugProcess("OTAKU: %d\n", (DefeatCounter + E_TYPE_OTAKU)->GetCount());
 	PrintDebugProcess("AA: %d\n", (DefeatCounter + E_TYPE_AA)->GetCount());
 	//// ‘S•”
-	PrintDebugProcess("ALL: %d\n", GetAllDefeated());
+	PrintDebugProcess("ALL: %d\n", GetAllDefeat());
 
 	// Œ‚”j”‚Ì‰ÁZ
 	if (GetKeyboardTrigger(DIK_NUMPAD0))

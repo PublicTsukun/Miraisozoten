@@ -66,7 +66,6 @@ void UninitWorkSon(void)
 
 
 	case SCENE_GAME://タイトルで使ったソースのUninit
-		UninitStage();
 		break;
 
 

@@ -42,7 +42,7 @@ DefeatCounter *GetDefeatCounter(int no)
 //=============================================================================
 // æ“¾iŒ‚”j”‘˜aj
 //=============================================================================
-int GetAllDefeated(void)
+int GetAllDefeat(void)
 {
 	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
 	int value = 0;

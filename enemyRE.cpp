@@ -98,15 +98,6 @@ enum E_STATUS
 	E_STATUS_MAX,
 };
 
-enum NUM_STAGE
-{
-	STAGE_01_AKIBA = 0,
-	STAGE_02_USA,
-	STAGE_03_SPACE,
-
-	NUM_STAGE_MAX,
-};
-
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -138,23 +129,20 @@ void CheckUptime(int no);
 //*****************************************************************************
 char *FileEnemy[] =
 {
-	"data/TEXTURE/Character/01_01_child.png",
-	"data/TEXTURE/Character/01_02_maid.png",
-	"data/TEXTURE/Character/01_03_otaku.png",
-	"data/TEXTURE/Character/01_01_child.png",
-	"data/TEXTURE/Character/01_02_maid.png",
-	"data/TEXTURE/Character/01_03_otaku.png",
-	"data/TEXTURE/Character/01_01_child.png",
-	"data/TEXTURE/Character/01_02_maid.png",
-	"data/TEXTURE/Character/01_03_otaku.png",
+	"data/TEXTURE/Character/00_child.png",
+	"data/TEXTURE/Character/01_maid.png",
+	"data/TEXTURE/Character/02_otaku.png",
+	"data/TEXTURE/Character/03_aa.png",
+	"data/TEXTURE/Character/04_jk.png",
+	"data/TEXTURE/Character/05_american.png",
+	"data/TEXTURE/Character/06_astronaut.png",
+	"data/TEXTURE/Character/07_alien.png",
+	"data/TEXTURE/Character/08_ufo.png",
 };
 
 // ワーク
 ENEMY EnemyREWk[ENEMY_MAX];		
 CEnemyRE EnemyRE[ENEMY_MAX];
-
-// 撃破数
-int YOUDEFEATED;
 
 //=============================================================================
 // 初期化処理
@@ -187,11 +175,6 @@ void InitEnemyRE(void)
 
 		EnemyRE[i].Init((e + i)->pos, size);
 	}
-
-	ResetYouDefeated();
-
-	SetParameter01();
-
 }
 
 //=============================================================================
@@ -212,9 +195,6 @@ void UninitEnemyRE(void)
 void UpdateEnemyRE(void)
 {
 	ENEMY *e = GetEnemyRE(0);
-
-	// 衝突判定
-	CollisionEnemyRE();
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
@@ -237,7 +217,7 @@ void UpdateEnemyRE(void)
 			case E_STATUS_NORMAL:
 
 				// 衝突判定
-				//CollisionEnemyRE();
+				CollisionEnemyRE();
 				break;
 
 			case E_STATUS_DEFEATED:
@@ -412,7 +392,6 @@ void DefeatEnemyRE(int no)
 	AddGage(ENEMY_D_GAUGEBONUS);
 
 	// 撃破数カウントアップ
-	SetYouDefeated(1);
 
 	// 再生成
 	TrapFactory03(no, s->timer + 120);
@@ -432,7 +411,6 @@ void VanisnEnenyRE(int no)
 	(ePosData + no)->SetUse(false);
 
 	// 初期化
-	(e + no)->hp = ENEMY_HP;
 	(e + no)->timer = 0;
 	(e + no)->apr = -1;
 	(e + no)->status = E_STATUS_NORMAL;	
@@ -465,6 +443,21 @@ void VanisnAllEnenyRE(void)
 }
 
 //=============================================================================
+// 設置
+//=============================================================================
+void SetEnemyRE(int time)
+{
+	ENEMY *enemy = GetEnemyRE(0);
+
+	time += 60;
+
+	for (int i = 0; i < ENEMY_MAX; i++, time += 120)
+	{
+		TrapFactory03(i, time);
+	}
+}
+
+//=============================================================================
 // 登場
 //=============================================================================
 void EnemyREOnStage(int no)
@@ -479,45 +472,39 @@ void EnemyREOnStage(int no)
 }
 
 //=============================================================================
-// 撃破数取得
+// クリア（ステージ遷移の演出）
 //=============================================================================
-int GetYouDefeated(void)
+void ClearAllEnemyRE(void)
 {
-	return YOUDEFEATED;
+	ENEMY *enemy = GetEnemyRE(0);
+
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		if ((enemy + i)->status = E_STATUS_NORMAL)
+		{
+			(enemy + i)->use = FALSE;
+			(enemy + i)->status = E_STATUS_NULL;
+		}
+	}
+
 }
 
 //=============================================================================
-// 撃破数設定
+// パラメータリセット
 //=============================================================================
-void SetYouDefeated(int value)
+void ResetAllEnemyRE(void)
 {
-	YOUDEFEATED += value;
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		VanisnEnenyRE(i);
+	}
 }
 
 //=============================================================================
-// 撃破数リセット
-//=============================================================================
-void ResetYouDefeated(void) 
-{
-	SetYouDefeated(0);
-}
-
-//=============================================================================
-// パラメータ設定（ここで調整）
+// パラメータ設定
 //============================================================================='
 void SetParameter01(void)
 {
-	//TrapFactory02(60, 0);
-	//TrapFactory02(90, 1);
-	//TrapFactory02(120, 2);
-	//TrapFactory02(150, 0);
-	//TrapFactory02(180, 2);
-	//TrapFactory02(210, 0);
-	//TrapFactory02(240, 1);
-	//TrapFactory02(270, 2);
-	//TrapFactory02(300, 0);
-	//TrapFactory02(330, 2);
-
 	int i = 0;
 	int j = 60;
 
@@ -561,7 +548,7 @@ void TrapFactory03(int no, int apr)
 }
 
 //=============================================================================
-// タイプ設定
+// エネミー生成：タイプ設定
 //============================================================================='
 void TF_Type(int no)
 {
@@ -632,7 +619,7 @@ void TF_Type(int no)
 }
 
 //=============================================================================
-// 出現位置設定
+// エネミー生成：出現位置設定
 //============================================================================='
 void TF_Pos(int no)
 {
@@ -663,7 +650,6 @@ void TF_Pos(int no)
 	// 反映
 	EnemyRE[no].LoadObjectStatus(e->pos, e->rot);
 }
-
 
 //=============================================================================
 // 稼働時間検査
