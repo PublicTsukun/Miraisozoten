@@ -554,7 +554,7 @@ void TF_Type(int no)
 		if (temp == 4) e->type = E_TYPE_AA;
 		if (temp == 5) e->type = E_TYPE_JK;
 		if (temp == 6) e->type = E_TYPE_JK;
-		if (temp == 7) e->type = E_TYPE_AMERICAN;
+		if (temp == 7) e->type = E_TYPE_JK;
 		if (temp == 8) e->type = E_TYPE_AMERICAN;
 		if (temp == 9) e->type = E_TYPE_AMERICAN;
 		break;
@@ -564,10 +564,10 @@ void TF_Type(int no)
 		if (temp == 0) e->type = E_TYPE_ASTRONAUT;
 		if (temp == 1) e->type = E_TYPE_ASTRONAUT;
 		if (temp == 2) e->type = E_TYPE_ASTRONAUT;
-		if (temp == 3) e->type = E_TYPE_ASTRONAUT;
-		if (temp == 4) e->type = E_TYPE_ASTRONAUT;
-		if (temp == 5) e->type = E_TYPE_ALIEN;
-		if (temp == 6) e->type = E_TYPE_ALIEN;
+		if (temp == 3) e->type = E_TYPE_ALIEN;
+		if (temp == 4) e->type = E_TYPE_UFO;
+		if (temp == 5) e->type = E_TYPE_UFO;
+		if (temp == 6) e->type = E_TYPE_UFO;
 		if (temp == 7) e->type = E_TYPE_UFO;
 		if (temp == 8) e->type = E_TYPE_UFO;
 		if (temp == 9) e->type = E_TYPE_UFO;

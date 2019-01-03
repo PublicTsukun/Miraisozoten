@@ -76,24 +76,24 @@ void InitEnemyDB(void)
 	EnemyDBWk[E_TYPE_AA].SetScore(100);
 	EnemyDBWk[E_TYPE_AA].SetBonus(VALUE_MAX / 30);
 
-	EnemyDBWk[E_TYPE_JK].SetHP(50);
-	EnemyDBWk[E_TYPE_JK].SetScore(1000);
-	EnemyDBWk[E_TYPE_JK].SetBonus(VALUE_MAX / 10);
+	EnemyDBWk[E_TYPE_JK].SetHP(15);
+	EnemyDBWk[E_TYPE_JK].SetScore(500);
+	EnemyDBWk[E_TYPE_JK].SetBonus(VALUE_MAX / 20);
 
-	EnemyDBWk[E_TYPE_AMERICAN].SetHP(15);
-	EnemyDBWk[E_TYPE_AMERICAN].SetScore(500);
-	EnemyDBWk[E_TYPE_AMERICAN].SetBonus(VALUE_MAX / 20);
+	EnemyDBWk[E_TYPE_AMERICAN].SetHP(50);
+	EnemyDBWk[E_TYPE_AMERICAN].SetScore(1000);
+	EnemyDBWk[E_TYPE_AMERICAN].SetBonus(VALUE_MAX / 10);
 
-	EnemyDBWk[E_TYPE_ASTRONAUT].SetHP(5);
-	EnemyDBWk[E_TYPE_ASTRONAUT].SetScore(100);
-	EnemyDBWk[E_TYPE_ASTRONAUT].SetBonus(VALUE_MAX / 30);
+	EnemyDBWk[E_TYPE_ASTRONAUT].SetHP(15);
+	EnemyDBWk[E_TYPE_ASTRONAUT].SetScore(500);
+	EnemyDBWk[E_TYPE_ASTRONAUT].SetBonus(VALUE_MAX / 20);
 
 	EnemyDBWk[E_TYPE_ALIEN].SetHP(50);
 	EnemyDBWk[E_TYPE_ALIEN].SetScore(1000);
 	EnemyDBWk[E_TYPE_ALIEN].SetBonus(VALUE_MAX / 10);
 
-	EnemyDBWk[E_TYPE_UFO].SetHP(15);
-	EnemyDBWk[E_TYPE_UFO].SetScore(500);
-	EnemyDBWk[E_TYPE_UFO].SetBonus(VALUE_MAX / 20);
+	EnemyDBWk[E_TYPE_UFO].SetHP(5);
+	EnemyDBWk[E_TYPE_UFO].SetScore(100);
+	EnemyDBWk[E_TYPE_UFO].SetBonus(VALUE_MAX / 30);
 
 }

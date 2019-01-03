@@ -86,9 +86,9 @@ const char *ScoreDetailTex[] = {
 };
 
 const char *CharctorTex[] = {
-	"data/TEXTURE/Character/01_01_child.png",
-	"data/TEXTURE/Character/01_03_otaku.png",
-	"data/TEXTURE/Character/01_02_maid.png",
+	"data/TEXTURE/Character/00_child.png",
+	"data/TEXTURE/Character/02_otaku.png",
+	"data/TEXTURE/Character/01_maid.png",
 
 	"data/TEXTURE/Character/aa.png",
 	"data/TEXTURE/Character/JK.png",

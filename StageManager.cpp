@@ -96,7 +96,7 @@ void UpdateStage(void)
 	CountUpTimer();
 
 	//PrintDebugProcess("stage status: %d\n", stage->status);
-	PrintDebugProcess("stage timer: %d\n", stage->timer);
+	//PrintDebugProcess("stage timer: %d\n", stage->timer);
 	//PrintDebugProcess("stage next: %d\n", stage->nextStage);
 
 }
