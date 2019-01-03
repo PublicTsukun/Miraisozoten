@@ -107,7 +107,7 @@ void UpdateWorkSon(void)
 		TestMB();
 		//TestCO();
 		TesterAtk();
-		TesterPD();
+		//TesterPD();
 		#endif
 		break;
 

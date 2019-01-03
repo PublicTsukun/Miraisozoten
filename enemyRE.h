@@ -31,7 +31,7 @@ typedef struct
 
 	int posData;
 
-	int apr;		// 出現タイミング（再）
+	int apr;		// 出現タイミング
 
 	int status;		// 状態
 	int timer;		// タイマー
@@ -39,8 +39,7 @@ typedef struct
 	int type;		// 種類
 	int hp;			// HP
 	int score;		// 点数
-
-	
+	float bonus;		// ボーナス
 
 } ENEMY;
 

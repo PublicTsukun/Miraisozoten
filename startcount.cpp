@@ -73,7 +73,7 @@ void DrawStartCount(void)
 	if (LogoTimerUse)
 	{
 		StartLogo.Draw();
-		//UnFreezeStage();
+		GameStart();
 	}
 }
 

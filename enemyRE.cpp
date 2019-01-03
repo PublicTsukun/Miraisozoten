@@ -28,15 +28,11 @@
 
 #include "DefeatCounter.h"
 
+#include "S-Editor.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define ENEMY_HP			(2)		// 初期化用
-#define ENEMY_SCOREBONUS	(1)
-#define ENEMY_GAUGEBONUS	(50)
-#define ENEMY_D_SCOREBONUS	(10)
-#define ENEMY_D_GAUGEBONUS	(200)
-
 #define ENEMY_COLI_LEN		(48.0f)	// 当たり判定 x
 #define ENEMY_COLI_HEI		(48.0f)	// 当たり判定 y
 #define ENEMY_COLI_WID		(10.0f)	// 当たり判定 z
@@ -114,8 +110,6 @@ void VanisnEnenyRE(int no);
 //=================
 // 生成
 //=================
-void SetParameter01(void);
-
 void TrapFactory03(int no, int apr);
 
 void TF_Type(int no);
@@ -124,7 +118,7 @@ void TF_Pos(int no);
 //=================
 // 演出
 //=================
-void CheckUptime(int no);
+void DefeatEnemyREEfx(int no);
 
 //*****************************************************************************
 // グローバル変数
@@ -171,7 +165,7 @@ void InitEnemyRE(void)
 
 		(e + i)->type = 0;
 
-		(e + i)->hp = ENEMY_HP;
+		(e + i)->hp = 0;
 
 		(e + i)->status = 0;
 
@@ -207,12 +201,6 @@ void UpdateEnemyRE(void)
 			// 更新処理（位置、回転）
 			EnemyRE[i].LoadObjectStatus((e + i)->pos, (e + i)->rot);
 			
-			// タイマーカウントアップ
-			(e + i)->timer++;
-
-			// 稼働時間検査
-			CheckUptime(i);
-
 			switch ((e + i)->status)
 			{
 			case E_STATUS_NULL:
@@ -227,6 +215,7 @@ void UpdateEnemyRE(void)
 			case E_STATUS_DEFEATED:
 
 				// アニメーション
+				DefeatEnemyREEfx(i);
 				break;
 
 			default:
@@ -362,30 +351,29 @@ void DamageDealEnemyRE(int Eno, int Vno)
 //=============================================================================
 void DefeatEnemyRE(int no)
 {
-	ENEMY *e = GetEnemyRE(0);
-	STAGE *s = GetStage();
+	ENEMY *enemy = GetEnemyRE(no);
 	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
 
 	// 状態変更
-	(e + no)->status = E_STATUS_DEFEATED;
+	enemy->status = E_STATUS_DEFEATED;
 
 	// タイマー再設定
-	(e + no)->timer = 0;
+	enemy->timer = 0;
 
 	// テクスチャ変更
-	EnemyRE[no].ChangeTexture(0, 1, 1, 2);
+	//EnemyRE[no].ChangeTexture(0, 1, 1, 2);
 
 	// 音声
 	PlaySE(VIGOR);
 
 	// スコアアップ
-	AddScore((e + no)->score);
+	AddScore(enemy->score);
 
-	// ゲージアップ
-	AddGage(ENEMY_D_GAUGEBONUS);
+	// ボーナスゲージアップ
+	AddGage(int(enemy->bonus));
 
 	// 撃破数カウントアップ
-	(DefeatCounter + (e + no)->type)->CountUp();
+	(DefeatCounter + enemy->type)->CountUp();
 
 }
 
@@ -442,9 +430,9 @@ void SetEnemyRE(int time)
 {
 	ENEMY *enemy = GetEnemyRE(0);
 
-	time += 60;
+	time += ENEMY_SPAWN_DELAY_01;
 
-	for (int i = 0; i < ENEMY_MAX; i++, time += 120)
+	for (int i = 0; i < ENEMY_MAX; i++, time += ENEMY_SPAWN_DELAY_02)
 	{
 		TrapFactory03(i, time);
 	}
@@ -493,27 +481,6 @@ void ResetAllEnemyRE(void)
 }
 
 //=============================================================================
-// パラメータ設定
-//============================================================================='
-void SetParameter01(void)
-{
-	int i = 0;
-	int j = 60;
-
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j);
-}
-
-//=============================================================================
 // エネミー生成
 //============================================================================='
 void TrapFactory03(int no, int apr)
@@ -522,6 +489,9 @@ void TrapFactory03(int no, int apr)
 
 	EnemyHP *EnemyHP = GetEnemyHP(no);
 	Vector3 tempPos;
+	
+	// 回転
+	enemy->rot.y = 0.0;
 
 	// 出現タイミング
 	enemy->apr = apr;
@@ -615,6 +585,7 @@ void TF_Type(int no)
 	EnemyDB = GetEnemyDB(e->type);
 	e->hp = EnemyDB->GetHP();
 	e->score = EnemyDB->GetScore();
+	e->bonus = EnemyDB->GetBonus();
 	
 }
 
@@ -654,35 +625,63 @@ void TF_Pos(int no)
 }
 
 //=============================================================================
-// 稼働時間検査
-//============================================================================='
-void CheckUptime(int no)
+// 撃破エフェクト
+//=============================================================================
+void DefeatEnemyREEfx(int no)
 {
-	ENEMY *e = GetEnemyRE(0);
+	ENEMY *enemy = GetEnemyRE(no);
 
-	int Uptime = -1;
+	const int uptime = ENEMY_DEFEAT_DELAY;
+	const int animeStart = 0;
+	const int animeEnd = 18;
 
-	switch ((e + no)->status)
+
+	if (enemy->status == E_STATUS_DEFEATED)
 	{
-	case 0:
-		break;
-	case E_STATUS_NORMAL:
-		break;
-	case E_STATUS_DEFEATED:
-		Uptime = 120;
-
-		if ((e + no)->timer >= Uptime)
+		// アニメーション
+		if (enemy->timer >= animeStart &&
+			enemy->timer < animeEnd)
 		{
-			VanisnEnenyRE(no);
+			// 回転
+			enemy->rot.y += (360 / animeEnd) * (D3DX_PI / 180);
+
+			// 角度修正
+			if (enemy->rot.y >= 90 * (D3DX_PI / 180))
+			{
+				enemy->rot.y = -(90 * (D3DX_PI / 180));
+			}
 		}
 
-		break;
-	default:
-		break;
+		if (enemy->timer == animeEnd)
+		{
+			// 角度修正
+			enemy->rot.y = 0;
+		}
+		
+		// テクスチャ変更
+		if (enemy->timer == int(animeEnd / 2))
+		{
+			EnemyRE[no].ChangeTexture(0, 1, 1, 2);
+		}
+
+		if (GetFiver() == FALSE)
+		{
+			if (enemy->timer >= uptime)
+			{
+				VanisnEnenyRE(no);
+			}
+		}
+		else if (GetFiver() == TRUE)
+		{
+			if (enemy->timer >= ENEMY_DEFEAT_FEVER)
+			{
+				VanisnEnenyRE(no);
+			}
+		}
+
+		// タイマーカウントアップ
+		enemy->timer++;
 	}
-
-
-
 
 }
 

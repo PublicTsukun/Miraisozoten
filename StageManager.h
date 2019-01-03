@@ -48,4 +48,6 @@ STAGE *GetStage(void);
 void InitStage(void);
 void UpdateStage(void);
 
+void GameStart(void);
+
 #endif

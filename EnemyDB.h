@@ -15,13 +15,16 @@ class EnemyDB
 private:
 	int hp;
 	int score;
+	float bonus;
 	
 public:
 	void SetHP(int hp);
 	void SetScore(int score);
+	void SetBonus(float bonus);
 
 	int GetHP(void);
 	int GetScore(void);
+	float GetBonus(void);
 };
 
 //*****************************************************************************

@@ -81,10 +81,24 @@ void TesterDC(void)
 //=============================================================================
 void TesterAtk(void)
 {
+	ENEMY *enemy = GetEnemyRE(0);
+
 	if (GetKeyboardTrigger(DIK_A))
 	{
 		TesterAtkEnemyRE();
 	}
+
+	if (GetKeyboardPress(DIK_NUMPAD3))
+	{
+		enemy->rot.y += 6 * (D3DX_PI / 180);
+	}
+
+	if (enemy->rot.y >= 90 * (D3DX_PI / 180))
+	{
+		enemy->rot.y = -(90 * (D3DX_PI / 180));
+	}
+
+	PrintDebugProcess("(%f)", enemy->rot.y);
 }
 
 //=============================================================================

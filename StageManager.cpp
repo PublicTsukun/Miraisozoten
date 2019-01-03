@@ -16,6 +16,8 @@
 
 #include "DefeatCounter.h"
 
+#include "S-Editor.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -72,9 +74,9 @@ void InitStage(void)
 	s->timer = 0;
 	s->nextStage = -1;
 
-	s->status = STAGE_STATUS_NORMAL;
+	s->status = STAGE_STATUS_NULL;
 
-	SetEnemyRE(s->timer + 180);
+	SetEnemyRE(s->timer);
 }
 
 //=============================================================================
@@ -94,7 +96,7 @@ void UpdateStage(void)
 	CountUpTimer();
 
 	//PrintDebugProcess("stage status: %d\n", stage->status);
-	//PrintDebugProcess("stage timer: %d\n", stage->timer);
+	PrintDebugProcess("stage timer: %d\n", stage->timer);
 	//PrintDebugProcess("stage next: %d\n", stage->nextStage);
 
 }
@@ -130,14 +132,14 @@ void CheckChangeStage(void)
 
 	STAGE *stage = GetStage();
 
-	if (CheckDefeat == 1 &&
-		stage->no == 0)
+	if (CheckDefeat == STAGE_NORMA_01 &&
+		stage->no == STAGE_01_AKIBA)
 	{
 		NextStageEfx();
 	}
 
-	if (CheckDefeat == 2 &&
-		stage->no == 1)
+	if (CheckDefeat == STAGE_NORMA_02 &&
+		stage->no == STAGE_02_USA)
 	{
 		NextStageEfx();
 	}
@@ -147,7 +149,7 @@ void CheckChangeStage(void)
 		NextStage();
 	}
 
-	if (stage->timer >= 5400)
+	if (stage->timer >= STAGE_TIME)
 	{
 		GameOver();
 	}
@@ -216,4 +218,15 @@ void CountUpTimer(void)
 	{
 		stage->timer++;
 	}
+}
+
+//=============================================================================
+// ゲームスタート
+//=============================================================================
+void GameStart(void)
+{
+	STAGE *stage = GetStage();
+
+	stage->status = STAGE_STATUS_NORMAL;
+
 }

@@ -273,7 +273,7 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			// 到達所要距離の正規化
 			//(v + i)->nor = (Tgt - Self) / float((v + i)->dura);
 
-			(v + i)->nor = (Tgt - Self) / (v + i)->dist * 32.0f;
+			(v + i)->nor = (Tgt - Self) / float((v + i)->dist * 32.0f);
 
 
 			// 速度（未使用）
@@ -329,13 +329,6 @@ void VanishVoiceten(int no)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	//if ((v + no)->timer >= (v + no)->dura)
-	//{
-
-	//}
-
-
-
 	if ((v + no)->pos.z >= 2000.0f ||
 		(v + no)->pos.y <= 0.0f)
 	{
@@ -350,8 +343,6 @@ void VanishVoiceten(int no)
 		Voiceten[no].LoadObjectStatus((v + no)->pos);
 
 	}
-
-
 
 }
 
