@@ -11,10 +11,7 @@
 
 #include "enemyRE.h"
 #include "DefeatCounter.h"
-
-
-
-
+#include "EnemyPosData.h"
 
 //=============================================================================
 // DefeatCounter
@@ -76,5 +73,33 @@ void TesterDC(void)
 	if (GetKeyboardTrigger(DIK_NUMPAD8))
 	{
 		(DefeatCounter + E_TYPE_UFO)->CountUp();
+	}
+}
+
+//=============================================================================
+// DeirectAttack
+//=============================================================================
+void TesterAtk(void)
+{
+	if (GetKeyboardTrigger(DIK_A))
+	{
+		TesterAtkEnemyRE();
+	}
+}
+
+//=============================================================================
+// PosData
+//=============================================================================
+void TesterPD(void)
+{
+	ENEMY *enemy = GetEnemyRE(0);
+	PrintDebugProcess("E PosData: %d\n", enemy->posData);
+
+	EnemyPosData *ePosData = GetEnemyPosData(0);
+
+	for (int i = 0; i < ENEMYPOS_MAX; i++)
+	{
+		PrintDebugProcess("PosData: %d\n", (ePosData + i)->GetUse());
+		
 	}
 }

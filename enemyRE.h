@@ -29,6 +29,8 @@ typedef struct
 	float hei;		// size Y
 	//float wid;		// size Z
 
+	int posData;
+
 	int apr;		// 出現タイミング（再）
 
 	int status;		// 状態
@@ -78,5 +80,7 @@ void ResetAllEnemyRE(void);
 
 // テスト用
 void VanisnAllEnenyRE(void);
+void TesterAtkEnemyRE(void);
+
 
 #endif

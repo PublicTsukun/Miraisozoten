@@ -26,6 +26,8 @@
 #include "EnemyPosData.h"
 #include "EnemyHP.h"
 
+#include "DefeatCounter.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -160,6 +162,8 @@ void InitEnemyRE(void)
 		(e + i)->use = FALSE;
 		(e + i)->pos = Vector3(0.0f, float(size.y / 2), 0.0f);
 		(e + i)->rot = Vector3(0.0f, 0.0f, 0.0f);
+
+		(e + i)->posData = -1;
 
 		(e + i)->timer = 0;
 
@@ -347,22 +351,10 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	}
 	
 	// 撃破判定
-	if ((e + Eno)->hp <= 0 &&
-		(e + Eno)->status == E_STATUS_NORMAL)
+	if ((e + Eno)->hp <= 0)
 	{
 		DefeatEnemyRE(Eno);
 	}
-	else
-	{
-#ifdef _DEBUG
-		// スコアアップ
-		AddScore(ENEMY_SCOREBONUS);
-#endif
-		// ゲージアップ
-		AddGage(ENEMY_GAUGEBONUS);
-
-	}
-
 }
 
 //=============================================================================
@@ -372,6 +364,7 @@ void DefeatEnemyRE(int no)
 {
 	ENEMY *e = GetEnemyRE(0);
 	STAGE *s = GetStage();
+	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
 
 	// 状態変更
 	(e + no)->status = E_STATUS_DEFEATED;
@@ -392,9 +385,7 @@ void DefeatEnemyRE(int no)
 	AddGage(ENEMY_D_GAUGEBONUS);
 
 	// 撃破数カウントアップ
-
-	// 再生成
-	TrapFactory03(no, s->timer + 120);
+	(DefeatCounter + (e + no)->type)->CountUp();
 
 }
 
@@ -405,15 +396,17 @@ void VanisnEnenyRE(int no)
 {
 	ENEMY *e = GetEnemyRE(0);
 	EnemyPosData *ePosData = GetEnemyPosData(0);
+	STAGE *stage = GetStage();
 
 	// 消滅
 	(e + no)->use = FALSE;
-	(ePosData + no)->SetUse(false);
 
-	// 初期化
-	(e + no)->timer = 0;
-	(e + no)->apr = -1;
-	(e + no)->status = E_STATUS_NORMAL;	
+	(ePosData + ((e + no)->posData))->SetUse(false);
+	(e + no)->posData = -1;
+
+	// 再生成
+	TrapFactory03(no, stage->timer);
+
 }
 
 //=============================================================================
@@ -463,12 +456,9 @@ void SetEnemyRE(int time)
 void EnemyREOnStage(int no)
 {
 	ENEMY *e = GetEnemyRE(0);
-	EnemyHP *EnemyHP = GetEnemyHP(0);
 
 	(e + no)->use = TRUE;
 	(e + no)->status = E_STATUS_NORMAL;
-
-	(EnemyHP + no)->Enable();
 }
 
 //=============================================================================
@@ -480,7 +470,7 @@ void ClearAllEnemyRE(void)
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		if ((enemy + i)->status = E_STATUS_NORMAL)
+		if ((enemy + i)->status == E_STATUS_NORMAL)
 		{
 			(enemy + i)->use = FALSE;
 			(enemy + i)->status = E_STATUS_NULL;
@@ -494,9 +484,11 @@ void ClearAllEnemyRE(void)
 //=============================================================================
 void ResetAllEnemyRE(void)
 {
-	for (int i = 0; i < ENEMY_MAX; i++)
+	EnemyPosData *ePosData = GetEnemyPosData(0);
+
+	for (int i = 0; i < ENEMYPOS_MAX; i++)
 	{
-		VanisnEnenyRE(i);
+		(ePosData + i)->SetUse(false);
 	}
 }
 
@@ -526,9 +518,16 @@ void SetParameter01(void)
 //============================================================================='
 void TrapFactory03(int no, int apr)
 {
+	ENEMY *enemy = GetEnemyRE(no);
+
+	EnemyHP *EnemyHP = GetEnemyHP(no);
+	Vector3 tempPos;
+
 	// 出現タイミング
-	ENEMY *e = GetEnemyRE(no);
-	e->apr = apr;
+	enemy->apr = apr;
+
+	// タイマー
+	enemy->timer = 0;
 
 	// タイプ
 	TF_Type(no);
@@ -537,14 +536,15 @@ void TrapFactory03(int no, int apr)
 	TF_Pos(no);
 
 	// パーツ・HPゲージ
-	EnemyHP *EnemyHP = GetEnemyHP(no);
-	Vector3 tempPos = e->pos;
+	//// 画像設定
+	SetEnemyHP(no);
 	//// 位置調整
+	tempPos = enemy->pos;
 	tempPos.x += -32.0f;
 	tempPos.y += -88.0f;
 	//// 位置設定
 	EnemyHP->LoadObjectStatus(tempPos);
-
+	
 }
 
 //=============================================================================
@@ -636,6 +636,8 @@ void TF_Pos(int no)
 		ePosData = GetEnemyPosData(tempP);
 	} while (ePosData->GetUse() == true);
 
+	e->posData = tempP;
+
 	e->pos.x = ePosData->GetPosX();
 	e->pos.z = ePosData->GetPosZ();
 	ePosData->SetUse(true);
@@ -682,4 +684,31 @@ void CheckUptime(int no)
 
 
 
+}
+
+//=============================================================================
+// テスト用
+//============================================================================='
+void TesterAtkEnemyRE(void)
+{
+	ENEMY *e = GetEnemyRE(0);
+
+	// ダメージ計算
+	if ((e + 0)->status == E_STATUS_NORMAL)
+	{
+		(e + 0)->hp -= 4;
+
+		// HP修正
+		if ((e + 0)->hp < 0)
+		{
+			(e + 0)->hp = 0;
+		}
+
+		// 撃破判定
+		if ((e + 0)->hp <= 0)
+		{
+			DefeatEnemyRE(0);
+		}
+
+	}
 }

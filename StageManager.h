@@ -36,8 +36,7 @@ typedef struct
 	int timeLimit[STAGE_MAX];
 
 	// èÛë‘êßå‰ån
-	bool freeze;
-	bool end;
+	int status;
 
 } STAGE;
 
@@ -48,8 +47,5 @@ STAGE *GetStage(void);
 
 void InitStage(void);
 void UpdateStage(void);
-
-void FreezeStage(void);
-void UnFreezeStage(void);
 
 #endif

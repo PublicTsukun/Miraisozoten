@@ -23,6 +23,15 @@
 //*****************************************************************************
 // 列挙型
 //*****************************************************************************
+enum EN_STAGE_STATUS
+{
+	STAGE_STATUS_NULL = 0,
+	STAGE_STATUS_NORMAL,
+	STAGE_STATUS_CHANGING,
+	STAGE_STATUS_END,
+
+};
+
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -63,10 +72,9 @@ void InitStage(void)
 	s->timer = 0;
 	s->nextStage = -1;
 
-	s->freeze = TRUE;
-	s->end = FALSE;
+	s->status = STAGE_STATUS_NORMAL;
 
-	SetEnemyRE(s->timer);
+	SetEnemyRE(s->timer + 180);
 }
 
 //=============================================================================
@@ -74,6 +82,8 @@ void InitStage(void)
 //=============================================================================
 void UpdateStage(void)
 {
+	STAGE *stage = GetStage();
+
 	// チェック
 	CheckChangeStage();
 
@@ -83,26 +93,10 @@ void UpdateStage(void)
 	// カウントアップタイマー
 	CountUpTimer();
 
-}
+	//PrintDebugProcess("stage status: %d\n", stage->status);
+	//PrintDebugProcess("stage timer: %d\n", stage->timer);
+	//PrintDebugProcess("stage next: %d\n", stage->nextStage);
 
-//=============================================================================
-// 凍結
-//=============================================================================
-void FreezeStage(void)
-{
-	STAGE *s = GetStage();
-
-	s->freeze = TRUE;
-}
-
-//=============================================================================
-// 解凍
-//=============================================================================
-void UnFreezeStage(void)
-{
-	STAGE *s = GetStage();
-
-	s->freeze = FALSE;
 }
 
 //=============================================================================
@@ -113,13 +107,17 @@ void EnemySpawner(void)
 	ENEMY *e = GetEnemyRE(0);
 	STAGE *s = GetStage();
 
-	for (int i = 0; i < ENEMY_MAX; i++)
+	if (s->status == STAGE_STATUS_NORMAL)
 	{
-		if (s->timer == (e + i)->apr)
+		for (int i = 0; i < ENEMY_MAX; i++)
 		{
-			EnemyREOnStage(i);
+			if (s->timer == (e + i)->apr)
+			{
+				EnemyREOnStage(i);
+			}
 		}
 	}
+
 }
 
 //=============================================================================
@@ -132,12 +130,14 @@ void CheckChangeStage(void)
 
 	STAGE *stage = GetStage();
 
-	if (CheckDefeat == 10)
+	if (CheckDefeat == 1 &&
+		stage->no == 0)
 	{
 		NextStageEfx();
 	}
 
-	if (CheckDefeat == 25)
+	if (CheckDefeat == 2 &&
+		stage->no == 1)
 	{
 		NextStageEfx();
 	}
@@ -161,9 +161,15 @@ void NextStageEfx(void)
 {
 	STAGE *stage = GetStage();
 
-	stage->nextStage = stage->timer + 120;
+	if (stage->status == STAGE_STATUS_NORMAL)
+	{
+		stage->status = STAGE_STATUS_CHANGING;
 
-	ClearAllEnemyRE();
+		stage->nextStage = stage->timer + 120;
+
+		ClearAllEnemyRE();
+	}
+
 }
 
 //=============================================================================
@@ -173,12 +179,19 @@ void NextStage(void)
 {
 	STAGE *stage = GetStage();
 
-	stage->no += 1;
-	stage->no %= 3;
-	SetFeildTex(stage->no);
+	if (stage->status == STAGE_STATUS_CHANGING)
+	{
+		stage->no += 1;
+		stage->no %= 3;
+		SetFeildTex(stage->no);
 
-	ResetAllEnemyRE();
-	SetEnemyRE(stage->timer);
+		ResetAllEnemyRE();
+		SetEnemyRE(stage->timer);
+
+		stage->status = STAGE_STATUS_NORMAL;
+		stage->nextStage = -1;
+	}
+
 }
 
 //=============================================================================
@@ -188,7 +201,7 @@ void GameOver(void)
 {
 	STAGE *stage = GetStage();
 
-	stage->end = true;
+	stage->status = STAGE_STATUS_END;
 }
 
 //=============================================================================
@@ -198,7 +211,8 @@ void CountUpTimer(void)
 {
 	STAGE *stage = GetStage();
 
-	if (stage->end != true)
+	if (stage->status == STAGE_STATUS_NORMAL ||
+		stage->status == STAGE_STATUS_CHANGING)
 	{
 		stage->timer++;
 	}

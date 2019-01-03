@@ -102,10 +102,12 @@ void UpdateWorkSon(void)
 		UpdateVLauncher();
 
 		#ifdef _DEBUG
-		TesterDC();
+		//TesterDC();
 		TestVL();
 		TestMB();
 		//TestCO();
+		TesterAtk();
+		TesterPD();
 		#endif
 		break;
 
