@@ -11,5 +11,7 @@
 // プロトタイプ宣言
 //*****************************************************************************
 void TesterDC(void);
+void TesterAtk(void);
+void TesterPD(void);
 
 #endif

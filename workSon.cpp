@@ -66,7 +66,6 @@ void UninitWorkSon(void)
 
 
 	case SCENE_GAME://タイトルで使ったソースのUninit
-		UninitStage();
 		break;
 
 
@@ -103,10 +102,12 @@ void UpdateWorkSon(void)
 		UpdateVLauncher();
 
 		#ifdef _DEBUG
-		TesterDC();
+		//TesterDC();
 		TestVL();
 		TestMB();
 		//TestCO();
+		TesterAtk();
+		TesterPD();
 		#endif
 		break;
 

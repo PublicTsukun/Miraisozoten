@@ -29,6 +29,8 @@ typedef struct
 	float hei;		// size Y
 	//float wid;		// size Z
 
+	int posData;
+
 	int apr;		// 出現タイミング（再）
 
 	int status;		// 状態
@@ -69,15 +71,16 @@ void UpdateEnemyRE(void);
 void DrawEnemyRE(void);
 ENEMY *GetEnemyRE(int no);
 
-// 登場／退場
+// 登場
+void SetEnemyRE(int time);
 void EnemyREOnStage(int no);
 
-// 撃破数
-int GetYouDefeated(void);
-void SetYouDefeated(int value);
-void ResetYouDefeated(void);
+void ClearAllEnemyRE(void);
+void ResetAllEnemyRE(void);
 
 // テスト用
 void VanisnAllEnenyRE(void);
+void TesterAtkEnemyRE(void);
+
 
 #endif

@@ -161,14 +161,6 @@ void UpdateEnemyHP(void)
 		if ((Enemy + i)->use == TRUE)
 		{
 			SetEnemyHP(i);
-
-			#ifdef _DEBUG
-			// テスト用
-			if (GetKeyboardTrigger(DIK_A))
-			{
-				(Enemy + i)->hp -= 2;
-			}
-			#endif
 		}
 	}
 }
