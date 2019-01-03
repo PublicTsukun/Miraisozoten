@@ -127,6 +127,8 @@ int g_score;
 
 bool excellentf;
 
+float DetailMove;
+int   DetailTimer;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -134,10 +136,8 @@ HRESULT InitResultlogo(void)
 {
 	DetailWindow.Init(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, D3DFMT_X8R8G8B8);
 	Detail.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, RS_X(0.6f/2.0f), RS_Y(0.6f/2.0f));
-
 	resultbg[0].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, TEXTURE_RESULTBG);
 	resultbg[1].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH*1.67f/ 2, SCREEN_HEIGHT*1.67/ 2, TEXTURE_RESULTBG);
-
 
 	for (int i = 0; i < NUM_PLACE; i++)
 	{
@@ -166,7 +166,8 @@ HRESULT InitResultlogo(void)
 	DetailCount = 0;
 
 	excellentf = false;
-
+	DetailMove = 0;
+	DetailTimer = 0;
 	for (int i = 0; i < DETAIL_MAX; i++)
 	{
 		ScoreDetail[i].ScoreInit(i);
@@ -195,7 +196,6 @@ void UninitResultlogo(void)
 
 	DetailWindow.Release();
 
-
 }
 
 //=============================================================================
@@ -220,8 +220,8 @@ void DrawResultlogo(void)
 
 
 		DetailWindow.EndDraw();
-
 		Detail.Draw(DetailWindow.GetTexture());
+
 }
 
 //=============================================================================
@@ -244,7 +244,6 @@ void UpdateResultlogo(void)
 	slotTimer++;				//タイマー加算
 
 	if (DetailCount == DETAIL_MAX && !slotStart)
-		//if (slotTimer >= 120)
 	{
 		slotStart = true;//一定時間でスロットスタート
 		slotTimer = 0;
@@ -323,8 +322,9 @@ void UpdateResultlogo(void)
 	//===========================================================================
 	//スコア詳細
 	//===========================================================================
-
-	if (GetKeyboardTrigger(DIK_RETURN) && ScoreDetail[0].DetailBg.GetPosition().x > SCREEN_CENTER_X)
+	DetailTimer++;
+	//if (GetKeyboardTrigger(DIK_RETURN) && ScoreDetail[0].DetailBg.GetPosition().x > SCREEN_CENTER_X)
+	if (DetailTimer == 120)
 	{
 		ScoreDetail[0].DetailBg.Move = true;
 	}
@@ -333,7 +333,7 @@ void UpdateResultlogo(void)
 	{
 		if (ScoreDetail[i].DetailBg.Move)
 		{
-			ScoreDetail[i].DetailBg.MoveX(-30.0);
+			ScoreDetail[i].DetailBg.MoveX(-15.0);
 
 		}
 
@@ -355,12 +355,19 @@ void UpdateResultlogo(void)
 
 		if (DrawCount >= 3)//3マイ出てきたらスクロール
 		{
+			DetailMove -= 4;
 			for (int j = 0; j < DETAIL_MAX; j++)
 			{
-				ScoreDetail[j].DetailBg.MoveY(-200.0);
+				ScoreDetail[j].DetailBg.MoveY(-4.0);
 
 			}
-			DrawCount--;
+
+			if (DetailMove == -200)
+			{
+				DetailMove = 0;
+				DrawCount--;
+
+			}
 
 		}
 
