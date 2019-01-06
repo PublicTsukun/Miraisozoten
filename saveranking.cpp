@@ -19,7 +19,6 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void SaveRankingSort();
 int Compare(const void *p, const void *q);
 
 //*****************************************************************************
@@ -29,50 +28,6 @@ int Compare(const void *p, const void *q);
 SAVERANKING			rankingWk[RANKING_MAX];				// ランキング格納ワーク
 int				rankCnt;							// 読み込んだランキングの数
 //BUF				bufWk[BUFC_MAX];
-
-//=============================================================================
-// ランキング処理
-//=============================================================================
-void SaveRanking(int score,long long name_num)
-{
-	// IDの最大値を抽出する
-	int max = rankingWk[0].id;	// id最大値格納用
-	for (int i = 1; i < RANKING_MAX-1 ; i++)
-	{
-		if (max < rankingWk[i].id)max = rankingWk[i].id;
-	}
-
-	//修正箇所１
-	//ここからの処理は6位ではなく5位に行う
-	//5位よりスコアがいい場合のみこの関数が呼ばれるため
-
-	// スコアを取得(一時的にスコアを6位にする)
-	rankingWk[SIXTH].score = score;//6位のスコアに今回のスコアをぶちこむ
-	rankingWk[SIXTH].id = max + 1;//IDは最大
-	for (int i = NAME_MAX - 1; i > 0; i--)
-	{
-		rankingWk[SIXTH].name[i][1] = name_num % 10;
-		name_num /= 10;
-		rankingWk[SIXTH].name[i][0] = name_num % 10;
-		name_num /= 10;
-	}
-
-	//修正箇所２
-	//if文は不要
-	//5位よりスコアがいい場合のみこの関数が呼ばれるため
-
-	// スコアをもとに5位のスコアと比較し、5位のスコアより低ければランキング更新しない
-	if (rankingWk[SIXTH].score >= rankingWk[FIFTH].score)
-	{	
-		SaveRankingSort();
-		WriteSaveRankingCsv();
-	}
-	// ランキングの表示
-	SAVERANKING *ranking = &rankingWk[0];	// ポインターを初期化
-	PrintDebugProcess("ID表示 : (%d)\n", ranking->id);
-	PrintDebugProcess("ランク表示 : (%d)\n", ranking->rank);
-	PrintDebugProcess("スコア表示 : (%d)\n", ranking->score);
-}
 
 
 //=============================================================================
@@ -174,13 +129,25 @@ void WriteSaveRankingCsv(void)
 //=============================================================================
 // ランキング更新処理(ソート)
 //=============================================================================
-void SaveRankingSort()
+bool SaveRankingSort(int score)
 {
+
+	// IDの最大値を抽出する
+	int max = rankingWk[0].id;	// id最大値格納用
+	for (int i = 1; i < RANKING_MAX - 1; i++)
+	{
+		if (max < rankingWk[i].id)max = rankingWk[i].id;
+	}
+
+	rankingWk[5].id = max+1;//6位に最大IDと
+	rankingWk[5].score = score;//今回取得したスコアを格納
+
+	//その後ソート
 	SAVERANKING *ranking = &rankingWk[0];					// ポインターを初期化
 	int num = sizeof rankingWk / sizeof(SAVERANKING);		// 要素数を求める
 	qsort(rankingWk, num, sizeof(SAVERANKING), Compare);	// クイックソート
 
-	// 順位を更新
+	//ソートが終わったら 順位を更新
 	for (int i = 0; i < RANKING_MAX; i++, ranking++)
 	{
 		ranking->rank = i + 1;
@@ -192,6 +159,15 @@ void SaveRankingSort()
 				rankingWk[i].rank = rankingWk[i - 1].rank;
 			}
 		}
+	}
+
+	if (rankingWk[5].score != score)//今回ランクインできたかどうかで返り値を変更
+	{
+		return true;//最下位が変わっていれば真　　
+	}
+	else
+	{
+		return false;//変わっていなければ偽
 	}
 }
 //============================================================================

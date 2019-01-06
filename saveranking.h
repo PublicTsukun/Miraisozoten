@@ -58,7 +58,8 @@ SAVERANKING *GetSaveRanking(int no);
 int GetSaveRankingCnt(void);
 void WriteSaveRankingCsv(void);
 void LoadSaveRankingCsv(void);
-void SaveRanking(int score,long long name_num);
+void SaveRanking();
 void DebugRank(void);
+bool SaveRankingSort(int score);
 
 #endif

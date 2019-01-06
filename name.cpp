@@ -215,7 +215,7 @@ HRESULT InitName(void)
 			ranking[i].score[t].Init(NAME_POS_X + ((NAME_SCORE_SIZE*2)*(NAME_MAX_NO+(t))), NAME_SCORE_POS_Y +((NAME_SCORE_SIZE*2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 			ranking[i].score[t].LoadTexture("data/TEXTURE/UI/ƒXƒRƒA”Žš.png");
 			int num;
-			num = (rankinfo->score / (int)(pow(10, 4-t)));
+			num = (rankinfo->score / (int)(pow(10, 5-t-1)));
 			num %= 10;
 			ranking[i].score[t].SetNumber(num);
 		}
