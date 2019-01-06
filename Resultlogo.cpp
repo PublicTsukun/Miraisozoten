@@ -13,6 +13,7 @@
 #include "GameSound.h"
 #include "SceneManager.h"
 #include "DefeatCounter.h"
+#include "GameSound.h"
 
 //=============================================================================
 // マクロ定義
@@ -323,8 +324,8 @@ void UpdateResultlogo(void)
 	//スコア詳細
 	//===========================================================================
 	DetailTimer++;
-	//if (GetKeyboardTrigger(DIK_RETURN) && ScoreDetail[0].DetailBg.GetPosition().x > SCREEN_CENTER_X)
-	if (DetailTimer == 120)
+
+	if (DetailTimer == 60)
 	{
 		ScoreDetail[0].DetailBg.Move = true;
 	}
@@ -342,7 +343,7 @@ void UpdateResultlogo(void)
 			&&ScoreDetail[i].DetailBg.Move == true)
 		{
 			ScoreDetail[i].DetailBg.Move = false;
-
+			PlaySE(SLOT_STOP);
 			if (ScoreDetail[i + 1].DetailBg.Use && ((i + 1) < DETAIL_MAX))
 			{
 				ScoreDetail[i + 1].DetailBg.Move = true;

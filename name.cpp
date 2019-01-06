@@ -206,7 +206,7 @@ HRESULT InitName(void)
 
 	LoadSaveRankingCsv();
 	SAVERANKING *rankinfo = GetSaveRanking(0);
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 5; i++,rankinfo++)
 	{
 		ranking[i].rank.Init(NAME_SCORE_SIZE + 40, NAME_SCORE_POS_Y + ((NAME_SCORE_SIZE * 2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 		ranking[i].rank.LoadTexture(ranktex[rankinfo->rank-1]);
@@ -215,7 +215,7 @@ HRESULT InitName(void)
 			ranking[i].score[t].Init(NAME_POS_X + ((NAME_SCORE_SIZE*2)*(NAME_MAX_NO+(t))), NAME_SCORE_POS_Y +((NAME_SCORE_SIZE*2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 			ranking[i].score[t].LoadTexture("data/TEXTURE/UI/ƒXƒRƒA”Žš.png");
 			int num;
-			num = (rankinfo->score / (int)(pow(10, i)));
+			num = (rankinfo->score / (int)(pow(10, 4-t)));
 			num %= 10;
 			ranking[i].score[t].SetNumber(num);
 		}
@@ -476,7 +476,10 @@ defalt:
 	}
 
 
-
+	if (GetKeyboardTrigger(DIK_LSHIFT))
+	{
+		WriteSaveRankingCsv();
+	}
 }
 
 
