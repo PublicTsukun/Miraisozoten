@@ -121,6 +121,16 @@
 #define NAME_POS_X	(SCREEN_CENTER_X-(SENTAKUMOJI_WIDTH*4))//(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
 #define NAME_POS_Y	(170.0f) //(SCREEN_CENTER_Y)
 #define RANKING_NO	(5)		// ランキング画面に表示される名前の数
+
+
+// 間隔調整用
+#define NAME_MAX_NO (5)
+#define SCORE_MAX_NO (5)
+#define NAME_POS_X (210.0)
+#define NAME_POS_Y (70.0)
+#define NAME_SCORE_POS_Y (150)		// 名前とスコアは同じ高さ
+#define NAME_SPACE_01	(50)
+#define NAME_SCORE_SIZE (50)
 //*****************************************************************************
 // 構造体定義
 //*****************************************************************************
@@ -198,11 +208,11 @@ HRESULT InitName(void)
 	SAVERANKING *rankinfo = GetSaveRanking(0);
 	for (int i = 0; i < 5; i++)
 	{
-		ranking[i].rank.Init(SCREEN_CENTER_X,SCREEN_CENTER_Y, NAME_WIDTH, NAME_WIDTH);
+		ranking[i].rank.Init(NAME_SCORE_SIZE + 40, NAME_SCORE_POS_Y + ((NAME_SCORE_SIZE * 2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 		ranking[i].rank.LoadTexture(ranktex[rankinfo->rank-1]);
 		for (int t = 0; t < 5; t++)
-		{
-			ranking[i].score[t].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, NAME_WIDTH, NAME_WIDTH);
+		{	// スコア描画
+			ranking[i].score[t].Init(NAME_POS_X + ((NAME_SCORE_SIZE*2)*(NAME_MAX_NO+(t))), NAME_SCORE_POS_Y +((NAME_SCORE_SIZE*2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 			ranking[i].score[t].LoadTexture("data/TEXTURE/UI/スコア数字.png");
 			int num;
 			num = (rankinfo->score / (int)(pow(10, i)));
@@ -210,9 +220,10 @@ HRESULT InitName(void)
 			ranking[i].score[t].SetNumber(num);
 		}
 
-		for (int agmon = 0; agmon < 5; agmon++)
+		// 名前描画
+		for (int agmon = 0; agmon < NAME_MAX_NO; agmon++)
 		{
-			ranking[i].name[agmon].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, NAME_WIDTH, NAME_WIDTH);
+			ranking[i].name[agmon].Init(NAME_POS_X+((NAME_SCORE_SIZE*2)*agmon), NAME_SCORE_POS_Y +((NAME_SCORE_SIZE*2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 			ranking[i].name[agmon].LoadTexture(NAME_TEX);
 			int gabmon = rankinfo->name[agmon][0]*10+rankinfo->name[agmon][1];
 			ranking[i].name[agmon].SetTexture(gabmon, 10, 10);
