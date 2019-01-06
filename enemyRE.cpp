@@ -24,16 +24,15 @@
 
 #include "EnemyDB.h"
 #include "EnemyPosData.h"
+#include "EnemyHP.h"
+
+#include "DefeatCounter.h"
+
+#include "S-Editor.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define ENEMY_HP			(2)		// 初期化用
-#define ENEMY_SCOREBONUS	(1)
-#define ENEMY_GAUGEBONUS	(50)
-#define ENEMY_D_SCOREBONUS	(10)
-#define ENEMY_D_GAUGEBONUS	(200)
-
 #define ENEMY_COLI_LEN		(48.0f)	// 当たり判定 x
 #define ENEMY_COLI_HEI		(48.0f)	// 当たり判定 y
 #define ENEMY_COLI_WID		(10.0f)	// 当たり判定 z
@@ -97,15 +96,6 @@ enum E_STATUS
 	E_STATUS_MAX,
 };
 
-enum NUM_STAGE
-{
-	STAGE_01_AKIBA = 0,
-	STAGE_02_USA,
-	STAGE_03_SPACE,
-
-	NUM_STAGE_MAX,
-};
-
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -120,61 +110,35 @@ void VanisnEnenyRE(int no);
 //=================
 // 生成
 //=================
-void SetParameter00(void);				
-void SetParameter01(void);
-
-void TrapFactory(int apr, int num);
-void TrapFactory02(int apr, int num);
 void TrapFactory03(int no, int apr);
 
 void TF_Type(int no);
 void TF_Pos(int no);
 
-void SetType(int ENo, int type);
-void SetPos(int ENo, float x, float y, float z);
-
-bool SetPosCheckX(float x);
-
 //=================
 // 演出
 //=================
-void CheckUptime(int no);
-
-//=================
-// テスト用
-//=================
-void TestEnemyRE(void);
+void DefeatEnemyREEfx(int no);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 char *FileEnemy[] =
 {
-	"data/TEXTURE/Character/01_01_child.png",
-	"data/TEXTURE/Character/01_02_maid.png",
-	"data/TEXTURE/Character/01_03_otaku.png",
-	"data/TEXTURE/Character/01_01_child.png",
-	"data/TEXTURE/Character/01_02_maid.png",
-	"data/TEXTURE/Character/01_03_otaku.png",
-	"data/TEXTURE/Character/01_01_child.png",
-	"data/TEXTURE/Character/01_02_maid.png",
-	"data/TEXTURE/Character/01_03_otaku.png",
-};
-
-// Enemy HP Database、E_TYPEに対応
-int EnemyHp[] =
-{
-	5,		// CHILD
-	50,		// MAID
-	15,		// OTAKU
+	"data/TEXTURE/Character/00_child.png",
+	"data/TEXTURE/Character/01_maid.png",
+	"data/TEXTURE/Character/02_otaku.png",
+	"data/TEXTURE/Character/03_aa.png",
+	"data/TEXTURE/Character/04_jk.png",
+	"data/TEXTURE/Character/05_american.png",
+	"data/TEXTURE/Character/06_astronaut.png",
+	"data/TEXTURE/Character/07_alien.png",
+	"data/TEXTURE/Character/08_ufo.png",
 };
 
 // ワーク
 ENEMY EnemyREWk[ENEMY_MAX];		
 CEnemyRE EnemyRE[ENEMY_MAX];
-
-// 撃破数
-int YOUDEFEATED;
 
 //=============================================================================
 // 初期化処理
@@ -193,28 +157,22 @@ void InitEnemyRE(void)
 		(e + i)->pos = Vector3(0.0f, float(size.y / 2), 0.0f);
 		(e + i)->rot = Vector3(0.0f, 0.0f, 0.0f);
 
+		(e + i)->posData = -1;
+
 		(e + i)->timer = 0;
 
 		(e + i)->apr = -1;
 
 		(e + i)->type = 0;
 
-		(e + i)->hp = ENEMY_HP;
+		(e + i)->hp = 0;
 
 		(e + i)->status = 0;
 
 		(e + i)->score = 0;
 
 		EnemyRE[i].Init((e + i)->pos, size);
-		EnemyRE[i].LoadTexture(FileEnemy[0]);
-
 	}
-
-	ResetYouDefeated();
-
-	//SetParameter00();
-	SetParameter01();
-
 }
 
 //=============================================================================
@@ -236,20 +194,6 @@ void UpdateEnemyRE(void)
 {
 	ENEMY *e = GetEnemyRE(0);
 
-#ifdef _DEBUG
-
-	TestEnemyRE();
-
-	PrintDebugProcess("撃破数: %d\n", YOUDEFEATED);
-
-
-
-
-#endif
-
-			// 衝突判定
-			CollisionEnemyRE();
-
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		if ((e + i)->use == TRUE)
@@ -257,12 +201,6 @@ void UpdateEnemyRE(void)
 			// 更新処理（位置、回転）
 			EnemyRE[i].LoadObjectStatus((e + i)->pos, (e + i)->rot);
 			
-			// タイマーカウントアップ
-			(e + i)->timer++;
-
-			// 稼働時間検査
-			CheckUptime(i);
-
 			switch ((e + i)->status)
 			{
 			case E_STATUS_NULL:
@@ -271,31 +209,21 @@ void UpdateEnemyRE(void)
 			case E_STATUS_NORMAL:
 
 				// 衝突判定
-				//CollisionEnemyRE();
+				CollisionEnemyRE();
 				break;
 
 			case E_STATUS_DEFEATED:
 
 				// アニメーション
+				DefeatEnemyREEfx(i);
 				break;
 
 			default:
 				break;
 
 			}
-
-
 		}
 	}
-
-	PrintDebugProcess("0.x: %f\n", (e + 0)->pos.x);
-	PrintDebugProcess("0.z: %f\n", (e + 0)->pos.z);
-	PrintDebugProcess("0.use: %d\n", (e + 0)->use);
-	PrintDebugProcess("0.type: %d\n", (e + 0)->type);
-	PrintDebugProcess("0.apr: %d\n", (e + 0)->apr);
-	PrintDebugProcess("0.hp: %d\n", (e + 0)->hp);
-	PrintDebugProcess("0.score: %d\n", (e + 0)->score);
-
 }
 
 //=============================================================================
@@ -405,23 +333,17 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	// ダメージ計算
 	(e + Eno)->hp -= (v + Vno)->atk;
 
+	// HP修正
+	if ((e + Eno)->hp < 0)
+	{
+		(e + Eno)->hp = 0;
+	}
+	
 	// 撃破判定
-	if ((e + Eno)->hp <= 0 &&
-		(e + Eno)->status == E_STATUS_NORMAL)
+	if ((e + Eno)->hp <= 0)
 	{
 		DefeatEnemyRE(Eno);
 	}
-	else
-	{
-#ifdef _DEBUG
-		// スコアアップ
-		AddScore(ENEMY_SCOREBONUS);
-#endif
-		// ゲージアップ
-		AddGage(ENEMY_GAUGEBONUS);
-
-	}
-
 }
 
 //=============================================================================
@@ -429,32 +351,29 @@ void DamageDealEnemyRE(int Eno, int Vno)
 //=============================================================================
 void DefeatEnemyRE(int no)
 {
-	ENEMY *e = GetEnemyRE(0);
-	STAGE *s = GetStage();
+	ENEMY *enemy = GetEnemyRE(no);
+	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
 
 	// 状態変更
-	(e + no)->status = E_STATUS_DEFEATED;
+	enemy->status = E_STATUS_DEFEATED;
 
 	// タイマー再設定
-	(e + no)->timer = 0;
+	enemy->timer = 0;
 
 	// テクスチャ変更
-	EnemyRE[no].ChangeTexture(0, 1, 1, 2);
+	//EnemyRE[no].ChangeTexture(0, 1, 1, 2);
 
 	// 音声
 	PlaySE(VIGOR);
 
 	// スコアアップ
-	AddScore((e + no)->score);
+	AddScore(enemy->score);
 
-	// ゲージアップ
-	AddGage(ENEMY_D_GAUGEBONUS);
+	// ボーナスゲージアップ
+	AddGage(int(enemy->bonus));
 
 	// 撃破数カウントアップ
-	SetYouDefeated(1);
-
-	// 再生成
-	TrapFactory02((s->timer + 120), (e + no)->type);
+	(DefeatCounter + enemy->type)->CountUp();
 
 }
 
@@ -465,16 +384,17 @@ void VanisnEnenyRE(int no)
 {
 	ENEMY *e = GetEnemyRE(0);
 	EnemyPosData *ePosData = GetEnemyPosData(0);
+	STAGE *stage = GetStage();
 
 	// 消滅
 	(e + no)->use = FALSE;
-	(ePosData + no)->SetUse(false);
 
-	// 初期化
-	(e + no)->hp = ENEMY_HP;
-	(e + no)->timer = 0;
-	(e + no)->apr = -1;
-	(e + no)->status = E_STATUS_NORMAL;	
+	(ePosData + ((e + no)->posData))->SetUse(false);
+	(e + no)->posData = -1;
+
+	// 再生成
+	TrapFactory03(no, stage->timer);
+
 }
 
 //=============================================================================
@@ -504,6 +424,21 @@ void VanisnAllEnenyRE(void)
 }
 
 //=============================================================================
+// 設置
+//=============================================================================
+void SetEnemyRE(int time)
+{
+	ENEMY *enemy = GetEnemyRE(0);
+
+	time += ENEMY_SPAWN_DELAY_01;
+
+	for (int i = 0; i < ENEMY_MAX; i++, time += ENEMY_SPAWN_DELAY_02)
+	{
+		TrapFactory03(i, time);
+	}
+}
+
+//=============================================================================
 // 登場
 //=============================================================================
 void EnemyREOnStage(int no)
@@ -515,539 +450,34 @@ void EnemyREOnStage(int no)
 }
 
 //=============================================================================
-// 撃破数取得
+// クリア（ステージ遷移の演出）
 //=============================================================================
-int GetYouDefeated(void)
+void ClearAllEnemyRE(void)
 {
-	return YOUDEFEATED;
-}
-
-//=============================================================================
-// 撃破数設定
-//=============================================================================
-void SetYouDefeated(int value)
-{
-	YOUDEFEATED += value;
-}
-
-//=============================================================================
-// 撃破数リセット
-//=============================================================================
-void ResetYouDefeated(void) 
-{
-	SetYouDefeated(0);
-}
-
-//=============================================================================
-// パラメータ設定
-//============================================================================='
-void SetParameter00(void)
-{
-	//TrapFactory02(60, 0);
-	//TrapFactory02(90, 1);
-	//TrapFactory02(120, 2);
-	//TrapFactory02(150, 0);
-	//TrapFactory02(180, 2);
-	//TrapFactory02(210, 0);
-	//TrapFactory02(240, 1);
-	//TrapFactory02(270, 2);
-	//TrapFactory02(300, 0);
-	//TrapFactory02(330, 2);
-
-
-	ENEMY *e = GetEnemyRE(0);
-
-	int i = 0;
-	float j = -280.0f;
-	float z1 = 0.0f;
-
-	SetType(i, 0);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-	
-
-	SetType(i, 0);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, 0);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, 0);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, 0);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, 0);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	z1 = 100.0f;
-	j = -280.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	z1 = 200.0f;
-	j = -280.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	z1 = 300.0f;
-	j = -280.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	z1 = 400.0f;
-	j = -280.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	z1 = 500.0f;
-	j = -280.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	z1 = 600.0f;
-	j = -280.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	SetType(i, E_TYPE_OTAKU);
-	SetPos(i, j, 100, z1);
-	(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//SetType(i, E_TYPE_OTAKU);
-	//SetPos(i, j, 100, z1);
-	//(e + i)->apr = 0;
-	i++; j += 100.0f;
-
-	//float z2 = 600.0f;
-
-	//SetType(7, E_TYPE_OTAKU);
-	//SetPos(7, -280, 100, z2);
-	//(e + 7)->apr = 0;
-
-	//SetType(8, E_TYPE_OTAKU);
-	//SetPos(8, -180, 100, z2);
-	//(e + 8)->apr = 0;
-
-	//SetType(9, E_TYPE_OTAKU);
-	//SetPos(9, -80, 100, z2);
-	//(e + 9)->apr = 0;
-
-	//SetType(10, E_TYPE_OTAKU);
-	//SetPos(10, 20, 100, z2);
-	//(e + 10)->apr = 0;
-
-	//SetType(11, E_TYPE_OTAKU);
-	//SetPos(11, 120, 100, z2);
-	//(e + 11)->apr = 0;
-
-	//SetType(12, E_TYPE_OTAKU);
-	//SetPos(12, 220, 100, z2);
-	//(e + 12)->apr = 0;
-
-	//SetType(13, E_TYPE_OTAKU);
-	//SetPos(13, 320, 100, z2);
-	//(e + 13)->apr = 0;
-
-
-
-}
-
-//=============================================================================
-// パラメータ設定（ここで調整）
-//============================================================================='
-void SetParameter01(void)
-{
-	//TrapFactory02(60, 0);
-	//TrapFactory02(90, 1);
-	//TrapFactory02(120, 2);
-	//TrapFactory02(150, 0);
-	//TrapFactory02(180, 2);
-	//TrapFactory02(210, 0);
-	//TrapFactory02(240, 1);
-	//TrapFactory02(270, 2);
-	//TrapFactory02(300, 0);
-	//TrapFactory02(330, 2);
-
-	int i = 0;
-	int j = 60;
-
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j); i++; j += 30;
-	TrapFactory03(i, j);
-}
-
-//=============================================================================
-// テクスチャタイプ設定
-//============================================================================='
-void SetType(int ENo, int type)
-{
-	ENEMY *e = GetEnemyRE(0);
-
-	EnemyRE[ENo].LoadTexture(FileEnemy[type]);
-	EnemyRE[ENo].SetTexture();
-
-}
-
-//=============================================================================
-// 位置設定
-//============================================================================='
-void SetPos(int ENo, float x, float y, float z)
-{
-	ENEMY *e = GetEnemyRE(0);
-
-	(e + ENo)->pos = Vector3(x, y, z);
-	EnemyRE[ENo].LoadObjectStatus((e + ENo)->pos, (e + ENo)->rot);
-
-}
-
-bool SetPosCheckX(float x)
-{
-	ENEMY *e = GetEnemyRE(0);
-
-	float v = 40.0f;
-	bool check = FALSE;
+	ENEMY *enemy = GetEnemyRE(0);
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		if ((e + i)->use == TRUE)
+		if ((enemy + i)->status == E_STATUS_NORMAL)
 		{
-			if (x <= ((e + i)->pos.x + v) &&
-				x >= ((e + i)->pos.x - v)
-				)
-			{
-				check = TRUE;
-				break;
-			}
-			
+			(enemy + i)->use = FALSE;
+			(enemy + i)->status = E_STATUS_NULL;
 		}
 	}
 
-	return check;
 }
 
 //=============================================================================
-// エネミー生成（応急措置）
-//============================================================================='
-void TrapFactory(int apr, int num)
+// パラメータリセット
+//=============================================================================
+void ResetAllEnemyRE(void)
 {
-	ENEMY *e = GetEnemyRE(0);
+	EnemyPosData *ePosData = GetEnemyPosData(0);
 
-	int type;
-	float x;
-	float z;
-
-	// 未使用のオブジェクトを捜す
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i < ENEMYPOS_MAX; i++)
 	{
-		for (int j = 0; j < ENEMY_MAX; j++)
-		{
-			if ((e + j)->apr == -1)
-			{
-				(e + j)->apr = apr;
-
-				// 種類設定
-				type = rand() % E_TYPE_MAX;
-				SetType(j, type);		
-
-				// 位置設定
-				x = float(rand() % 560 - 280);
-				z = float(rand() % 600);
-				SetPos(j, x, 100, z);	
-
-				// HP設定
-				switch (type)
-				{
-				case E_TYPE_CHILD:
-					(e + j)->hp = EnemyHp[E_TYPE_CHILD];
-					(e + j)->score = 500;
-					break;
-				case E_TYPE_MAID:
-					(e + j)->hp = EnemyHp[E_TYPE_MAID];
-					(e + j)->score = 100;
-					break;
-				case E_TYPE_OTAKU:
-					(e + j)->hp = EnemyHp[E_TYPE_OTAKU];
-					(e + j)->score = 1000;
-					break;
-				default:
-					(e + j)->hp = ENEMY_HP;
-					break;
-				}
-
-				break;
-			}
-		}
+		(ePosData + i)->SetUse(false);
 	}
-
-}
-
-//=============================================================================
-// エネミー生成（応急措置）
-//============================================================================='
-void TrapFactory02(int apr, int num)
-{
-	ENEMY *e = GetEnemyRE(0);
-
-	float x = 0.0f;
-	float z = 0.0f;
-
-	// 未使用のオブジェクトを捜す
-		for (int j = 0; j < ENEMY_MAX; j++)
-		{
-			if ((e + j)->apr == -1)
-			{
-				(e + j)->apr = apr;
-
-				// 種類設定
-				(e + j)->type = num;
-				SetType(j, (e + j)->type);
-
-				// 位置設定
-				x = float(rand() % 560 - 280);
-				z = float(rand() % 600);
-				SetPos(j, x, 100, z);
-
-				// HP設定
-				switch ((e + j)->type)
-				{
-				case E_TYPE_CHILD:
-					(e + j)->hp = EnemyHp[E_TYPE_CHILD];
-					(e + j)->score = 500;
-					break;
-				case E_TYPE_MAID:
-					(e + j)->hp = EnemyHp[E_TYPE_MAID];
-					(e + j)->score = 100;
-					break;
-				case E_TYPE_OTAKU:
-					(e + j)->hp = EnemyHp[E_TYPE_OTAKU];
-					(e + j)->score = 1000;
-					break;
-				default:
-					(e + j)->hp = ENEMY_HP;
-					(e + j)->score = 0;
-					break;
-				}
-
-				break;
-			}
-	}
-
 }
 
 //=============================================================================
@@ -1055,18 +485,40 @@ void TrapFactory02(int apr, int num)
 //============================================================================='
 void TrapFactory03(int no, int apr)
 {
-	ENEMY *e = GetEnemyRE(no);
-	e->apr = apr;
+	ENEMY *enemy = GetEnemyRE(no);
+
+	EnemyHP *EnemyHP = GetEnemyHP(no);
+	Vector3 tempPos;
+	
+	// 回転
+	enemy->rot.y = 0.0;
+
+	// 出現タイミング
+	enemy->apr = apr;
+
+	// タイマー
+	enemy->timer = 0;
 
 	// タイプ
 	TF_Type(no);
 
 	// 位置
 	TF_Pos(no);
+
+	// パーツ・HPゲージ
+	//// 画像設定
+	SetEnemyHP(no);
+	//// 位置調整
+	tempPos = enemy->pos;
+	tempPos.x += -32.0f;
+	tempPos.y += -88.0f;
+	//// 位置設定
+	EnemyHP->LoadObjectStatus(tempPos);
+	
 }
 
 //=============================================================================
-// タイプ設定
+// エネミー生成：タイプ設定
 //============================================================================='
 void TF_Type(int no)
 {
@@ -1102,7 +554,7 @@ void TF_Type(int no)
 		if (temp == 4) e->type = E_TYPE_AA;
 		if (temp == 5) e->type = E_TYPE_JK;
 		if (temp == 6) e->type = E_TYPE_JK;
-		if (temp == 7) e->type = E_TYPE_AMERICAN;
+		if (temp == 7) e->type = E_TYPE_JK;
 		if (temp == 8) e->type = E_TYPE_AMERICAN;
 		if (temp == 9) e->type = E_TYPE_AMERICAN;
 		break;
@@ -1112,10 +564,10 @@ void TF_Type(int no)
 		if (temp == 0) e->type = E_TYPE_ASTRONAUT;
 		if (temp == 1) e->type = E_TYPE_ASTRONAUT;
 		if (temp == 2) e->type = E_TYPE_ASTRONAUT;
-		if (temp == 3) e->type = E_TYPE_ASTRONAUT;
-		if (temp == 4) e->type = E_TYPE_ASTRONAUT;
-		if (temp == 5) e->type = E_TYPE_ALIEN;
-		if (temp == 6) e->type = E_TYPE_ALIEN;
+		if (temp == 3) e->type = E_TYPE_ALIEN;
+		if (temp == 4) e->type = E_TYPE_UFO;
+		if (temp == 5) e->type = E_TYPE_UFO;
+		if (temp == 6) e->type = E_TYPE_UFO;
 		if (temp == 7) e->type = E_TYPE_UFO;
 		if (temp == 8) e->type = E_TYPE_UFO;
 		if (temp == 9) e->type = E_TYPE_UFO;
@@ -1133,11 +585,12 @@ void TF_Type(int no)
 	EnemyDB = GetEnemyDB(e->type);
 	e->hp = EnemyDB->GetHP();
 	e->score = EnemyDB->GetScore();
+	e->bonus = EnemyDB->GetBonus();
 	
 }
 
 //=============================================================================
-// 出現位置設定
+// エネミー生成：出現位置設定
 //============================================================================='
 void TF_Pos(int no)
 {
@@ -1154,6 +607,8 @@ void TF_Pos(int no)
 		ePosData = GetEnemyPosData(tempP);
 	} while (ePosData->GetUse() == true);
 
+	e->posData = tempP;
+
 	e->pos.x = ePosData->GetPosX();
 	e->pos.z = ePosData->GetPosZ();
 	ePosData->SetUse(true);
@@ -1169,110 +624,90 @@ void TF_Pos(int no)
 	EnemyRE[no].LoadObjectStatus(e->pos, e->rot);
 }
 
-
 //=============================================================================
-// 稼働時間検査
-//============================================================================='
-void CheckUptime(int no)
+// 撃破エフェクト
+//=============================================================================
+void DefeatEnemyREEfx(int no)
 {
-	ENEMY *e = GetEnemyRE(0);
+	ENEMY *enemy = GetEnemyRE(no);
 
-	int Uptime = -1;
+	const int uptime = ENEMY_DEFEAT_DELAY;
+	const int animeStart = 0;
+	const int animeEnd = 18;
 
-	switch ((e + no)->status)
+
+	if (enemy->status == E_STATUS_DEFEATED)
 	{
-	case 0:
-		break;
-	case E_STATUS_NORMAL:
-		break;
-	case E_STATUS_DEFEATED:
-		Uptime = 120;
-
-		if ((e + no)->timer >= Uptime)
+		// アニメーション
+		if (enemy->timer >= animeStart &&
+			enemy->timer < animeEnd)
 		{
-			VanisnEnenyRE(no);
+			// 回転
+			enemy->rot.y += (360 / animeEnd) * (D3DX_PI / 180);
+
+			// 角度修正
+			if (enemy->rot.y >= 90 * (D3DX_PI / 180))
+			{
+				enemy->rot.y = -(90 * (D3DX_PI / 180));
+			}
 		}
 
-		break;
-	default:
-		break;
+		if (enemy->timer == animeEnd)
+		{
+			// 角度修正
+			enemy->rot.y = 0;
+		}
+		
+		// テクスチャ変更
+		if (enemy->timer == int(animeEnd / 2))
+		{
+			EnemyRE[no].ChangeTexture(0, 1, 1, 2);
+		}
+
+		if (GetFiver() == FALSE)
+		{
+			if (enemy->timer >= uptime)
+			{
+				VanisnEnenyRE(no);
+			}
+		}
+		else if (GetFiver() == TRUE)
+		{
+			if (enemy->timer >= ENEMY_DEFEAT_FEVER)
+			{
+				VanisnEnenyRE(no);
+			}
+		}
+
+		// タイマーカウントアップ
+		enemy->timer++;
 	}
-
-
-
 
 }
 
 //=============================================================================
 // テスト用
 //============================================================================='
-void TestEnemyRE(void)
+void TesterAtkEnemyRE(void)
 {
 	ENEMY *e = GetEnemyRE(0);
 
-	float vel = 10.0f;
-
-	if (GetKeyboardPress(DIK_NUMPAD8))
+	// ダメージ計算
+	if ((e + 0)->status == E_STATUS_NORMAL)
 	{
-		e->pos.z += vel;
-	}
+		(e + 0)->hp -= 4;
 
+		// HP修正
+		if ((e + 0)->hp < 0)
+		{
+			(e + 0)->hp = 0;
+		}
 
-	if (GetKeyboardPress(DIK_NUMPAD5))
-	{
-		e->pos.z -= vel;
-
-	}
-
-	if (GetKeyboardPress(DIK_NUMPAD4))
-	{
-		e->pos.x -= vel;
-
-	}
-
-	if (GetKeyboardPress(DIK_NUMPAD6))
-	{
-		e->pos.x += vel;
+		// 撃破判定
+		if ((e + 0)->hp <= 0)
+		{
+			DefeatEnemyRE(0);
+		}
 
 	}
-
-	if (GetKeyboardPress(DIK_NUMPAD7))
-	{
-		e->pos.y -= vel;
-	}
-
-	if (GetKeyboardPress(DIK_NUMPAD9))
-	{
-		e->pos.y += vel;
-	}
-
-	if (GetKeyboardPress(DIK_NUMPAD3))
-	{
-		e->rot.y += 0.2f;
-	}
-
-
-	//if (GetKeyboardPress(DIK_NUMPAD3))
-	//{
-	//	tx->rot.y += 6 * (D3DX_PI / 180);
-	//}
-
-	//if (tx->rot.y >= 90 * (D3DX_PI / 180))
-	//{
-	//	tx->rot.y = -(90 * (D3DX_PI / 180));
-	//}
-
-	// 0 -> 90	-90 -> 90   -90 > 0
-	// 90 180 90
-	// 360 / vel = time
-	// if time rot = 0
-
-
-	PrintDebugProcess("pos: %f %f %f\n", e->pos.x, e->pos.y, e->pos.z);
-	PrintDebugProcess("pos: %f %f %f\n", (e + 1)->pos.x, (e + 1)->pos.y, (e + 1)->pos.z);
-	PrintDebugProcess("pos: %f %f %f\n", (e + 2)->pos.x, (e + 2)->pos.y, (e + 2)->pos.z);
-
 }
-
-
-

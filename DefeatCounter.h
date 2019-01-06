@@ -1,36 +1,32 @@
 //=============================================================================
 //
-// エネミーデータベース [EnemyDB.h]
+// 撃破数計数器 [DefeatCounter.h]
 // Author : 宋彦霖
 //
 //=============================================================================
-#ifndef _ENEMYDB_INCLUDE_H_
-#define _ENEMYDB_INCLUDE_H_
+#ifndef _DEFEATCOUNTER_INCLUDE_H_
+#define _DEFEATCOUNTER_INCLUDE_H_
 
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class EnemyDB
+class DefeatCounter
 {
 private:
-	int hp;
-	int score;
-	float bonus;
+	int count;
 	
 public:
-	void SetHP(int hp);
-	void SetScore(int score);
-	void SetBonus(float bonus);
+	DefeatCounter();
 
-	int GetHP(void);
-	int GetScore(void);
-	float GetBonus(void);
+	void CountUp(void);
+	int GetCount(void);
+
 };
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-EnemyDB *GetEnemyDB(int no);
-void InitEnemyDB(void);
+DefeatCounter *GetDefeatCounter(int no);
+int GetAllDefeat(void);
 
 #endif

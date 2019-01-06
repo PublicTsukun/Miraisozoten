@@ -1,25 +1,17 @@
 //=============================================================================
 //
-// リザルト画面処理 [Game.h]
+// [S-Tester.h]
+// Author : 宋彦霖
 //
 //=============================================================================
-#ifndef _GAME_INCLUDE_H_
-#define _GAME_INCLUDE_H_
-
-
-#include <Windows.h>
-
+#ifndef _STESTER_INCLUDE_H_
+#define _STESTER_INCLUDE_H_
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitGame(void);
-void UninitGame(void);
-void UpdateGame(void);
-void DrawGame(void);
-
-
-void LoadTexture(void);
-void ReleaseTexture(void);
+void TesterDC(void);
+void TesterAtk(void);
+void TesterPD(void);
 
 #endif

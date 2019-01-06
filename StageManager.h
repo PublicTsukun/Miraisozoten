@@ -12,9 +12,16 @@
 #include <d3dx9.h>
 
 //*****************************************************************************
-// マクロ定義
+// 列挙型
 //*****************************************************************************
-#define STAGE_MAX (3)
+enum EN_STAGE
+{
+	STAGE_01_AKIBA = 0,
+	STAGE_02_USA,
+	STAGE_03_SPACE,
+
+	STAGE_MAX,
+};
 
 //*****************************************************************************
 // 構造体定義
@@ -22,13 +29,14 @@
 typedef struct
 {
 	int no;
-	int timer;
-	bool freeze;
-	bool end;
-	int timerLimit[STAGE_MAX];
 
-	//int timerF;
-	bool fever;
+	// 時間制御系
+	int timer;
+	int nextStage;
+	int timeLimit[STAGE_MAX];
+
+	// 状態制御系
+	int status;
 
 } STAGE;
 
@@ -38,18 +46,8 @@ typedef struct
 STAGE *GetStage(void);
 
 void InitStage(void);
-void UninitStage(void);
 void UpdateStage(void);
 
-void FreezeStage(void);
-void UnFreezeStage(void);
-
-void EndOfStage(void);
-
-void SetStage(void);
-
-void BasiliskTime(void);
-
-void EnemySpawner(void);
+void GameStart(void);
 
 #endif

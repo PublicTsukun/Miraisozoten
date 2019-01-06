@@ -29,7 +29,9 @@ typedef struct
 	float hei;		// size Y
 	//float wid;		// size Z
 
-	int apr;		// 出現タイミング（再）
+	int posData;
+
+	int apr;		// 出現タイミング
 
 	int status;		// 状態
 	int timer;		// タイマー
@@ -37,8 +39,7 @@ typedef struct
 	int type;		// 種類
 	int hp;			// HP
 	int score;		// 点数
-
-	
+	float bonus;		// ボーナス
 
 } ENEMY;
 
@@ -69,15 +70,16 @@ void UpdateEnemyRE(void);
 void DrawEnemyRE(void);
 ENEMY *GetEnemyRE(int no);
 
-// 登場／退場
+// 登場
+void SetEnemyRE(int time);
 void EnemyREOnStage(int no);
 
-// 撃破数
-int GetYouDefeated(void);
-void SetYouDefeated(int value);
-void ResetYouDefeated(void);
+void ClearAllEnemyRE(void);
+void ResetAllEnemyRE(void);
 
 // テスト用
 void VanisnAllEnenyRE(void);
+void TesterAtkEnemyRE(void);
+
 
 #endif

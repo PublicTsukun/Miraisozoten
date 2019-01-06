@@ -73,7 +73,7 @@ void DrawStartCount(void)
 	if (LogoTimerUse)
 	{
 		StartLogo.Draw();
-		UnFreezeStage();
+		GameStart();
 	}
 }
 
@@ -98,8 +98,12 @@ void UpdateStartCount(void)
 
 	if (StartCount.ActiveCheck() == false)
 	{
-		//TimerSet(COUNT);
+		TimerSet(COUNT);
 		LogoTimerUse = true;
+	}
+	else
+	{
+		TimerSet(STOP);
 	}
 
 	if (LogoTimerUse)

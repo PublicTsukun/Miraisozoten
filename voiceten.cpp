@@ -79,18 +79,10 @@ void UpdateVoiMoveY(int no);
 
 void CheckUptimeVoi(int no);
 
-
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 VOICETEN VoicetenWk[VOICETEN_MAX];		// ワーク
-
-char *FileVoiceten[] =
-{
-	"data/TEXTURE/UI/voiceten.png",
-
-};
-
 CVoiceten Voiceten[VOICETEN_MAX];
 
 //=============================================================================
@@ -121,8 +113,6 @@ void InitVoiceten(void)
 		(v + i)->atk = 1;
 
 		Voiceten[i].Init((v + i)->pos, size);
-		Voiceten[i].LoadTexture(FileVoiceten[0]);
-		
 	}
 }
 
@@ -283,7 +273,7 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			// 到達所要距離の正規化
 			//(v + i)->nor = (Tgt - Self) / float((v + i)->dura);
 
-			(v + i)->nor = (Tgt - Self) / (v + i)->dist * 32.0f;
+			(v + i)->nor = (Tgt - Self) / float((v + i)->dist * 32.0f);
 
 
 			// 速度（未使用）
@@ -301,6 +291,8 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			Voiceten[i].LoadObjectStatus((v + i)->pos);
 
 			// テクスチャ、ATK設定（ヴォイステンゲージに依存）
+			Voiceten[i].LoadTexture("data/TEXTURE/UI/voiceten.png");
+
 			if (VoiceTankUI::GetVoiceVolume() < (140 * 3))
 			{
 				Voiceten[i].SetTexture(V_TYPE_BLUE);
@@ -337,13 +329,6 @@ void VanishVoiceten(int no)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	//if ((v + no)->timer >= (v + no)->dura)
-	//{
-
-	//}
-
-
-
 	if ((v + no)->pos.z >= 2000.0f ||
 		(v + no)->pos.y <= 0.0f)
 	{
@@ -358,8 +343,6 @@ void VanishVoiceten(int no)
 		Voiceten[no].LoadObjectStatus((v + no)->pos);
 
 	}
-
-
 
 }
 

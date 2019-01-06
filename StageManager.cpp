@@ -14,38 +14,45 @@
 
 #include "field.h"
 
+#include "DefeatCounter.h"
+
+#include "S-Editor.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define STAGE00_TIMELIMIT	(360)
-#define STAGE01_TIMELIMIT	(180)
-#define STAGE02_TIMELIMIT	(120)
-#define FEVER_TIMELIMIT		(120)
 
 //*****************************************************************************
 // 列挙型
 //*****************************************************************************
-//enum cursor
-//{
-//	SINGLE,
-//	MULTI,
-//	RANKING,
-//	CURSORMAX
-//
-//};
+enum EN_STAGE_STATUS
+{
+	STAGE_STATUS_NULL = 0,
+	STAGE_STATUS_NORMAL,
+	STAGE_STATUS_CHANGING,
+	STAGE_STATUS_END,
+
+};
+
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-//void NextStage(void);
-void ResetStage(void);
+void SetEnemy(int no);
+
+void EnemySpawner(void);
+
+void CheckChangeStage(void);
+void NextStageEfx(void);
+void NextStage(void);
+void GameOver(void);
+
+void CountUpTimer(void);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 STAGE StageWk;		// ワーク
-
-
 
 //=============================================================================
 // 取得
@@ -63,26 +70,13 @@ void InitStage(void)
 	STAGE *s = GetStage();
 
 	s->no = 0;
+
 	s->timer = 0;
-	s->freeze = TRUE;
-	s->end = FALSE;
+	s->nextStage = -1;
 
-	s->fever = FALSE;
+	s->status = STAGE_STATUS_NULL;
 
-	// パラメータ設定
-	s->timerLimit[0] = STAGE00_TIMELIMIT;
-	s->timerLimit[1] = STAGE01_TIMELIMIT;
-	s->timerLimit[2] = STAGE02_TIMELIMIT;
-
-
-}
-
-//=============================================================================
-// 初期化処理
-//=============================================================================
-void UninitStage(void)
-{
-
+	SetEnemyRE(s->timer);
 }
 
 //=============================================================================
@@ -90,193 +84,149 @@ void UninitStage(void)
 //=============================================================================
 void UpdateStage(void)
 {
-	STAGE *s = GetStage();
+	STAGE *stage = GetStage();
 
-	// ポース、テスト用
-	if (s->freeze == FALSE && s->end == FALSE)
-	{
-		// ポース
-		if (GetKeyboardTrigger(DIK_P))
-		{
-			FreezeStage();
-		}
-
-		// タイマーカウントアップ
-		s->timer++;
-	}
-	else if (s->freeze == TRUE && s->end == FALSE)
-	{
-		// 再開
-		if (GetKeyboardTrigger(DIK_P))
-		{
-			UnFreezeStage();
-		}
-
-	}
+	// チェック
+	CheckChangeStage();
 
 	// エネミースポーン
 	EnemySpawner();
-
-	// フィーバータイム
-	BasiliskTime();
-
-	// ステージ終了、チェック
-	EndOfStage();
-
-	// テスト用
-	PrintDebugProcess("No: %d\n", s->no);
-	PrintDebugProcess("Timer: %d\n", s->timer);
-	PrintDebugProcess("End: %d\n", s->end);
-
-	PrintDebugProcess("Fever: %d\n", s->fever);
-
-
-}
-
-//=============================================================================
-// 凍結
-//=============================================================================
-void FreezeStage(void)
-{
-	STAGE *s = GetStage();
-
-	s->freeze = TRUE;
-}
-
-//=============================================================================
-// 解凍
-//=============================================================================
-void UnFreezeStage(void)
-{
-	STAGE *s = GetStage();
-
-	s->freeze = FALSE;
-}
-
-//=============================================================================
-// ステージ終了
-//=============================================================================
-void EndOfStage(void)
-{
-	STAGE *s = GetStage();
 	
-	if (s->end == FALSE)
-	{
-		// 終了条件を設定　現：タイムリミット
-		switch (s->no)
-		{
-		case 0:
-			if (s->timer == s->timerLimit[s->no])
-			{
-				s->freeze = TRUE;
-				s->end = TRUE;
-			}
-			break;
-		case 1:
-			if (s->timer == s->timerLimit[s->no])
-			{
-				s->freeze = TRUE;
-				s->end = TRUE;
-			}
-			break;
-		case 2:
-			if (s->timer == s->timerLimit[s->no])
-			{
-				s->freeze = TRUE;
-				s->end = TRUE;
-			}
-			break;
-		default:
-			break;
-		}
-	}
+	// カウントアップタイマー
+	CountUpTimer();
 
-	// 次のステージ
-	if (s->end == TRUE)
-	{
-		if (GetKeyboardTrigger(DIK_N))
-		{
-			// NEXT STAGE or GAME OVER
-			s->no += 1;
-			s->no %= 3;
-			LoadFeildTex(s->no);
-
-			// パラメータリセット
-			ResetStage();
-
-			// 再開
-			UnFreezeStage();
-		}
-	}
-}
-
-//=============================================================================
-// リセット
-//=============================================================================
-void ResetStage(void)
-{
-	STAGE *s = GetStage();
-
-	s->timer = 0;
-	s->end = FALSE;
-	s->fever = FALSE;
-}
-
-//=============================================================================
-// ステージ番号の設定（未完成）
-//=============================================================================
-void SetStage(void)
-{
+	//PrintDebugProcess("stage status: %d\n", stage->status);
+	//PrintDebugProcess("stage timer: %d\n", stage->timer);
+	//PrintDebugProcess("stage next: %d\n", stage->nextStage);
 
 }
 
 //=============================================================================
-// フィーバータイム
-//=============================================================================
-void BasiliskTime(void)
-{
-	STAGE *s = GetStage();
-
-	s->fever = GetFiver();//フィーバー状態の取得
-
-	//================================//================================
-	// 通常
-	//================================
-	
-	// 効果、ここで追加
-
-
-
-	//================================//================================
-
-
-
-	//================================//================================
-	// フィーバー
-	//================================
-	if (s->fever == TRUE)
-	{
-		// 効果、ここで追加
-	}
-	else
-	{
-	}
-	//================================//================================
-}
-
-//=============================================================================
-// エネミースポーン
+// エネミーの生成
 //=============================================================================
 void EnemySpawner(void)
 {
 	ENEMY *e = GetEnemyRE(0);
 	STAGE *s = GetStage();
 
-	for (int i = 0; i < ENEMY_MAX; i++)
+	if (s->status == STAGE_STATUS_NORMAL)
 	{
-		if (s->timer == (e + i)->apr)
+		for (int i = 0; i < ENEMY_MAX; i++)
 		{
-			EnemyREOnStage(i);
+			if (s->timer == (e + i)->apr)
+			{
+				EnemyREOnStage(i);
+			}
 		}
 	}
+
+}
+
+//=============================================================================
+// 時間軸チェック（ステージ遷移関係）
+//=============================================================================
+void CheckChangeStage(void)
+{
+	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
+	int CheckDefeat = GetAllDefeat();
+
+	STAGE *stage = GetStage();
+
+	if (CheckDefeat == STAGE_NORMA_01 &&
+		stage->no == STAGE_01_AKIBA)
+	{
+		NextStageEfx();
+	}
+
+	if (CheckDefeat == STAGE_NORMA_02 &&
+		stage->no == STAGE_02_USA)
+	{
+		NextStageEfx();
+	}
+
+	if (stage->timer == stage->nextStage)
+	{
+		NextStage();
+	}
+
+	if (stage->timer >= STAGE_TIME)
+	{
+		GameOver();
+	}
+
+}
+
+//=============================================================================
+// 次のステージに移行（演出効果）
+//=============================================================================
+void NextStageEfx(void)
+{
+	STAGE *stage = GetStage();
+
+	if (stage->status == STAGE_STATUS_NORMAL)
+	{
+		stage->status = STAGE_STATUS_CHANGING;
+
+		stage->nextStage = stage->timer + 120;
+
+		ClearAllEnemyRE();
+	}
+
+}
+
+//=============================================================================
+// 次のステージに移行
+//=============================================================================
+void NextStage(void)
+{
+	STAGE *stage = GetStage();
+
+	if (stage->status == STAGE_STATUS_CHANGING)
+	{
+		stage->no += 1;
+		stage->no %= 3;
+		SetFeildTex(stage->no);
+
+		ResetAllEnemyRE();
+		SetEnemyRE(stage->timer);
+
+		stage->status = STAGE_STATUS_NORMAL;
+		stage->nextStage = -1;
+	}
+
+}
+
+//=============================================================================
+// ゲームオーバー
+//=============================================================================
+void GameOver(void)
+{
+	STAGE *stage = GetStage();
+
+	stage->status = STAGE_STATUS_END;
+}
+
+//=============================================================================
+// カウントアップタイマー
+//=============================================================================
+void CountUpTimer(void)
+{
+	STAGE *stage = GetStage();
+
+	if (stage->status == STAGE_STATUS_NORMAL ||
+		stage->status == STAGE_STATUS_CHANGING)
+	{
+		stage->timer++;
+	}
+}
+
+//=============================================================================
+// ゲームスタート
+//=============================================================================
+void GameStart(void)
+{
+	STAGE *stage = GetStage();
+
+	stage->status = STAGE_STATUS_NORMAL;
+
 }

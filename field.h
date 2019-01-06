@@ -30,11 +30,13 @@
 //プロトタイプ宣言
 //=============================================================================
 HRESULT InitField(void);
+void LoadFieldTex(void);
+void ReleaseTex(void);
 void UninitField(void);
 void DrawField(void);
 void UpdateField(void);
 
-void LoadFeildTex(int StageNo);
+void SetFeildTex(int StageNo);
 
 
 #endif

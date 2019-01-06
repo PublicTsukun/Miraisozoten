@@ -20,18 +20,22 @@ class EnemyHP : public C3DPolygonObject
 private:
 	bool use;
 	void SetUse(bool use);
-	
+
 public:
 	void Enable(void);
 	void Disable(void);
 	bool GetUse(void);
+	float GetSizeX(void);
 
-	void Initial(void);
+	void InitVertexEnemyHP(void);
+	void SetVertexEnemyHP(float coord, float uv);
+
 };
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 EnemyHP *GetEnemyHP(int no);
+void InitEnemyHP(void);
 void UninitEnemyHP(void);
 void DrawEnemyHP(void);
 void UpdateEnemyHP(void);

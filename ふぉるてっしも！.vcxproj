@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AimPointer.cpp" />
+    <ClCompile Include="DefeatCounter.cpp" />
     <ClCompile Include="EffectFeelBetter.cpp" />
     <ClCompile Include="EffectVoicetenHit.cpp" />
     <ClCompile Include="EnemyDB.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="Library\Particle.cpp" />
     <ClCompile Include="Option.cpp" />
     <ClCompile Include="S-Editor.cpp" />
+    <ClCompile Include="S-Tester.cpp" />
     <ClCompile Include="startcount.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemyRE.cpp" />
@@ -89,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimPointer.h" />
+    <ClInclude Include="DefeatCounter.h" />
     <ClInclude Include="EffectFeelBetter.h" />
     <ClInclude Include="EffectVoicetenHit.h" />
     <ClInclude Include="EnemyDB.h" />
@@ -100,6 +103,7 @@
     <ClInclude Include="Library\Particle.h" />
     <ClInclude Include="Option.h" />
     <ClInclude Include="S-Editor.h" />
+    <ClInclude Include="S-Tester.h" />
     <ClInclude Include="startcount.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemyRE.h" />
