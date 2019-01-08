@@ -204,7 +204,10 @@ HRESULT InitName(void)
 	ranktex[3].LoadTexture("data/TEXTURE/UI/リザルト/4th.png");
 	ranktex[4].LoadTexture("data/TEXTURE/UI/リザルト/5th.png");
 
+	// 読み込み
 	LoadSaveRankingCsv();
+
+
 	SAVERANKING *rankinfo = GetSaveRanking(0);
 	for (int i = 0; i < 5; i++,rankinfo++)
 	{
@@ -263,7 +266,11 @@ HRESULT InitName(void)
 	haikei.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, HAIKEI_WIDTH, HAIKEI_HEIGHT, HAIKEI_TEX);
 	//haikei_logo.Init
 
-
+	// ランク確認
+	LoadSaveRankingCsv();
+	// スコア取得
+	int player_score = GetScore();
+	name_enter = SaveRankingSort(player_score);	// スコアがランクインしたか？
 
 	return S_OK;
 }
@@ -384,16 +391,21 @@ void DrawName(void)
 void Update_Name(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
-
-	// debug
-	if (GetKeyboardPress(DIK_0))
+	//name_enter = true;
+	// フラグがtrueなら名前入力ＯＫ
+	if (name_enter == true && GetKeyboardTrigger(DIK_0))
 	{
-		name_status++;
-		if (name_status == NAME_SELECT_MAX)
+		if (name_status == NAME_SELECT)
 		{
 			name_status = BEGIN;
 		}
+		else
+		{
+			name_status = NAME_SELECT;
+		}
 	}
+
+
 	switch (name_status)
 	{
 	case NAME_SELECT:
@@ -409,12 +421,13 @@ void Update_Name(void)
 		}
 
 
-		// 文字入力の終了
+		// 文字入力の終了(確定)
 		if (GetKeyboardTrigger(DIK_Z))
 		{
 			int player_score = GetScore();
 			// あたまがはたらかなかった↓
 			long long name_number = (rankdata[0].namechar[0] * 100000000) + (rankdata[0].namechar[1] * 1000000) + (rankdata[0].namechar[2] * 10000) + (rankdata[0].namechar[3] * 100) + rankdata[0].namechar[4];
+			WriteSaveRankingCsv();
 		}
 
 		// 文字盤を変える(カーソル移動中は実行できない）
