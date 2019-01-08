@@ -161,13 +161,13 @@ bool SaveRankingSort(int score)
 		}
 	}
 
-	if (rankingWk[5].score != score)//今回ランクインできたかどうかで返り値を変更
+	if ((rankingWk[5].score == score) && (rankingWk[5].id == max + 1))//今回ランクインできたかどうかで返り値を変更
 	{
-		return true;//最下位が変わっていれば真　　
+		return false;//変わっていなければ偽
 	}
 	else
 	{
-		return false;//変わっていなければ偽
+		return true;//最下位が変わっていれば真　　
 	}
 }
 //============================================================================

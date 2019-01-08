@@ -415,7 +415,6 @@ void Update_Name(void)
 			int player_score = GetScore();
 			// あたまがはたらかなかった↓
 			long long name_number = (rankdata[0].namechar[0] * 100000000) + (rankdata[0].namechar[1] * 1000000) + (rankdata[0].namechar[2] * 10000) + (rankdata[0].namechar[3] * 100) + rankdata[0].namechar[4];
-			SaveRanking(player_score, name_number);
 		}
 
 		// 文字盤を変える(カーソル移動中は実行できない）

@@ -249,6 +249,9 @@
     <ClCompile Include="S-Tester.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="StageSwitch.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -469,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="S-Tester.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="StageSwitch.h">
+      <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

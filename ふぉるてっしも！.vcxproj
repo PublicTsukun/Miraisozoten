@@ -33,6 +33,7 @@
     <ClCompile Include="Option.cpp" />
     <ClCompile Include="S-Editor.cpp" />
     <ClCompile Include="S-Tester.cpp" />
+    <ClCompile Include="StageSwitch.cpp" />
     <ClCompile Include="startcount.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemyRE.cpp" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Option.h" />
     <ClInclude Include="S-Editor.h" />
     <ClInclude Include="S-Tester.h" />
+    <ClInclude Include="StageSwitch.h" />
     <ClInclude Include="startcount.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemyRE.h" />

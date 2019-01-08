@@ -157,12 +157,12 @@ void DrawField(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-		wall[i].Draw();
+	//	wall[i].Draw();
 	}
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		//LiveWall[i].Draw();
+		LiveWall[i].Draw();
 	}
 
 
@@ -170,51 +170,8 @@ void DrawField(void)
 
 void UpdateField(void)
 {
-	//wall[1].Print();
 
-	//if (GetKeyboardPress(DIK_UP))
-	//{
-	//	wall[1].MoveWallZ(1.0f);
-	//}
-	//if (GetKeyboardPress(DIK_DOWN))
-	//{
-	//	wall[1].MoveWallZ(-1.0f);
-	//}
-	//if (GetKeyboardPress(DIK_LEFT))
-	//{
-	//	wall[0].MoveWallX(-10.0f);
-	//}
-	//if (GetKeyboardPress(DIK_RIGHT))
-	//{
-	//	wall[0].MoveWallX(10.0f);
-	//}
-	//
-	//if (GetKeyboardPress(DIK_Q))
-	//{
-	//	wall[1].MoveWallY(-1.0f);
-	//}
-	//if (GetKeyboardPress(DIK_E))
-	//{
-	//	wall[1].MoveWallY(1.0f);
-	//}
-	//
-	//if (GetKeyboardPress(DIK_W))
-	//{
-	//	wall[0].SizeWallY(10.0f);
-	//}
-	//if (GetKeyboardPress(DIK_A))
-	//{
-	//	wall[0].SizeWallX(-10.0f);
-	//}
-	//if (GetKeyboardPress(DIK_S))
-	//{
-	//	wall[0].SizeWallY(-10.0f);
-	//}
-	//if (GetKeyboardPress(DIK_D))
-	//{
-	//	wall[0].SizeWallX(10.0f);
-	//}
-	//wall[0].Print();
+	//—Ç‚¢Š´‚¶‚Éƒ‰ƒCƒgˆ—
 }
 
 
