@@ -59,7 +59,7 @@ const Vector2 wallSize = Vector2(WALL_SIZE_X, WALL_SIZE_Y);
 
 const Vector3 wallPos = Vector3(WALL_POS_X, WALL_POS_Y, WALL_POS_Z);
 
-C3DPolygonObject LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
+C3DPolygonObject LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y][2];
 const Vector3 LivewallPos = Vector3(WALL_POS_X - (LIVEWALL_SIZE_X * 2 * (WALL_LIVE_NUM_X / 2)),
 									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)),
 									WALL_POS_Z);
@@ -77,7 +77,7 @@ const char *WallTex[] =
 	"data/TEXTURE/ステージ/宇宙/フロント.png",
 };
 
-Dx9Texture LiveTex;
+Dx9Texture LiveTex[2];
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -100,10 +100,15 @@ HRESULT InitField(void)
 		Vector2 Size;
 		Size.x = LIVEWALL_SIZE_X;
 		Size.y = LIVEWALL_SIZE_Y;
-		LiveWall[i].Init(Pos, Size);
-		LiveWall[i].LoadTexture(LiveTex);
-		LiveWall[i].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
-		LiveWall[i].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_X);
+		LiveWall[i][0].Init(Pos, Size);
+		LiveWall[i][0].LoadTexture(LiveTex[0]);
+		LiveWall[i][0].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
+		LiveWall[i][0].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_X);
+
+		LiveWall[i][1].Init(Pos, Size);
+		LiveWall[i][1].LoadTexture(LiveTex[1]);
+		LiveWall[i][1].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
+		LiveWall[i][1].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_X);
 	}
 
 	return S_OK;
@@ -119,7 +124,8 @@ void LoadFieldTex(void)
 	wall[1].LoadTexture(WallTex[1]);
 	wall[2].LoadTexture(WallTex[2]);
 
-	LiveTex.LoadTexture("data/TEXTURE/UI/リザルト/りざると背景.png");
+	LiveTex[0].LoadTexture("data/TEXTURE/UI/リザルト/りざると背景.png");
+	LiveTex[1].LoadTexture("data/TEXTURE/UI/リザルト/りざると背景.png");
 
 }
 
@@ -129,7 +135,8 @@ void ReleaseTex(void)
 	{
 		wall[i].Release();
 	}
-	LiveTex.Release();
+	LiveTex[0].Release();
+	LiveTex[1].Release();
 }
 //=============================================================================
 // 終了処理
@@ -144,7 +151,8 @@ void UninitField(void)
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		LiveWall[i].ReleaseVertex();
+		LiveWall[i][0].ReleaseVertex();
+		LiveWall[i][1].ReleaseVertex();
 	}
 
 }
@@ -162,7 +170,8 @@ void DrawField(void)
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		LiveWall[i].Draw();
+		LiveWall[i][0].Draw();
+		LiveWall[i][1].Draw();
 	}
 
 
