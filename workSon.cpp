@@ -19,6 +19,9 @@
 #include "EnemyDB.h"
 #include "EnemyPosData.h"
 #include "EnemyHP.h"
+#include "EffectVH.h"
+#include "EffectFB.h"
+
 #include "S-Tester.h"
 
 //=============================================================================
@@ -41,6 +44,8 @@ HRESULT InitWorkSon(void)
 		InitEnemyHP();
 		InitEnemyRE();
 		InitStage();
+		InitEffectVH();
+		InitEffectFB();
 		break;
 
 
@@ -74,7 +79,8 @@ void UninitWorkSon(void)
 		UninitMessageBox();
 		UninitEnemyHP();
 		UninitEnemyRE();
-
+		UninitEffectVH();
+		UninitEffectFB();
 		break;
 	}
 
@@ -100,14 +106,17 @@ void UpdateWorkSon(void)
 		UpdateEnemyRE();
 		UpdateStage();
 		UpdateVLauncher();
+		UpdateEffectVH();
+		UpdateEffectFB();
 
 		#ifdef _DEBUG
 		//TesterDC();
-		TestVL();
-		TestMB();
+		//TestVL();
+		//TestMB();
 		//TestCO();
-		TesterAtk();
+		//TesterAtk();
 		//TesterPD();
+		//TesterEFVH();
 		#endif
 		break;
 
@@ -137,6 +146,8 @@ void DrawWorkSon(void)
 		DrawMessagebox();
 		DrawEnemyHP();
 		DrawEnemyRE();
+		DrawEffectVH();
+		DrawEffectFB();
 		break;
 
 

@@ -1,18 +1,22 @@
 //=============================================================================
 //
-// [S-Tester.h]
+// 撃破エフェクト[EffectFB.h]
 // Author : 宋彦霖
 //
 //=============================================================================
-#ifndef _STESTER_INCLUDE_H_
-#define _STESTER_INCLUDE_H_
+#ifndef _EFFECTFB_INCLUDE_H_
+#define _EFFECTFB_INCLUDE_H_
+
+#include "Library/Vector.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void TesterDC(void);
-void TesterAtk(void);
-void TesterPD(void);
-void TesterEFVH(void);
+void InitEffectFB(void);
+void UninitEffectFB(void);
+void UpdateEffectFB(void);
+void DrawEffectFB(void);
+
+void CallEffectFB(Vector3 pos);
 
 #endif
