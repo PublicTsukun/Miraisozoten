@@ -141,6 +141,7 @@ void C3DPolygonObject::Draw(UINT state, const char* order)
 	pDevice->SetTexture(0, Texture);
 
 	// ポリゴンの描画
+
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, RECT_NUM_POLYGON);
 
 	// ラインティング復元
