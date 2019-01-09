@@ -13,6 +13,9 @@
 #include "DefeatCounter.h"
 #include "EnemyPosData.h"
 
+#include "EffectVH.h"
+#include "EffectFB.h"
+
 //=============================================================================
 // DefeatCounter
 //=============================================================================
@@ -115,5 +118,16 @@ void TesterPD(void)
 	{
 		PrintDebugProcess("PosData: %d\n", (ePosData + i)->GetUse());
 		
+	}
+}
+
+//=============================================================================
+// EFX VH
+//=============================================================================
+void TesterEFVH(void)
+{
+	if (GetKeyboardTrigger(DIK_J))
+	{
+		CallEffectFB(Vector3(0, 0, 0));
 	}
 }

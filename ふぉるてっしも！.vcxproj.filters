@@ -252,6 +252,12 @@
     <ClCompile Include="StageSwitch.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="EffectVH.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectFB.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\Camera.h">
@@ -474,6 +480,12 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="StageSwitch.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectVH.h">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectFB.h">
       <Filter>ソース ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
