@@ -17,7 +17,7 @@
 #include "UIBonus.h"
 #include "startcount.h"
 #include "Resultlogo.h"
-
+#include "StageSwitch.h"
 
 //=============================================================================
 //初期化処理
@@ -37,6 +37,7 @@ HRESULT InitWorkYamaguchi(void)
 		InitScore();
 		InitUIBonus();
 		InitStartCount();
+		InitStageSwitch();
 
 		break;
 
@@ -73,6 +74,8 @@ void UninitWorkYamaguchi(void)
 		UninitScore();
 		UninitUIBonus();
 		UninitStartCount();
+		UninitStageSwitch();
+
 		break;
 	}
 
@@ -97,6 +100,8 @@ void UpdateWorkYamaguchi(void)
 		UpdateUIBonus();
 		UpdateStartCount();
 		UpdateField();
+		UpdateStageSwitch();
+
 		break;
 
 
@@ -127,11 +132,38 @@ void DrawWorkYamaguchi(void)
 		DrawScore();
 		DrawUIBonus();
 		DrawStartCount();
+
 		break;
 
 
 	case SCENE_RESULT://リザルトで使うソースのDraw
 		DrawResultlogo();
+
+		break;
+	}
+
+
+}
+//=============================================================================
+//描画処理
+//=============================================================================
+void DrawWorkYamaguchi2(void)
+{
+	switch (Scene::SetScene(SCENE_MAX))
+	{
+	case SCENE_TITLE://タイトルで使うソースのDraw
+
+		break;
+
+
+	case SCENE_PAUSE:
+	case SCENE_GAME://ゲームで使うソースのDraw
+		DrawStageSwitch();
+
+		break;
+
+
+	case SCENE_RESULT://リザルトで使うソースのDraw
 
 		break;
 	}

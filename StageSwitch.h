@@ -11,5 +11,11 @@
 #include <Windows.h>
 #include "Library/Common.h"
 
+void InitStageSwitch(void);
+void UninitStageSwitch(void);
+void DrawStageSwitch(void);
+void UpdateStageSwitch(void);
+
+void CameraShutter(int stagenum);
 
 #endif

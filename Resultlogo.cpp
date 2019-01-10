@@ -338,7 +338,7 @@ void UpdateResultlogo(void)
 	{
 		if (ScoreDetail[i].DetailBg.Move)
 		{
-			ScoreDetail[i].DetailBg.MoveX(-15.0);
+			ScoreDetail[i].DetailBg.MoveX(-50.0);
 
 		}
 
