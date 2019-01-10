@@ -6,7 +6,6 @@
 #include "Library\Input.h"
 
 //写真テクスチャ作成用
-#include "enemy.h"
 #include "field.h"
 #include "voiceten.h"
 #include "enemyRE.h"
@@ -108,7 +107,6 @@ void DrawStageSwitch(void)
 	Photo.PhotoTex.BeginDraw();
 	DrawField();
 	DrawVoiceten();
-	//DrawENEMY();
 	DrawEnemyRE();
 	Photo.PhotoTex.EndDraw();
 	//写真用テクスチャ作成終了
@@ -166,19 +164,12 @@ void UpdateStageSwitch(void)
 
 		}
 
-		if (IsMouseLeftPressed())
-		{
-			SSwitchBg[1].MovePosition(Vector2(GetMouseX(), GetMouseY()));
-			SSwitchBg[2].MovePosition(Vector2(GetMouseX(), GetMouseY()));
-		}
-		PrintDebugProcess("\nPOS  %f   %f", SSwitchBg[1].GetPosition().x, SSwitchBg[1].GetPosition().y);
-		PrintDebugProcess("\nPOS  %f   %f", SSwitchBg[2].GetPosition().x, SSwitchBg[2].GetPosition().y);
 
 		if (Photo.PhotoTimer >= 150)
 		{
-			//SSwitchBg[0].MovePosition(Vector2(0, -100));
-			//SSwitchBg[1].MovePosition(Vector2(0, -100));
-			//SSwitchBg[2].MovePosition(Vector2(0, -100));
+			SSwitchBg[0].MovePosition(Vector2(0, -100));
+			SSwitchBg[1].MovePosition(Vector2(0, -100));
+			SSwitchBg[2].MovePosition(Vector2(0, -100));
 
 			if (SSwitchBg[0].GetPosition().y < -SCREEN_HEIGHT)
 			{
