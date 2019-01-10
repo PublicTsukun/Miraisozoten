@@ -59,7 +59,7 @@ const Vector2 wallSize = Vector2(WALL_SIZE_X, WALL_SIZE_Y);
 
 const Vector3 wallPos = Vector3(WALL_POS_X, WALL_POS_Y, WALL_POS_Z);
 
-C3DPolygonObject LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y][2];
+C3DPolygonObject LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
 const Vector3 LivewallPos = Vector3(WALL_POS_X - (LIVEWALL_SIZE_X * 2 * (WALL_LIVE_NUM_X / 2)),
 									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)),
 									WALL_POS_Z);
@@ -85,32 +85,27 @@ HRESULT InitField(void)
 {
 
 	wall[0].Init(wallPos, wallSize);
-	//wall[1].Init(wallPos, wallSize);
+	wall[1].Init(wallPos, wallSize);
 	wall[1].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.75 - 600), wallSize*0.75);
 	wall[2].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.5 - 600), wallSize*0.5);
 
 	SetFeildTex(0);
 
+		Vector3 Pos;
+		Vector2 Size;
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		Vector3 Pos;
 		Pos.x = LivewallPos.x + LIVEWALL_SIZE_X*2*(i%WALL_LIVE_NUM_X);
 		Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y*2*(i / WALL_LIVE_NUM_X);
 		Pos.z = LivewallPos.z;
 
-		Vector2 Size;
 		Size.x = LIVEWALL_SIZE_X;
 		Size.y = LIVEWALL_SIZE_Y;
-		LiveWall[i][0].Init(Pos, Size);
-		LiveWall[i][0].LoadTexture(LiveTex[0]);
-		LiveWall[i][0].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
-		LiveWall[i][0].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_X);
+		LiveWall[i].Init(Pos, Size);
+		LiveWall[i].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
+		LiveWall[i].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_X);
 
-		LiveWall[i][1].Init(Pos, Size);
-		LiveWall[i][1].LoadTexture(LiveTex[1]);
-		LiveWall[i][1].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
-		LiveWall[i][1].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_X);
 	}
 
 	return S_OK;
@@ -125,6 +120,10 @@ void LoadFieldTex(void)
 	LiveTex[0].LoadTexture("data/TEXTURE/UI/ƒŠƒUƒ‹ƒg/‚è‚´‚é‚Æ”wŒi.png");
 	LiveTex[1].LoadTexture("data/TEXTURE/UI/ƒŠƒUƒ‹ƒg/‚è‚´‚é‚Æ”wŒi.png");
 
+	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+	{
+		LiveWall[i].LoadTexture(LiveTex[0]);
+	}
 }
 
 void ReleaseTex(void)
@@ -149,8 +148,7 @@ void UninitField(void)
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		LiveWall[i][0].ReleaseVertex();
-		LiveWall[i][1].ReleaseVertex();
+		LiveWall[i].ReleaseVertex();
 	}
 
 }
@@ -168,8 +166,7 @@ void DrawField(void)
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		LiveWall[i][0].Draw();
-		LiveWall[i][1].Draw();
+		LiveWall[i].Draw();
 	}
 
 
