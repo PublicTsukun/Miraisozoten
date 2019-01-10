@@ -89,6 +89,8 @@ HRESULT InitField(void)
 	wall[1].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.75 - 600), wallSize*0.75);
 	wall[2].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.5 - 600), wallSize*0.5);
 
+	SetFeildTex(0);
+
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
@@ -120,10 +122,6 @@ HRESULT InitField(void)
 //===============================================================================
 void LoadFieldTex(void)
 {
-	wall[0].LoadTexture(WallTex[0]);
-	wall[1].LoadTexture(WallTex[1]);
-	wall[2].LoadTexture(WallTex[2]);
-
 	LiveTex[0].LoadTexture("data/TEXTURE/UI/ƒŠƒUƒ‹ƒg/‚è‚´‚é‚Æ”wŒi.png");
 	LiveTex[1].LoadTexture("data/TEXTURE/UI/ƒŠƒUƒ‹ƒg/‚è‚´‚é‚Æ”wŒi.png");
 
@@ -165,7 +163,7 @@ void DrawField(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-	//	wall[i].Draw();
+		wall[i].Draw();
 	}
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)

@@ -28,6 +28,9 @@
 
 #include "DefeatCounter.h"
 
+#include "EffectVH.h"
+#include "EffectFB.h"
+
 #include "S-Editor.h"
 
 //*****************************************************************************
@@ -307,7 +310,10 @@ void CollisionEnemyRE(void)
 				// ダメージ計算
 				DamageDealEnemyRE(i, j);
 
+				// エフェクト発生
+				CallEffectVH(v->pos);
 
+				// 目標状態検査
 				if (e->status == E_STATUS_NORMAL)
 				{
 					// 弾消滅
@@ -631,10 +637,9 @@ void DefeatEnemyREEfx(int no)
 {
 	ENEMY *enemy = GetEnemyRE(no);
 
-	const int uptime = ENEMY_DEFEAT_DELAY;
 	const int animeStart = 0;
 	const int animeEnd = 18;
-
+	const int efxStart = 0;
 
 	if (enemy->status == E_STATUS_DEFEATED)
 	{
@@ -658,7 +663,13 @@ void DefeatEnemyREEfx(int no)
 			enemy->rot.y = 0;
 		}
 		
-		// テクスチャ変更
+		// エフェクト発生
+		if (enemy->timer == efxStart)
+		{
+			CallEffectFB(enemy->pos);
+		}
+
+		// テクスチャ変更（指定の時間で発生）
 		if (enemy->timer == int(animeEnd / 2))
 		{
 			EnemyRE[no].ChangeTexture(0, 1, 1, 2);
@@ -666,7 +677,7 @@ void DefeatEnemyREEfx(int no)
 
 		if (GetFiver() == FALSE)
 		{
-			if (enemy->timer >= uptime)
+			if (enemy->timer >= ENEMY_DEFEAT_DELAY)
 			{
 				VanisnEnenyRE(no);
 			}

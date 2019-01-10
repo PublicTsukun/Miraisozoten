@@ -1,18 +1,22 @@
 //=============================================================================
 //
-// [S-Tester.h]
+// 命中エフェクト[EffectVH.h]
 // Author : 宋彦霖
 //
 //=============================================================================
-#ifndef _STESTER_INCLUDE_H_
-#define _STESTER_INCLUDE_H_
+#ifndef _EFFECTVH_INCLUDE_H_
+#define _EFFECTVH_INCLUDE_H_
+
+#include "Library/Vector.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void TesterDC(void);
-void TesterAtk(void);
-void TesterPD(void);
-void TesterEFVH(void);
+void InitEffectVH(void);
+void UninitEffectVH(void);
+void UpdateEffectVH(void);
+void DrawEffectVH(void);
+
+void CallEffectVH(Vector3 pos);
 
 #endif

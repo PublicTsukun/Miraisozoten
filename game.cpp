@@ -116,6 +116,7 @@ void DrawGame(void)
 	DrawWorkYamaguchi();
 	DrawWorkYamamoto();
 	DrawWorkTsu();
+	DrawWorkYamaguchi2();
 
 }
 

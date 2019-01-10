@@ -19,7 +19,13 @@
 #define TEXTURE_RESULT_LOGO		"data/TEXTURE/UI/リザルト/りざると.png"
 #define RESULT_LOGO_SIZE_X		(260*SCREEN_SCALE)
 #define	RESULT_LOGO_SIZE_Y		(65*SCREEN_SCALE)
-
+#define RESULT_LOGO_COLOR		(0xff112233)	//「りざると」の文字色変えるのここだよ～
+												//0xは固定　ff(最初の２桁)がα値
+												//			11(次の２桁)がR
+												//			22(次の２桁)がG
+												//			33(最後の２桁)がB
+												//ネットで調べたらいい感じに出てくると思う
+												//１６進数２桁でそれぞれの色を決めてね
 
 #define	TEXTURE_SCORE		"data/TEXTURE/UI/スコア数字.png"	// 読み込むテクスチャファイル名
 #define	RESULT_SCORE_SIZE_X		(46.0f*SCREEN_SCALE)							// スコアの数字の幅

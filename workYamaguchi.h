@@ -16,5 +16,6 @@ HRESULT InitWorkYamaguchi(void);
 void UninitWorkYamaguchi(void);
 void UpdateWorkYamaguchi(void);
 void DrawWorkYamaguchi(void);
+void DrawWorkYamaguchi2(void);
 
 #endif

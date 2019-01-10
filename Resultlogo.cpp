@@ -137,6 +137,9 @@ HRESULT InitResultlogo(void)
 {
 	DetailWindow.Init(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, D3DFMT_X8R8G8B8);
 	Detail.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, RS_X(0.6f/2.0f), RS_Y(0.6f/2.0f));
+	Detail.SetTexture(0, 0.001f, 0.001f);
+	Detail.SetTexture(2, 0.001f, 0.999f);
+
 	resultbg[0].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, TEXTURE_RESULTBG);
 	resultbg[1].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH*1.67f/ 2, SCREEN_HEIGHT*1.67/ 2, TEXTURE_RESULTBG);
 
@@ -161,6 +164,7 @@ HRESULT InitResultlogo(void)
 
 
 	resultlogo.Init(SCREEN_CENTER_X, RESULT_LOGO_SIZE_Y + 10.0f, RESULT_LOGO_SIZE_X, RESULT_LOGO_SIZE_Y, TEXTURE_RESULT_LOGO);
+	resultlogo.SetVertex(RESULT_LOGO_COLOR);
 	
 	DrawCount = 0;
 
@@ -334,7 +338,7 @@ void UpdateResultlogo(void)
 	{
 		if (ScoreDetail[i].DetailBg.Move)
 		{
-			ScoreDetail[i].DetailBg.MoveX(-15.0);
+			ScoreDetail[i].DetailBg.MoveX(-50.0);
 
 		}
 
