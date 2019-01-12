@@ -91,13 +91,13 @@ const char *CharctorTex[] = {
 	"data/TEXTURE/Character/02_otaku.png",
 	"data/TEXTURE/Character/01_maid.png",
 
-	"data/TEXTURE/Character/aa.png",
-	"data/TEXTURE/Character/JK.png",
-	"data/TEXTURE/Character/Ç†ÇﬂÇËÇ©êl.png",
-
-	"data/TEXTURE/Character/UFO.png",
-	"data/TEXTURE/Character/âFíàîÚçsém.png",
-	"data/TEXTURE/Character/âFíàêl.png",
+	"data/TEXTURE/Character/03_aa.png",
+	"data/TEXTURE/Character/04_jk.png",
+	"data/TEXTURE/Character/05_american.png",
+	
+	"data/TEXTURE/Character/08_ufo.png",
+	"data/TEXTURE/Character/06_astronaut.png",
+	"data/TEXTURE/Character/07_alien.png",
 };
 
 int CharactorScore[] = {

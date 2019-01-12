@@ -161,7 +161,7 @@ void DrawField(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-		wall[i].Draw();
+		//wall[i].Draw();
 	}
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)

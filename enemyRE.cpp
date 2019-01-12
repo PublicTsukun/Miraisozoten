@@ -129,14 +129,14 @@ void DefeatEnemyREEfx(int no);
 char *FileEnemy[] =
 {
 	"data/TEXTURE/Character/00_child.png",
-	"data/TEXTURE/Character/01_maid.png",
 	"data/TEXTURE/Character/02_otaku.png",
+	"data/TEXTURE/Character/01_maid.png",
 	"data/TEXTURE/Character/03_aa.png",
 	"data/TEXTURE/Character/04_jk.png",
 	"data/TEXTURE/Character/05_american.png",
+	"data/TEXTURE/Character/08_ufo.png",
 	"data/TEXTURE/Character/06_astronaut.png",
 	"data/TEXTURE/Character/07_alien.png",
-	"data/TEXTURE/Character/08_ufo.png",
 };
 
 // ÉèÅ[ÉN
