@@ -117,8 +117,8 @@ HRESULT InitField(void)
 //===============================================================================
 void LoadFieldTex(void)
 {
-	LiveTex[0].LoadTexture("data/TEXTURE/UI/リザルト/りざると背景.png");
-	LiveTex[1].LoadTexture("data/TEXTURE/UI/リザルト/りざると背景.png");
+	LiveTex[0].LoadTexture("data/TEXTURE/ステージ/ライブステージ/バック.jpg");
+	LiveTex[1].LoadTexture("data/TEXTURE/ステージ/ライブステージ/フロント.png");
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
