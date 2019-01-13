@@ -96,7 +96,7 @@ HRESULT InitField(void)
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		Pos.x = LivewallPos.x + LIVEWALL_SIZE_X*2*(i%WALL_LIVE_NUM_X);
+		Pos.x = LivewallPos.x + LIVEWALL_SIZE_X*2*(i % WALL_LIVE_NUM_X);
 		Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y*2*(i / WALL_LIVE_NUM_X);
 		Pos.z = LivewallPos.z;
 
@@ -104,7 +104,7 @@ HRESULT InitField(void)
 		Size.y = LIVEWALL_SIZE_Y;
 		LiveWall[i].Init(Pos, Size);
 		LiveWall[i].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
-		LiveWall[i].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_X);
+		LiveWall[i].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y);
 
 	}
 
@@ -161,7 +161,7 @@ void DrawField(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-		//wall[i].Draw();
+		wall[i].Draw();
 	}
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
