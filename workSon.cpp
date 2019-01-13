@@ -38,7 +38,7 @@ HRESULT InitWorkSon(void)
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitVoiceten();
-		InitMessageBox();
+		//InitMessageBox();
 		InitEnemyPosData();
 		InitEnemyDB();
 		InitEnemyHP();
@@ -76,7 +76,7 @@ void UninitWorkSon(void)
 
 	case SCENE_RESULT://ゲームで使ったソースのUninit
 		UninitVoiceten();
-		UninitMessageBox();
+		//UninitMessageBox();
 		UninitEnemyHP();
 		UninitEnemyRE();
 		UninitEffectVH();
@@ -101,7 +101,7 @@ void UpdateWorkSon(void)
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
 		UpdateVoiceten();
-		UpdateMessageBox();
+		//UpdateMessageBox();
 		UpdateEnemyHP();
 		UpdateEnemyRE();
 		UpdateStage();
@@ -143,7 +143,7 @@ void DrawWorkSon(void)
 	case SCENE_PAUSE:
 	case SCENE_GAME://ゲームで使うソースのDraw
 		DrawVoiceten();
-		DrawMessagebox();
+		//DrawMessagebox();
 		DrawEnemyHP();
 		DrawEnemyRE();
 		DrawEffectVH();

@@ -148,9 +148,6 @@ void UpdateVoiceten(void)
 
 			// 稼働時間検査
 			CheckUptimeVoi(i);
-
-			// 消滅
-			VanishVoiceten(i);
 		}
 	}
 }
@@ -272,9 +269,7 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 
 			// 到達所要距離の正規化
 			//(v + i)->nor = (Tgt - Self) / float((v + i)->dura);
-
-			(v + i)->nor = (Tgt - Self) / float((v + i)->dist * 32.0f);
-
+			(v + i)->nor = (Tgt - Self) / float((v + i)->dist) * 32.0f;
 
 			// 速度（未使用）
 			//(v + i)->vel =
@@ -329,21 +324,15 @@ void VanishVoiceten(int no)
 {
 	VOICETEN *v = GetVoiceten(0);
 
-	if ((v + no)->pos.z >= 2000.0f ||
-		(v + no)->pos.y <= 0.0f)
-	{
-		// 消滅
-		(v + no)->use = FALSE;
+	// 消滅
+	(v + no)->use = FALSE;
 
-		// 初期化
-		(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
-		(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
-		(v + no)->timer = 0;
+	// 初期化
+	(v + no)->pos = Vector3(0.0f, 0.0f, 0.0f);
+	(v + no)->nor = Vector3(0.0f, 0.0f, 0.0f);
+	(v + no)->timer = 0;
 
-		Voiceten[no].LoadObjectStatus((v + no)->pos);
-
-	}
-
+	Voiceten[no].LoadObjectStatus((v + no)->pos);
 }
 
 //=============================================================================
@@ -356,6 +345,12 @@ void CheckUptimeVoi(int no)
 	const int Uptime = 600;
 
 	if ((v + no)->timer >= Uptime)
+	{
+		VanishVoiceten(no);
+	}
+
+	if ((v + no)->pos.z >= 2000.0f ||
+		(v + no)->pos.y <= 0.0f)
 	{
 		VanishVoiceten(no);
 	}

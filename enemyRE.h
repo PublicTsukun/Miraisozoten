@@ -49,8 +49,8 @@ typedef struct
 enum E_TYPE
 {
 	E_TYPE_CHILD = 0,
-	E_TYPE_OTAKU,
 	E_TYPE_MAID,
+	E_TYPE_OTAKU,
 	E_TYPE_AA,
 	E_TYPE_JK,
 	E_TYPE_AMERICAN,
