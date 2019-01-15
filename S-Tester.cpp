@@ -16,6 +16,8 @@
 #include "EffectVH.h"
 #include "EffectFB.h"
 
+#include "voiceten.h"
+
 //=============================================================================
 // DefeatCounter
 //=============================================================================
@@ -129,5 +131,13 @@ void TesterEFVH(void)
 	if (GetKeyboardTrigger(DIK_J))
 	{
 		CallEffectFB(Vector3(0, 0, 0));
+	}
+
+	if (GetKeyboardTrigger(DIK_L))
+	{
+		SetVoiceten(
+			Vector3(0.0f, 250.0f, -0.0f),				// ”­ŽËˆÊ’u
+			Vector3(600.0f, 0.0f, 600.0f));		// –Ú•WˆÊ’u
+
 	}
 }

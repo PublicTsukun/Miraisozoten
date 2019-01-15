@@ -55,6 +55,7 @@ int timerVL;
 void UpdateVLauncher(void)
 {
 	if (VoiceTankUI::GetVoiceVolume())
+	//if (1)
 	{
 		Vector2 direction = AimPointer::GetPosition();
 
@@ -77,6 +78,7 @@ void UpdateVLauncher(void)
 		{
 			SetVoiceten(
 				Vector3(0.0f, 250.0f, -800.0f),				// 発射位置
+				//Vector3(0.0f, 250.0f, -0.0f),				// 発射位置
 				Vector3(pout->x, pout->y, pout->z));		// 目標位置
 			PlaySE(SHOOT_BULLET);
 		}
@@ -84,7 +86,7 @@ void UpdateVLauncher(void)
 		// タイマーカウントアップ
 		timerVL++;
 
-		PrintDebugProcess("(%f), (%f), (%f)\n", pout->x, pout->y, pout->z);
+		PrintDebugProcess("pout: (%f), (%f), (%f)\n", pout->x, pout->y, pout->z);
 
 	}
 	else

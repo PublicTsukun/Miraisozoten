@@ -36,8 +36,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define ENEMY_COLI_LEN		(48.0f)	// 当たり判定 x
-#define ENEMY_COLI_HEI		(48.0f)	// 当たり判定 y
+#define ENEMY_COLI_LEN		(36.0f)	// 当たり判定 x
+#define ENEMY_COLI_HEI		(24.0f)	// 当たり判定 y
 #define ENEMY_COLI_WID		(10.0f)	// 当たり判定 z
 
 //*****************************************************************************
@@ -203,30 +203,18 @@ void UpdateEnemyRE(void)
 		{
 			// 更新処理（位置、回転）
 			EnemyRE[i].LoadObjectStatus((e + i)->pos, (e + i)->rot);
-			
-			switch ((e + i)->status)
+
+			if ((e + i)->status == E_STATUS_DEFEATED)
 			{
-			case E_STATUS_NULL:
-				break;
-
-			case E_STATUS_NORMAL:
-
-				// 衝突判定
-				CollisionEnemyRE();
-				break;
-
-			case E_STATUS_DEFEATED:
-
 				// アニメーション
 				DefeatEnemyREEfx(i);
-				break;
-
-			default:
-				break;
-
 			}
+
 		}
 	}
+
+	// 衝突判定
+	CollisionEnemyRE();
 }
 
 //=============================================================================
@@ -270,6 +258,7 @@ void CollisionEnemyRE(void)
 	for(int i = 0; i < ENEMY_MAX; i++, e++)
 	{
 		if (e->use == FALSE) continue;
+		if (e->status != E_STATUS_NORMAL) continue;
 		v = GetVoiceten(0);
 
 		for (int j = 0; j < VOICETEN_MAX; j++, v++)
@@ -313,12 +302,8 @@ void CollisionEnemyRE(void)
 				// エフェクト発生
 				CallEffectVH(v->pos);
 
-				// 目標状態検査
-				if (e->status == E_STATUS_NORMAL)
-				{
-					// 弾消滅
-					VanishVoiceten(j);
-				}
+				// 弾消滅
+				VanishVoiceten(j);
 
 			}
 
@@ -336,20 +321,24 @@ void DamageDealEnemyRE(int Eno, int Vno)
 	VOICETEN *v = GetVoiceten(0);
 	ENEMY *e = GetEnemyRE(0);
 
-	// ダメージ計算
-	(e + Eno)->hp -= (v + Vno)->atk;
+	if ((e + Eno)->status == E_STATUS_NORMAL)
+	{
+		// ダメージ計算
+		(e + Eno)->hp -= (v + Vno)->atk;
 
-	// HP修正
-	if ((e + Eno)->hp < 0)
-	{
-		(e + Eno)->hp = 0;
+		// HP修正
+		if ((e + Eno)->hp < 0)
+		{
+			(e + Eno)->hp = 0;
+		}
+
+		// 撃破判定
+		if ((e + Eno)->hp <= 0)
+		{
+			DefeatEnemyRE(Eno);
+		}
 	}
-	
-	// 撃破判定
-	if ((e + Eno)->hp <= 0)
-	{
-		DefeatEnemyRE(Eno);
-	}
+
 }
 
 //=============================================================================
@@ -544,7 +533,7 @@ void TF_Type(int no)
 		if (temp == 2) e->type = E_TYPE_CHILD;
 		if (temp == 3) e->type = E_TYPE_CHILD;
 		if (temp == 4) e->type = E_TYPE_CHILD;
-		if (temp == 5) e->type = E_TYPE_MAID;
+		if (temp == 5) e->type = E_TYPE_CHILD;
 		if (temp == 6) e->type = E_TYPE_MAID;
 		if (temp == 7) e->type = E_TYPE_OTAKU;
 		if (temp == 8) e->type = E_TYPE_OTAKU;
@@ -561,7 +550,7 @@ void TF_Type(int no)
 		if (temp == 5) e->type = E_TYPE_JK;
 		if (temp == 6) e->type = E_TYPE_JK;
 		if (temp == 7) e->type = E_TYPE_JK;
-		if (temp == 8) e->type = E_TYPE_AMERICAN;
+		if (temp == 8) e->type = E_TYPE_AA;
 		if (temp == 9) e->type = E_TYPE_AMERICAN;
 		break;
 
