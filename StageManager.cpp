@@ -18,6 +18,7 @@
 
 #include "S-Editor.h"
 
+#include "StageSwitch.h"
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
@@ -168,6 +169,9 @@ void NextStageEfx(void)
 		stage->status = STAGE_STATUS_CHANGING;
 
 		stage->nextStage = stage->timer + 120;
+		
+		
+		CameraShutter(stage->no);
 
 		ClearAllEnemyRE();
 	}
@@ -228,5 +232,16 @@ void GameStart(void)
 	STAGE *stage = GetStage();
 
 	stage->status = STAGE_STATUS_NORMAL;
+
+}
+
+//================================================================================
+//ƒQ[ƒ€ˆêŽž’âŽ~
+//===============================================================================
+void GameStop(void)
+{
+	STAGE *stage = GetStage();
+
+	stage->status = STAGE_STATUS_CHANGING;
 
 }

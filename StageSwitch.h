@@ -17,5 +17,6 @@ void DrawStageSwitch(void);
 void UpdateStageSwitch(void);
 
 void CameraShutter(int stagenum);
+void UseBoard(int stagenum);
 
 #endif

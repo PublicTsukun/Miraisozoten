@@ -49,5 +49,6 @@ void InitStage(void);
 void UpdateStage(void);
 
 void GameStart(void);
+void GameStop(void);
 
 #endif

@@ -32,7 +32,7 @@ HRESULT InitScore(void)
 	}
 
 	Score = 0;
-
+	DrawScr = 0;
 
 	ScoreFrame.Init(SCORE_FRAME_POS, SCORE_POS_Y, SCORE_SIZE_X * SCORE_DIGIT+20.0*SCREEN_SCALE, SCORE_SIZE_Y + 5 * SCREEN_SCALE, SCORE_FRAME_TEX);
 	ScoreFrame.SetVertex(0xff33ccff);
