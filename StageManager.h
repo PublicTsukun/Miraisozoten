@@ -32,8 +32,8 @@ typedef struct
 
 	// ŠÔ§ŒäŒn
 	int timer;
+	int timerEfx;
 	int nextStage;
-	int timeLimit[STAGE_MAX];
 
 	// ó‘Ô§ŒäŒn
 	int status;

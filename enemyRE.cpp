@@ -204,9 +204,9 @@ void UpdateEnemyRE(void)
 			// 更新処理（位置、回転）
 			EnemyRE[i].LoadObjectStatus((e + i)->pos, (e + i)->rot);
 
+			// 撃破エフェクト
 			if ((e + i)->status == E_STATUS_DEFEATED)
 			{
-				// アニメーション
 				DefeatEnemyREEfx(i);
 			}
 
