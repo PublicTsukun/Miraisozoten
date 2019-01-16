@@ -32,12 +32,10 @@
 #define STAGE_TIME				(START_TIME * 60)
 
 // ステージ01クリア条件（撃破数）
-//#define STAGE_NORMA_01			(10)
-#define STAGE_NORMA_01			(1)
+#define STAGE_NORMA_01			(10)
 
 // ステージ02クリア条件（撃破数）
-//#define STAGE_NORMA_02			(25)
-#define STAGE_NORMA_02			(2)
+#define STAGE_NORMA_02			(25)
 
 // 命中エフェクトの大きさ
 #define EFX_SIZE_HIT			(96.0f)

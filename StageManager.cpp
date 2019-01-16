@@ -239,6 +239,6 @@ void GameStop(void)
 {
 	STAGE *stage = GetStage();
 
-	stage->status = STAGE_STATUS_CHANGING;
+	stage->status = STAGE_STATUS_NULL;
 
 }
