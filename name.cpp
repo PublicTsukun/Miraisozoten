@@ -207,6 +207,10 @@ HRESULT InitName(void)
 	// 読み込み
 	LoadSaveRankingCsv();
 
+	// スコア取得
+	int player_score = GetScore();
+	name_enter = SaveRankingSort(player_score);	// スコアがランクインしたか？
+
 
 	SAVERANKING *rankinfo = GetSaveRanking(0);
 	for (int i = 0; i < 5; i++,rankinfo++)
@@ -266,11 +270,6 @@ HRESULT InitName(void)
 	haikei.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, HAIKEI_WIDTH, HAIKEI_HEIGHT, HAIKEI_TEX);
 	//haikei_logo.Init
 
-	// ランク確認
-	LoadSaveRankingCsv();
-	// スコア取得
-	int player_score = GetScore();
-	name_enter = SaveRankingSort(player_score);	// スコアがランクインしたか？
 
 	return S_OK;
 }
