@@ -177,7 +177,7 @@ void UninitField(void)
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		LiveWall[i].ReleaseVertex();
+		//LiveWall[i].ReleaseVertex();
 	}
 
 }
