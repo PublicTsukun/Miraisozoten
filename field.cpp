@@ -5,6 +5,7 @@
 //=============================================================================
 #include "field.h"
 #include "Library/ObjectBase3D.h"
+#include "Library\Light.h"
 #include "Library\Input.h"
 #include "Library\DebugProcess.h"
 
@@ -78,6 +79,15 @@ const char *WallTex[] =
 };
 
 Dx9Texture LiveTex[2];
+
+/* ライト */
+Dx9Light BackLight;		// 環境光を当てる
+Dx9Light SpotLight[6];	// スポットライト
+Vector3  SpotVec[6];	// スポット先の座標
+float    LCurve = 0.0f;						// カーブ値
+float    LR = 0.0f, LG = 0.0f, LB = 0.0f;	// 色
+bool     LFlg = true;						// 色用
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -106,6 +116,25 @@ HRESULT InitField(void)
 		LiveWall[i].LoadTextureStatus(Size.x, Size.y, 1.0f, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y, 1);
 		LiveWall[i].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y);
 
+	}
+
+	/* ライト */
+	/* バックライト(環境光) */
+	BackLight.Direction = Vector3(0, 0, 1);
+	BackLight.Diffuse = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
+	BackLight.SetLight(0);
+
+	/* スポットライト */
+	for (int i = 0; i < 6; i++)
+	{
+		SpotLight[i].Type = D3DLIGHT_SPOT;
+		SpotLight[i].Position = Vector3((float)i * 600.0f - 1500.0f, 200.0f, 0.0f);
+		SpotLight[i].Range = 2100.0f;
+		SpotLight[i].Falloff = 2.0f;
+		SpotLight[i].Attenuation0 = 0.5f;
+		SpotLight[i].Attenuation1 = 0.0001f;
+		SpotLight[i].Theta = DegToRad(10);
+		SpotLight[i].Phi = DegToRad(20);
 	}
 
 	return S_OK;
@@ -164,18 +193,51 @@ void DrawField(void)
 		wall[i].Draw();
 	}
 
+	Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
 		LiveWall[i].Draw();
 	}
-
+	Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 }
 
 void UpdateField(void)
 {
-
 	//良い感じにライト処理
+
+	/* スポットライト */
+	// 方向操作
+	LCurve += 0.1f;
+	for (int i = 0; i < 6; i++)
+	{
+		SpotVec[i].y = (i % 2) ? sinf(LCurve) : -sinf(LCurve);
+	}
+
+	// 色操作
+	if (LFlg)
+	{
+		if (LR < 1.0f) LR += 0.05f;
+		else if (LG < 1.0f) LG += 0.05f;
+		else if (LB < 1.0f) LB += 0.05f;
+		else               LFlg = false;
+	}
+	else
+	{
+		if (LB > 0.5f) LB -= 0.05f;
+		else if (LG > 0.2f) LG -= 0.05f;
+		else if (LR > 0.0f) LR -= 0.05f;
+		else               LFlg = true;
+	}
+
+	// 反映
+	Vector3 vec;
+	for (int i = 0; i < 6; i++)
+	{
+		SpotLight[i].Diffuse = D3DXCOLOR(LR, LG, LB, 1.0f);
+		SpotLight[i].Direction = Vector3(0, SpotVec[i].y / 3.0f, 1);
+		SpotLight[i].SetLight(i + 1);
+	}
 }
 
 
