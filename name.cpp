@@ -76,7 +76,7 @@
 #define SENTAKUMOJI_POS_Y	(170.0f) //(SCREEN_CENTER_Y)
 
 // 文字修正用のカーソル(入力済み文字に重ねて表示してます)
-#define RENAME_CURSOLE_TEX	("data/テスト用画像/テスト用画像3.png")
+#define RENAME_CURSOLE_TEX	("data/TEXTURE/UI//リザルト/名前矢印.png")
 #define RENAME_CURSOLE_WIDTH	(70.0)
 #define RENAME_CURSOLE_HEIGHT	(70.0)
 #define RENAME_CURSOLE_POS_X	(SCREEN_CENTER_X-(SENTAKUMOJI_WIDTH*4))//(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
@@ -101,7 +101,7 @@
 //***************************************************
 // カーソル関連
 //***************************************************
-#define CURSOLE_TEX		("data/テスト用画像/テスト用画像.png")
+#define CURSOLE_TEX		("data/TEXTURE/UI//リザルト/文字入力カーソル.png")
 #define CURSOLE_SPACE	(2)					// 次のマスに移動するためにカーソルのX,Yにかける値
 #define CURSOLE_WIDTH	(MOJIBAN_WIDTH/10)			// 文字盤が10文字×10文字なので
 #define CURSOLE_HEIGHT	(MOJIBAN_HEIGHT/5)
@@ -136,6 +136,7 @@
 #define NAME_SPACE_01	(50)
 #define NAME_SCORE_SIZE (50)
 
+#define FLASH_TIME		(0.05)
 
 // 決定ボタン
 //*****************************************************************************
@@ -172,6 +173,9 @@ C2DObject name_set;						// 決定ボタン
 RANKING ranking[5];
 Dx9Texture ranktex[5];
 
+// 点滅に使う
+float flash_count;
+bool flash_count_switch;
 
 bool char_type;
 #define HIRAGANA (0)
@@ -195,15 +199,17 @@ bool pos_rockon;	// 目標座標決定済みか
 float movesize_X, movesize_Y;
 float target_x, target_y;	// カーソル移動用　目標位置と現在位置の座標
 bool finish_flag;			// 文字入力終わるかどうかのフラグ
+int flash_score;			// 点滅するsukoa
 
-							//*************************************************************************
-							// プロトタイプ宣言(cpp内でのみ使用するやつ
-							//*************************************************************************
+//*************************************************************************
+// プロトタイプ宣言(cpp内でのみ使用するやつ
+//*************************************************************************
 void move_cursole(void);
 void move_cursole_alpha(void);
 void name_char_select(void);
 void cursole_change(void);
 void Draw_ranking(int hoge);
+void Flash_Tex(int no);
 //*************************************************************************
 // HRESULT Initname(void)
 // 文字入力の初期化
@@ -261,6 +267,7 @@ HRESULT InitName(void)
 	}
 
 	timedayo = 0;
+
 	// 各フラグ初期化
 	for (int i = 0; i < NAMEMAX; i++)
 	{
@@ -272,6 +279,7 @@ HRESULT InitName(void)
 	pos_rockon = false;
 	cursolechanging = false;
 	name_enter = false;
+	flash_count_switch = false;
 
 	// ステータスを初期状態に
 	name_status = BEGIN;
@@ -288,7 +296,10 @@ HRESULT InitName(void)
 	name_set.Init(SCREEN_CENTER_X, Y_TEST + KETTEI_Y, 160.0, 80.0, "data/TEXTURE/UI/けってい.png");	//X座標×2に更に文字数をかける
 	//haikei_logo.Init
 
+	// カウントセット
+	flash_count = 1.0f;
 
+	flash_score = 0;
 	return S_OK;
 }
 
@@ -398,6 +409,7 @@ void DrawName(void)
 		{
 			cursole_change();
 		}
+		cursole.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
 		cursole.Draw();
 	}
 	break;
@@ -521,15 +533,25 @@ void Update_Name(void)
 			//select_moji[0].SetTexture(1,10,10);
 		}
 		else
-		{	// 決定ボタンにいる際の処理
+		{	// 以下、決定ボタンにいる際の処理
 			if (GetKeyboardTrigger(DIK_2))
 			{
+				select_moji[namechar - 1].Release();	//テクスチャ解放
+				rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
+				rankdata[0].namechar[namechar] = 00;		// 文字入力フラグ初期化(あの位置へ）
+				namechar--;									// 現在入力中の文字数を減らすよ
+				rankdata[0].name_position = namechar - 1;
 				cursole_status = KEYBOARD;
 			}
 			// 決定ボタンにカーソルが存在しておりLキーが押された場合
 			if (GetKeyboardTrigger(DIK_L))
-			{	// データ出力
+			{
+				// データ出力
 				WriteSaveRankingCsv();
+				// 再ロード
+				LoadSaveRankingCsv();
+				// ランキングへ
+				name_status = BEGIN;
 			}
 		}
 
@@ -539,11 +561,14 @@ defalt:
 	break;
 	}
 
+	Flash_Tex(0);
 	// test セーブランキング作成
 	if (GetKeyboardTrigger(DIK_LSHIFT))
 	{
 	//	WriteSaveRankingCsv();
 	}
+	// 点滅
+	
 }
 
 
@@ -714,13 +739,13 @@ void name_char_select(void)
 			rankdata[0].name_position--;
 			if (rankdata[0].name_position < 0)
 			{
-				rankdata[0].name_position = namechar;
+				rankdata[0].name_position = namechar-1;
 			}
 		}
 		else if (GetKeyboardTrigger(DIK_D))
 		{
 			rankdata[0].name_position++;
-			if (rankdata[0].name_position >= namechar+1)
+			if (rankdata[0].name_position >= namechar)
 			{
 				rankdata[0].name_position = 0;
 			}
@@ -866,6 +891,65 @@ void cursole_change(void)
 		timedayo = 0;
 		cursolechanging = false;
 		pos_rockon = false;
+	}
+}
+
+
+//********************************************************************
+// void Flash_Tex(int no)
+// テクスチャの点滅！
+// 引数　int 戻り値 なし
+//********************************************************************
+void Flash_Tex(int no)
+{
+	//if (flash_count_switch == false)
+	//{	// 減産
+	//	flash_count -= (FLASH_TIME / 60.0f);
+	//	if (flash_count < 0.0f)
+	//	{
+	//		flash_count = 0.0f;
+	//		flash_count_switch = true;
+	//	}
+	//}
+	//else
+	//{
+	//	flash_count += (FLASH_TIME / 60.0);
+	//	if (flash_count > 1.0f)
+	//	{
+	//		flash_count = 1.0f;
+	//		flash_count_switch = false;
+	//	}
+	//}
+	flash_count += FLASH_TIME;
+	if (name_enter == true && name_status == BEGIN)
+	{	// プレイヤーのスコアとランキングのスコアを比較する？
+		int player_score = GetScore();
+		SAVERANKING *rankinfo = GetSaveRanking(0);
+		for (int i = 0; i < 5;i++, rankinfo++)
+		{
+			if (player_score == rankinfo->score)
+			{
+				flash_score = i;
+			}
+		}
+		for (int t = 0; t < 5; t++)
+		{
+			ranking[flash_score].name[t].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
+			ranking[flash_score].score[t].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
+		}
+
+
+	}
+	else
+	{	// キーボードなどが表示されてるやつ
+		if (cursole_status == FINISH)
+		{
+			name_set.SetVertex(D3DXCOLOR(1.0f,1.0f,1.0f,fabs(sinf(flash_count)) +0.3f));
+		}
+		else
+		{
+ 			cursole.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f,fabs(sinf(flash_count)) +0.3f));
+		}
 	}
 }
 
