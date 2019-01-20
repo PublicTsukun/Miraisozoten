@@ -19,7 +19,6 @@
 CountDown StartCount;
 C2DObject StartLogo;
 
-
 int LogoTimer;
 bool LogoTimerUse;
 float LogoAlpha;
@@ -82,7 +81,6 @@ void DrawStartCount(void)
 //=============================================================================
 void UpdateStartCount(void)
 {
-
 	StartCount.Animation();
 
 	if (SoundCount)

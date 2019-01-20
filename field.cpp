@@ -8,6 +8,7 @@
 #include "Library\Input.h"
 #include "Library\DebugProcess.h"
 
+#include "UIBonus.h"
 
 class Wall : public C3DPolygonObject
 {
@@ -41,9 +42,20 @@ public:
 		this->SetVertex();
 	}
 
+	void SetWall(Vector3 pos)
+	{
+		this->Position = pos;
+		this->SetVertex();
+	}
+
+	Vector3 GetWallPos(void)
+	{
+		return this->Position;
+	}
+
 	void Print(void)
 	{
-		PrintDebugProcess("\n背景情報\n", this->Position.x, this->Position.y, this->Position.z);
+		PrintDebugProcess("\n背景情報\n");
 		PrintDebugProcess("POSITION X[%f]Y[%f]Z[%f]\n", this->Position.x, this->Position.y, this->Position.z);
 		PrintDebugProcess("SIZE X[%f]Y[%f]\n\n", this->Size.x, this->Size.y);
 	}
@@ -59,11 +71,12 @@ const Vector2 wallSize = Vector2(WALL_SIZE_X, WALL_SIZE_Y);
 
 const Vector3 wallPos = Vector3(WALL_POS_X, WALL_POS_Y, WALL_POS_Z);
 
-C3DPolygonObject LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
+Wall LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
 const Vector3 LivewallPos = Vector3(WALL_POS_X - (LIVEWALL_SIZE_X * 2 * (WALL_LIVE_NUM_X / 2)),
-									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)),
+									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)- LIVEWALL_SIZE_Y),
 									WALL_POS_Z);
 
+bool LiveWallUse;
 const char *WallTex[] =
 {
 	"data/TEXTURE/ステージ/アキバ/バック.png",
@@ -85,7 +98,6 @@ HRESULT InitField(void)
 {
 
 	wall[0].Init(wallPos, wallSize);
-	wall[1].Init(wallPos, wallSize);
 	wall[1].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.75 - 600), wallSize*0.75);
 	wall[2].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.5 - 600), wallSize*0.5);
 
@@ -97,7 +109,7 @@ HRESULT InitField(void)
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
 		Pos.x = LivewallPos.x + LIVEWALL_SIZE_X*2*(i % WALL_LIVE_NUM_X);
-		Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y*2*(i / WALL_LIVE_NUM_X);
+		Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y * 2 * (i / WALL_LIVE_NUM_X) - WALL_SIZE_Y*2;
 		Pos.z = LivewallPos.z;
 
 		Size.x = LIVEWALL_SIZE_X;
@@ -107,6 +119,8 @@ HRESULT InitField(void)
 		LiveWall[i].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y);
 
 	}
+
+	LiveWallUse = false;
 
 	return S_OK;
 }
@@ -158,22 +172,92 @@ void UninitField(void)
 //=============================================================================
 void DrawField(void)
 {
-
-	for (int i = 0; i < 3; i++)
+	if (!LiveWallUse|| !GetFiver())
 	{
-		wall[i].Draw();
+		for (int i = 0; i < 3; i++)
+		{
+			wall[i].Draw();
+		}
 	}
 
-	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+	if (GetFiver()||LiveWallUse)
 	{
-		LiveWall[i].Draw();
+		for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+		{
+			LiveWall[i].Draw();
+		}
 	}
-
 
 }
 
 void UpdateField(void)
 {
+	if (GetFiver())
+	{
+		if (LiveWall[0].GetWallPos().y < LivewallPos.y)
+		{
+			for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+			{
+				LiveWall[i].MoveWallY(50);
+			}
+			for (int i = 0; i < 3; i++)
+			{
+				wall[i].MoveWallY(50*(1-0.25*i));
+			}
+		}
+		else
+		{
+			Vector3 Pos;
+			for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+			{
+
+				Pos.x = LivewallPos.x + LIVEWALL_SIZE_X * 2 * (i % WALL_LIVE_NUM_X);
+				Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y * 2 * (i / WALL_LIVE_NUM_X);
+				Pos.z = LivewallPos.z;
+
+				LiveWall[i].SetWall(Pos);
+			}
+			//wall[0].SetWall(Vector3(wallPos.x, wallPos.y+ WALL_SIZE_Y, wallPos.z));
+			//wall[1].SetWall(Vector3(wallPos.x, wallPos.y+WALL_SIZE_Y, 2600 * 0.75 - 600));
+			//wall[2].SetWall(Vector3(wallPos.x, wallPos.y+WALL_SIZE_Y, 2600 * 0.5 - 600));
+
+			LiveWallUse = true;
+		}
+		LiveWall[0].Print();
+	}
+	else 
+	{
+		if (LiveWall[0].GetWallPos().y > LivewallPos.y - WALL_SIZE_Y * 2)
+		{
+			for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+			{
+				LiveWall[i].MoveWallY(-50);
+			}
+			for (int i = 0; i < 3; i++)
+			{
+				wall[i].MoveWallY(-50 * (1-0.25*i));
+			}
+		}
+		else
+		{
+			Vector3 Pos;
+			for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+			{
+
+				Pos.x = LivewallPos.x + LIVEWALL_SIZE_X * 2 * (i % WALL_LIVE_NUM_X);
+				Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y * 2 * (i / WALL_LIVE_NUM_X) - WALL_SIZE_Y * 2;;
+				Pos.z = LivewallPos.z;
+
+				LiveWall[i].SetWall(Pos);
+			}
+			wall[0].SetWall(Vector3(wallPos.x, wallPos.y , wallPos.z));
+			wall[1].SetWall(Vector3(wallPos.x, wallPos.y , 2600 * 0.75 - 600));
+			wall[2].SetWall(Vector3(wallPos.x, wallPos.y , 2600 * 0.5 - 600));
+
+			LiveWallUse = false;
+		}
+		LiveWall[0].Print();
+	}
 
 	//良い感じにライト処理
 }

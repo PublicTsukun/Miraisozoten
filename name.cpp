@@ -209,7 +209,8 @@ HRESULT InitName(void)
 
 	// スコア取得
 	int player_score = GetScore();
-	name_enter = SaveRankingSort(player_score);	// スコアがランクインしたか？
+	//name_enter = SaveRankingSort(player_score);	// スコアがランクインしたか？
+	name_enter = SaveRankingSort(99999);	// スコアがランクインしたか？
 
 
 	SAVERANKING *rankinfo = GetSaveRanking(0);

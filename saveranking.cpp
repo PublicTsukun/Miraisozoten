@@ -141,7 +141,12 @@ bool SaveRankingSort(int score)
 
 	rankingWk[5].id = max+1;//6位に最大IDと
 	rankingWk[5].score = score;//今回取得したスコアを格納
+	for (int i = 0; i < 5; i++)
+	{
+		rankingWk[5].name[i][0] = 2;
+		rankingWk[5].name[i][1] = 6;
 
+	}
 	//その後ソート
 	SAVERANKING *ranking = &rankingWk[0];					// ポインターを初期化
 	int num = sizeof rankingWk / sizeof(SAVERANKING);		// 要素数を求める

@@ -4,6 +4,7 @@
 #include "Library/MultiRendering.h" 
 #include "Library\DebugProcess.h"
 #include "Library\Input.h"
+#include "timer.h"
 
 //写真テクスチャ作成用
 #include "field.h"
@@ -217,6 +218,7 @@ void CameraShutter(int stagenum)
 	Photo.Photof = true;
 	Photo.HwiteFade.SetStatus(Photo.Scale, Photo.Ang);
 	Photo.PausePhoto.SetStatus(Photo.Scale, Photo.Ang);
+	TimerSet(STOP);
 }
 
 void UseBoard(int stagenum)
