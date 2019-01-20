@@ -535,11 +535,17 @@ void Update_Name(void)
 		{	// 以下、決定ボタンにいる際の処理
 			if (GetKeyboardTrigger(DIK_2))
 			{
+				select_moji[namechar - 1].Release();	//テクスチャ解放
+				rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
+				rankdata[0].namechar[namechar] = 00;		// 文字入力フラグ初期化(あの位置へ）
+				namechar--;									// 現在入力中の文字数を減らすよ
+				rankdata[0].name_position = namechar - 1;
 				cursole_status = KEYBOARD;
 			}
 			// 決定ボタンにカーソルが存在しておりLキーが押された場合
 			if (GetKeyboardTrigger(DIK_L))
-			{	// データ出力
+			{
+				// データ出力
 				WriteSaveRankingCsv();
 				// 再ロード
 				LoadSaveRankingCsv();
