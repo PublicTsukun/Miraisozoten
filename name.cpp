@@ -717,13 +717,13 @@ void name_char_select(void)
 			rankdata[0].name_position--;
 			if (rankdata[0].name_position < 0)
 			{
-				rankdata[0].name_position = namechar;
+				rankdata[0].name_position = namechar-1;
 			}
 		}
 		else if (GetKeyboardTrigger(DIK_D))
 		{
 			rankdata[0].name_position++;
-			if (rankdata[0].name_position >= namechar+1)
+			if (rankdata[0].name_position >= namechar)
 			{
 				rankdata[0].name_position = 0;
 			}
