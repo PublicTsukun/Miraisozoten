@@ -520,7 +520,7 @@ void Update_Name(void)
 			//select_moji[0].SetTexture(1,10,10);
 		}
 		else
-		{	// 決定ボタンにいる際の処理
+		{	// 以下、決定ボタンにいる際の処理
 			if (GetKeyboardTrigger(DIK_2))
 			{
 				cursole_status = KEYBOARD;
@@ -529,6 +529,10 @@ void Update_Name(void)
 			if (GetKeyboardTrigger(DIK_L))
 			{	// データ出力
 				WriteSaveRankingCsv();
+				// 再ロード
+				LoadSaveRankingCsv();
+				// ランキングへ
+				name_status = BEGIN;
 			}
 		}
 
