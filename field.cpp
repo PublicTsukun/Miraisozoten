@@ -5,10 +5,10 @@
 //=============================================================================
 #include "field.h"
 #include "Library/ObjectBase3D.h"
+#include "Library\Light.h"
 #include "Library\Input.h"
 #include "Library\DebugProcess.h"
 
-#include "UIBonus.h"
 
 class Wall : public C3DPolygonObject
 {
@@ -42,20 +42,9 @@ public:
 		this->SetVertex();
 	}
 
-	void SetWall(Vector3 pos)
-	{
-		this->Position = pos;
-		this->SetVertex();
-	}
-
-	Vector3 GetWallPos(void)
-	{
-		return this->Position;
-	}
-
 	void Print(void)
 	{
-		PrintDebugProcess("\n背景情報\n");
+		PrintDebugProcess("\n背景情報\n", this->Position.x, this->Position.y, this->Position.z);
 		PrintDebugProcess("POSITION X[%f]Y[%f]Z[%f]\n", this->Position.x, this->Position.y, this->Position.z);
 		PrintDebugProcess("SIZE X[%f]Y[%f]\n\n", this->Size.x, this->Size.y);
 	}
@@ -71,12 +60,11 @@ const Vector2 wallSize = Vector2(WALL_SIZE_X, WALL_SIZE_Y);
 
 const Vector3 wallPos = Vector3(WALL_POS_X, WALL_POS_Y, WALL_POS_Z);
 
-Wall LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
+C3DPolygonObject LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
 const Vector3 LivewallPos = Vector3(WALL_POS_X - (LIVEWALL_SIZE_X * 2 * (WALL_LIVE_NUM_X / 2)),
-									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)- LIVEWALL_SIZE_Y),
+									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)),
 									WALL_POS_Z);
 
-bool LiveWallUse;
 const char *WallTex[] =
 {
 	"data/TEXTURE/ステージ/アキバ/バック.png",
@@ -91,6 +79,15 @@ const char *WallTex[] =
 };
 
 Dx9Texture LiveTex[2];
+
+/* ライト */
+Dx9Light BackLight;		// 環境光を当てる
+Dx9Light SpotLight[6];	// スポットライト
+Vector3  SpotVec[6];	// スポット先の座標
+float    LCurve = 0.0f;						// カーブ値
+float    LR = 0.0f, LG = 0.0f, LB = 0.0f;	// 色
+bool     LFlg = true;						// 色用
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -98,6 +95,7 @@ HRESULT InitField(void)
 {
 
 	wall[0].Init(wallPos, wallSize);
+	wall[1].Init(wallPos, wallSize);
 	wall[1].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.75 - 600), wallSize*0.75);
 	wall[2].Init(Vector3(wallPos.x, wallPos.y, 2600 * 0.5 - 600), wallSize*0.5);
 
@@ -109,7 +107,7 @@ HRESULT InitField(void)
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
 		Pos.x = LivewallPos.x + LIVEWALL_SIZE_X*2*(i % WALL_LIVE_NUM_X);
-		Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y * 2 * (i / WALL_LIVE_NUM_X) - WALL_SIZE_Y*2;
+		Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y*2*(i / WALL_LIVE_NUM_X);
 		Pos.z = LivewallPos.z;
 
 		Size.x = LIVEWALL_SIZE_X;
@@ -120,7 +118,24 @@ HRESULT InitField(void)
 
 	}
 
-	LiveWallUse = false;
+	/* ライト */
+	/* バックライト(環境光) */
+	BackLight.Direction = Vector3(0, 0, 1);
+	BackLight.Diffuse = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
+	BackLight.SetLight(0);
+
+	/* スポットライト */
+	for (int i = 0; i < 6; i++)
+	{
+		SpotLight[i].Type = D3DLIGHT_SPOT;
+		SpotLight[i].Position = Vector3((float)i * 600.0f - 1500.0f, 200.0f, 0.0f);
+		SpotLight[i].Range = 2100.0f;
+		SpotLight[i].Falloff = 2.0f;
+		SpotLight[i].Attenuation0 = 0.5f;
+		SpotLight[i].Attenuation1 = 0.0001f;
+		SpotLight[i].Theta = DegToRad(10);
+		SpotLight[i].Phi = DegToRad(20);
+	}
 
 	return S_OK;
 }
@@ -162,7 +177,7 @@ void UninitField(void)
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		LiveWall[i].ReleaseVertex();
+		//LiveWall[i].ReleaseVertex();
 	}
 
 }
@@ -172,94 +187,57 @@ void UninitField(void)
 //=============================================================================
 void DrawField(void)
 {
-	if (!LiveWallUse|| !GetFiver())
+
+	for (int i = 0; i < 3; i++)
 	{
-		for (int i = 0; i < 3; i++)
-		{
-			wall[i].Draw();
-		}
+		wall[i].Draw();
 	}
 
-	if (GetFiver()||LiveWallUse)
+	Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
+	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
-		for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
-		{
-			LiveWall[i].Draw();
-		}
+		LiveWall[i].Draw();
 	}
+	Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 }
 
 void UpdateField(void)
 {
-	if (GetFiver())
-	{
-		if (LiveWall[0].GetWallPos().y < LivewallPos.y)
-		{
-			for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
-			{
-				LiveWall[i].MoveWallY(50);
-			}
-			for (int i = 0; i < 3; i++)
-			{
-				wall[i].MoveWallY(50*(1-0.25*i));
-			}
-		}
-		else
-		{
-			Vector3 Pos;
-			for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
-			{
-
-				Pos.x = LivewallPos.x + LIVEWALL_SIZE_X * 2 * (i % WALL_LIVE_NUM_X);
-				Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y * 2 * (i / WALL_LIVE_NUM_X);
-				Pos.z = LivewallPos.z;
-
-				LiveWall[i].SetWall(Pos);
-			}
-			//wall[0].SetWall(Vector3(wallPos.x, wallPos.y+ WALL_SIZE_Y, wallPos.z));
-			//wall[1].SetWall(Vector3(wallPos.x, wallPos.y+WALL_SIZE_Y, 2600 * 0.75 - 600));
-			//wall[2].SetWall(Vector3(wallPos.x, wallPos.y+WALL_SIZE_Y, 2600 * 0.5 - 600));
-
-			LiveWallUse = true;
-		}
-		LiveWall[0].Print();
-	}
-	else 
-	{
-		if (LiveWall[0].GetWallPos().y > LivewallPos.y - WALL_SIZE_Y * 2)
-		{
-			for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
-			{
-				LiveWall[i].MoveWallY(-50);
-			}
-			for (int i = 0; i < 3; i++)
-			{
-				wall[i].MoveWallY(-50 * (1-0.25*i));
-			}
-		}
-		else
-		{
-			Vector3 Pos;
-			for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
-			{
-
-				Pos.x = LivewallPos.x + LIVEWALL_SIZE_X * 2 * (i % WALL_LIVE_NUM_X);
-				Pos.y = LivewallPos.y - LIVEWALL_SIZE_Y * 2 * (i / WALL_LIVE_NUM_X) - WALL_SIZE_Y * 2;;
-				Pos.z = LivewallPos.z;
-
-				LiveWall[i].SetWall(Pos);
-			}
-			wall[0].SetWall(Vector3(wallPos.x, wallPos.y , wallPos.z));
-			wall[1].SetWall(Vector3(wallPos.x, wallPos.y , 2600 * 0.75 - 600));
-			wall[2].SetWall(Vector3(wallPos.x, wallPos.y , 2600 * 0.5 - 600));
-
-			LiveWallUse = false;
-		}
-		LiveWall[0].Print();
-	}
-
 	//良い感じにライト処理
+
+	/* スポットライト */
+	// 方向操作
+	LCurve += 0.1f;
+	for (int i = 0; i < 6; i++)
+	{
+		SpotVec[i].y = (i % 2) ? sinf(LCurve) : -sinf(LCurve);
+	}
+
+	// 色操作
+	if (LFlg)
+	{
+		if (LR < 1.0f) LR += 0.05f;
+		else if (LG < 1.0f) LG += 0.05f;
+		else if (LB < 1.0f) LB += 0.05f;
+		else               LFlg = false;
+	}
+	else
+	{
+		if (LB > 0.5f) LB -= 0.05f;
+		else if (LG > 0.2f) LG -= 0.05f;
+		else if (LR > 0.0f) LR -= 0.05f;
+		else               LFlg = true;
+	}
+
+	// 反映
+	Vector3 vec;
+	for (int i = 0; i < 6; i++)
+	{
+		SpotLight[i].Diffuse = D3DXCOLOR(LR, LG, LB, 1.0f);
+		SpotLight[i].Direction = Vector3(0, SpotVec[i].y / 3.0f, 1);
+		SpotLight[i].SetLight(i + 1);
+	}
 }
 
 
