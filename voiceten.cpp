@@ -136,24 +136,29 @@ void UpdateVoiceten(void)
 	VOICETEN *v = GetVoiceten(0);
 	STAGE *stage = GetStage();
 
-	UpdateVoiMove();
-
-	for (int i = 0; i < VOICETEN_MAX; i++)
+	if (stage->status == STAGE_STATUS_NORMAL ||
+		stage->status == STAGE_STATUS_END
+		)
 	{
-		if ((v + i)->use == TRUE &&
-			stage->status == STAGE_STATUS_NORMAL
-			)
+		for (int i = 0; i < VOICETEN_MAX; i++)
 		{
-			// 更新処理（位置、回転）
-			Voiceten[i].LoadObjectStatus((v + i)->pos, (v + i)->rot);
+			if ((v + i)->use == TRUE)
+			{
+				// 更新処理（位置、回転）
+				Voiceten[i].LoadObjectStatus((v + i)->pos, (v + i)->rot);
 
-			// タイマー　カウントアップ
-			(v + i)->timer++;
+				UpdateVoiMove();
 
-			// 稼働時間検査
-			CheckUptimeVoi(i);
+				// タイマー　カウントアップ
+				(v + i)->timer++;
+
+				// 稼働時間検査
+				CheckUptimeVoi(i);
+			}
 		}
+
 	}
+
 }
 
 //=============================================================================

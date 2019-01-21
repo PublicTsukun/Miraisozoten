@@ -60,46 +60,50 @@ void UpdateVLauncher(void)
 {
 	STAGE *stage = GetStage();
 
-	if (VoiceTankUI::GetVoiceVolume() > VOICETEN_SHOT_VOL &&
-		stage->status == STAGE_STATUS_NORMAL
+	if (stage->status == STAGE_STATUS_NORMAL ||
+		stage->status == STAGE_STATUS_END
 		)
-	//if (1)
 	{
-		Vector2 direction = AimPointer::GetPosition();
-
-		D3DXVECTOR3 *pout;
-		pout = &D3DXVECTOR3(0, 0, 0);
-
-		pout =
-			CalcScreenToXZ
-			(
-				pout,
-				(int)direction.x,
-				(int)direction.y,
-				(int)SCREEN_WIDTH,
-				(int)SCREEN_HEIGHT,
-				&(GetMtxView)(),
-				&(GetMtxProj)()
-			);
-
-		if (timerVL % V_FREQ == 0)
+		//if (VoiceTankUI::GetVoiceVolume() > VOICETEN_SHOT_VOL)
+		if (1)
 		{
-			SetVoiceten(
-				Vector3(0.0f, 250.0f, -800.0f),				// 発射位置
-				//Vector3(0.0f, 250.0f, -0.0f),				// 発射位置
-				Vector3(pout->x, pout->y, pout->z));		// 目標位置
-			PlaySE(SHOOT_BULLET);
+			Vector2 direction = AimPointer::GetPosition();
+
+			D3DXVECTOR3 *pout;
+			pout = &D3DXVECTOR3(0, 0, 0);
+
+			pout =
+				CalcScreenToXZ
+				(
+					pout,
+					(int)direction.x,
+					(int)direction.y,
+					(int)SCREEN_WIDTH,
+					(int)SCREEN_HEIGHT,
+					&(GetMtxView)(),
+					&(GetMtxProj)()
+					);
+
+			if (timerVL % V_FREQ == 0)
+			{
+				SetVoiceten(
+					Vector3(0.0f, 250.0f, -800.0f),				// 発射位置
+																//Vector3(0.0f, 250.0f, -0.0f),				// 発射位置
+					Vector3(pout->x, pout->y, pout->z));		// 目標位置
+				PlaySE(SHOOT_BULLET);
+			}
+
+			// タイマーカウントアップ
+			timerVL++;
+
+			PrintDebugProcess("pout: (%f), (%f), (%f)\n", pout->x, pout->y, pout->z);
+
+		}
+		else
+		{
+			timerVL = 0;
 		}
 
-		// タイマーカウントアップ
-		timerVL++;
-
-		PrintDebugProcess("pout: (%f), (%f), (%f)\n", pout->x, pout->y, pout->z);
-
-	}
-	else
-	{
-		timerVL = 0;
 	}
 
 }
