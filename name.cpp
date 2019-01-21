@@ -501,7 +501,7 @@ void Update_Name(void)
 				// データ出力
 				WriteSaveRankingCsv();
 				// 再ロード
-				LoadSaveRankingCsv();
+				//LoadSaveRankingCsv();
 				// ランキングへ
 				name_status = BEGIN;
 			}
