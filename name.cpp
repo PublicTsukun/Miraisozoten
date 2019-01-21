@@ -443,7 +443,7 @@ void DrawName(void)
 void Update_Name(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
-	name_enter = true;
+	//name_enter = true;
 	// ƒtƒ‰ƒO‚ªtrue‚È‚ç–¼‘O“ü—Í‚n‚j
 	if (name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
 	{
