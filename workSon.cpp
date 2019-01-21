@@ -114,7 +114,7 @@ void UpdateWorkSon(void)
 		//TestVL();
 		//TestMB();
 		//TestCO();
-		//TesterAtk();
+		TesterAtk();
 		//TesterPD();
 		//TesterEFVH();
 		#endif

@@ -122,13 +122,13 @@ void CheckChangeStage(void)
 
 	STAGE *stage = GetStage();
 
-	if (CheckDefeat == STAGE_NORMA_01 &&
+	if (CheckDefeat >= STAGE_NORMA_01 &&
 		stage->no == STAGE_01_AKIBA)
 	{
 		NextStageEfx();
 	}
 
-	if (CheckDefeat == STAGE_NORMA_02 &&
+	if (CheckDefeat >= STAGE_NORMA_02 &&
 		stage->no == STAGE_02_USA)
 	{
 		NextStageEfx();

@@ -20,6 +20,7 @@ public:
 
 	void CountUp(void);
 	int GetCount(void);
+	void SetCount(int value);
 
 };
 

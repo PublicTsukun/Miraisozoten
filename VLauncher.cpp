@@ -64,8 +64,8 @@ void UpdateVLauncher(void)
 		stage->status == STAGE_STATUS_END
 		)
 	{
-		//if (VoiceTankUI::GetVoiceVolume() > VOICETEN_SHOT_VOL)
-		if (1)
+		if (VoiceTankUI::GetVoiceVolume() >= VOICETEN_SHOT_VOL)
+		//if (1)
 		{
 			Vector2 direction = AimPointer::GetPosition();
 

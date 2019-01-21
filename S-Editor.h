@@ -19,6 +19,12 @@
 // ”­ËŠ—v‰¹—Ê
 #define VOICETEN_SHOT_VOL		(1)	
 
+// Voiceten Type ‰¹—Êİ’è
+#define VOICETEN_TYPE_VOL_01	(140 * 3)
+
+// Voiceten Type ‰¹—Êİ’è
+#define VOICETEN_TYPE_VOL_02	(140 * 6)
+
 // ŠÔŠu‚Å“G‚ğ¶¬iframej
 #define ENEMY_SPAWN_DELAY_01	(60)
 

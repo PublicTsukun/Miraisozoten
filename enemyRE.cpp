@@ -696,24 +696,34 @@ void DefeatEnemyREEfx(int no)
 //============================================================================='
 void TesterAtkEnemyRE(void)
 {
-	ENEMY *e = GetEnemyRE(0);
+	ENEMY *enemy = GetEnemyRE(0);
 
-	// ƒ_ƒ[ƒWŒvŽZ
-	if ((e + 0)->status == E_STATUS_NORMAL)
+	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		(e + 0)->hp -= 4;
-
-		// HPC³
-		if ((e + 0)->hp < 0)
+		if ((enemy + i)->use == true)
 		{
-			(e + 0)->hp = 0;
+			(enemy + i)->hp -= (enemy + i)->hp;
+			DefeatEnemyRE(i);
+			break;
 		}
-
-		// Œ‚”j”»’è
-		if ((e + 0)->hp <= 0)
-		{
-			DefeatEnemyRE(0);
-		}
-
 	}
+
+	//// ƒ_ƒ[ƒWŒvŽZ
+	//if ((e + 0)->status == E_STATUS_NORMAL)
+	//{
+	//	(e + 0)->hp -= 256;
+
+	//	// HPC³
+	//	if ((e + 0)->hp < 0)
+	//	{
+	//		(e + 0)->hp = 0;
+	//	}
+
+	//	// Œ‚”j”»’è
+	//	if ((e + 0)->hp <= 0)
+	//	{
+	//		DefeatEnemyRE(0);
+	//	}
+
+	//}
 }

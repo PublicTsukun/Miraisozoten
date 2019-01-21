@@ -26,6 +26,11 @@ int DefeatCounter::GetCount(void)
 	return this->count;
 }
 
+void DefeatCounter::SetCount(int value)
+{
+	this->count = value;
+}
+
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************

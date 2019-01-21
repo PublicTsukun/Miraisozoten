@@ -12,6 +12,8 @@
 #include "voicetank.h"
 #include "StageManager.h"
 
+#include "S-Editor.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -297,20 +299,20 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			// テクスチャ、ATK設定（ヴォイステンゲージに依存）
 			Voiceten[i].LoadTexture("data/TEXTURE/UI/voiceten.png");
 
-			if (VoiceTankUI::GetVoiceVolume() < (140 * 3))
+			if (VoiceTankUI::GetVoiceVolume() < (VOICETEN_TYPE_VOL_01))
 			{
 				Voiceten[i].SetTexture(V_TYPE_BLUE);
 				(v + i)->atk = V_BLUE_ATK;
 
 			}
-			else if (VoiceTankUI::GetVoiceVolume() >= (140 * 3) &&
-				VoiceTankUI::GetVoiceVolume() < (140 * 6))
+			else if (VoiceTankUI::GetVoiceVolume() >= (VOICETEN_TYPE_VOL_01) &&
+				VoiceTankUI::GetVoiceVolume() < (VOICETEN_TYPE_VOL_02))
 			{
 				Voiceten[i].SetTexture(V_TYPE_YELLOW);
 				(v + i)->atk = V_YELLOW_ATK;
 
 			}
-			else if (VoiceTankUI::GetVoiceVolume() >= (140 * 6))
+			else if (VoiceTankUI::GetVoiceVolume() >= (VOICETEN_TYPE_VOL_02))
 			{
 				Voiceten[i].SetTexture(V_TYPE_RED);
 				(v + i)->atk = V_RED_ATK;
