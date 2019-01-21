@@ -160,7 +160,7 @@ int namechar;
 int lastchar;		// かーそるってえいごでなんだっけ！
 int name_status;	// 現在の状態
 RANKDATA	rankdatawk[1];
-
+CURSOLE		cursolewk;
 C2DObject cursole;
 C2DObject char_cursole;		// 名前の文字をさすカーソル
 C2DObject mojiban;			// ひらがな用文字盤
@@ -205,10 +205,6 @@ int flash_score;			// 点滅するsukoa
 // プロトタイプ宣言(cpp内でのみ使用するやつ
 //*************************************************************************
 void move_cursole(void);
-void move_cursole_alpha(void);
-void name_char_select(void);
-void cursole_change(void);
-void Draw_ranking(int hoge);
 void Flash_Tex(int no);
 //*************************************************************************
 // HRESULT Initname(void)
@@ -230,15 +226,16 @@ HRESULT InitName(void)
 
 	// スコア取得
 	int player_score = GetScore();
-	//name_enter = SaveRankingSort(player_score);	// スコアがランクインしたか？
-	name_enter = SaveRankingSort(99999);	// スコアがランクインしたか？
+	name_enter = SaveRankingSort(player_score);	// スコアがランクインしたか？
+	//name_enter = SaveRankingSort(99999);	// スコアがランクインしたか？
 
 
 	SAVERANKING *rankinfo = GetSaveRanking(0);
 	for (int i = 0; i < 5; i++,rankinfo++)
-	{
+	{// 236
 		ranking[i].rank.Init(NAME_SCORE_SIZE + 40, NAME_SCORE_POS_Y + ((NAME_SCORE_SIZE * 2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 		ranking[i].rank.LoadTexture(ranktex[rankinfo->rank-1]);
+
 		for (int t = 0; t < 5; t++)
 		{	// スコア描画
 			ranking[i].score[t].Init(NAME_POS_X + ((NAME_SCORE_SIZE*2)*(NAME_MAX_NO+(t))), NAME_SCORE_POS_Y +((NAME_SCORE_SIZE*2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
@@ -260,11 +257,11 @@ HRESULT InitName(void)
 	}
 
 
-	// 名前初期化
-	for (int i = 0; i < NAMEMAX; i++)
-	{
-		rankdata[0].namechar[i] = EMPTY_NO;	// 全てを初期値に
-	}
+	//// 名前初期化
+	//for (int i = 0; i < NAMEMAX; i++)
+	//{
+	//	rankdata[0].namechar[i] = EMPTY_NO;	// 全てを初期値に
+	//}
 
 	timedayo = 0;
 
@@ -285,8 +282,8 @@ HRESULT InitName(void)
 	name_status = BEGIN;
 
 	// カーソルを初期位置に
-	rankdata[0].cursole_X = 0;
-	rankdata[0].cursole_Y = 0;
+	cursolewk.pos.x = 0;
+	cursolewk.pos.y = 0;
 	namechar = 0;							// 入力済文字
 											// 画像の初期化
 	cursole.Init(CURSOLE_POS_X, Y_TEST + CURSOLE_POS_Y, CURSOLE_WIDTH, CURSOLE_HEIGHT, CURSOLE_TEX);
@@ -300,6 +297,11 @@ HRESULT InitName(void)
 	flash_count = 1.0f;
 
 	flash_score = 0;
+
+	for (int i = 0;i<5;i++)
+	{
+		select_moji[i].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*i), Y_TEST + SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
+	}
 	return S_OK;
 }
 
@@ -320,7 +322,9 @@ void UninitName(void)
 		{
 			ranking[i].name[t].Release();
 			ranking[i].score[t].Release();
+			
 		}
+		ranking[i].rank.Release();
 		ranktex[i].Release();
 	}
 	for (int i = 0; i < CHAR_MAX; i++)
@@ -366,8 +370,9 @@ void DrawName(void)
 			if (rankdata[0].selected[i] == true)
 			{
 				// テクスチャのセット
-				//select_moji[namechar].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH)*namechar), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-				select_moji[i].SetTexture(rankdata[0].namechar[i], 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
+				int numnum;
+				numnum = rankdata[0].namechar[i][0] * 10 + rankdata[0].namechar[i][1];
+				select_moji[i].SetTexture(numnum, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
 				select_moji[i].Draw();
 			}
 		}
@@ -390,24 +395,24 @@ void DrawName(void)
 			{
 			case KEYBOARD:
 			{	// 文字盤
-				cursole.Init(CURSOLE_POS_X + ((CURSOLE_WIDTH*CURSOLE_SPACE)*rankdata[0].cursole_X), Y_TEST + CURSOLE_POS_Y + ((CURSOLE_HEIGHT*CURSOLE_SPACE)*rankdata[0].cursole_Y), CURSOLE_WIDTH, CURSOLE_HEIGHT, CURSOLE_TEX);
+				cursole.SetStatus(CURSOLE_POS_X + ((CURSOLE_WIDTH*CURSOLE_SPACE)*cursolewk.pos.x), Y_TEST + CURSOLE_POS_Y + ((CURSOLE_HEIGHT*CURSOLE_SPACE)*cursolewk.pos.y), CURSOLE_WIDTH, CURSOLE_HEIGHT);
 				break;
 			}
 			case PLAYER_NAME:
 			{	// カーソルのサイズと位置を変えるだけでよくね？
-				cursole.Init(SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position), Y_TEST + RENAME_CURSOLE_POS_Y, RENAME_CURSOLE_WIDTH, RENAME_CURSOLE_HEIGHT, RENAME_CURSOLE_TEX);
+				//cursole.SetStatus(SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position), Y_TEST + RENAME_CURSOLE_POS_Y, RENAME_CURSOLE_WIDTH, RENAME_CURSOLE_HEIGHT);
 				break;
 			}
 			case FINISH:
 			{	// カーソルを表示しない
-				cursole.Init(-100, -100, 0.0, 0.0);
+				cursole.SetStatus(-100, -100, 0.0, 0.0);
 				break;
 			}
 			}
 		}
 		else
 		{
-			cursole_change();
+			//cursole_change();
 		}
 		cursole.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
 		cursole.Draw();
@@ -442,14 +447,7 @@ void Update_Name(void)
 	// フラグがtrueなら名前入力ＯＫ
 	if (name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
 	{
-		if (name_status == NAME_SELECT)
-		{
-			name_status = BEGIN;
-		}
-		else
-		{
-			name_status = NAME_SELECT;
-		}
+		name_status = NAME_SELECT;
 	}
 
 
@@ -459,93 +457,43 @@ void Update_Name(void)
 	case NAME_SELECT:
 	{
 		if (cursole_status != FINISH)
-		{	// 決定ボタンにカーソルが居ない
+		{	// 決定ボタンにカーソルが居ない(キーボード)
 			// カーソル移動
-			if (name_flag == true)
-			{
+
 				move_cursole();
-			}
-			else
-			{	// 文字盤移動処理
-				name_char_select();
-			}
 
-
-			// 文字入力の終了(確定)
-			if (GetKeyboardTrigger(DIK_Z))
-			{
-				int player_score = GetScore();
-				// あたまがはたらかなかった↓
-				long long name_number = (rankdata[0].namechar[0] * 100000000) + (rankdata[0].namechar[1] * 1000000) + (rankdata[0].namechar[2] * 10000) + (rankdata[0].namechar[3] * 100) + rankdata[0].namechar[4];
-				WriteSaveRankingCsv();
-			}
 
 			// 文字盤を変える(カーソル移動中は実行できない）
-			if ((GetKeyboardTrigger(DIK_X) || IsButtonTriggered(LSTICK_RIGHT | LSTICK_LEFT)) && cursolechanging == false)
+			if (GetKeyboardTrigger(DIK_X) || IsButtonTriggered(LSTICK_RIGHT | LSTICK_LEFT) && cursolechanging == false)
 			{
 				char_type = !char_type;
 				// カーソル位置の初期化
-				rankdata[0].cursole_X = 0;
-				rankdata[0].cursole_Y = 0;
+				cursolewk.pos.x = 0;
+				cursolewk.pos.y = 0;
 			}
 
 			// カーソルの位置を変える(文字盤⇔名前欄)
-			// てかこれを文字入力まで動かせないようにすればよくね？
-			if (namechar != 0)
-			{
-				if (GetKeyboardTrigger(DIK_C))
-				{
-					if (cursolechanging == false)
-					{
-						name_flag = !name_flag;
-						// rankdata[0].cursole_Y * 10
-
-						if (name_flag == true)
-						{
-							// name_flagがtrueになった場合、文字盤が表示されるのでカーソルが変わる
-							rankdata[0].cursole_X = rankdata[0].namechar[rankdata[0].name_position] % 10;
-							rankdata[0].cursole_Y = (rankdata[0].namechar[rankdata[0].name_position] / 10) % 10;
-							// 未入力の場合
-							if (rankdata[0].namechar[rankdata[0].name_position] == EMPTY_NO)
-							{
-								rankdata[0].cursole_X = 0;
-								rankdata[0].cursole_Y = 0;
-							}
-							// もしも入力された文字が文字盤と違う場合(「あ」なのに文字盤がアルファベットだったり)文字盤を対応する物に変えてあげる
-							long long agumon_X = rankdata[0].namechar[rankdata[0].name_position] % 10;			// X座標
-							long long agumon_Y = (rankdata[0].namechar[rankdata[0].name_position] / 10) % 10;	// Y座標
-
-							if (char_type == HIRAGANA && agumon_Y > MOJIBAN_MASUMAX_Y)
-							{
-								char_type = !char_type;			// 文字盤変更
-							}
-							else if (char_type == ABC && agumon_Y <= MOJIBAN_MASUMAX_Y)
-							{
-								char_type = !char_type;
-							}
-
-						}
-						cursolechanging = true;
-					}
-				}
-			}
-			// 00があ　01がい
-			//select_moji[0].SetTexture(1,10,10);
 		}
 		else
 		{	// 以下、決定ボタンにいる際の処理
-			if (GetKeyboardTrigger(DIK_2))
+			if (GetKeyboardTrigger(DIK_2) || IsButtonTriggered(BUTTON_DOWN))
 			{
-				select_moji[namechar - 1].Release();	//テクスチャ解放
 				rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
-				rankdata[0].namechar[namechar] = 00;		// 文字入力フラグ初期化(あの位置へ）
+				rankdata[0].namechar[namechar-1][0] = 0;
+				rankdata[0].namechar[namechar-1][1] = 0;// 文字入力フラグ初期化(あの位置へ）
 				namechar--;									// 現在入力中の文字数を減らすよ
-				rankdata[0].name_position = namechar - 1;
+				//rankdata[0].name_position = namechar - 1;
 				cursole_status = KEYBOARD;
 			}
 			// 決定ボタンにカーソルが存在しておりLキーが押された場合
 			if (GetKeyboardTrigger(DIK_L) || IsButtonTriggered(BUTTON_UP))
 			{
+
+				for (int i = 0; i < NAMEMAX; i++)
+				{
+					Enter_the_no(CheckRank(GetScore()),i, rankdata[0].namechar[i][0], rankdata[0].namechar[i][1]);
+				}
+
 				// データ出力
 				WriteSaveRankingCsv();
 				// 再ロード
@@ -562,11 +510,6 @@ defalt:
 	}
 
 	Flash_Tex(0);
-	// test セーブランキング作成
-	if (GetKeyboardTrigger(DIK_LSHIFT))
-	{
-	//	WriteSaveRankingCsv();
-	}
 	// 点滅
 	
 }
@@ -581,50 +524,59 @@ void move_cursole(void)
 	RANKDATA *rankdata = &rankdatawk[0];
 	if (GetKeyboardTrigger(DIK_W) || IsButtonTriggered(LSTICK_UP))
 	{
-		rankdata[0].cursole_Y--;
-		if (rankdata[0].cursole_Y < 0)
+		cursolewk.pos.y--;
+		if (char_type == HIRAGANA && cursolewk.pos.y < 0)
 		{
-			rankdata[0].cursole_Y = MOJIBAN_MASUMAX_Y;
+			cursolewk.pos.y = MOJIBAN_MASUMAX_Y;
+		}
+		else if(char_type!=HIRAGANA && cursolewk.pos.y <0)
+		{
+			cursolewk.pos.y = 2;	// アルファベット最大たてます
 		}
 	}
 	else if (GetKeyboardTrigger(DIK_S) || IsButtonTriggered(LSTICK_DOWN))
 	{	// したキーが押された
-		rankdata[0].cursole_Y++;
+		cursolewk.pos.y++;
 		// チェック
-		if (rankdata[0].cursole_Y > MOJIBAN_MASUMAX_Y)
+		if (char_type == HIRAGANA && cursolewk.pos.y > MOJIBAN_MASUMAX_Y)
 		{
-			rankdata[0].cursole_Y = 0;
+			cursolewk.pos.y = 0;
+		}
+		else if (char_type != HIRAGANA && cursolewk.pos.y >2)
+		{
+			cursolewk.pos.y = 0;
 		}
 	}
 	else if (GetKeyboardTrigger(DIK_D) || IsButtonTriggered(LSTICK_RIGHT))
 	{
 		// 右キー
-		rankdata[0].cursole_X++;
+		cursolewk.pos.x++;
 		// チェック
-		if (rankdata[0].cursole_X >MOJIBAN_MASUMAX_X)
+		if (cursolewk.pos.x >MOJIBAN_MASUMAX_X)
 		{
-			rankdata[0].cursole_X = 0;
+			cursolewk.pos.x = 0;
 		}
 	}
 	else if (GetKeyboardTrigger(DIK_A) || IsButtonTriggered(LSTICK_LEFT))
 	{
 		// 左キー
-		rankdata[0].cursole_X--;
+		cursolewk.pos.x--;
 		// チェック
-		if (rankdata[0].cursole_X < 0)
+		if (cursolewk.pos.x < 0)
 		{
-			rankdata[0].cursole_X = MOJIBAN_MASUMAX_X;
+			cursolewk.pos.x = MOJIBAN_MASUMAX_X;
 		}
 	}
 
 	// 文字の削除(不要な場合削除お願いします(＞＜))
-	if (GetKeyboardTrigger(DIK_BACKSPACE) || IsButtonTriggered(BUTTON_DOWN))
+	if (GetKeyboardTrigger(DIK_BACKSPACE) || IsButtonTriggered(BUTTON_DOWN) )
 	{	// 名前入力フラグの削除
-		select_moji[namechar - 1].Release();	//テクスチャ解放
+		//select_moji[namechar - 1].Release();	//テクスチャ解放
 		rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
-		rankdata[0].namechar[namechar] = 00;		// 文字入力フラグ初期化(あの位置へ）
+		rankdata[0].namechar[namechar-1][0] = 0;		// 文字入力フラグ初期化(あの位置へ）
+		rankdata[0].namechar[namechar-1][1] = 0;
 		namechar--;									// 現在入力中の文字数を減らすよ
-		rankdata[0].name_position = namechar - 1;
+		//rankdata[0].name_position = namechar - 1;
 
 	}
 
@@ -635,30 +587,7 @@ void move_cursole(void)
 		//if (namechar < NAMEMAX)
 		{
 			// 既に選択されている場合上書き処理
-			//if (rankdata[0].selected[rankdata[0].name_position] == true)
-			{ // 上書き処理
 
-			 // // 数字で文字を格納
-				//if (char_type == HIRAGANA)
-				//{
-				//	rankdata[0].namechar[rankdata[0].name_position] = rankdata[0].cursole_X + (rankdata[0].cursole_Y * 10);
-				//}
-				//else
-				//{
-				//	rankdata[0].namechar[rankdata[0].name_position] = rankdata[0].cursole_X + ((rankdata[0].cursole_Y + 5) * 10);
-				//}
-				//// テクスチャのセット
-				//select_moji[rankdata[0].name_position].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*rankdata[0].name_position), SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-				////select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
-				//// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
-
-				//// 文字入力されたので現在入力中の名前を加算
-				//if (namechar < NAMEMAX)
-				//{
-				//	//rankdata[0].name_position = namechar;
-				//	//namechar++;
-				//}
-			}
 			/*else*/ if (namechar < NAMEMAX)
 			{
 				// 指定位置
@@ -668,15 +597,14 @@ void move_cursole(void)
 				// 数字で文字を格納
 				if (char_type == HIRAGANA)
 				{
-					rankdata[0].namechar[namechar] = rankdata[0].cursole_X + (rankdata[0].cursole_Y * 10);
+					rankdata[0].namechar[namechar][0] = cursolewk.pos.y;
+					rankdata[0].namechar[namechar][1] = cursolewk.pos.x;
 				}
 				else
 				{
-					rankdata[0].namechar[namechar] = rankdata[0].cursole_X + ((rankdata[0].cursole_Y + 5) * 10);
+					rankdata[0].namechar[namechar][0] = cursolewk.pos.y + 5;
+					rankdata[0].namechar[namechar][1] = cursolewk.pos.x;
 				}
-				// テクスチャのセット
-				select_moji[namechar].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*namechar), Y_TEST + SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-				
 				//	今回の決定によって5文字目が入力された場合
 				if (rankdata[0].selected[NAMEMAX - 1] == true)
 				{
@@ -691,7 +619,7 @@ void move_cursole(void)
 			if (namechar < NAMEMAX)
 			{
 				namechar++;
-				rankdata[0].name_position = namechar;
+				//rankdata[0].name_position = namechar;
 
 			}
 		}
@@ -700,198 +628,8 @@ void move_cursole(void)
 
 
 	}
-					PrintDebugProcess("namechar %d", namechar);
+	PrintDebugProcess("namechar %d", namechar);
 
-}
-
-//********************************************************************
-// void name_char_select
-// 名前編集処理！！！！
-// 入力済みの名前をカーソル移動する場合　スカルグレイモンかっこいいすき
-//********************************************************************
-void name_char_select(void)
-{
-	RANKDATA *rankdata = &rankdatawk[0];
-
-	if (namechar < NAMEMAX)
-	{
-		if (GetKeyboardTrigger(DIK_A))
-		{
-			rankdata[0].name_position--;
-			if (rankdata[0].name_position < 0)
-			{
-				rankdata[0].name_position = namechar;
-			}
-		}
-		else if (GetKeyboardTrigger(DIK_D))
-		{
-			rankdata[0].name_position++;
-			if (rankdata[0].name_position >= namechar + 1)
-			{
-				rankdata[0].name_position = 0;
-			}
-		}
-	}
-	else
-	{
-		if (GetKeyboardTrigger(DIK_A))
-		{
-			rankdata[0].name_position--;
-			if (rankdata[0].name_position < 0)
-			{
-				rankdata[0].name_position = namechar-1;
-			}
-		}
-		else if (GetKeyboardTrigger(DIK_D))
-		{
-			rankdata[0].name_position++;
-			if (rankdata[0].name_position >= namechar)
-			{
-				rankdata[0].name_position = 0;
-			}
-		}
-	}
-
-}
-
-//********************************************************************
-// void move_cursole_alpha(void)
-// 文字盤のサイズなどが変わっていた時の関数
-// 使わなそうなので削除予定
-//********************************************************************
-void move_cursole_alpha(void)
-{
-	RANKDATA *rankdata = &rankdatawk[0];
-	if (GetKeyboardTrigger(DIK_W))
-	{
-		rankdata[0].cursole_Y--;
-		if (rankdata[0].cursole_Y < 0)
-		{
-			rankdata[0].cursole_Y = MOJIBAN_MASUMAX_Y;
-		}
-	}
-	else if (GetKeyboardTrigger(DIK_S))
-	{	// したキーが押された
-		rankdata[0].cursole_Y++;
-		// チェック
-		if (rankdata[0].cursole_Y > MOJIBAN_MASUMAX_Y)
-		{
-			rankdata[0].cursole_Y = 0;
-		}
-	}
-	else if (GetKeyboardTrigger(DIK_D))
-	{
-		// 右キー
-		rankdata[0].cursole_X++;
-		// チェック
-		if (rankdata[0].cursole_X >MOJIBAN_MASUMAX_X)
-		{
-			rankdata[0].cursole_X = 0;
-		}
-	}
-	else if (GetKeyboardTrigger(DIK_A))
-	{
-		// 左キー
-		rankdata[0].cursole_X--;
-		// チェック
-		if (rankdata[0].cursole_X < 0)
-		{
-			rankdata[0].cursole_X = MOJIBAN_MASUMAX_X;
-		}
-	}
-	// 決定キーが入力された場合今のカーソル位置の文字を格納
-	if (GetKeyboardTrigger(DIK_SPACE) && namechar<NAMEMAX)
-	{
-		// 1フラグをtrueに
-		rankdata[0].selected[namechar] = true;
-		// 数字で文字を格納
-		rankdata[0].namechar[namechar] = rankdata[0].cursole_X + (rankdata[0].cursole_Y + 5 * 10);
-
-		// テクスチャのセット
-		select_moji[namechar].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*namechar), Y_TEST + SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
-		//select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
-		// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
-		if (namechar < NAMEMAX)
-		{
-			namechar++;
-		}
-	}
-}
-
-
-//********************************************************************
-// cursole_change
-// 文字盤～名前間で行き来するよ
-// 絶対バグるから関数にしました
-// うまくいったら上にそのままぶちこもウと思ったけれど長くなったからやめた
-//********************************************************************
-void cursole_change(void)
-{
-	RANKDATA *rankdata = &rankdatawk[0];
-	// 目標地点が決まってない場合、距離の計算
-	if (pos_rockon == false)
-	{
-
-		{ // 初期位置のままの場合以下の処理は行わない
-		  // 名前欄選択位置の文字を取得
-			long long agumon_X = rankdata[0].namechar[rankdata[0].name_position] % 10;			// X座標
-			long long agumon_Y = (rankdata[0].namechar[rankdata[0].name_position] / 10) % 10;	// Y座標
-
-																								// この分岐いる？
-			if (name_flag == true)
-			{	// 名前から文字盤へ
-				// アルファベットの場合位置調整が必要
-				if (agumon_Y > MOJIBAN_MASUMAX_Y)
-				{
-					agumon_Y -= 5;	// マス目の高さだけひいてる
-					rankdata[0].cursole_Y -= 5;
-				}
-				// 文字盤が英語の場合
-				if (char_type == ABC)
-				{
-				}
-				target_x = (CURSOLE_POS_X + ((CURSOLE_WIDTH*CURSOLE_SPACE)*rankdata[0].cursole_X)) - (SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position));
-				target_y = (CURSOLE_POS_Y + ((CURSOLE_HEIGHT*CURSOLE_SPACE)*agumon_Y)) - RENAME_CURSOLE_POS_Y;
-				cursole_status = KEYBOARD;
-			}
-			else
-			{	// 文字盤から名前欄へ
-				if (rankdata[0].name_position >= NAMEMAX)
-				{
-					rankdata[0].name_position = NAMEMAX - 1;
-				}
-				// 文字盤の種類によって位置調整が必要なので位置を保存
-				// 現在のカーソル位置と名前欄の位置の距離を出せばいい
-				target_x = (SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position) - (CURSOLE_POS_X + ((CURSOLE_WIDTH*CURSOLE_SPACE)*rankdata[0].cursole_X)));
-				target_y = RENAME_CURSOLE_POS_Y - (CURSOLE_POS_Y + ((CURSOLE_HEIGHT*CURSOLE_SPACE)*rankdata[0].cursole_Y));
-				//	これサイズなんだけどさ…いる？
-				// 名前欄にポジション移動
-				cursole_status = PLAYER_NAME;
-			}
-			target_x = target_x / cursole_update;
-			target_y = target_y / cursole_update;
-			movesize_X = (RENAME_CURSOLE_WIDTH - CURSOLE_WIDTH) / cursole_update;
-			movesize_Y = (RENAME_CURSOLE_HEIGHT - CURSOLE_HEIGHT) / cursole_update;
-			pos_rockon = true;
-		}
-	}
-	if (name_flag == true)
-	{	// 名前のやつから文字盤へ
-		cursole.Init(SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position) + (target_x*timedayo), Y_TEST + RENAME_CURSOLE_POS_Y + (target_y*timedayo), RENAME_CURSOLE_WIDTH - (movesize_X*timedayo), RENAME_CURSOLE_HEIGHT - (movesize_Y*timedayo), RENAME_CURSOLE_TEX);
-	}
-	else
-	{	// 文字盤から名前欄へ
-		cursole.Init(CURSOLE_POS_X + ((CURSOLE_WIDTH*CURSOLE_SPACE)*rankdata[0].cursole_X) + (target_x*timedayo), Y_TEST + CURSOLE_POS_Y + ((CURSOLE_HEIGHT*CURSOLE_SPACE)*rankdata[0].cursole_Y) + (target_y*timedayo), CURSOLE_WIDTH + (movesize_X*timedayo), CURSOLE_HEIGHT + (movesize_Y*timedayo), CURSOLE_TEX);
-	}
-
-	timedayo++;
-	if (timedayo >= cursole_update)
-	{
-		//name_flag = !name_flag;
-		timedayo = 0;
-		cursolechanging = false;
-		pos_rockon = false;
-	}
 }
 
 
@@ -952,21 +690,6 @@ void Flash_Tex(int no)
 		}
 	}
 }
-
-//********************************************************************
-// Draw_ranking(int hoge)
-// ランキングの表示処理です、int型hogeによって名前の点滅などを行います。
-//********************************************************************
-void Draw_ranking(int hoge)
-{
-	RANKDATA *rankdata = &rankdatawk[0];
-	// C2Dobject Initで初期化　Drawで描画
-	for (int i = 0; i < RANKING_NO; i++)
-	{
-		//ranking[i].Init((NAME_POS_X + ((NAME_WIDTH * 2)*rankdata[0].name_position), NAME_POS_Y, NAME_WIDTH, NAME_HEIGHT, NAME_TEX));
-	}
-}
-
 
 
 // ファイル読みこみ

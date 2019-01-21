@@ -38,21 +38,17 @@ typedef struct
 {
 	long long x;
 	long long y;
+	Vector2 pos;
 }CURSOLE;
 
 typedef struct
 {
-	char name[256];	// ユーザー名
+	int name[5][2];	// ユーザー名
 	int score;		// スコア
-	long long namechar[NAMEMAX];
+	int namechar[NAMEMAX][2];
 	// 文字盤操作時のカーソル
-	long long  cursole_X;
-	long long  cursole_Y;
-	int name_position;
-	CURSOLE name_cursole;
 	bool selected[NAMEMAX];
 }RANKDATA;
-
 
 void Update_Name(void);
 HRESULT InitName(void);

@@ -60,5 +60,9 @@ void WriteSaveRankingCsv(void);
 void LoadSaveRankingCsv(void);
 void DebugRank(void);
 bool SaveRankingSort(int score);
+// writesaveranking‚Ì’¼‘O‚ÉˆÈ‰º‚ÌŠÖ”‚ğŒÄ‚Ô
+void Enter_the_no(int rank, int num, int y, int x);
+int CheckRank(int Score);
+
 
 #endif
