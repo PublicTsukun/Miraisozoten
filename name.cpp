@@ -509,6 +509,14 @@ void Update_Name(void)
 
 	}
 	break;
+	case BEGIN:
+	{
+		if ((GetKeyboardTrigger(DIK_3) || IsButtonTriggered(BUTTON_HOME)))// ŒÂX‚Ìƒ{ƒ^ƒ“‘Š’k‚·‚é
+		{
+			PlaySE(DECIDE);
+			Scene::SetScene(SCENE_TITLE);
+		}
+	}
 defalt:
 	break;
 	}

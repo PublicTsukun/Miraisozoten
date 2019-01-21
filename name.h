@@ -7,7 +7,8 @@
 
 #include "Library/Input.h"
 #include "Library/ObjectBase2D.h"
-
+#include "SceneManager.h"
+#include "GameSound.h"
 // ‚Å‚Ó‚Ÿ‚¢‚ñ
 #define NAMEMAX	(5)
 
