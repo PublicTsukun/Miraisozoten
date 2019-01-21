@@ -352,7 +352,38 @@ void DrawName(void)
 	{
 		// 名前入力に入っている場合の描画
 	case NAME_SELECT:
-	{	// ここから下関数にしてわけるかも？
+	{	
+		if (cursolechanging == false)
+		{
+			// カーソルの表示位置を変更する
+
+			// name_flagnで変わる
+			switch (cursole_status)
+			{
+			case KEYBOARD:
+			{	// 文字盤
+				cursole.SetStatus(CURSOLE_POS_X + ((CURSOLE_WIDTH*CURSOLE_SPACE)*cursolewk.pos.x), Y_TEST + CURSOLE_POS_Y + ((CURSOLE_HEIGHT*CURSOLE_SPACE)*cursolewk.pos.y), CURSOLE_WIDTH, CURSOLE_HEIGHT);
+				break;
+			}
+			case PLAYER_NAME:
+			{	// カーソルのサイズと位置を変えるだけでよくね？
+				//cursole.SetStatus(SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position), Y_TEST + RENAME_CURSOLE_POS_Y, RENAME_CURSOLE_WIDTH, RENAME_CURSOLE_HEIGHT);
+				break;
+			}
+			case FINISH:
+			{	// カーソルを表示しない
+				cursole.SetStatus(-100, -100, 0.0, 0.0);
+				break;
+			}
+			}
+		}
+		else
+		{
+			//cursole_change();
+		}
+		cursole.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
+		cursole.Draw();
+		// ここから下関数にしてわけるかも？
 		if (char_type == HIRAGANA)
 		{
 			mojiban.SetTexture(0, 1, 2);
@@ -386,36 +417,7 @@ void DrawName(void)
 		// カーソル描画
 		// ばぐってるから
 		//cursolechanging = false;
-		if (cursolechanging == false)
-		{
-			// カーソルの表示位置を変更する
 
-			// name_flagnで変わる
-			switch (cursole_status)
-			{
-			case KEYBOARD:
-			{	// 文字盤
-				cursole.SetStatus(CURSOLE_POS_X + ((CURSOLE_WIDTH*CURSOLE_SPACE)*cursolewk.pos.x), Y_TEST + CURSOLE_POS_Y + ((CURSOLE_HEIGHT*CURSOLE_SPACE)*cursolewk.pos.y), CURSOLE_WIDTH, CURSOLE_HEIGHT);
-				break;
-			}
-			case PLAYER_NAME:
-			{	// カーソルのサイズと位置を変えるだけでよくね？
-				//cursole.SetStatus(SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position), Y_TEST + RENAME_CURSOLE_POS_Y, RENAME_CURSOLE_WIDTH, RENAME_CURSOLE_HEIGHT);
-				break;
-			}
-			case FINISH:
-			{	// カーソルを表示しない
-				cursole.SetStatus(-100, -100, 0.0, 0.0);
-				break;
-			}
-			}
-		}
-		else
-		{
-			//cursole_change();
-		}
-		cursole.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
-		cursole.Draw();
 	}
 	break;
 
@@ -443,7 +445,7 @@ void DrawName(void)
 void Update_Name(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
-	//name_enter = true;
+	name_enter = true;
 	// フラグがtrueなら名前入力ＯＫ
 	if (name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
 	{
