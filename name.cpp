@@ -353,6 +353,43 @@ void DrawName(void)
 		// 名前入力に入っている場合の描画
 	case NAME_SELECT:
 	{	
+
+
+		// ここから下関数にしてわけるかも？
+		if (char_type == HIRAGANA)
+		{
+			mojiban.SetTexture(0, 1, 2);
+			mojiban.Draw();
+		}
+		else
+		{
+			mojiban.SetTexture(1, 1, 2);
+			mojiban.Draw();
+		}
+		// 格納文字書き出し
+		for (int i = 0; i < NAME_MAX; i++)
+		{
+			// selectedがtrueならテクスチャ表示
+			if (rankdata[0].selected[i] == true)
+			{
+				// テクスチャのセット
+				int numnum;
+				numnum = rankdata[0].namechar[i][0] * 10 + rankdata[0].namechar[i][1];
+				select_moji[i].SetTexture(numnum, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
+				select_moji[i].Draw();
+			}
+		}
+
+		// 決定ボタン(一度でも文字が最大まで入力された場合表示
+		if (rankdata[0].selected[NAME_MAX - 1] == true)
+		{
+			name_set.Draw();
+		}
+		
+
+		// カーソル描画
+		// ばぐってるから
+		//cursolechanging = false;
 		if (cursolechanging == false)
 		{
 			// カーソルの表示位置を変更する
@@ -383,41 +420,6 @@ void DrawName(void)
 		}
 		cursole.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
 		cursole.Draw();
-		// ここから下関数にしてわけるかも？
-		if (char_type == HIRAGANA)
-		{
-			mojiban.SetTexture(0, 1, 2);
-			mojiban.Draw();
-		}
-		else
-		{
-			mojiban.SetTexture(1, 1, 2);
-			mojiban.Draw();
-		}
-		// 格納文字書き出し
-		for (int i = 0; i < NAME_MAX; i++)
-		{
-			// selectedがtrueならテクスチャ表示
-			if (rankdata[0].selected[i] == true)
-			{
-				// テクスチャのセット
-				int numnum;
-				numnum = rankdata[0].namechar[i][0] * 10 + rankdata[0].namechar[i][1];
-				select_moji[i].SetTexture(numnum, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
-				select_moji[i].Draw();
-			}
-		}
-		// 決定ボタン(一度でも文字が最大まで入力された場合表示
-		if (rankdata[0].selected[NAME_MAX - 1] == true)
-		{
-			name_set.Draw();
-		}
-		
-
-		// カーソル描画
-		// ばぐってるから
-		//cursolechanging = false;
-
 	}
 	break;
 
