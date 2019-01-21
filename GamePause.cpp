@@ -68,12 +68,12 @@ GPR GamePause::Update()
 		&& !BackCheckF
 		&& !OptionF)
 	{
-		if (GetKeyboardTrigger(DIK_UP))
+		if (GetKeyboardTrigger(DIK_UP) || IsButtonTriggered(LSTICK_UP))
 		{
 			ChoiceNo -= 1;
 			PlaySE(CURSOL);
 		}
-		else if (GetKeyboardTrigger(DIK_DOWN))
+		else if (GetKeyboardTrigger(DIK_DOWN) || IsButtonTriggered(LSTICK_DOWN))
 		{
 			ChoiceNo += 1;
 			PlaySE(CURSOL);
@@ -100,7 +100,7 @@ GPR GamePause::Update()
 
 			PrintDebugProcess("Scale %f\n", Scale);
 
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 				PlaySE(DECIDE);
 				Scene::SetScene(SCENE_GAME,false);
@@ -129,7 +129,7 @@ GPR GamePause::Update()
 
 			PrintDebugProcess("Scale %f\n", Scale);
 
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 				PlaySE(DECIDE);
 				BackTitleF = true;
@@ -154,7 +154,7 @@ GPR GamePause::Update()
 
 			PrintDebugProcess("Scale %f\n", Scale);
 
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 
 				PlaySE(DECIDE);
@@ -170,12 +170,12 @@ GPR GamePause::Update()
 	//==============================================================
 	else if (BackTitleF)
 	{
-		if (GetKeyboardTrigger(DIK_RIGHT))
+		if (GetKeyboardTrigger(DIK_RIGHT) || IsButtonTriggered(LSTICK_RIGHT))
 		{
 			ChoiceNoT += 1;
 			PlaySE(CURSOL);
 		}
-		else if (GetKeyboardTrigger(DIK_LEFT))
+		else if (GetKeyboardTrigger(DIK_LEFT) || IsButtonTriggered(LSTICK_LEFT))
 		{
 			ChoiceNoT -= 1;
 			PlaySE(CURSOL);
@@ -198,7 +198,7 @@ GPR GamePause::Update()
 			PrintDebugProcess("Scale %f\n", Scale);
 
 
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 
 				PlaySE(DECIDE);
@@ -218,7 +218,7 @@ GPR GamePause::Update()
 
 			No.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
 			Yes.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 				PlaySE(DECIDE);
 				BackTitleF = false;
@@ -233,7 +233,7 @@ GPR GamePause::Update()
 	//==============================================================
 	else if (OptionF)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN)&& GetCursol()==5)
+		if ((GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))&& GetCursol()==5)
 		{
 			PlaySE(DECIDE);
 			OptionF = false;

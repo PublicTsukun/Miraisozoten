@@ -440,7 +440,7 @@ void Update_Name(void)
 	RANKDATA *rankdata = &rankdatawk[0];
 	name_enter = true;
 	// フラグがtrueなら名前入力ＯＫ
-	if (name_enter == true && GetKeyboardTrigger(DIK_0))
+	if (name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
 	{
 		if (name_status == NAME_SELECT)
 		{
@@ -481,7 +481,7 @@ void Update_Name(void)
 			}
 
 			// 文字盤を変える(カーソル移動中は実行できない）
-			if (GetKeyboardTrigger(DIK_X) && cursolechanging == false)
+			if ((GetKeyboardTrigger(DIK_X) || IsButtonTriggered(LSTICK_RIGHT | LSTICK_LEFT)) && cursolechanging == false)
 			{
 				char_type = !char_type;
 				// カーソル位置の初期化
@@ -544,7 +544,7 @@ void Update_Name(void)
 				cursole_status = KEYBOARD;
 			}
 			// 決定ボタンにカーソルが存在しておりLキーが押された場合
-			if (GetKeyboardTrigger(DIK_L))
+			if (GetKeyboardTrigger(DIK_L) || IsButtonTriggered(BUTTON_UP))
 			{
 				// データ出力
 				WriteSaveRankingCsv();
@@ -579,7 +579,7 @@ defalt:
 void move_cursole(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
-	if (GetKeyboardTrigger(DIK_W))
+	if (GetKeyboardTrigger(DIK_W) || IsButtonTriggered(LSTICK_UP))
 	{
 		rankdata[0].cursole_Y--;
 		if (rankdata[0].cursole_Y < 0)
@@ -587,7 +587,7 @@ void move_cursole(void)
 			rankdata[0].cursole_Y = MOJIBAN_MASUMAX_Y;
 		}
 	}
-	else if (GetKeyboardTrigger(DIK_S))
+	else if (GetKeyboardTrigger(DIK_S) || IsButtonTriggered(LSTICK_DOWN))
 	{	// したキーが押された
 		rankdata[0].cursole_Y++;
 		// チェック
@@ -596,7 +596,7 @@ void move_cursole(void)
 			rankdata[0].cursole_Y = 0;
 		}
 	}
-	else if (GetKeyboardTrigger(DIK_D))
+	else if (GetKeyboardTrigger(DIK_D) || IsButtonTriggered(LSTICK_RIGHT))
 	{
 		// 右キー
 		rankdata[0].cursole_X++;
@@ -606,7 +606,7 @@ void move_cursole(void)
 			rankdata[0].cursole_X = 0;
 		}
 	}
-	else if (GetKeyboardTrigger(DIK_A))
+	else if (GetKeyboardTrigger(DIK_A) || IsButtonTriggered(LSTICK_LEFT))
 	{
 		// 左キー
 		rankdata[0].cursole_X--;
@@ -618,7 +618,7 @@ void move_cursole(void)
 	}
 
 	// 文字の削除(不要な場合削除お願いします(＞＜))
-	if (GetKeyboardTrigger(DIK_BACKSPACE))
+	if (GetKeyboardTrigger(DIK_BACKSPACE) || IsButtonTriggered(BUTTON_DOWN))
 	{	// 名前入力フラグの削除
 		select_moji[namechar - 1].Release();	//テクスチャ解放
 		rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
@@ -630,7 +630,7 @@ void move_cursole(void)
 
 
 	// 決定キーが入力された場合今のカーソル位置の文字を格納
-	if (GetKeyboardTrigger(DIK_SPACE))
+	if (GetKeyboardTrigger(DIK_SPACE) || IsButtonTriggered(BUTTON_UP))
 	{
 		//if (namechar < NAMEMAX)
 		{

@@ -130,7 +130,7 @@ void UpdateTimer(void)
 
 	}
 
-	if (GetKeyboardTrigger(DIK_SPACE) || IsButtonTriggered(BUTTON_10, 1))
+	if (GetKeyboardTrigger(DIK_SPACE) /*|| IsButtonTriggered(BUTTON_10, 1)*/)
 	{
 		Time = 10;
 		TimerSet(COUNT);

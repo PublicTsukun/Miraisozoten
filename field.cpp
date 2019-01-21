@@ -217,40 +217,37 @@ void DrawField(void)
 	{
 		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+		// •`‰æ’¼‘O‚É‚±‚ê‚ð’Ç‰Á‚µ‚Ä
+		//DWORD blend;
+		//DWORD op;
+		//DWORD bSRC;
+		//DWORD bDEST;
 
+		//Direct3D::GetD3DDevice()->GetRenderState(D3DRS_ALPHABLENDENABLE, &blend);
+		//Direct3D::GetD3DDevice()->GetRenderState(D3DRS_BLENDOP, &op);
+		//Direct3D::GetD3DDevice()->GetRenderState(D3DRS_SRCBLEND, &bSRC);
+		//Direct3D::GetD3DDevice()->GetRenderState(D3DRS_DESTBLEND, &bDEST);
 
-		DWORD blend;
-		DWORD op;
-		DWORD bSRC;
-		DWORD bDEST;
-
-		Direct3D::GetD3DDevice()->GetRenderState(D3DRS_ALPHABLENDENABLE, &blend);
-		Direct3D::GetD3DDevice()->GetRenderState(D3DRS_BLENDOP, &op);
-		Direct3D::GetD3DDevice()->GetRenderState(D3DRS_SRCBLEND, &bSRC);
-		Direct3D::GetD3DDevice()->GetRenderState(D3DRS_DESTBLEND, &bDEST);
-
-		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-		
 		for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 		{
 			LiveWall[i].Draw();
 		}
-		LiveWallFront.Draw();
-
-		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, blend);
-		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_BLENDOP, op);
-		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_SRCBLEND, bSRC);
-		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, bDEST);
-
-
-
 		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD); // ƒuƒŒƒ“ƒhƒ‚[ƒh‚ð‰ÁŽZ‚É
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); // SRC(•`‰æ—\’è‘¤)‚ð”¼“§–¾‡¬
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE); // DEST(•`‰æÏ‚Ý‘¤)‚ð‚»‚Ì‚Ü‚Ü•`‰æ
 
+		//LiveWallFront.Draw();
+		//
 
-		LiveWallFront.Draw();
+		// •`‰æ’¼Œã‚É‚±‚ê‚ð’Ç‰Á
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, blend);
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_BLENDOP, op);
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_SRCBLEND, bSRC);
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, bDEST);
+
+		//LiveWallFront.Draw();
 	}
 }
 

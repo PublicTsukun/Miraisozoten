@@ -178,12 +178,12 @@ void UninitOption(void)
 
 void UpdateOption(void)
 {
-	if (GetKeyboardTrigger(DIK_UP))
+	if (GetKeyboardTrigger(DIK_UP) || IsButtonTriggered(LSTICK_UP))
 	{
 		ChoiceNoS -= 1;
 		PlaySE(CURSOL);
 	}
-	else if (GetKeyboardTrigger(DIK_DOWN))
+	else if (GetKeyboardTrigger(DIK_DOWN) || IsButtonTriggered(LSTICK_DOWN))
 	{
 		ChoiceNoS += 1;
 		PlaySE(CURSOL);
