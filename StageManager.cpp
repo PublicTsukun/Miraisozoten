@@ -27,14 +27,7 @@
 //*****************************************************************************
 // —ñ‹“Œ^
 //*****************************************************************************
-enum EN_STAGE_STATUS
-{
-	STAGE_STATUS_NULL = 0,
-	STAGE_STATUS_NORMAL,
-	STAGE_STATUS_CHANGING,
-	STAGE_STATUS_END,
 
-};
 
 
 //*****************************************************************************
@@ -164,7 +157,7 @@ void NextStageEfx(void)
 	{
 		stage->status = STAGE_STATUS_CHANGING;
 		
-		CameraShutter(stage->no);
+		CameraShutter(stage->no+1);
 
 		ClearAllEnemyRE();
 	}

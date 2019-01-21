@@ -54,11 +54,11 @@
 #define CHAR_POS_X			(-320.0f)
 #define CHAR_POS_Y			(-10.0f)
 
-#define KNOCK_POS_X			(-147.0f)
+#define KNOCK_POS_X			(-74.0f)
 #define KNOCK_POS_Y			(0.0f)
 #define KNOCK_INTER			(73.0f)
 
-#define GETPOINT_POS_X		(70.0f)
+#define GETPOINT_POS_X		(330.0f)
 #define GETPOINT_POS_Y		(0.0f)
 #define GETPOINT_INTER		(65.0f)
 

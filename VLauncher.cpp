@@ -14,6 +14,10 @@
 #include "Library\Camera.h"
 #include "GameSound.h"
 
+#include "StageManager.h"
+
+#include "S-Editor.h"
+
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
@@ -54,7 +58,11 @@ int timerVL;
 //=============================================================================
 void UpdateVLauncher(void)
 {
-	if (VoiceTankUI::GetVoiceVolume())
+	STAGE *stage = GetStage();
+
+	if (VoiceTankUI::GetVoiceVolume() > VOICETEN_SHOT_VOL &&
+		stage->status == STAGE_STATUS_NORMAL
+		)
 	//if (1)
 	{
 		Vector2 direction = AimPointer::GetPosition();

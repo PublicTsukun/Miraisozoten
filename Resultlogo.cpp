@@ -154,9 +154,9 @@ HRESULT InitResultlogo(void)
 	g_score = 0;
 	g_maxscore = GetScore();
 
+		int number;
 	for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++)
 	{
-		int number;
 
 		number = (g_score % (int)(powf(10.0f, (float)(NUM_PLACE - nCntPlace)))) / (int)(powf(10.0f, (float)(NUM_PLACE - nCntPlace - 1)));
 		resultscr[nCntPlace].SetTexture(number, 10, 1);
@@ -237,7 +237,7 @@ void UpdateResultlogo(void)
 	if (slotCount >= NUM_PLACE
 		&& (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP)))
 	{
-		Scene::SetScene(SCENE_TITLE);
+		Scene::SetScene(SCENE_RANKING);
 	}
 
 
@@ -393,6 +393,22 @@ void UpdateResultlogo(void)
 					ScoreDetail[i].DetailBg.MoveY(GetMouseZ());
 				}
 			}
+
+			if (IsButtonPressed(LSTICK_UP))
+			{
+				if (ScoreDetail[0].DetailBg.GetPosition().y < 140.0)
+				{
+					ScoreDetail[DETAIL_MAX - i - 1].DetailBg.MoveY(35);//‰º‚©‚ç•Ï‚¦‚Ä‚¢‚­@ã‚©‚ç•Ï‚¦‚é‚ÆƒoƒO‚é
+				}
+			}
+			else if (IsButtonPressed(LSTICK_DOWN))
+			{
+				if (ScoreDetail[DETAIL_MAX - 1].DetailBg.GetPosition().y > SCREEN_HEIGHT - 140.0)
+				{
+					ScoreDetail[i].DetailBg.MoveY(-35);
+				}
+
+			}
 		}
 		PrintDebugProcess("%f  %f\n", ScoreDetail[i].DetailBg.GetPosition().x, ScoreDetail[i].DetailBg.GetPosition().y);
 
@@ -515,14 +531,14 @@ void DETAIL::ScoreUpdate(void)
 
 	for (int i = 0; i < 2; i++)
 	{
-		Vector2 KnockPos = Vector2(KNOCK_POS_X + KNOCK_INTER*i, KNOCK_POS_Y);
+		Vector2 KnockPos = Vector2(KNOCK_POS_X - KNOCK_INTER*i, KNOCK_POS_Y);
 		Knock[i].SetStatus(DetailBg.GetPosition() + KnockPos, Vector2(39.0, 80.0));
 		Knock[i].SetVertex();
 	}
 
 	for (int i = 0; i < 5; i++)
 	{
-		Vector2 GetPointPos = Vector2(GETPOINT_POS_X + GETPOINT_INTER*i, GETPOINT_POS_Y);
+		Vector2 GetPointPos = Vector2(GETPOINT_POS_X - GETPOINT_INTER*i, GETPOINT_POS_Y);
 		GetPoint[i].SetStatus(DetailBg.GetPosition() + GetPointPos, Vector2(39.0, 80.0));
 		GetPoint[i].SetVertex();
 	}

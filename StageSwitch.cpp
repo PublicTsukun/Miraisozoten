@@ -64,7 +64,7 @@ SSwitchPhoto Photo;
 
 void InitStageSwitch(void)
 {
-	SSwitchBg[0].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_CENTER_X, SCREEN_CENTER_Y, "data/TEXTURE/ステージ/移行画面/背景.png");
+	SSwitchBg[0].Init(SCREEN_CENTER_X, -SCREEN_HEIGHT, SCREEN_CENTER_X, SCREEN_CENTER_Y, "data/TEXTURE/ステージ/移行画面/背景.png");
 	SSwitchBg[1].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_CENTER_X, SCREEN_CENTER_Y, "data/TEXTURE/ステージ/移行画面/キャラ.png");
 	SSwitchBg[2].Init(631.0f, 283.0f, 300*SCREEN_SCALE, 300* SCREEN_SCALE, "data/TEXTURE/ステージ/移行画面/移行.png");
 	SSwitchBg[2].SetTexture(2, 3, 1);
@@ -188,6 +188,7 @@ void UpdateStageSwitch(void)
 		if (SSwitchBg[0].GetPosition().y < -SCREEN_HEIGHT)
 		{
 			BgUsef = false;
+			TimerSet(COUNT);
 		}
 	}
 }
@@ -201,7 +202,7 @@ void CameraShutter(int stagenum)
 	SSwitchBg[2].SetTexture(stagenum, 3, 1);
 	BgTimer = 0;
 	BgUsef = false;
-	ChangeTime = 150;
+	ChangeTime = 180;
 
 
 	Photo.HwiteFade.SetPosition(Vector2(SCREEN_CENTER_X, SCREEN_CENTER_Y));

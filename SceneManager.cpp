@@ -56,10 +56,10 @@ int  SceneManager::Update()
 		// ランキングシーンの更新
 		UpdateRanking();
 
-		if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
-		{
-			SetScene(SCENE_TITLE);
-		}
+		//if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
+		//{
+		//	SetScene(SCENE_RESULT);
+		//}
 		break;
 
 	case SCENE_PAUSE:

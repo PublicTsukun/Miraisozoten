@@ -23,6 +23,15 @@ enum EN_STAGE
 	STAGE_MAX,
 };
 
+enum EN_STAGE_STATUS
+{
+	STAGE_STATUS_NULL = 0,
+	STAGE_STATUS_NORMAL,
+	STAGE_STATUS_CHANGING,
+	STAGE_STATUS_END,
+
+};
+
 //*****************************************************************************
 // ç\ë¢ëÃíËã`
 //*****************************************************************************

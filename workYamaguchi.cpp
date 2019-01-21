@@ -98,9 +98,9 @@ void UpdateWorkYamaguchi(void)
 		UpdateTimer();
 		UpdateScore();
 		UpdateUIBonus();
-		UpdateStartCount();
 		UpdateField();
 		UpdateStageSwitch();
+		UpdateStartCount();
 
 		break;
 

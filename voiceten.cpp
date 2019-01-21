@@ -10,6 +10,7 @@
 
 #include "UIBonus.h"
 #include "voicetank.h"
+#include "StageManager.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -133,12 +134,15 @@ void UninitVoiceten(void)
 void UpdateVoiceten(void)
 {
 	VOICETEN *v = GetVoiceten(0);
+	STAGE *stage = GetStage();
 
 	UpdateVoiMove();
 
 	for (int i = 0; i < VOICETEN_MAX; i++)
 	{
-		if ((v + i)->use == TRUE)
+		if ((v + i)->use == TRUE &&
+			stage->status == STAGE_STATUS_NORMAL
+			)
 		{
 			// 更新処理（位置、回転）
 			Voiceten[i].LoadObjectStatus((v + i)->pos, (v + i)->rot);
