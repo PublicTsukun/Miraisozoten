@@ -199,7 +199,7 @@ bool pos_rockon;	// 目標座標決定済みか
 float movesize_X, movesize_Y;
 float target_x, target_y;	// カーソル移動用　目標位置と現在位置の座標
 bool finish_flag;			// 文字入力終わるかどうかのフラグ
-int flash_score;			// 点滅するsukoa
+int flash_score;			// 点滅するsuko
 
 //*************************************************************************
 // プロトタイプ宣言(cpp内でのみ使用するやつ
@@ -423,6 +423,10 @@ void DrawName(void)
 	}
 	break;
 
+	case NAME_SELECT_END:
+	{
+
+	}
 	default:
 		// ランキング描画用の関数…
 		for (int i = 0; i < 5; i++)
@@ -449,7 +453,7 @@ void Update_Name(void)
 	RANKDATA *rankdata = &rankdatawk[0];
 	name_enter = true;
 	// フラグがtrueなら名前入力ＯＫ
-	if (name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
+	if (name_status != NAME_SELECT_END && name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
 	{
 		name_status = NAME_SELECT;
 	}
@@ -479,9 +483,9 @@ void Update_Name(void)
 			// カーソルの位置を変える(文字盤⇔名前欄)
 		}
 		else
-		{	// 以下、決定ボタンにいる際の処理
+		{	// 以下、決定ボタンにいる際の処理(name_status = NAME_FINISH)
 			if (GetKeyboardTrigger(DIK_2) || IsButtonTriggered(BUTTON_DOWN))
-			{
+			{	// まだ決定しないよ
 				rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
 				rankdata[0].namechar[namechar-1][0] = 0;
 				rankdata[0].namechar[namechar-1][1] = 0;// 文字入力フラグ初期化(あの位置へ）
@@ -503,15 +507,15 @@ void Update_Name(void)
 				// 再ロード
 				//LoadSaveRankingCsv();
 				// ランキングへ
-				name_status = BEGIN;
+				name_status = NAME_SELECT_END;
 			}
 		}
 
 	}
 	break;
-	case BEGIN:
+	case NAME_SELECT_END:
 	{
-		if ((GetKeyboardTrigger(DIK_3) || IsButtonTriggered(BUTTON_HOME)))// 個々のボタン相談する
+		if ((GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP)))// 個々のボタン相談する
 		{
 			PlaySE(DECIDE);
 			Scene::SetScene(SCENE_TITLE);
@@ -671,7 +675,7 @@ void Flash_Tex(int no)
 	//	}
 	//}
 	flash_count += FLASH_TIME;
-	if (name_enter == true && name_status == BEGIN)
+	if (name_enter == true && name_status == BEGIN || name_status == NAME_SELECT_END)
 	{	// プレイヤーのスコアとランキングのスコアを比較する？
 		int player_score = GetScore();
 		SAVERANKING *rankinfo = GetSaveRanking(0);
