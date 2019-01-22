@@ -10,7 +10,7 @@
 #include <Windows.h>
 #include "Library/Common.h"
 
-#define CHANGETIME_CS	(150)	// Effect:CameraShutter ì“®ŠÔ
+#define CHANGETIME_CS	(220)	// Effect:CameraShutter ì“®ŠÔ
 
 void InitStageSwitch(void);
 void UninitStageSwitch(void);
