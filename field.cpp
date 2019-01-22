@@ -9,6 +9,7 @@
 #include "Library\Input.h"
 #include "Library\DebugProcess.h"
 
+#include "StageManager.h"
 #include "UIBonus.h"
 
 class Wall : public C3DPolygonObject
@@ -261,7 +262,7 @@ void UpdateField(void)
 //			LiveWallFront.MoveWallY(WALL_CHANGE_SPEED);
 			for (int i = 0; i < 3; i++)
 			{
-				wall[i].MoveWallY(WALL_CHANGE_SPEED * (1 - 0.25*i));
+				wall[i].MoveWallY(WALL_CHANGE_SPEED * (1 - 0.25f*i));
 			}
 		}
 		else
@@ -296,7 +297,7 @@ void UpdateField(void)
 //			LiveWallFront.MoveWallY(-WALL_CHANGE_SPEED);
 			for (int i = 0; i < 3; i++)
 			{
-				wall[i].MoveWallY(-WALL_CHANGE_SPEED * (1 - 0.25*i));
+				wall[i].MoveWallY(-WALL_CHANGE_SPEED * (1 - 0.25f*i));
 			}
 		}
 		else
@@ -322,38 +323,44 @@ void UpdateField(void)
 
 
 	//良い感じにライト処理
+	STAGE *stage = GetStage();
 
-	/* スポットライト */
-	// 方向操作
-	LCurve += 0.1f;
-	for (int i = 0; i < 6; i++)
+	if (stage->status == STAGE_STATUS_NORMAL ||
+		stage->status == STAGE_STATUS_END)
 	{
-		SpotVec[i].y = (i % 2) ? sinf(LCurve) : -sinf(LCurve);
-	}
 
-	// 色操作
-	if (LFlg)
-	{
-		if (LR < 1.0f) LR += 0.05f;
-		else if (LG < 1.0f) LG += 0.05f;
-		else if (LB < 1.0f) LB += 0.05f;
-		else               LFlg = false;
-	}
-	else
-	{
-		if (LB > 0.5f) LB -= 0.05f;
-		else if (LG > 0.2f) LG -= 0.05f;
-		else if (LR > 0.0f) LR -= 0.05f;
-		else               LFlg = true;
-	}
+		/* スポットライト */
+		// 方向操作
+		LCurve += 0.1f;
+		for (int i = 0; i < 6; i++)
+		{
+			SpotVec[i].y = (i % 2) ? sinf(LCurve) : -sinf(LCurve);
+		}
 
-	// 反映
-	Vector3 vec;
-	for (int i = 0; i < 6; i++)
-	{
-		SpotLight[i].Diffuse = D3DXCOLOR(LR, LG, LB, 1.0f);
-		SpotLight[i].Direction = Vector3(0, SpotVec[i].y / 3.0f, 1);
-		SpotLight[i].SetLight(i + 1);
+		// 色操作
+		if (LFlg)
+		{
+			if (LR < 1.0f) LR += 0.05f;
+			else if (LG < 1.0f) LG += 0.05f;
+			else if (LB < 1.0f) LB += 0.05f;
+			else               LFlg = false;
+		}
+		else
+		{
+			if (LB > 0.5f) LB -= 0.05f;
+			else if (LG > 0.2f) LG -= 0.05f;
+			else if (LR > 0.0f) LR -= 0.05f;
+			else               LFlg = true;
+		}
+
+		// 反映
+		Vector3 vec;
+		for (int i = 0; i < 6; i++)
+		{
+			SpotLight[i].Diffuse = D3DXCOLOR(LR, LG, LB, 1.0f);
+			SpotLight[i].Direction = Vector3(0, SpotVec[i].y / 3.0f, 1);
+			SpotLight[i].SetLight(i + 1);
+		}
 	}
 }
 

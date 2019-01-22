@@ -134,7 +134,7 @@ D3DXVECTOR3* CalcScreenToWorld(
 
 	// ‹t•ÏŠ·
 	D3DXMATRIX tmp = InvViewport * InvPrj * InvView;
-	D3DXVec3TransformCoord(pout, &D3DXVECTOR3(Sx, Sy, fZ), &tmp);
+	D3DXVec3TransformCoord(pout, &D3DXVECTOR3((float)Sx, (float)Sy, fZ), &tmp);
 
 	return pout;
 }

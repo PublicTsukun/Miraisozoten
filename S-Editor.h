@@ -17,13 +17,13 @@
 //*****************************************************************************
 
 // î≠éÀèäóvâπó 
-#define VOICETEN_SHOT_VOL		(1)	
+#define VOICETEN_SHOT_VOL		(ENERGY_MIN)	
 
 // Voiceten Type âπó ê›íË
-#define VOICETEN_TYPE_VOL_01	(140 * 3)
+#define VOICETEN_TYPE_VOL_01	(ENERGY_CORD * 3)
 
 // Voiceten Type âπó ê›íË
-#define VOICETEN_TYPE_VOL_02	(140 * 6)
+#define VOICETEN_TYPE_VOL_02	(ENERGY_CORD * 6)
 
 // ä‘äuÇ≈ìGÇê∂ê¨ÅiframeÅj
 #define ENEMY_SPAWN_DELAY_01	(60)

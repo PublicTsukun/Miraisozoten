@@ -93,7 +93,7 @@ GPR GamePause::Update()
 			BackTitleScl = 0.0f;
 			OptionScl = 0.0f;
 
-			Scale = (sinf(BackGameScl) / 8.0) + 1.125f;
+			Scale = (sinf(BackGameScl) / 8.0f) + 1.125f;
 			BackGame.SetStatus(Scale, 0.0f);
 			BackTitle.SetStatus(1.0f, 0.0f);
 			Option.SetStatus(1.0f, 0.0f);
@@ -122,7 +122,7 @@ GPR GamePause::Update()
 			BackGameScl = 0.0f;
 			OptionScl = 0.0f;
 
-			Scale = (sinf(BackTitleScl) / 8.0) + 1.125f;
+			Scale = (sinf(BackTitleScl) / 8.0f) + 1.125f;
 			BackTitle.SetStatus(Scale, 0.0f);
 			BackGame.SetStatus(1.0f, 0.0f);
 			Option.SetStatus(1.0f, 0.0f);
@@ -147,7 +147,7 @@ GPR GamePause::Update()
 			BackGameScl = 0.0f;
 			OptionScl += 0.05f;
 
-			Scale = (sinf(OptionScl) / 8.0) + 1.125f;
+			Scale = (sinf(OptionScl) / 8.0f) + 1.125f;
 			BackTitle.SetStatus(1.0f, 0.0f);
 			BackGame.SetStatus(1.0f, 0.0f);
 			Option.SetStatus(Scale, 0.0f);
@@ -192,7 +192,7 @@ GPR GamePause::Update()
 			YesScl += 0.05f;
 			NoScl = 0.0f;
 
-			Scale = (sinf(YesScl) / 8.0) + 1.125f;
+			Scale = (sinf(YesScl) / 8.0f) + 1.125f;
 			Yes.SetStatus(Scale, 0.0f);
 			No.SetStatus(1.0f, 0.0f);
 			PrintDebugProcess("Scale %f\n", Scale);
@@ -211,7 +211,7 @@ GPR GamePause::Update()
 			NoScl += 0.05f;
 			YesScl = 0.0f;
 
-			Scale = (sinf(NoScl) / 8.0) + 1.125f;
+			Scale = (sinf(NoScl) / 8.0f) + 1.125f;
 			No.SetStatus(Scale, 0.0f);
 			Yes.SetStatus(1.0f, 0.0f);
 			PrintDebugProcess("Scale %f\n", Scale);

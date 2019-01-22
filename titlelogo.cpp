@@ -313,7 +313,7 @@ void UpdateTitlelogo(void)
 	}
 
 
-	ButtonAlpha += 0.06;
+	ButtonAlpha += 0.06f;
 	startbutton.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(ButtonAlpha)) + 0.3f));
 }
 

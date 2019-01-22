@@ -136,7 +136,7 @@
 #define NAME_SPACE_01	(50)
 #define NAME_SCORE_SIZE (50)
 
-#define FLASH_TIME		(0.05)
+#define FLASH_TIME		(0.05f)
 
 // Œˆ’èƒ{ƒ^ƒ“
 //*****************************************************************************
@@ -233,7 +233,7 @@ HRESULT InitName(void)
 	SAVERANKING *rankinfo = GetSaveRanking(0);
 	for (int i = 0; i < 5; i++,rankinfo++)
 	{// 236
-		ranking[i].rank.Init(NAME_SCORE_SIZE + 40, NAME_SCORE_POS_Y + ((NAME_SCORE_SIZE * 2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
+		ranking[i].rank.Init(NAME_SCORE_SIZE + 40.0f, NAME_SCORE_POS_Y + ((NAME_SCORE_SIZE * 2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 		ranking[i].rank.LoadTexture(ranktex[rankinfo->rank-1]);
 
 		for (int t = 0; t < 5; t++)
@@ -529,7 +529,7 @@ void Update_Name(void)
 			Scene::SetScene(SCENE_TITLE);
 		}
 	}
-defalt:
+//defalt:
 	break;
 	}
 
@@ -621,13 +621,13 @@ void move_cursole(void)
 				// ”Žš‚Å•¶Žš‚ðŠi”[
 				if (char_type == HIRAGANA)
 				{
-					rankdata[0].namechar[namechar][0] = cursolewk.pos.y;
-					rankdata[0].namechar[namechar][1] = cursolewk.pos.x;
+					rankdata[0].namechar[namechar][0] = (int)cursolewk.pos.y;
+					rankdata[0].namechar[namechar][1] = (int)cursolewk.pos.x;
 				}
 				else
 				{
-					rankdata[0].namechar[namechar][0] = cursolewk.pos.y + 5;
-					rankdata[0].namechar[namechar][1] = cursolewk.pos.x;
+					rankdata[0].namechar[namechar][0] = (int)cursolewk.pos.y + 5;
+					rankdata[0].namechar[namechar][1] = (int)cursolewk.pos.x;
 				}
 				//	¡‰ñ‚ÌŒˆ’è‚É‚æ‚Á‚Ä5•¶Žš–Ú‚ª“ü—Í‚³‚ê‚½ê‡
 				if (rankdata[0].selected[NAMEMAX - 1] == true)
