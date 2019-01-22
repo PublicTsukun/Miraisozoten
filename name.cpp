@@ -451,13 +451,21 @@ void DrawName(void)
 void Update_Name(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
-	name_enter = true;
+	if (GetKeyboardTrigger(DIK_8))
+	{
+		name_enter = !name_enter;
+	}
+
 	// ƒtƒ‰ƒO‚ªtrue‚È‚ç–¼‘O“ü—Í‚n‚j
 	if (name_status != NAME_SELECT_END && name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
 	{
 		name_status = NAME_SELECT;
 	}
-
+	else if (name_enter == false && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
+	{
+		PlaySE(DECIDE);
+		Scene::SetScene(SCENE_TITLE);
+	}
 
 
 	switch (name_status)
