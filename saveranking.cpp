@@ -141,7 +141,12 @@ bool SaveRankingSort(int score)
 
 	rankingWk[5].id = max+1;//6位に最大IDと
 	rankingWk[5].score = score;//今回取得したスコアを格納
+	for (int i = 0; i < 5; i++)
+	{
+		rankingWk[5].name[i][0] = 2;
+		rankingWk[5].name[i][1] = 6;
 
+	}
 	//その後ソート
 	SAVERANKING *ranking = &rankingWk[0];					// ポインターを初期化
 	int num = sizeof rankingWk / sizeof(SAVERANKING);		// 要素数を求める
@@ -169,6 +174,22 @@ bool SaveRankingSort(int score)
 	{
 		return true;//最下位が変わっていれば真　　
 	}
+}
+
+
+//============================================================================
+//ranking の確認
+//=============================================================================
+int CheckRank(int Score)
+{
+	for (int i = 0; i < RANKING_MAX - 1; i++)
+	{
+		if (rankingWk[i].score == Score)
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 //============================================================================
 // 比較関数処理(降順ソート)
@@ -198,4 +219,15 @@ void DebugRank(void)
 	PrintDebugProcess("名前４ : (%d)(%d)\n", ranking->name[3][0], ranking->name[3][1]);
 	PrintDebugProcess("名前５ : (%d)(%d)\n", ranking->name[4][0], ranking->name[4][1]);
 }
+//********************************************************
+// void Enter_the_no(int rank,int no)
+// 引数　int rank(指定順位) int no(ランクに入れたい値)
+//　指定された順位に指定された値を入れる
+void Enter_the_no(int rank,int num,int y,int x)
+{
+	//rankingWk[rank].name[0][2] = {};
 
+	rankingWk[rank].name[num][0] = y;
+	rankingWk[rank].name[num][1] = x;
+
+}

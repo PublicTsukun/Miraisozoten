@@ -65,6 +65,7 @@ Vector3		padGyro[GAMEPADMAX];
 D3DXVECTOR2	padLsRoll[GAMEPADMAX];		// 左スティックの倒状態
 D3DXVECTOR2	padRsRoll[GAMEPADMAX];		// 右スティックの倒状態
 bool		padNowUseSide = true;		// 現在使用している(true = 左 : false = 右)
+int			padNowUseNo = 0;			// 現在使用しているNo
 int			padCount = 0;				// 検出したパッドの数
 
 //=============================================================================
@@ -604,10 +605,12 @@ void UpdatePad(void)
 		if (dijs.rgbButtons[13] & 0x80)
 		{
 			padNowUseSide = true;
+			padNowUseNo = i;
 		}
 		else if (dijs.rgbButtons[12] & 0x80)
 		{
 			padNowUseSide = false;
+			padNowUseNo = i;
 		}
 
 		// 左右のジョイコンに対応させる
@@ -670,7 +673,7 @@ BOOL IsButtonTriggered(DWORD button, int no)
 {
 	if (no < 0)
 	{
-		return (button & padTrigger[padNowUseSide ? 0 : 1]);
+		return (button & padTrigger[padNowUseNo]);
 	}
 	return (button & padTrigger[no]);
 }

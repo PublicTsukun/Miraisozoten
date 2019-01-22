@@ -16,6 +16,15 @@
 // マクロ定義
 //*****************************************************************************
 
+// 発射所要音量
+#define VOICETEN_SHOT_VOL		(ENERGY_MIN)	
+
+// Voiceten Type 音量設定
+#define VOICETEN_TYPE_VOL_01	(ENERGY_CORD * 3)
+
+// Voiceten Type 音量設定
+#define VOICETEN_TYPE_VOL_02	(ENERGY_CORD * 6)
+
 // 間隔で敵を生成（frame）
 #define ENEMY_SPAWN_DELAY_01	(60)
 

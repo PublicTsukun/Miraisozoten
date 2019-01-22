@@ -19,7 +19,7 @@
 #define TEXTURE_RESULT_LOGO		"data/TEXTURE/UI/リザルト/りざると.png"
 #define RESULT_LOGO_SIZE_X		(260*SCREEN_SCALE)
 #define	RESULT_LOGO_SIZE_Y		(65*SCREEN_SCALE)
-#define RESULT_LOGO_COLOR		(0xff112233)	//「りざると」の文字色変えるのここだよ～
+#define RESULT_LOGO_COLOR		(0xffff0050)	//「りざると」の文字色変えるのここだよ～
 												//0xは固定　ff(最初の２桁)がα値
 												//			11(次の２桁)がR
 												//			22(次の２桁)がG
@@ -54,11 +54,11 @@
 #define CHAR_POS_X			(-320.0f)
 #define CHAR_POS_Y			(-10.0f)
 
-#define KNOCK_POS_X			(-147.0f)
+#define KNOCK_POS_X			(-74.0f)
 #define KNOCK_POS_Y			(0.0f)
 #define KNOCK_INTER			(73.0f)
 
-#define GETPOINT_POS_X		(70.0f)
+#define GETPOINT_POS_X		(330.0f)
 #define GETPOINT_POS_Y		(0.0f)
 #define GETPOINT_INTER		(65.0f)
 

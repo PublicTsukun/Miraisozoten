@@ -19,7 +19,6 @@
 CountDown StartCount;
 C2DObject StartLogo;
 
-
 int LogoTimer;
 bool LogoTimerUse;
 float LogoAlpha;
@@ -27,6 +26,8 @@ float LogoScale;
 
 int SoundCount;
 int CountInter;
+
+bool Timer;
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -42,7 +43,7 @@ HRESULT InitStartCount(void)
 	LogoAlpha = 1.0;
 	LogoScale = 0.0f;
 	
-
+	Timer = false;
 
 	SoundCount = 4;
 	CountInter = 10;
@@ -82,7 +83,6 @@ void DrawStartCount(void)
 //=============================================================================
 void UpdateStartCount(void)
 {
-
 	StartCount.Animation();
 
 	if (SoundCount)
@@ -98,7 +98,11 @@ void UpdateStartCount(void)
 
 	if (StartCount.ActiveCheck() == false)
 	{
-		TimerSet(COUNT);
+		if (!Timer)
+		{
+			TimerSet(COUNT);
+			Timer = true;
+		}
 		LogoTimerUse = true;
 	}
 	else
@@ -128,6 +132,8 @@ void SetStartCount(int no)
 	LogoAlpha = 1.0;
 	LogoScale = 0.0f;
 	CountInter = 10;
+	Timer = false;
+
 }
 
 bool CheckLogoUse(void)

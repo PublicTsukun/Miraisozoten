@@ -28,13 +28,13 @@ HRESULT InitWorkYamaguchi(void)
 	{
 	case SCENE_TITLE://タイトルで使いたいソースのInit
 
+		InitScore();
 		break;
 
 
 	case SCENE_GAME://ゲームで使いたいソースのInit
 		InitField();
 		InitTimer();
-		InitScore();
 		InitUIBonus();
 		InitStartCount();
 		InitStageSwitch();
@@ -98,9 +98,9 @@ void UpdateWorkYamaguchi(void)
 		UpdateTimer();
 		UpdateScore();
 		UpdateUIBonus();
-		UpdateStartCount();
 		UpdateField();
 		UpdateStageSwitch();
+		UpdateStartCount();
 
 		break;
 

@@ -178,12 +178,12 @@ void UninitOption(void)
 
 void UpdateOption(void)
 {
-	if (GetKeyboardTrigger(DIK_UP))
+	if (GetKeyboardTrigger(DIK_UP) || IsButtonTriggered(LSTICK_UP))
 	{
 		ChoiceNoS -= 1;
 		PlaySE(CURSOL);
 	}
-	else if (GetKeyboardTrigger(DIK_DOWN))
+	else if (GetKeyboardTrigger(DIK_DOWN) || IsButtonTriggered(LSTICK_DOWN))
 	{
 		ChoiceNoS += 1;
 		PlaySE(CURSOL);
@@ -226,8 +226,8 @@ void UpdateOption(void)
 		GyroSensitivityY.SetColor(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
 		GyroCorrection.SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-		if (GetKeyboardPress(DIK_LEFT))  sense->y -= 0.1f;
-		if (GetKeyboardPress(DIK_RIGHT)) sense->y += 0.1f;
+		if (GetKeyboardPress(DIK_LEFT) || IsButtonTriggered(LSTICK_LEFT))  sense->y -= 0.1f;
+		if (GetKeyboardPress(DIK_RIGHT) || IsButtonTriggered(LSTICK_RIGHT)) sense->y += 0.1f;
 		if (sense->y <  0.0f) sense->y = 0.0f;
 		if (sense->y > 10.0f) sense->y = 10.0f;
 		GyroSensitivityY.SetValue(sense->y);
@@ -240,8 +240,8 @@ void UpdateOption(void)
 		OptionBack.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		OptionBack.SetStatus(1.0f, 0.0f);
 
-		if (GetKeyboardPress(DIK_LEFT))  *correct -= 0.1f;
-		if (GetKeyboardPress(DIK_RIGHT)) *correct += 0.1f;
+		if (GetKeyboardPress(DIK_LEFT)  || IsButtonTriggered(LSTICK_LEFT) )  *correct -= 0.1f;
+		if (GetKeyboardPress(DIK_RIGHT) || IsButtonTriggered(LSTICK_RIGHT)) *correct += 0.1f;
 		if (*correct <  0.0f) *correct = 0.0f;
 		if (*correct > 10.0f) *correct = 10.0f;
 		GyroCorrection.SetValue(*correct);
@@ -256,7 +256,7 @@ void UpdateOption(void)
 		float Scale;
 		OptionBackScl += 0.05f;
 
-		Scale = (sinf(OptionBackScl) / 8.0) + 1.125f;
+		Scale = (sinf(OptionBackScl) / 8.0f) + 1.125f;
 		OptionBack.SetStatus(Scale, 0.0f);
 		PrintDebugProcess("Scale %f\n", Scale);
 	}

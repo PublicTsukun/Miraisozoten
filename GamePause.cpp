@@ -68,19 +68,19 @@ GPR GamePause::Update()
 		&& !BackCheckF
 		&& !OptionF)
 	{
-		if (GetKeyboardTrigger(DIK_UP))
+		if (GetKeyboardTrigger(DIK_UP) || IsButtonTriggered(LSTICK_UP))
 		{
 			ChoiceNo -= 1;
 			PlaySE(CURSOL);
 		}
-		else if (GetKeyboardTrigger(DIK_DOWN))
+		else if (GetKeyboardTrigger(DIK_DOWN) || IsButtonTriggered(LSTICK_DOWN))
 		{
 			ChoiceNo += 1;
 			PlaySE(CURSOL);
 
 		}
-		ChoiceNo += 6;
-		ChoiceNo %= 6;
+		ChoiceNo += 3;
+		ChoiceNo %= 3;
 
 		if (ChoiceNo == 0)
 		{
@@ -93,14 +93,14 @@ GPR GamePause::Update()
 			BackTitleScl = 0.0f;
 			OptionScl = 0.0f;
 
-			Scale = (sinf(BackGameScl) / 8.0) + 1.125f;
+			Scale = (sinf(BackGameScl) / 8.0f) + 1.125f;
 			BackGame.SetStatus(Scale, 0.0f);
 			BackTitle.SetStatus(1.0f, 0.0f);
 			Option.SetStatus(1.0f, 0.0f);
 
 			PrintDebugProcess("Scale %f\n", Scale);
 
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 				PlaySE(DECIDE);
 				Scene::SetScene(SCENE_GAME,false);
@@ -122,14 +122,14 @@ GPR GamePause::Update()
 			BackGameScl = 0.0f;
 			OptionScl = 0.0f;
 
-			Scale = (sinf(BackTitleScl) / 8.0) + 1.125f;
+			Scale = (sinf(BackTitleScl) / 8.0f) + 1.125f;
 			BackTitle.SetStatus(Scale, 0.0f);
 			BackGame.SetStatus(1.0f, 0.0f);
 			Option.SetStatus(1.0f, 0.0f);
 
 			PrintDebugProcess("Scale %f\n", Scale);
 
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 				PlaySE(DECIDE);
 				BackTitleF = true;
@@ -147,14 +147,14 @@ GPR GamePause::Update()
 			BackGameScl = 0.0f;
 			OptionScl += 0.05f;
 
-			Scale = (sinf(OptionScl) / 8.0) + 1.125f;
+			Scale = (sinf(OptionScl) / 8.0f) + 1.125f;
 			BackTitle.SetStatus(1.0f, 0.0f);
 			BackGame.SetStatus(1.0f, 0.0f);
 			Option.SetStatus(Scale, 0.0f);
 
 			PrintDebugProcess("Scale %f\n", Scale);
 
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 
 				PlaySE(DECIDE);
@@ -170,12 +170,12 @@ GPR GamePause::Update()
 	//==============================================================
 	else if (BackTitleF)
 	{
-		if (GetKeyboardTrigger(DIK_RIGHT))
+		if (GetKeyboardTrigger(DIK_RIGHT) || IsButtonTriggered(LSTICK_RIGHT))
 		{
 			ChoiceNoT += 1;
 			PlaySE(CURSOL);
 		}
-		else if (GetKeyboardTrigger(DIK_LEFT))
+		else if (GetKeyboardTrigger(DIK_LEFT) || IsButtonTriggered(LSTICK_LEFT))
 		{
 			ChoiceNoT -= 1;
 			PlaySE(CURSOL);
@@ -192,13 +192,13 @@ GPR GamePause::Update()
 			YesScl += 0.05f;
 			NoScl = 0.0f;
 
-			Scale = (sinf(YesScl) / 8.0) + 1.125f;
+			Scale = (sinf(YesScl) / 8.0f) + 1.125f;
 			Yes.SetStatus(Scale, 0.0f);
 			No.SetStatus(1.0f, 0.0f);
 			PrintDebugProcess("Scale %f\n", Scale);
 
 
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 
 				PlaySE(DECIDE);
@@ -211,14 +211,14 @@ GPR GamePause::Update()
 			NoScl += 0.05f;
 			YesScl = 0.0f;
 
-			Scale = (sinf(NoScl) / 8.0) + 1.125f;
+			Scale = (sinf(NoScl) / 8.0f) + 1.125f;
 			No.SetStatus(Scale, 0.0f);
 			Yes.SetStatus(1.0f, 0.0f);
 			PrintDebugProcess("Scale %f\n", Scale);
 
 			No.SetVertex(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
 			Yes.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-			if (GetKeyboardTrigger(DIK_RETURN))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
 				PlaySE(DECIDE);
 				BackTitleF = false;
@@ -233,7 +233,7 @@ GPR GamePause::Update()
 	//==============================================================
 	else if (OptionF)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN)&& GetCursol()==5)
+		if ((GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))&& GetCursol()==5)
 		{
 			PlaySE(DECIDE);
 			OptionF = false;

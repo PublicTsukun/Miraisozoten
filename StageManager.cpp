@@ -18,6 +18,8 @@
 
 #include "S-Editor.h"
 
+#include "StageSwitch.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -25,21 +27,12 @@
 //*****************************************************************************
 // 列挙型
 //*****************************************************************************
-enum EN_STAGE_STATUS
-{
-	STAGE_STATUS_NULL = 0,
-	STAGE_STATUS_NORMAL,
-	STAGE_STATUS_CHANGING,
-	STAGE_STATUS_END,
 
-};
 
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void SetEnemy(int no);
-
 void EnemySpawner(void);
 
 void CheckChangeStage(void);
@@ -67,16 +60,16 @@ STAGE *GetStage(void)
 //=============================================================================
 void InitStage(void)
 {
-	STAGE *s = GetStage();
+	STAGE *stage = GetStage();
 
-	s->no = 0;
+	stage->no = 0;
 
-	s->timer = 0;
-	s->nextStage = -1;
+	stage->timer = 0;
+	stage->timerEfx = 0;
 
-	s->status = STAGE_STATUS_NULL;
+	stage->status = STAGE_STATUS_NULL;
 
-	SetEnemyRE(s->timer);
+	SetEnemyRE(stage->timer);
 }
 
 //=============================================================================
@@ -84,8 +77,6 @@ void InitStage(void)
 //=============================================================================
 void UpdateStage(void)
 {
-	STAGE *stage = GetStage();
-
 	// チェック
 	CheckChangeStage();
 
@@ -95,9 +86,9 @@ void UpdateStage(void)
 	// カウントアップタイマー
 	CountUpTimer();
 
-	//PrintDebugProcess("stage status: %d\n", stage->status);
+	//STAGE *stage = GetStage();	
 	//PrintDebugProcess("stage timer: %d\n", stage->timer);
-	//PrintDebugProcess("stage next: %d\n", stage->nextStage);
+	//PrintDebugProcess("stage status: %d\n", stage->status);
 
 }
 
@@ -127,24 +118,23 @@ void EnemySpawner(void)
 //=============================================================================
 void CheckChangeStage(void)
 {
-	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
 	int CheckDefeat = GetAllDefeat();
 
 	STAGE *stage = GetStage();
 
-	if (CheckDefeat == STAGE_NORMA_01 &&
+	if (CheckDefeat >= STAGE_NORMA_01 &&
 		stage->no == STAGE_01_AKIBA)
 	{
 		NextStageEfx();
 	}
 
-	if (CheckDefeat == STAGE_NORMA_02 &&
+	if (CheckDefeat >= STAGE_NORMA_02 &&
 		stage->no == STAGE_02_USA)
 	{
 		NextStageEfx();
 	}
 
-	if (stage->timer == stage->nextStage)
+	if (stage->timerEfx == CHANGETIME_CS)
 	{
 		NextStage();
 	}
@@ -166,8 +156,8 @@ void NextStageEfx(void)
 	if (stage->status == STAGE_STATUS_NORMAL)
 	{
 		stage->status = STAGE_STATUS_CHANGING;
-
-		stage->nextStage = stage->timer + 120;
+		
+		CameraShutter(stage->no+1);
 
 		ClearAllEnemyRE();
 	}
@@ -191,7 +181,7 @@ void NextStage(void)
 		SetEnemyRE(stage->timer);
 
 		stage->status = STAGE_STATUS_NORMAL;
-		stage->nextStage = -1;
+		stage->timerEfx = 0;
 	}
 
 }
@@ -213,10 +203,14 @@ void CountUpTimer(void)
 {
 	STAGE *stage = GetStage();
 
-	if (stage->status == STAGE_STATUS_NORMAL ||
-		stage->status == STAGE_STATUS_CHANGING)
+	if (stage->status == STAGE_STATUS_NORMAL)
 	{
 		stage->timer++;
+	}
+
+	if (stage->status == STAGE_STATUS_CHANGING)
+	{
+		stage->timerEfx++;
 	}
 }
 
@@ -228,5 +222,16 @@ void GameStart(void)
 	STAGE *stage = GetStage();
 
 	stage->status = STAGE_STATUS_NORMAL;
+
+}
+
+//================================================================================
+// ゲーム一時停止
+//===============================================================================
+void GameStop(void)
+{
+	STAGE *stage = GetStage();
+
+	stage->status = STAGE_STATUS_NULL;
 
 }

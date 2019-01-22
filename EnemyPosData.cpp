@@ -60,6 +60,13 @@ EnemyPosData *GetEnemyPosData(int no)
 //=============================================================================
 void InitEnemyPosData(void)
 {
+	// use flag reset
+	for (int i = 0; i < ENEMYPOS_MAX; i++)
+	{
+		EnemyPosDataWk[i].SetUse(false);
+	}
+
+	// ƒpƒ‰ƒ[ƒ^Ý’è
 	int i = 0;
 	float z = 0;
 
