@@ -79,8 +79,8 @@ GPR GamePause::Update()
 			PlaySE(CURSOL);
 
 		}
-		ChoiceNo += 6;
-		ChoiceNo %= 6;
+		ChoiceNo += 3;
+		ChoiceNo %= 3;
 
 		if (ChoiceNo == 0)
 		{

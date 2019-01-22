@@ -5,6 +5,7 @@
 #include "Library\DebugProcess.h"
 #include "Library\Input.h"
 #include "timer.h"
+#include "startcount.h"
 
 //写真テクスチャ作成用
 #include "field.h"
@@ -87,6 +88,8 @@ void InitStageSwitch(void)
 	Photo.Scale = 1.0f;
 	Photo.Ang = 0.0f;
 	Photo.Photof = false;
+
+	//UseBoard(STAGE_01_AKIBA);
 }
 
 void UninitStageSwitch(void)
@@ -189,6 +192,13 @@ void UpdateStageSwitch(void)
 		{
 			BgUsef = false;
 			TimerSet(COUNT);
+
+			STAGE *stage = GetStage();
+
+			if (stage->no == STAGE_01_AKIBA)
+			{
+				//SetStartCount(3);
+			}
 		}
 	}
 }

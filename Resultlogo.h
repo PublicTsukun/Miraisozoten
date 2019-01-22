@@ -45,22 +45,22 @@
 
 #define DETAIL_MAX			(9)
 
-#define	CLOSS_POS_X			(0.0f)	//×用ポジション　背景との相対座標
-#define	CLOSS_POS_Y			(0.0f)
+#define	CLOSS_POS_X			(0.0f*SCREEN_SCALE)	//×用ポジション　背景との相対座標
+#define	CLOSS_POS_Y			(0.0f*SCREEN_SCALE)
 
-#define	EQUAL_POS_X			(0.0f)	//＝用ポジション　背景との相対座標
-#define	EQUAL_POS_Y			(0.0f)
+#define	EQUAL_POS_X			(0.0f*SCREEN_SCALE)	//＝用ポジション　背景との相対座標
+#define	EQUAL_POS_Y			(0.0f*SCREEN_SCALE)
 
-#define CHAR_POS_X			(-320.0f)
-#define CHAR_POS_Y			(-10.0f)
+#define CHAR_POS_X			(-320.0f*SCREEN_SCALE)
+#define CHAR_POS_Y			(-10.0f*SCREEN_SCALE)
 
-#define KNOCK_POS_X			(-74.0f)
-#define KNOCK_POS_Y			(0.0f)
-#define KNOCK_INTER			(73.0f)
+#define KNOCK_POS_X			(-74.0f*SCREEN_SCALE)
+#define KNOCK_POS_Y			(0.0f*SCREEN_SCALE)
+#define KNOCK_INTER			(73.0f*SCREEN_SCALE)
 
-#define GETPOINT_POS_X		(330.0f)
-#define GETPOINT_POS_Y		(0.0f)
-#define GETPOINT_INTER		(65.0f)
+#define GETPOINT_POS_X		(330.0f*SCREEN_SCALE)
+#define GETPOINT_POS_Y		(0.0f*SCREEN_SCALE)
+#define GETPOINT_INTER		(65.0f*SCREEN_SCALE)
 
 
 //*****************************************************************************

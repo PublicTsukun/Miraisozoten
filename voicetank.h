@@ -3,7 +3,7 @@
 /* íSìñ : èâ */
 
 #include "UIEnergyTank.h"
-
+#include "Library\Common.h"
 constexpr int VoiceVolumeMIN = 60;
 constexpr int VoiceVolumeMAX = 3000;
 

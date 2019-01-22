@@ -561,13 +561,13 @@ void UpdatePad(void)
 
 		// ３２の各ビットに意味を持たせ、ボタン押下に応じてビットをオンにする
 		//* y-axis (Lforward)
-		if (dijs.lY < 0)				padState[i] |= LSTICK_UP;
+		if (dijs.lY < -500)				padState[i] |= LSTICK_UP;
 		//* y-axis (Lbackward)
-		if (dijs.lY > 0)				padState[i] |= LSTICK_DOWN;
+		if (dijs.lY > 500)				padState[i] |= LSTICK_DOWN;
 		//* x-axis (Lleft)
-		if (dijs.lX < 0)				padState[i] |= LSTICK_LEFT;
+		if (dijs.lX < -500)				padState[i] |= LSTICK_LEFT;
 		//* x-axis (Lright)
-		if (dijs.lX > 0)				padState[i] |= LSTICK_RIGHT;
+		if (dijs.lX > 500)				padState[i] |= LSTICK_RIGHT;
 
 		//* ボタン00
 		if (dijs.rgbButtons[0] & 0x80)		padState[i] |= BUTTON_00;

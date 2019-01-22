@@ -13,7 +13,7 @@ HRESULT TSULibrarySystem::Initialize(HINSTANCE hInstance)
 		return -1;
 
 	// グラフィックス初期化(Direct3D)
-	if (FAILED(Direct3D::Init(WindowClass::GetHWnd(), TRUE)))
+	if (FAILED(Direct3D::Init(WindowClass::GetHWnd(), FALSE)))
 		return -1;
 
 	// インプット初期化
