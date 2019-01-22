@@ -141,7 +141,7 @@ HRESULT InitResultlogo(void)
 	Detail.SetTexture(2, 0.001f, 0.999f);
 
 	resultbg[0].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, TEXTURE_RESULTBG);
-	resultbg[1].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH*1.67f/ 2, SCREEN_HEIGHT*1.67/ 2, TEXTURE_RESULTBG);
+	resultbg[1].Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, SCREEN_WIDTH*1.67f/ 2, SCREEN_HEIGHT*1.67f/ 2, TEXTURE_RESULTBG);
 
 	for (int i = 0; i < NUM_PLACE; i++)
 	{
@@ -267,7 +267,7 @@ void UpdateResultlogo(void)
 			g_score += slotadd;
 			if (g_score >= (int)(powf(10.0f, NUM_PLACE + 1)))
 			{
-				g_score = g_maxscore % (int)(powf(10.0f, slotCount));//オーバーフローする前に戻す
+				g_score = g_maxscore % (int)(powf(10.0f, (float)slotCount));//オーバーフローする前に戻す
 			}
 		}
 
@@ -383,14 +383,14 @@ void UpdateResultlogo(void)
 			{
 				if (ScoreDetail[0].DetailBg.GetPosition().y < 140.0)
 				{
-					ScoreDetail[DETAIL_MAX - i - 1].DetailBg.MoveY(GetMouseZ());//下から変えていく　上から変えるとバグる
+					ScoreDetail[DETAIL_MAX - i - 1].DetailBg.MoveY((float)GetMouseZ());//下から変えていく　上から変えるとバグる
 				}
 			}
 			else if (GetMouseZ() < 0)
 			{
 				if (ScoreDetail[DETAIL_MAX - 1].DetailBg.GetPosition().y > SCREEN_HEIGHT - 140.0)
 				{
-					ScoreDetail[i].DetailBg.MoveY(GetMouseZ());
+					ScoreDetail[i].DetailBg.MoveY((float)GetMouseZ());
 				}
 			}
 
@@ -427,19 +427,19 @@ void DETAIL::ScoreInit(int no)
 	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
 
 
-	DetailBg.Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 400.0, 100.0, ScoreDetailTex[no % 3]);
+	DetailBg.Init(SCREEN_WIDTH + 400.0, 140.0f + (float)no * 200.0f, 400.0, 100.0, ScoreDetailTex[no % 3]);
 	DetailBg.Use = true;
 	DetailBg.Move = false;
 
-	Closs.Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 400.0, 100.0, "data/TEXTURE/UI/リザルト/×.png");
+	Closs.Init(SCREEN_WIDTH + 400.0, 140.0f + (float)no * 200.0f, 400.0, 100.0, "data/TEXTURE/UI/リザルト/×.png");
 	Closs.Use = false;
 	Closs.Move = false;
 
-	Equal.Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 400.0, 100.0, "data/TEXTURE/UI/リザルト/=.png");
+	Equal.Init(SCREEN_WIDTH + 400.0, 140.0f + (float)no * 200.0f, 400.0, 100.0, "data/TEXTURE/UI/リザルト/=.png");
 	Equal.Use = false;
 	Equal.Move = false;
 
-	CharTex.Init(SCREEN_WIDTH + 100.0, 140 + no * 200, 100.0, 100.0, CharctorTex[no]);
+	CharTex.Init(SCREEN_WIDTH + 100.0, 140.0f + (float)no * 200.0f, 100.0, 100.0, CharctorTex[no]);
 	CharTex.Use = false;
 	CharTex.Move = false;
 	CharTex.SetTexture(1, 2, 1);
@@ -447,26 +447,26 @@ void DETAIL::ScoreInit(int no)
 
 	for (int i = 0; i < 2; i++)
 	{
-		Knock[i].Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 39.0, 80.0, "data/TEXTURE/UI/スコア数字.png");
+		Knock[i].Init(SCREEN_WIDTH + 400.0, 140.0f + (float)no * 200.0f, 39.0, 80.0, "data/TEXTURE/UI/スコア数字.png");
 		Knock[i].Use = false;
 		Knock[i].Move = false;
 
 		int num;
 		num = (DefeatCounter + no)->GetCount();
-		num /= pow(10, i);
+		num /= (int)pow(10, i);
 		num %= 10;
 		Knock[i].SetTexture(num, 10, 1);
 	}
 
 	for (int i = 0; i < 5; i++)
 	{
-		GetPoint[i].Init(SCREEN_WIDTH + 400.0, 140 + no * 200, 39.0, 80.0, "data/TEXTURE/UI/スコア数字.png");
+		GetPoint[i].Init(SCREEN_WIDTH + 400.0, 140.0f + (float)no * 200.0f, 39.0, 80.0, "data/TEXTURE/UI/スコア数字.png");
 		GetPoint[i].Use = false;
 		GetPoint[i].Move = false;
 
 		int num;
 		num = CharactorScore[no]*(DefeatCounter + no)->GetCount();
-		num /= pow(10, i);
+		num /= (int)pow(10, i);
 		num %= 10;
 		GetPoint[i].SetTexture(num, 10, 1);
 	}

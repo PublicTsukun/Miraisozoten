@@ -122,8 +122,6 @@
 #define NAME_TEX		("data/TEXTURE/UI/リザルト/五十音プログラム表記用.png")
 #define NAME_WIDTH	(70.0)
 #define NAME_HEIGHT	(70.0)
-#define NAME_POS_X	(SCREEN_CENTER_X-(SENTAKUMOJI_WIDTH*4))//(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
-#define NAME_POS_Y	(170.0f) //(SCREEN_CENTER_Y)
 #define RANKING_NO	(5)		// ランキング画面に表示される名前の数
 
 

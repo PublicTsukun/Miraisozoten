@@ -256,7 +256,7 @@ void UpdateOption(void)
 		float Scale;
 		OptionBackScl += 0.05f;
 
-		Scale = (sinf(OptionBackScl) / 8.0) + 1.125f;
+		Scale = (sinf(OptionBackScl) / 8.0f) + 1.125f;
 		OptionBack.SetStatus(Scale, 0.0f);
 		PrintDebugProcess("Scale %f\n", Scale);
 	}

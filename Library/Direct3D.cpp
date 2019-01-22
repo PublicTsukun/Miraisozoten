@@ -28,8 +28,8 @@ HRESULT Direct3D::Init(HWND hWnd, bool bWindowMode)
 	// デバイスのプレゼンテーションパラメータの設定
 	ZeroMemory(&dxD3Dpp, sizeof(dxD3Dpp));			// ワークをゼロクリア
 	dxD3Dpp.BackBufferCount  = 1;					// バックバッファの数
-	dxD3Dpp.BackBufferWidth  = SCREEN_WIDTH;		// ゲーム画面サイズ(幅)
-	dxD3Dpp.BackBufferHeight = SCREEN_HEIGHT;		// ゲーム画面サイズ(高さ)
+	dxD3Dpp.BackBufferWidth  = (UINT)SCREEN_WIDTH;		// ゲーム画面サイズ(幅)
+	dxD3Dpp.BackBufferHeight = (UINT)SCREEN_HEIGHT;		// ゲーム画面サイズ(高さ)
 	dxD3Dpp.BackBufferFormat = d3ddm.Format;		// カラーモードの指定 (d3ddm.Format)
 	dxD3Dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;		// 映像信号に同期してフリップする
 	dxD3Dpp.Windowed = bWindowMode;					// ウィンドウモード

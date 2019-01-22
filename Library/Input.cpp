@@ -65,7 +65,7 @@ Vector3		padGyro[GAMEPADMAX];
 D3DXVECTOR2	padLsRoll[GAMEPADMAX];		// 左スティックの倒状態
 D3DXVECTOR2	padRsRoll[GAMEPADMAX];		// 右スティックの倒状態
 bool		padNowUseSide = true;		// 現在使用している(true = 左 : false = 右)
-bool		padNowUseNo = 0;			// 現在使用しているNo
+int			padNowUseNo = 0;			// 現在使用しているNo
 int			padCount = 0;				// 検出したパッドの数
 
 //=============================================================================

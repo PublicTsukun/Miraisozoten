@@ -20,8 +20,8 @@ HRESULT RenderBuffer::Init(DWORD vp_w, DWORD vp_h, UINT dep_w, UINT dep_h, UINT 
 {
 	this->DefaultViewport.X = 0;
 	this->DefaultViewport.Y = 0;
-	this->DefaultViewport.Width = SCREEN_WIDTH;
-	this->DefaultViewport.Height = SCREEN_HEIGHT;
+	this->DefaultViewport.Width = (DWORD)SCREEN_WIDTH;
+	this->DefaultViewport.Height = (DWORD)SCREEN_HEIGHT;
 	this->DefaultViewport.MinZ = 0.0f;
 	this->DefaultViewport.MaxZ = 1.0f;
 
