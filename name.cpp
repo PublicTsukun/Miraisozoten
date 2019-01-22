@@ -23,7 +23,7 @@
 //*********************************************************
 // 仮決め
 #define NEXT_CHAR		(91)	// 決定キー
-#define Y_TEST			(-100)	// 調整よう
+#define Y_TEST			(-100*SCREEN_SCALE)	// 調整よう
 //********************************************************
 
 // 文字盤
@@ -59,8 +59,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // もじばん
 #define MOJIBAN_TEX		("data/TEXTURE/UI/リザルト/五十音プログラム表記用.png")
-#define MOJIBAN_WIDTH	(400.0)
-#define MOJIBAN_HEIGHT	(200.0)
+#define MOJIBAN_WIDTH	(400.0*SCREEN_SCALE)
+#define MOJIBAN_HEIGHT	(200.0*SCREEN_SCALE)
 #define MOJIBAN_POS_X	(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
 #define MOJIBAN_POS_Y	(SCREEN_CENTER_Y + MOJIBAN_HEIGHT/2)
 // 文字盤の最大マス目
@@ -70,17 +70,17 @@
 
 // もじばん２(選択された文字を出すときに使うやつ）
 #define SENTAKUMOJI_TEX		("data/TEXTURE/UI/リザルト/五十音プログラム表記用.png")
-#define SENTAKUMOJI_WIDTH	(70.0)
-#define SENTAKUMOJI_HEIGHT	(70.0)
+#define SENTAKUMOJI_WIDTH	(70.0*SCREEN_SCALE)
+#define SENTAKUMOJI_HEIGHT	(70.0*SCREEN_SCALE)
 #define SENTAKUMOJI_POS_X	(SCREEN_CENTER_X-(SENTAKUMOJI_WIDTH*4))//(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
-#define SENTAKUMOJI_POS_Y	(170.0f) //(SCREEN_CENTER_Y)
+#define SENTAKUMOJI_POS_Y	(170.0f*SCREEN_SCALE) //(SCREEN_CENTER_Y)
 
 // 文字修正用のカーソル(入力済み文字に重ねて表示してます)
 #define RENAME_CURSOLE_TEX	("data/TEXTURE/UI//リザルト/名前矢印.png")
-#define RENAME_CURSOLE_WIDTH	(70.0)
-#define RENAME_CURSOLE_HEIGHT	(70.0)
+#define RENAME_CURSOLE_WIDTH	(70.0*SCREEN_SCALE)
+#define RENAME_CURSOLE_HEIGHT	(70.0*SCREEN_SCALE)
 #define RENAME_CURSOLE_POS_X	(SCREEN_CENTER_X-(SENTAKUMOJI_WIDTH*4))//(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
-#define RENAME_CURSOLE_POS_Y	(170.0f) //(SCREEN_CENTER_Y)
+#define RENAME_CURSOLE_POS_Y	(170.0f*SCREEN_SCALE) //(SCREEN_CENTER_Y)
 
 
 
@@ -89,7 +89,7 @@
 #define CHANGE_TIME	(1)
 
 //　決定B単y座標
-#define KETTEI_Y	(740)
+#define KETTEI_Y	(740*SCREEN_SCALE)
 
 // 最大まで文字が入力されていないときのサークル
 
@@ -106,33 +106,35 @@
 #define CURSOLE_WIDTH	(MOJIBAN_WIDTH/10)			// 文字盤が10文字×10文字なので
 #define CURSOLE_HEIGHT	(MOJIBAN_HEIGHT/5)
 // 「あ」を初期位置に
-#define CURSOLE_POS_X	(SCREEN_CENTER_X-CURSOLE_WIDTH - (CURSOLE_WIDTH*CURSOLE_SPACE*4))
-#define CURSOLE_POS_Y	((MOJIBAN_POS_Y) - (CURSOLE_HEIGHT*4))// - (CURSOLE_WIDTH*CURSOLE_SPACE))
+#define CURSOLE_POS_X	((SCREEN_CENTER_X-CURSOLE_WIDTH - (CURSOLE_WIDTH*CURSOLE_SPACE*4)))
+#define CURSOLE_POS_Y	(((MOJIBAN_POS_Y) - (CURSOLE_HEIGHT*4)))// - (CURSOLE_WIDTH*CURSOLE_SPACE))
 
 // 文字盤ではなく選択文字をさしたいばあい
 #define CHOISE_CURSOLE_TEX ("data/テスト用画像/ほげ.png")	// 多分使わない？
 #define CHOISE_CURSOLE_SPACE	(2)					// 次のマスに移動するためにカーソルのX,Yにかける値
-#define CHOISE_CURSOLE_WIDTH	(MOJIBAN_WIDTH/10)			// 文字盤が10文字×10文字なので
-#define CHOISE_CURSOLE_HEIGHT	(MOJIBAN_HEIGHT/5)
+#define CHOISE_CURSOLE_WIDTH	(MOJIBAN_WIDTH*SCREEN_SCALE/10)			// 文字盤が10文字×10文字なので
+#define CHOISE_CURSOLE_HEIGHT	(MOJIBAN_HEIGHT*SCREEN_SCALE/5)
 
-#define CHOISE_CURSOLE_POS_X	(SCREEN_CENTER_X-CURSOLE_WIDTH - (CURSOLE_WIDTH*CURSOLE_SPACE*4))
-#define CHOISE_CURSOLE_POS_Y	((MOJIBAN_POS_Y) - (CURSOLE_HEIGHT*4))// - (CURSOLE_WIDTH*CURSOLE_SPACE))
+#define CHOISE_CURSOLE_POS_X	((SCREEN_CENTER_X-CURSOLE_WIDTH - (CURSOLE_WIDTH*CURSOLE_SPACE*4)))
+#define CHOISE_CURSOLE_POS_Y	(((MOJIBAN_POS_Y) - (CURSOLE_HEIGHT*4)))// - (CURSOLE_WIDTH*CURSOLE_SPACE))
 
 // ランキングの名前
 #define NAME_TEX		("data/TEXTURE/UI/リザルト/五十音プログラム表記用.png")
-#define NAME_WIDTH	(70.0)
-#define NAME_HEIGHT	(70.0)
+#define NAME_WIDTH	(70.0*SCREEN_SCALE)
+#define NAME_HEIGHT	(70.0*SCREEN_SCALE)
+#define NAME_POS_X	((SCREEN_CENTER_X-(SENTAKUMOJI_WIDTH*4))*SCREEN_SCALE)//(SCREEN_CENTER_X)						// CENTER_X指定で自動的に真ん中に表示してくれる(Draw?)
+#define NAME_POS_Y	(170.0f*SCREEN_SCALE) //(SCREEN_CENTER_Y)
 #define RANKING_NO	(5)		// ランキング画面に表示される名前の数
 
 
 // 間隔調整用
 #define NAME_MAX_NO (5)
 #define SCORE_MAX_NO (5)
-#define NAME_POS_X (210.0)
-#define NAME_POS_Y (70.0)
-#define NAME_SCORE_POS_Y (150)		// 名前とスコアは同じ高さ
+#define NAME_POS_X (210.0*SCREEN_SCALE)
+#define NAME_POS_Y (70.0*SCREEN_SCALE)
+#define NAME_SCORE_POS_Y (150*SCREEN_SCALE)		// 名前とスコアは同じ高さ
 #define NAME_SPACE_01	(50)
-#define NAME_SCORE_SIZE (50)
+#define NAME_SCORE_SIZE (50*SCREEN_SCALE)
 
 #define FLASH_TIME		(0.05)
 
@@ -231,7 +233,7 @@ HRESULT InitName(void)
 	SAVERANKING *rankinfo = GetSaveRanking(0);
 	for (int i = 0; i < 5; i++,rankinfo++)
 	{// 236
-		ranking[i].rank.Init(NAME_SCORE_SIZE + 40, NAME_SCORE_POS_Y + ((NAME_SCORE_SIZE * 2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
+		ranking[i].rank.Init(NAME_SCORE_SIZE + 40 * SCREEN_SCALE, NAME_SCORE_POS_Y + ((NAME_SCORE_SIZE * 2)*i), NAME_SCORE_SIZE, NAME_SCORE_SIZE);
 		ranking[i].rank.LoadTexture(ranktex[rankinfo->rank-1]);
 
 		for (int t = 0; t < 5; t++)
@@ -287,7 +289,7 @@ HRESULT InitName(void)
 	mojiban.Init(MOJIBAN_POS_X, Y_TEST + MOJIBAN_POS_Y, MOJIBAN_WIDTH, MOJIBAN_HEIGHT, MOJIBAN_TEX);
 	char_cursole.Init(RENAME_CURSOLE_POS_X, Y_TEST + RENAME_CURSOLE_POS_Y, RENAME_CURSOLE_WIDTH, RENAME_CURSOLE_HEIGHT, RENAME_CURSOLE_TEX);
 	haikei.Init(SCREEN_CENTER_X, SCREEN_CENTER_Y, HAIKEI_WIDTH, HAIKEI_HEIGHT, HAIKEI_TEX);
-	name_set.Init(SCREEN_CENTER_X, Y_TEST + KETTEI_Y, 160.0, 80.0, "data/TEXTURE/UI/けってい.png");	//X座標×2に更に文字数をかける
+	name_set.Init(SCREEN_CENTER_X, Y_TEST + KETTEI_Y, 160.0*SCREEN_SCALE, 80.0*SCREEN_SCALE, "data/TEXTURE/UI/けってい.png");	//X座標×2に更に文字数をかける
 	//haikei_logo.Init
 
 	// カウントセット
@@ -411,7 +413,7 @@ void DrawName(void)
 			}
 			case NAME_FINISH:
 			{	// カーソルを表示しない
-				cursole.SetStatus(-100, -100, 0.0, 0.0);
+				cursole.SetStatus(-100 * SCREEN_SCALE, -100 * SCREEN_SCALE, 0.0, 0.0);
 				break;
 			}
 			}

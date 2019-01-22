@@ -25,7 +25,7 @@ void VoiceTankUI::Init()
 {
 	CEnergyTankUI::Initialize();
 	MicTestInit();
-	this->CEnergyTankUI::Init(95, 550, 8, 8, 1000);
+	this->CEnergyTankUI::Init(95 * SCREEN_SCALE, 550 * SCREEN_SCALE, 8 * SCREEN_SCALE, 8 * SCREEN_SCALE, 1000);
 }
 
 void VoiceTankUI::Update()

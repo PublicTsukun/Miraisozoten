@@ -4,7 +4,7 @@
 
 #include "Library\ObjectBase2D.h"
 
-#define ENERGY_MIN (45)
+#define ENERGY_MIN (100)
 #define ENERGY_CORD (140)
 
 class CEnergyTankUI

@@ -323,7 +323,7 @@ void UpdateGameSound(void)
 //==================================================================
 void SEVolumeTurning(void)
 {
-	if (GetKeyboardPress(DIK_RIGHT) || IsButtonTriggered(LSTICK_RIGHT))
+	if (GetKeyboardPress(DIK_RIGHT) || IsButtonPressed(LSTICK_RIGHT))
 	{
 		SEVolume += 100;
 		if (SEVolume > SE_VOLUME_MAX)
@@ -332,7 +332,7 @@ void SEVolumeTurning(void)
 		}
 	}
 
-	if (GetKeyboardPress(DIK_LEFT) || IsButtonTriggered(LSTICK_LEFT))
+	if (GetKeyboardPress(DIK_LEFT) || IsButtonPressed(LSTICK_LEFT))
 	{
 		SEVolume -= 100;
 		if (SEVolume < SE_VOLUME_MIN)
@@ -354,7 +354,7 @@ void SEVolumeTurning(void)
 //==================================================================
 void BGMVolumeTurning(void)
 {
-	if (GetKeyboardPress(DIK_RIGHT) || IsButtonTriggered(LSTICK_RIGHT))
+	if (GetKeyboardPress(DIK_RIGHT) || IsButtonPressed(LSTICK_RIGHT))
 	{
 		BGMVolume += 100;
 		if (BGMVolume > BGM_VOLUME_MAX)
@@ -363,7 +363,7 @@ void BGMVolumeTurning(void)
 		}
 	}
 
-	if (GetKeyboardPress(DIK_LEFT) || IsButtonTriggered(LSTICK_LEFT))
+	if (GetKeyboardPress(DIK_LEFT) || IsButtonPressed(LSTICK_LEFT))
 	{
 		BGMVolume -= 100;
 		if (BGMVolume < BGM_VOLUME_MIN+100)
