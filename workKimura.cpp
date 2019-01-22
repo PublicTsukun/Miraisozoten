@@ -78,7 +78,7 @@ void UpdateWorkKimura(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのUpdate
-		UpdateENEMY();
+//		UpdateENEMY();
 		break;
 
 
@@ -103,7 +103,7 @@ void DrawWorkKimura(void)
 
 
 	case SCENE_GAME://ゲームで使うソースのDraw
-		DrawENEMY();
+//		DrawENEMY();
 		break;
 
 

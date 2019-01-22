@@ -4,6 +4,9 @@
 
 #include "Library\ObjectBase2D.h"
 
+#define ENERGY_MIN (45)
+#define ENERGY_CORD (140)
+
 class CEnergyTankUI
 {
 	static Dx9Texture texTank;

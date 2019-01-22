@@ -38,10 +38,10 @@ HRESULT WindowClass::Init(HINSTANCE hInstance)
 		ClassName,												//クラス名
 		WindowName,												//ウィンドウ名（タイトル）
 		(WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU),			//スタイル
-		((GetSystemMetrics(SM_CXSCREEN) - SCREEN_WIDTH) / 2),	//横方向の位置
-		((GetSystemMetrics(SM_CYSCREEN) - SCREEN_HEIGHT) / 2),	//縦方向の位置
-		SCREEN_WIDTH + GetSystemMetrics(SM_CXDLGFRAME) * 2,									//幅
-		SCREEN_HEIGHT + GetSystemMetrics(SM_CXDLGFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION),	//高さ
+		((GetSystemMetrics(SM_CXSCREEN) - (int)SCREEN_WIDTH) / 2),	//横方向の位置
+		((GetSystemMetrics(SM_CYSCREEN) - (int)SCREEN_HEIGHT) / 2),	//縦方向の位置
+		(int)SCREEN_WIDTH + GetSystemMetrics(SM_CXDLGFRAME) * 2,									//幅
+		(int)SCREEN_HEIGHT + GetSystemMetrics(SM_CXDLGFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION),	//高さ
 		NULL,						//親ウィンドウ
 		NULL,						//メニュー
 		Instance,					//アプリケーションインスタンスのハンドル
@@ -142,7 +142,7 @@ void WindowClass::SetWindowMode(bool mode)
 	if (mode)
 	{
 		//SetWindowLong(s_hWnd, GWL_STYLE, WS_CAPTION | WS_THICKFRAME | WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU);
-		SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+		SetWindowSize((int)SCREEN_WIDTH, (int)SCREEN_HEIGHT);
 	}
 	//else
 	//{
