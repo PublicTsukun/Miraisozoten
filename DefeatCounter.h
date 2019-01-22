@@ -28,6 +28,7 @@ public:
 // プロトタイプ宣言
 //*****************************************************************************
 DefeatCounter *GetDefeatCounter(int no);
+void InitDefeatCounter(void);
 int GetAllDefeat(void);
 
 #endif
