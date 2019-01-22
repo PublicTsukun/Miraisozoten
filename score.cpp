@@ -131,5 +131,6 @@ void AddScore(int num)
 //========================================================================
 int GetScore(void)
 {
-	return Score;
+	//return Score;
+	return 99999;
 }

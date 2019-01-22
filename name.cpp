@@ -159,7 +159,7 @@ typedef enum
 int namechar;
 int lastchar;		// かーそるってえいごでなんだっけ！
 int name_status;	// 現在の状態
-RANKDATA	rankdatawk[1];
+RANKDATA	rankdatawk;
 CURSOLE		cursolewk;
 C2DObject cursole;
 C2DObject char_cursole;		// 名前の文字をさすカーソル
@@ -212,7 +212,7 @@ void Flash_Tex(int no);
 //*************************************************************************
 HRESULT InitName(void)
 {
-	RANKDATA *rankdata = &rankdatawk[0];
+	RANKDATA *rankdata = &rankdatawk;
 
 	//
 	ranktex[0].LoadTexture("data/TEXTURE/UI/リザルト/1st.png");
@@ -268,14 +268,13 @@ HRESULT InitName(void)
 	// 各フラグ初期化
 	for (int i = 0; i < NAMEMAX; i++)
 	{
-		rankdata[0].selected[i] = false;
+		rankdata->selected[i] = false;
 	}
 	name_flag = true;
 	cursole_status = KEYBOARD;	// キーボードへ
 	char_type = HIRAGANA;
 	pos_rockon = false;
 	cursolechanging = false;
-	name_enter = false;
 	flash_count_switch = false;
 
 	// ステータスを初期状態に
@@ -343,7 +342,7 @@ void UninitName(void)
 //**************************************************************
 void DrawName(void)
 {
-	RANKDATA *rankdata = &rankdatawk[0];
+	RANKDATA *rankdata = &rankdatawk;
 
 
 	haikei.Draw();			// 背景画像
@@ -370,18 +369,18 @@ void DrawName(void)
 		for (int i = 0; i < NAME_MAX; i++)
 		{
 			// selectedがtrueならテクスチャ表示
-			if (rankdata[0].selected[i] == true)
+			if (rankdata->selected[i] == true)
 			{
 				// テクスチャのセット
 				int numnum;
-				numnum = rankdata[0].namechar[i][0] * 10 + rankdata[0].namechar[i][1];
+				numnum = rankdata->namechar[i][0] * 10 + rankdata->namechar[i][1];
 				select_moji[i].SetTexture(numnum, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
 				select_moji[i].Draw();
 			}
 		}
 
 		// 決定ボタン(一度でも文字が最大まで入力された場合表示
-		if (rankdata[0].selected[NAME_MAX - 1] == true)
+		if (rankdata->selected[NAME_MAX - 1] == true)
 		{
 			name_set.Draw();
 		}
@@ -450,18 +449,14 @@ void DrawName(void)
 //***************************************************************************
 void Update_Name(void)
 {
-	RANKDATA *rankdata = &rankdatawk[0];
-	if (GetKeyboardTrigger(DIK_8))
-	{
-		name_enter = !name_enter;
-	}
+	RANKDATA *rankdata = &rankdatawk;
 
 	// フラグがtrueなら名前入力ＯＫ
-	if (name_status != NAME_SELECT_END && name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
+	if (name_status != NAME_SELECT_END && name_enter == true && (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP)))
 	{
 		name_status = NAME_SELECT;
 	}
-	else if (name_enter == false && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
+	else if (name_enter == false && (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP)))
 	{
 		PlaySE(DECIDE);
 		Scene::SetScene(SCENE_TITLE);
@@ -480,7 +475,7 @@ void Update_Name(void)
 
 
 			// 文字盤を変える(カーソル移動中は実行できない）
-			if (GetKeyboardTrigger(DIK_X) || IsButtonTriggered(LSTICK_RIGHT | LSTICK_LEFT) && cursolechanging == false)
+			if ((GetKeyboardTrigger(DIK_X) || IsButtonTriggered(LSTICK_RIGHT | LSTICK_LEFT)) && cursolechanging == false)
 			{
 				char_type = !char_type;
 				// カーソル位置の初期化
@@ -492,26 +487,32 @@ void Update_Name(void)
 		}
 		else
 		{	// 以下、決定ボタンにいる際の処理(name_status = NAME_FINISH)
-			if (GetKeyboardTrigger(DIK_2) || IsButtonTriggered(BUTTON_DOWN))
+			if (GetKeyboardTrigger(DIK_BACKSPACE) || IsButtonTriggered(BUTTON_DOWN))
 			{	// まだ決定しないよ
-				rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
-				rankdata[0].namechar[namechar-1][0] = 0;
-				rankdata[0].namechar[namechar-1][1] = 0;// 文字入力フラグ初期化(あの位置へ）
+				rankdata->selected[namechar - 1] = false;	// 入力文字のフラグをオフに
+				rankdata->namechar[namechar-1][0] = 0;
+				rankdata->namechar[namechar-1][1] = 0;// 文字入力フラグ初期化(あの位置へ）
 				namechar--;									// 現在入力中の文字数を減らすよ
 				//rankdata[0].name_position = namechar - 1;
 				cursole_status = KEYBOARD;
 			}
 			// 決定ボタンにカーソルが存在しておりLキーが押された場合
-			if (GetKeyboardTrigger(DIK_L) || IsButtonTriggered(BUTTON_UP))
+			if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 			{
-
 				for (int i = 0; i < NAMEMAX; i++)
 				{
-					Enter_the_no(CheckRank(GetScore()),i, rankdata[0].namechar[i][0], rankdata[0].namechar[i][1]);
+					Enter_the_no(CheckRank(GetScore()),i, rankdata->namechar[i][0], rankdata->namechar[i][1]);
 				}
 
 				// データ出力
 				WriteSaveRankingCsv();
+				
+				int gabmon;
+				for (int i = 0; i < NAMEMAX; i++)
+				{
+					gabmon = rankdata->namechar[i][0] * 10 + rankdata->namechar[i][1];
+					ranking[CheckRank(GetScore())].name[i].SetTexture(gabmon, 10, 10);
+				}
 				// 再ロード
 				//LoadSaveRankingCsv();
 				// ランキングへ
@@ -523,7 +524,7 @@ void Update_Name(void)
 	break;
 	case NAME_SELECT_END:
 	{
-		if ((GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP)))// 個々のボタン相談する
+		if ((GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP)))// 個々のボタン相談する
 		{
 			PlaySE(DECIDE);
 			Scene::SetScene(SCENE_TITLE);
@@ -545,7 +546,7 @@ defalt:
 //********************************************************************
 void move_cursole(void)
 {
-	RANKDATA *rankdata = &rankdatawk[0];
+	RANKDATA *rankdata = &rankdatawk;
 	if (GetKeyboardTrigger(DIK_W) || IsButtonTriggered(LSTICK_UP))
 	{
 		cursolewk.pos.y--;
@@ -596,9 +597,9 @@ void move_cursole(void)
 	if (GetKeyboardTrigger(DIK_BACKSPACE) || IsButtonTriggered(BUTTON_DOWN) )
 	{	// 名前入力フラグの削除
 		//select_moji[namechar - 1].Release();	//テクスチャ解放
-		rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
-		rankdata[0].namechar[namechar-1][0] = 0;		// 文字入力フラグ初期化(あの位置へ）
-		rankdata[0].namechar[namechar-1][1] = 0;
+		rankdata->selected[namechar - 1] = false;	// 入力文字のフラグをオフに
+		rankdata->namechar[namechar-1][0] = 0;		// 文字入力フラグ初期化(あの位置へ）
+		rankdata->namechar[namechar-1][1] = 0;
 		namechar--;									// 現在入力中の文字数を減らすよ
 		//rankdata[0].name_position = namechar - 1;
 
@@ -616,21 +617,21 @@ void move_cursole(void)
 			{
 				// 指定位置
 				// 1フラグをtrueに
-				rankdata[0].selected[namechar] = true;
+				rankdata->selected[namechar] = true;
 
 				// 数字で文字を格納
 				if (char_type == HIRAGANA)
 				{
-					rankdata[0].namechar[namechar][0] = cursolewk.pos.y;
-					rankdata[0].namechar[namechar][1] = cursolewk.pos.x;
+					rankdata->namechar[namechar][0] = cursolewk.pos.y;
+					rankdata->namechar[namechar][1] = cursolewk.pos.x;
 				}
 				else
 				{
-					rankdata[0].namechar[namechar][0] = cursolewk.pos.y + 5;
-					rankdata[0].namechar[namechar][1] = cursolewk.pos.x;
+					rankdata->namechar[namechar][0] = cursolewk.pos.y + 5;
+					rankdata->namechar[namechar][1] = cursolewk.pos.x;
 				}
 				//	今回の決定によって5文字目が入力された場合
-				if (rankdata[0].selected[NAMEMAX - 1] == true)
+				if (rankdata->selected[NAMEMAX - 1] == true)
 				{
 					cursole_status = NAME_FINISH;
 				}
@@ -687,17 +688,17 @@ void Flash_Tex(int no)
 	{	// プレイヤーのスコアとランキングのスコアを比較する？
 		int player_score = GetScore();
 		SAVERANKING *rankinfo = GetSaveRanking(0);
-		for (int i = 0; i < 5;i++, rankinfo++)
-		{
-			if (player_score == rankinfo->score)
-			{
-				flash_score = i;
-			}
-		}
+		//for (int i = 0; i < 5;i++, rankinfo++)
+		//{
+		//	if (player_score == rankinfo->score)
+		//	{
+		//		flash_score = i;
+		//	}
+		//}
 		for (int t = 0; t < 5; t++)
 		{
-			ranking[flash_score].name[t].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
-			ranking[flash_score].score[t].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
+			ranking[CheckRank(GetScore())].name[t].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
+			ranking[CheckRank(GetScore())].score[t].SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(flash_count)) + 0.3f));
 		}
 
 
