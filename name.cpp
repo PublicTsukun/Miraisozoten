@@ -380,10 +380,9 @@ void DrawName(void)
 		}
 
 		// 決定ボタン(一度でも文字が最大まで入力された場合表示
-		if (rankdata->selected[NAME_MAX - 1] == true)
-		{
+
 			name_set.Draw();
-		}
+
 		
 
 		// カーソル描画
@@ -471,7 +470,7 @@ void Update_Name(void)
 		{	// 決定ボタンにカーソルが居ない(キーボード)
 			// カーソル移動
 
-				move_cursole();
+			move_cursole();
 
 
 			// 文字盤を変える(カーソル移動中は実行できない）
@@ -487,11 +486,32 @@ void Update_Name(void)
 		}
 		else
 		{	// 以下、決定ボタンにいる際の処理(name_status = NAME_FINISH)
+			if (GetKeyboardTrigger(DIK_W) || IsButtonTriggered(LSTICK_UP))
+			{
+				if (char_type = HIRAGANA)
+				{
+					cursolewk.pos.y = MOJIBAN_MASUMAX_Y;
+					name_set.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(1.0)) + 0.3f));
+				}
+				else if (char_type != HIRAGANA)
+				{
+					cursolewk.pos.y = 2;	// アルファベット最大たてます
+					name_set.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(1.0)) + 0.3f));
+				}
+				cursole_status = KEYBOARD;
+			}
+			else if (GetKeyboardTrigger(DIK_S) || IsButtonTriggered(LSTICK_DOWN))
+			{
+				cursolewk.pos.y = 0;
+				name_set.SetVertex(D3DXCOLOR(1.0f, 1.0f, 1.0f, fabs(sinf(1.0)) + 0.3f));
+				cursole_status = KEYBOARD;
+			}
+
 			if (GetKeyboardTrigger(DIK_BACKSPACE) || IsButtonTriggered(BUTTON_DOWN))
 			{	// まだ決定しないよ
 				rankdata->selected[namechar - 1] = false;	// 入力文字のフラグをオフに
-				rankdata->namechar[namechar-1][0] = 0;
-				rankdata->namechar[namechar-1][1] = 0;// 文字入力フラグ初期化(あの位置へ）
+				rankdata->namechar[namechar-1][0] = 2;
+				rankdata->namechar[namechar-1][1] = 6;// 文字入力フラグ初期化(あの位置へ）
 				namechar--;									// 現在入力中の文字数を減らすよ
 				//rankdata[0].name_position = namechar - 1;
 				cursole_status = KEYBOARD;
@@ -553,10 +573,12 @@ void move_cursole(void)
 		if (char_type == HIRAGANA && cursolewk.pos.y < 0)
 		{
 			cursolewk.pos.y = MOJIBAN_MASUMAX_Y;
+			cursole_status = NAME_FINISH;
 		}
 		else if(char_type!=HIRAGANA && cursolewk.pos.y <0)
 		{
 			cursolewk.pos.y = 2;	// アルファベット最大たてます
+			cursole_status = NAME_FINISH;
 		}
 	}
 	else if (GetKeyboardTrigger(DIK_S) || IsButtonTriggered(LSTICK_DOWN))
@@ -566,10 +588,12 @@ void move_cursole(void)
 		if (char_type == HIRAGANA && cursolewk.pos.y > MOJIBAN_MASUMAX_Y)
 		{
 			cursolewk.pos.y = 0;
+			cursole_status = NAME_FINISH;
 		}
 		else if (char_type != HIRAGANA && cursolewk.pos.y >2)
 		{
 			cursolewk.pos.y = 0;
+			cursole_status = NAME_FINISH;
 		}
 	}
 	else if (GetKeyboardTrigger(DIK_D) || IsButtonTriggered(LSTICK_RIGHT))
@@ -598,8 +622,8 @@ void move_cursole(void)
 	{	// 名前入力フラグの削除
 		//select_moji[namechar - 1].Release();	//テクスチャ解放
 		rankdata->selected[namechar - 1] = false;	// 入力文字のフラグをオフに
-		rankdata->namechar[namechar-1][0] = 0;		// 文字入力フラグ初期化(あの位置へ）
-		rankdata->namechar[namechar-1][1] = 0;
+		rankdata->namechar[namechar-1][0] = 2;		// 文字入力フラグ初期化(あの位置へ）
+		rankdata->namechar[namechar-1][1] = 6;
 		namechar--;									// 現在入力中の文字数を減らすよ
 		//rankdata[0].name_position = namechar - 1;
 
@@ -635,11 +659,7 @@ void move_cursole(void)
 				{
 					cursole_status = NAME_FINISH;
 				}
-				
-				//select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
-				// 空白文字の場合の処理(空白文字入力できるかわからないので保留)
 
-				// 文字入力されたので現在入力中の名前を加算
 			}
 			if (namechar < NAMEMAX)
 			{
