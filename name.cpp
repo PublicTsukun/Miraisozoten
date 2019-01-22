@@ -480,7 +480,7 @@ void Update_Name(void)
 
 
 			// 文字盤を変える(カーソル移動中は実行できない）
-			if ((GetKeyboardTrigger(DIK_X) || IsButtonTriggered(LSTICK_RIGHT | LSTICK_LEFT)) && cursolechanging == false)
+			if ((GetKeyboardTrigger(DIK_X) || IsButtonTriggered(BUTTON_RIGHT | BUTTON_LEFT)) && cursolechanging == false)
 			{
 				char_type = !char_type;
 				// カーソル位置の初期化
