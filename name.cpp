@@ -147,7 +147,7 @@ typedef enum
 {
 	KEYBOARD,
 	PLAYER_NAME,
-	FINISH
+	NAME_FINISH
 }CURSOLE_POSITION;
 
 
@@ -407,7 +407,7 @@ void DrawName(void)
 				//cursole.SetStatus(SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position), Y_TEST + RENAME_CURSOLE_POS_Y, RENAME_CURSOLE_WIDTH, RENAME_CURSOLE_HEIGHT);
 				break;
 			}
-			case FINISH:
+			case NAME_FINISH:
 			{	// カーソルを表示しない
 				cursole.SetStatus(-100, -100, 0.0, 0.0);
 				break;
@@ -460,7 +460,7 @@ void Update_Name(void)
 	{
 	case NAME_SELECT:
 	{
-		if (cursole_status != FINISH)
+		if (cursole_status != NAME_FINISH)
 		{	// 決定ボタンにカーソルが居ない(キーボード)
 			// カーソル移動
 
@@ -620,7 +620,7 @@ void move_cursole(void)
 				//	今回の決定によって5文字目が入力された場合
 				if (rankdata[0].selected[NAMEMAX - 1] == true)
 				{
-					cursole_status = FINISH;
+					cursole_status = NAME_FINISH;
 				}
 				
 				//select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
@@ -692,7 +692,7 @@ void Flash_Tex(int no)
 	}
 	else
 	{	// キーボードなどが表示されてるやつ
-		if (cursole_status == FINISH)
+		if (cursole_status == NAME_FINISH)
 		{
 			name_set.SetVertex(D3DXCOLOR(1.0f,1.0f,1.0f,fabs(sinf(flash_count)) +0.3f));
 		}
