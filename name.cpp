@@ -301,6 +301,12 @@ HRESULT InitName(void)
 	{
 		select_moji[i].Init(SENTAKUMOJI_POS_X + ((SENTAKUMOJI_WIDTH * 2)*i), Y_TEST + SENTAKUMOJI_POS_Y, SENTAKUMOJI_WIDTH, SENTAKUMOJI_HEIGHT, SENTAKUMOJI_TEX);
 	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		rankdata->namechar[i][0] = 2;
+		rankdata->namechar[i][1] = 6;
+	}
 	return S_OK;
 }
 
