@@ -147,7 +147,7 @@ typedef enum
 {
 	KEYBOARD,
 	PLAYER_NAME,
-	FINISH
+	NAME_FINISH
 }CURSOLE_POSITION;
 
 
@@ -199,7 +199,7 @@ bool pos_rockon;	// 目標座標決定済みか
 float movesize_X, movesize_Y;
 float target_x, target_y;	// カーソル移動用　目標位置と現在位置の座標
 bool finish_flag;			// 文字入力終わるかどうかのフラグ
-int flash_score;			// 点滅するsukoa
+int flash_score;			// 点滅するsuko
 
 //*************************************************************************
 // プロトタイプ宣言(cpp内でのみ使用するやつ
@@ -352,7 +352,10 @@ void DrawName(void)
 	{
 		// 名前入力に入っている場合の描画
 	case NAME_SELECT:
-	{	// ここから下関数にしてわけるかも？
+	{	
+
+
+		// ここから下関数にしてわけるかも？
 		if (char_type == HIRAGANA)
 		{
 			mojiban.SetTexture(0, 1, 2);
@@ -376,6 +379,7 @@ void DrawName(void)
 				select_moji[i].Draw();
 			}
 		}
+
 		// 決定ボタン(一度でも文字が最大まで入力された場合表示
 		if (rankdata[0].selected[NAME_MAX - 1] == true)
 		{
@@ -403,7 +407,7 @@ void DrawName(void)
 				//cursole.SetStatus(SENTAKUMOJI_POS_X + ((RENAME_CURSOLE_WIDTH * 2)*rankdata[0].name_position), Y_TEST + RENAME_CURSOLE_POS_Y, RENAME_CURSOLE_WIDTH, RENAME_CURSOLE_HEIGHT);
 				break;
 			}
-			case FINISH:
+			case NAME_FINISH:
 			{	// カーソルを表示しない
 				cursole.SetStatus(-100, -100, 0.0, 0.0);
 				break;
@@ -419,6 +423,10 @@ void DrawName(void)
 	}
 	break;
 
+	case NAME_SELECT_END:
+	{
+
+	}
 	default:
 		// ランキング描画用の関数…
 		for (int i = 0; i < 5; i++)
@@ -443,20 +451,28 @@ void DrawName(void)
 void Update_Name(void)
 {
 	RANKDATA *rankdata = &rankdatawk[0];
-	//name_enter = true;
+	if (GetKeyboardTrigger(DIK_8))
+	{
+		name_enter = !name_enter;
+	}
+
 	// フラグがtrueなら名前入力ＯＫ
-	if (name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
+	if (name_status != NAME_SELECT_END && name_enter == true && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
 	{
 		name_status = NAME_SELECT;
 	}
-
+	else if (name_enter == false && GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP))
+	{
+		PlaySE(DECIDE);
+		Scene::SetScene(SCENE_TITLE);
+	}
 
 
 	switch (name_status)
 	{
 	case NAME_SELECT:
 	{
-		if (cursole_status != FINISH)
+		if (cursole_status != NAME_FINISH)
 		{	// 決定ボタンにカーソルが居ない(キーボード)
 			// カーソル移動
 
@@ -475,9 +491,9 @@ void Update_Name(void)
 			// カーソルの位置を変える(文字盤⇔名前欄)
 		}
 		else
-		{	// 以下、決定ボタンにいる際の処理
+		{	// 以下、決定ボタンにいる際の処理(name_status = NAME_FINISH)
 			if (GetKeyboardTrigger(DIK_2) || IsButtonTriggered(BUTTON_DOWN))
-			{
+			{	// まだ決定しないよ
 				rankdata[0].selected[namechar - 1] = false;	// 入力文字のフラグをオフに
 				rankdata[0].namechar[namechar-1][0] = 0;
 				rankdata[0].namechar[namechar-1][1] = 0;// 文字入力フラグ初期化(あの位置へ）
@@ -497,14 +513,22 @@ void Update_Name(void)
 				// データ出力
 				WriteSaveRankingCsv();
 				// 再ロード
-				LoadSaveRankingCsv();
+				//LoadSaveRankingCsv();
 				// ランキングへ
-				name_status = BEGIN;
+				name_status = NAME_SELECT_END;
 			}
 		}
 
 	}
 	break;
+	case NAME_SELECT_END:
+	{
+		if ((GetKeyboardTrigger(DIK_0) || IsButtonTriggered(BUTTON_UP)))// 個々のボタン相談する
+		{
+			PlaySE(DECIDE);
+			Scene::SetScene(SCENE_TITLE);
+		}
+	}
 defalt:
 	break;
 	}
@@ -608,7 +632,7 @@ void move_cursole(void)
 				//	今回の決定によって5文字目が入力された場合
 				if (rankdata[0].selected[NAMEMAX - 1] == true)
 				{
-					cursole_status = FINISH;
+					cursole_status = NAME_FINISH;
 				}
 				
 				//select_moji[namechar].SetTexture(1, 10, 10);	//第二引数 ますめの数X 第3 ますめの数Y
@@ -659,7 +683,7 @@ void Flash_Tex(int no)
 	//	}
 	//}
 	flash_count += FLASH_TIME;
-	if (name_enter == true && name_status == BEGIN)
+	if (name_enter == true && name_status == BEGIN || name_status == NAME_SELECT_END)
 	{	// プレイヤーのスコアとランキングのスコアを比較する？
 		int player_score = GetScore();
 		SAVERANKING *rankinfo = GetSaveRanking(0);
@@ -680,7 +704,7 @@ void Flash_Tex(int no)
 	}
 	else
 	{	// キーボードなどが表示されてるやつ
-		if (cursole_status == FINISH)
+		if (cursole_status == NAME_FINISH)
 		{
 			name_set.SetVertex(D3DXCOLOR(1.0f,1.0f,1.0f,fabs(sinf(flash_count)) +0.3f));
 		}

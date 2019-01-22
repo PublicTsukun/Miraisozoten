@@ -7,7 +7,8 @@
 
 #include "Library/Input.h"
 #include "Library/ObjectBase2D.h"
-
+#include "SceneManager.h"
+#include "GameSound.h"
 // でふぁいん
 #define NAMEMAX	(5)
 
@@ -15,8 +16,9 @@
 typedef enum
 {	// 現在の状態
 	BEGIN = 0,		// 初期状態
-	RANKIN,
-	NAME_SELECT,
+	RANKIN,			// スコアがランクインしている
+	NAME_SELECT,	// 名前を入力している
+	NAME_SELECT_END,	// 名前が入力された
 	NAME_SELECT_MAX
 
 }NAME_SELECT_STATUS;
