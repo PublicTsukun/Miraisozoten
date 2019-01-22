@@ -37,8 +37,6 @@ void AimPointer::Update()
 	{
 		PrintDebugProcess("ポインター操作方法(M) : ジャイロ\n");
 
-		SetCursorPos(100, 100);
-
 		Vector3 gyro = GetGyro();
 
 		PrintDebugProcess("ジョイコン : (%f, %f, %f)\n", gyro.x, gyro.y, gyro.z);
