@@ -14,6 +14,10 @@
 #include "Library\Camera.h"
 #include "GameSound.h"
 
+#include "StageManager.h"
+
+#include "S-Editor.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -54,44 +58,52 @@ int timerVL;
 //=============================================================================
 void UpdateVLauncher(void)
 {
-	if (VoiceTankUI::GetVoiceVolume())
-	//if (1)
+	STAGE *stage = GetStage();
+
+	if (stage->status == STAGE_STATUS_NORMAL ||
+		stage->status == STAGE_STATUS_END
+		)
 	{
-		Vector2 direction = AimPointer::GetPosition();
-
-		D3DXVECTOR3 *pout;
-		pout = &D3DXVECTOR3(0, 0, 0);
-
-		pout =
-			CalcScreenToXZ
-			(
-				pout,
-				(int)direction.x,
-				(int)direction.y,
-				(int)SCREEN_WIDTH,
-				(int)SCREEN_HEIGHT,
-				&(GetMtxView)(),
-				&(GetMtxProj)()
-			);
-
-		if (timerVL % V_FREQ == 0)
+		if (VoiceTankUI::GetVoiceVolume() >= VOICETEN_SHOT_VOL)
+		//if (1)
 		{
-			SetVoiceten(
-				Vector3(0.0f, 250.0f, -800.0f),				// 発射位置
-				//Vector3(0.0f, 250.0f, -0.0f),				// 発射位置
-				Vector3(pout->x, pout->y, pout->z));		// 目標位置
-			PlaySE(SHOOT_BULLET);
+			Vector2 direction = AimPointer::GetPosition();
+
+			D3DXVECTOR3 *pout;
+			pout = &D3DXVECTOR3(0, 0, 0);
+
+			pout =
+				CalcScreenToXZ
+				(
+					pout,
+					(int)direction.x,
+					(int)direction.y,
+					(int)SCREEN_WIDTH,
+					(int)SCREEN_HEIGHT,
+					&(GetMtxView)(),
+					&(GetMtxProj)()
+					);
+
+			if (timerVL % V_FREQ == 0)
+			{
+				SetVoiceten(
+					Vector3(0.0f, 250.0f, -800.0f),				// 発射位置
+																//Vector3(0.0f, 250.0f, -0.0f),				// 発射位置
+					Vector3(pout->x, pout->y, pout->z));		// 目標位置
+				PlaySE(SHOOT_BULLET);
+			}
+
+			// タイマーカウントアップ
+			timerVL++;
+
+			PrintDebugProcess("pout: (%f), (%f), (%f)\n", pout->x, pout->y, pout->z);
+
+		}
+		else
+		{
+			timerVL = 0;
 		}
 
-		// タイマーカウントアップ
-		timerVL++;
-
-		PrintDebugProcess("pout: (%f), (%f), (%f)\n", pout->x, pout->y, pout->z);
-
-	}
-	else
-	{
-		timerVL = 0;
 	}
 
 }
@@ -122,7 +134,7 @@ D3DXVECTOR3* CalcScreenToWorld(
 
 	// 逆変換
 	D3DXMATRIX tmp = InvViewport * InvPrj * InvView;
-	D3DXVec3TransformCoord(pout, &D3DXVECTOR3(Sx, Sy, fZ), &tmp);
+	D3DXVec3TransformCoord(pout, &D3DXVECTOR3((float)Sx, (float)Sy, fZ), &tmp);
 
 	return pout;
 }

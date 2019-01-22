@@ -16,6 +16,15 @@
 // マクロ定義
 //*****************************************************************************
 
+// 発射所要音量
+#define VOICETEN_SHOT_VOL		(ENERGY_MIN)	
+
+// Voiceten Type 音量設定
+#define VOICETEN_TYPE_VOL_01	(ENERGY_CORD * 3)
+
+// Voiceten Type 音量設定
+#define VOICETEN_TYPE_VOL_02	(ENERGY_CORD * 6)
+
 // 間隔で敵を生成（frame）
 #define ENEMY_SPAWN_DELAY_01	(60)
 
@@ -30,6 +39,12 @@
 
 // ステージ最大時間（frame）
 #define STAGE_TIME				(START_TIME * 60)
+
+// ステージ遷移演出時間
+#define STAGE_CHANGE_EFX_TIME_01	(180)
+
+// ステージ遷移演出時間
+#define STAGE_CHANGE_EFX_TIME_02	(STAGE_CHANGE_EFX_TIME_01 + 60)
 
 // ステージ01クリア条件（撃破数）
 #define STAGE_NORMA_01			(10)

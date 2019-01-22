@@ -36,7 +36,7 @@ int  SceneManager::Update()
 		{
 			SetScene(SCENE_RESULT);
 		}
-		if (GetKeyboardTrigger(DIK_ESCAPE))
+		if (GetKeyboardTrigger(DIK_ESCAPE) || IsButtonTriggered(BUTTON_DOWN))
 		{
 			SetScene(SCENE_PAUSE);
 		}
@@ -46,7 +46,7 @@ int  SceneManager::Update()
 		// リザルトシーンの更新
 		UpdateResult();
 
-		if (GetKeyboardTrigger(DIK_RETURN))
+		if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
 		{
 			//SetScene(SCENE_TITLE);
 		}
@@ -56,10 +56,10 @@ int  SceneManager::Update()
 		// ランキングシーンの更新
 		UpdateRanking();
 
-		if (GetKeyboardTrigger(DIK_RETURN))
-		{
-			SetScene(SCENE_TITLE);
-		}
+		//if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(BUTTON_UP))
+		//{
+		//	SetScene(SCENE_RESULT);
+		//}
 		break;
 
 	case SCENE_PAUSE:

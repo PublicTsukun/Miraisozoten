@@ -7,7 +7,8 @@
 
 #include "Library/Input.h"
 #include "Library/ObjectBase2D.h"
-
+#include "SceneManager.h"
+#include "GameSound.h"
 // でふぁいん
 #define NAMEMAX	(5)
 
@@ -15,8 +16,9 @@
 typedef enum
 {	// 現在の状態
 	BEGIN = 0,		// 初期状態
-	RANKIN,
-	NAME_SELECT,
+	RANKIN,			// スコアがランクインしている
+	NAME_SELECT,	// 名前を入力している
+	NAME_SELECT_END,	// 名前が入力された
 	NAME_SELECT_MAX
 
 }NAME_SELECT_STATUS;
@@ -38,21 +40,17 @@ typedef struct
 {
 	long long x;
 	long long y;
+	Vector2 pos;
 }CURSOLE;
 
 typedef struct
 {
-	char name[256];	// ユーザー名
+	int name[5][2];	// ユーザー名
 	int score;		// スコア
-	long long namechar[NAMEMAX];
+	int namechar[NAMEMAX][2];
 	// 文字盤操作時のカーソル
-	long long  cursole_X;
-	long long  cursole_Y;
-	int name_position;
-	CURSOLE name_cursole;
 	bool selected[NAMEMAX];
 }RANKDATA;
-
 
 void Update_Name(void);
 HRESULT InitName(void);

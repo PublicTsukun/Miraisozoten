@@ -21,10 +21,12 @@
 #define WALL_POS_Z	(2000.00f)
 
 
-#define WALL_LIVE_NUM_X	(32)
-#define WALL_LIVE_NUM_Y	(18)
+#define WALL_LIVE_NUM_X	(16)
+#define WALL_LIVE_NUM_Y	(9)
 #define LIVEWALL_SIZE_X	(WALL_SIZE_X/WALL_LIVE_NUM_X)
 #define LIVEWALL_SIZE_Y	(WALL_SIZE_Y/WALL_LIVE_NUM_Y)
+
+#define WALL_CHANGE_SPEED		(100)
 
 //=============================================================================
 //プロトタイプ宣言

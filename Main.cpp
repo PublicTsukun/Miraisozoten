@@ -217,6 +217,10 @@ void Draw(void)
 		{
 			DrawDebugProcess();
 		}
+		else
+		{
+			SetCursorPos(100, 100);
+		}
 
 		// Direct3D‚É‚æ‚é•`‰æ‚ÌI—¹
 		Direct3D::GetD3DDevice()->EndScene();

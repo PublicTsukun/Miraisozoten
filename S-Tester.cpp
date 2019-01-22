@@ -18,6 +18,10 @@
 
 #include "voiceten.h"
 
+#include "StageManager.h"
+
+#include "S-Editor.h"
+
 //=============================================================================
 // DefeatCounter
 //=============================================================================
@@ -86,24 +90,47 @@ void TesterDC(void)
 //=============================================================================
 void TesterAtk(void)
 {
-	ENEMY *enemy = GetEnemyRE(0);
+#ifdef _DEBUG
+
+	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
+	STAGE *stage = GetStage();
 
 	if (GetKeyboardTrigger(DIK_A))
 	{
-		TesterAtkEnemyRE();
+		if (stage->no == STAGE_01_AKIBA &&
+			stage->status == STAGE_STATUS_NORMAL)
+
+		{
+			DefeatCounter->SetCount(STAGE_NORMA_01 - 1);
+			TesterAtkEnemyRE();
+		}
+
+		if (stage->no == STAGE_02_USA &&
+			stage->status == STAGE_STATUS_NORMAL)
+		{
+			DefeatCounter->SetCount(STAGE_NORMA_02 - 1);
+			TesterAtkEnemyRE();
+
+		}
 	}
 
-	if (GetKeyboardPress(DIK_NUMPAD3))
-	{
-		enemy->rot.y += 6 * (D3DX_PI / 180);
-	}
+#endif
+	//if (GetKeyboardTrigger(DIK_A))
+	//{
+	//	TesterAtkEnemyRE();
+	//}
 
-	if (enemy->rot.y >= 90 * (D3DX_PI / 180))
-	{
-		enemy->rot.y = -(90 * (D3DX_PI / 180));
-	}
+	//if (GetKeyboardPress(DIK_NUMPAD3))
+	//{
+	//	enemy->rot.y += 6 * (D3DX_PI / 180);
+	//}
 
-	PrintDebugProcess("(%f)", enemy->rot.y);
+	//if (enemy->rot.y >= 90 * (D3DX_PI / 180))
+	//{
+	//	enemy->rot.y = -(90 * (D3DX_PI / 180));
+	//}
+
+	//PrintDebugProcess("(%f)", enemy->rot.y);
 }
 
 //=============================================================================

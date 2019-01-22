@@ -10,6 +10,9 @@
 
 #include "UIBonus.h"
 #include "voicetank.h"
+#include "StageManager.h"
+
+#include "S-Editor.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -133,23 +136,31 @@ void UninitVoiceten(void)
 void UpdateVoiceten(void)
 {
 	VOICETEN *v = GetVoiceten(0);
+	STAGE *stage = GetStage();
 
-	UpdateVoiMove();
-
-	for (int i = 0; i < VOICETEN_MAX; i++)
+	if (stage->status == STAGE_STATUS_NORMAL ||
+		stage->status == STAGE_STATUS_END
+		)
 	{
-		if ((v + i)->use == TRUE)
+		for (int i = 0; i < VOICETEN_MAX; i++)
 		{
-			// 更新処理（位置、回転）
-			Voiceten[i].LoadObjectStatus((v + i)->pos, (v + i)->rot);
+			if ((v + i)->use == TRUE)
+			{
+				// 更新処理（位置、回転）
+				Voiceten[i].LoadObjectStatus((v + i)->pos, (v + i)->rot);
 
-			// タイマー　カウントアップ
-			(v + i)->timer++;
+				UpdateVoiMove();
 
-			// 稼働時間検査
-			CheckUptimeVoi(i);
+				// タイマー　カウントアップ
+				(v + i)->timer++;
+
+				// 稼働時間検査
+				CheckUptimeVoi(i);
+			}
 		}
+
 	}
+
 }
 
 //=============================================================================
@@ -288,20 +299,20 @@ void SetVoiceten(Vector3 Self, Vector3 Tgt)
 			// テクスチャ、ATK設定（ヴォイステンゲージに依存）
 			Voiceten[i].LoadTexture("data/TEXTURE/UI/voiceten.png");
 
-			if (VoiceTankUI::GetVoiceVolume() < (140 * 3))
+			if (VoiceTankUI::GetVoiceVolume() < (VOICETEN_TYPE_VOL_01))
 			{
 				Voiceten[i].SetTexture(V_TYPE_BLUE);
 				(v + i)->atk = V_BLUE_ATK;
 
 			}
-			else if (VoiceTankUI::GetVoiceVolume() >= (140 * 3) &&
-				VoiceTankUI::GetVoiceVolume() < (140 * 6))
+			else if (VoiceTankUI::GetVoiceVolume() >= (VOICETEN_TYPE_VOL_01) &&
+				VoiceTankUI::GetVoiceVolume() < (VOICETEN_TYPE_VOL_02))
 			{
 				Voiceten[i].SetTexture(V_TYPE_YELLOW);
 				(v + i)->atk = V_YELLOW_ATK;
 
 			}
-			else if (VoiceTankUI::GetVoiceVolume() >= (140 * 6))
+			else if (VoiceTankUI::GetVoiceVolume() >= (VOICETEN_TYPE_VOL_02))
 			{
 				Voiceten[i].SetTexture(V_TYPE_RED);
 				(v + i)->atk = V_RED_ATK;

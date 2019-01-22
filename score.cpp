@@ -14,7 +14,7 @@
 UI2DNumber score[SCORE_DIGIT];	//タイマー数字
 C2DObject ScoreFrame;
 
-int ScoreInter = SCORE_SIZE_X * 2;
+int ScoreInter = (int)SCORE_SIZE_X * 2;
 
 
 int Score;
@@ -32,7 +32,7 @@ HRESULT InitScore(void)
 	}
 
 	Score = 0;
-
+	DrawScr = 0;
 
 	ScoreFrame.Init(SCORE_FRAME_POS, SCORE_POS_Y, SCORE_SIZE_X * SCORE_DIGIT+20.0*SCREEN_SCALE, SCORE_SIZE_Y + 5 * SCREEN_SCALE, SCORE_FRAME_TEX);
 	ScoreFrame.SetVertex(0xff33ccff);
@@ -92,17 +92,12 @@ void UpdateScore(void)
 		}
 	}
 
+	int num;
 	for (int i = 0; i < SCORE_DIGIT; i++)
 	{
-		int num;
-
 		num = (DrawScr / (int)(pow(10, i)));
 		num %= 10;
-
-
 		score[i].SetNumber(num);
-
-
 	}
 
 }

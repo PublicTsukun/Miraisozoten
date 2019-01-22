@@ -134,9 +134,9 @@ char *FileEnemy[] =
 	"data/TEXTURE/Character/03_aa.png",
 	"data/TEXTURE/Character/04_jk.png",
 	"data/TEXTURE/Character/05_american.png",
+	"data/TEXTURE/Character/08_ufo.png",
 	"data/TEXTURE/Character/06_astronaut.png",
 	"data/TEXTURE/Character/07_alien.png",
-	"data/TEXTURE/Character/08_ufo.png",
 };
 
 // ワーク
@@ -204,9 +204,9 @@ void UpdateEnemyRE(void)
 			// 更新処理（位置、回転）
 			EnemyRE[i].LoadObjectStatus((e + i)->pos, (e + i)->rot);
 
+			// 撃破エフェクト
 			if ((e + i)->status == E_STATUS_DEFEATED)
 			{
-				// アニメーション
 				DefeatEnemyREEfx(i);
 			}
 
@@ -249,67 +249,73 @@ void CollisionEnemyRE(void)
 {
 	VOICETEN *v = GetVoiceten(0);
 	ENEMY *e = GetEnemyRE(0);
+	STAGE *stage = GetStage();
 
-	// 衝突範囲設定(1)
-	const float len = ENEMY_COLI_LEN;
-	const float hei = ENEMY_COLI_HEI;
-	const float wid = ENEMY_COLI_WID;
-
-	for(int i = 0; i < ENEMY_MAX; i++, e++)
+	if (stage->status == STAGE_STATUS_NORMAL)
 	{
-		if (e->use == FALSE) continue;
-		if (e->status != E_STATUS_NORMAL) continue;
-		v = GetVoiceten(0);
+		// 衝突範囲設定(1)
+		const float len = ENEMY_COLI_LEN;
+		const float hei = ENEMY_COLI_HEI;
+		const float wid = ENEMY_COLI_WID;
 
-		for (int j = 0; j < VOICETEN_MAX; j++, v++)
+		for (int i = 0; i < ENEMY_MAX; i++, e++)
 		{
-			if (v->use == FALSE) continue;
+			if (e->use == FALSE) continue;
+			if (e->status != E_STATUS_NORMAL) continue;
+			v = GetVoiceten(0);
 
-			// 衝突範囲設定(2)
-			Vector3 vA1 = v->pos;
-			Vector3 vA2 = v->pos;
-			Vector3 vB1 = e->pos;
-			Vector3 vB2 = e->pos;
-
-			vA1.x = v->pos.x - len;		// 左
-			vA1.y = v->pos.y + hei;		// 上
-			vA1.z = v->pos.z - wid;		// 前
-
-			vA2.x = v->pos.x + len;		// 右
-			vA2.y = v->pos.y - hei;		// 下
-			vA2.z = v->pos.z + wid;		// 奥
-
-			vB1.x = e->pos.x - len;		// 左
-			vB1.y = e->pos.y + hei;		// 上
-			vB1.z = e->pos.z - wid;		// 前
-
-			vB2.x = e->pos.x + len;		// 右
-			vB2.y = e->pos.y - hei;		// 下
-			vB2.z = e->pos.z + wid;		// 奥
-
-			// チェック
-			if ((vA2.x > vB1.x)
-				&& (vB2.x > vA1.x)
-				&& (vA2.y < vB1.y)
-				&& (vB2.y < vA1.y)
-				&& (vA2.z > vB1.z)
-				&& (vB2.z > vA1.z)
-				)
+			for (int j = 0; j < VOICETEN_MAX; j++, v++)
 			{
-				// ダメージ計算
-				DamageDealEnemyRE(i, j);
+				if (v->use == FALSE) continue;
 
-				// エフェクト発生
-				CallEffectVH(v->pos);
+				// 衝突範囲設定(2)
+				Vector3 vA1 = v->pos;
+				Vector3 vA2 = v->pos;
+				Vector3 vB1 = e->pos;
+				Vector3 vB2 = e->pos;
 
-				// 弾消滅
-				VanishVoiceten(j);
+				vA1.x = v->pos.x - len;		// 左
+				vA1.y = v->pos.y + hei;		// 上
+				vA1.z = v->pos.z - wid;		// 前
+
+				vA2.x = v->pos.x + len;		// 右
+				vA2.y = v->pos.y - hei;		// 下
+				vA2.z = v->pos.z + wid;		// 奥
+
+				vB1.x = e->pos.x - len;		// 左
+				vB1.y = e->pos.y + hei;		// 上
+				vB1.z = e->pos.z - wid;		// 前
+
+				vB2.x = e->pos.x + len;		// 右
+				vB2.y = e->pos.y - hei;		// 下
+				vB2.z = e->pos.z + wid;		// 奥
+
+											// チェック
+				if ((vA2.x > vB1.x)
+					&& (vB2.x > vA1.x)
+					&& (vA2.y < vB1.y)
+					&& (vB2.y < vA1.y)
+					&& (vA2.z > vB1.z)
+					&& (vB2.z > vA1.z)
+					)
+				{
+					// ダメージ計算
+					DamageDealEnemyRE(i, j);
+
+					// エフェクト発生
+					CallEffectVH(v->pos);
+
+					// 弾消滅
+					VanishVoiceten(j);
+
+				}
 
 			}
 
 		}
-		
+
 	}
+
 
 }
 
@@ -690,24 +696,34 @@ void DefeatEnemyREEfx(int no)
 //============================================================================='
 void TesterAtkEnemyRE(void)
 {
-	ENEMY *e = GetEnemyRE(0);
+	ENEMY *enemy = GetEnemyRE(0);
 
-	// ダメージ計算
-	if ((e + 0)->status == E_STATUS_NORMAL)
+	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		(e + 0)->hp -= 4;
-
-		// HP修正
-		if ((e + 0)->hp < 0)
+		if ((enemy + i)->use == true)
 		{
-			(e + 0)->hp = 0;
+			(enemy + i)->hp -= (enemy + i)->hp;
+			DefeatEnemyRE(i);
+			break;
 		}
-
-		// 撃破判定
-		if ((e + 0)->hp <= 0)
-		{
-			DefeatEnemyRE(0);
-		}
-
 	}
+
+	//// ダメージ計算
+	//if ((e + 0)->status == E_STATUS_NORMAL)
+	//{
+	//	(e + 0)->hp -= 256;
+
+	//	// HP修正
+	//	if ((e + 0)->hp < 0)
+	//	{
+	//		(e + 0)->hp = 0;
+	//	}
+
+	//	// 撃破判定
+	//	if ((e + 0)->hp <= 0)
+	//	{
+	//		DefeatEnemyRE(0);
+	//	}
+
+	//}
 }

@@ -102,15 +102,15 @@ void UpdateUIBonus(void)
 		}
 		//else
 		{
-			AddGage(-1);//ゲージを縮める
+			//AddGage(-1);//ゲージを縮める
 
 			if (fiverf == true)
 			{
-				AddGage(-2);//フィーバー状態ならもっと減らす
+				AddGage(-3);//フィーバー状態ならもっと減らす
 			}
 		}
 
-		if ((GetKeyboardTrigger(DIK_8) || IsButtonTriggered(BUTTON_09, 1)) && gagenum == 3)
+		if (/*(GetKeyboardTrigger(DIK_8) || IsButtonTriggered(BUTTON_09, 1)) &&*/ gagenum == 3)
 		{
 			fiverf = true;
 		}

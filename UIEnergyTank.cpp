@@ -60,7 +60,7 @@ void CEnergyTankUI::SetValue(float value)
 		0.22f,
 		0.0f
 	};
-	const float sta = this->MaxValue * 140.0f / 1000.0f;
+	const float sta = this->MaxValue * ENERGY_CORD / 1000.0f;
 	int rate;
 	if (value < sta * 1)      rate = 0;
 	else if (value < sta * 2) rate = 1;

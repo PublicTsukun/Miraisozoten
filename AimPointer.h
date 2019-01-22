@@ -5,7 +5,7 @@
 #include "Library\ObjectBase2D.h"
 
 
-static class AimPointer : public C2DObject
+class AimPointer : public C2DObject
 {
 	static Vector2 GlobalPosition;
 	static Vector2 GlobalSensitivity;

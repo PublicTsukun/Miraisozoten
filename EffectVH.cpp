@@ -12,16 +12,21 @@
 #include "S-Editor.h"
 
 //*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+#define	EFFECT_VH_MAX	(16)
+
+//*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-EffectVoicetenHit EffectVH[VOICETEN_MAX];
+EffectVoicetenHit EffectVH[EFFECT_VH_MAX];
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
 void InitEffectVH(void)
 {
-	for (int i = 0; i < VOICETEN_MAX; i++)
+	for (int i = 0; i < EFFECT_VH_MAX; i++)
 	{
 		EffectVH[i].Init();
 	}
@@ -32,7 +37,7 @@ void InitEffectVH(void)
 //=============================================================================
 void UninitEffectVH(void)
 {
-	for (int i = 0; i < VOICETEN_MAX; i++)
+	for (int i = 0; i < EFFECT_VH_MAX; i++)
 	{
 		EffectVH[i].Uninit();
 	}
@@ -43,7 +48,7 @@ void UninitEffectVH(void)
 //=============================================================================
 void UpdateEffectVH(void)
 {
-	for (int i = 0; i < VOICETEN_MAX; i++)
+	for (int i = 0; i < EFFECT_VH_MAX; i++)
 	{
 		EffectVH[i].Update();
 	}
@@ -54,7 +59,7 @@ void UpdateEffectVH(void)
 //=============================================================================
 void DrawEffectVH(void)
 {
-	for (int i = 0; i < VOICETEN_MAX; i++)
+	for (int i = 0; i < EFFECT_VH_MAX; i++)
 	{
 		EffectVH[i].Draw();
 	}
@@ -65,7 +70,7 @@ void DrawEffectVH(void)
 //=============================================================================
 void CallEffectVH(Vector3 pos)
 {
-	for (int i = 0; i < VOICETEN_MAX; i++)
+	for (int i = 0; i < EFFECT_VH_MAX; i++)
 	{
 		if (!EffectVH[i].CheckState())
 		{
