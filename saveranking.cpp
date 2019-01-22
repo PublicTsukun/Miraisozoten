@@ -176,13 +176,17 @@ bool SaveRankingSort(int score)
 	}
 }
 
+
+//============================================================================
+//ranking ‚ÌŠm”F
+//=============================================================================
 int CheckRank(int Score)
 {
 	for (int i = 0; i < RANKING_MAX - 1; i++)
 	{
 		if (rankingWk[i].score == Score)
 		{
-			return rankingWk[i].rank;
+			return i;
 		}
 	}
 	return -1;
