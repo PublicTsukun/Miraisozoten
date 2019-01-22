@@ -38,6 +38,7 @@ void EnemySpawner(void);
 void CheckChangeStage(void);
 void NextStageEfx(void);
 void NextStage(void);
+void NextStage01(void);
 void GameOver(void);
 
 void CountUpTimer(void);
@@ -86,9 +87,9 @@ void UpdateStage(void)
 	// カウントアップタイマー
 	CountUpTimer();
 
-	//STAGE *stage = GetStage();	
-	//PrintDebugProcess("stage timer: %d\n", stage->timer);
-	//PrintDebugProcess("stage status: %d\n", stage->status);
+	STAGE *stage = GetStage();	
+	PrintDebugProcess("stage timer: %d\n", stage->timer);
+	PrintDebugProcess("stage status: %d\n", stage->status);
 
 }
 
@@ -134,9 +135,14 @@ void CheckChangeStage(void)
 		NextStageEfx();
 	}
 
-	if (stage->timerEfx == CHANGETIME_CS)
+	if (stage->timerEfx == STAGE_CHANGE_EFX_TIME_01)
 	{
 		NextStage();
+	}
+
+	if (stage->timerEfx == STAGE_CHANGE_EFX_TIME_02)
+	{
+		NextStage01();
 	}
 
 	if (stage->timer >= STAGE_TIME)
@@ -180,10 +186,20 @@ void NextStage(void)
 		ResetAllEnemyRE();
 		SetEnemyRE(stage->timer);
 
+		//stage->status = STAGE_STATUS_NORMAL;
+		//stage->timerEfx = 0;
+	}
+}
+
+void NextStage01(void)
+{
+	STAGE *stage = GetStage();
+
+	if (stage->status == STAGE_STATUS_CHANGING)
+	{
 		stage->status = STAGE_STATUS_NORMAL;
 		stage->timerEfx = 0;
 	}
-
 }
 
 //=============================================================================
