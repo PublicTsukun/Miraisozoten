@@ -37,6 +37,19 @@ void DefeatCounter::SetCount(int value)
 DefeatCounter DefeatCounterWk[E_TYPE_MAX];
 
 //=============================================================================
+// ‰Šú‰»
+//=============================================================================
+void InitDefeatCounter(void)
+{
+	DefeatCounter *DefeatCounter = GetDefeatCounter(0);
+
+	for (int i = 0; i < E_TYPE_MAX; i++)
+	{
+		(DefeatCounter + i)->SetCount(0);
+	}
+}
+
+//=============================================================================
 // æ“¾
 //=============================================================================
 DefeatCounter *GetDefeatCounter(int no)

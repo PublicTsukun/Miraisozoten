@@ -21,6 +21,7 @@
 #include "EnemyHP.h"
 #include "EffectVH.h"
 #include "EffectFB.h"
+#include "DefeatCounter.h"
 
 #include "S-Tester.h"
 
@@ -46,6 +47,7 @@ HRESULT InitWorkSon(void)
 		InitStage();
 		InitEffectVH();
 		InitEffectFB();
+		InitDefeatCounter();
 		break;
 
 
