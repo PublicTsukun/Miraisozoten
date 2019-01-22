@@ -73,7 +73,7 @@ const Vector2 wallSize = Vector2(WALL_SIZE_X, WALL_SIZE_Y);
 const Vector3 wallPos = Vector3(WALL_POS_X, WALL_POS_Y, WALL_POS_Z);
 
 Wall LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
-Wall LiveWallFront;
+//Wall LiveWallFront;
 const Vector3 LivewallPos = Vector3(WALL_POS_X - (LIVEWALL_SIZE_X * 2 * (WALL_LIVE_NUM_X / 2))+ LIVEWALL_SIZE_X,
 									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)),
 									WALL_POS_Z);
@@ -132,7 +132,7 @@ HRESULT InitField(void)
 		LiveWall[i].SetTexture(i, WALL_LIVE_NUM_X, WALL_LIVE_NUM_Y);
 
 	}
-	LiveWallFront.Init(WALL_POS_X, WALL_POS_Y - WALL_SIZE_Y * 2, WALL_POS_Z, WALL_SIZE_X, WALL_SIZE_Y);
+//	LiveWallFront.Init(WALL_POS_X, WALL_POS_Y - WALL_SIZE_Y * 2, WALL_POS_Z, WALL_SIZE_X, WALL_SIZE_Y);
 
 
 	LiveWallUse = false;
@@ -166,13 +166,13 @@ HRESULT InitField(void)
 void LoadFieldTex(void)
 {
 	LiveTex[0].LoadTexture("data/TEXTURE/ステージ/ライブステージ/バック.jpg");
-	LiveTex[1].LoadTexture("data/TEXTURE/ステージ/ライブステージ/フロント.png");
+//	LiveTex[1].LoadTexture("data/TEXTURE/ステージ/ライブステージ/フロント.png");
 
 	for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
 	{
 		LiveWall[i].LoadTexture(LiveTex[0]);
 	}
-	LiveWallFront.LoadTexture(LiveTex[1]);
+//	LiveWallFront.LoadTexture(LiveTex[1]);
 
 }
 
@@ -217,37 +217,33 @@ void DrawField(void)
 	{
 		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-		// 描画直前にこれを追加して
 		//DWORD blend;
 		//DWORD op;
 		//DWORD bSRC;
 		//DWORD bDEST;
+
+		for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
+		{
+			LiveWall[i].Draw();
+		}
 
 		//Direct3D::GetD3DDevice()->GetRenderState(D3DRS_ALPHABLENDENABLE, &blend);
 		//Direct3D::GetD3DDevice()->GetRenderState(D3DRS_BLENDOP, &op);
 		//Direct3D::GetD3DDevice()->GetRenderState(D3DRS_SRCBLEND, &bSRC);
 		//Direct3D::GetD3DDevice()->GetRenderState(D3DRS_DESTBLEND, &bDEST);
 
-		for (int i = 0; i < WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y; i++)
-		{
-			LiveWall[i].Draw();
-		}
-		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+		
+//		LiveWallFront.Draw();
 
-		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD); // ブレンドモードを加算に
-		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA); // SRC(描画予定側)を半透明合成
-		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE); // DEST(描画済み側)をそのまま描画
-
-		//LiveWallFront.Draw();
-		//
-
-		// 描画直後にこれを追加
 		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, blend);
 		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_BLENDOP, op);
 		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_SRCBLEND, bSRC);
 		//Direct3D::GetD3DDevice()->SetRenderState(D3DRS_DESTBLEND, bDEST);
 
-		//LiveWallFront.Draw();
+		Direct3D::GetD3DDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 	}
 }
 
@@ -262,7 +258,7 @@ void UpdateField(void)
 			{
 				LiveWall[i].MoveWallY(WALL_CHANGE_SPEED);
 			}
-			LiveWallFront.MoveWallY(WALL_CHANGE_SPEED);
+//			LiveWallFront.MoveWallY(WALL_CHANGE_SPEED);
 			for (int i = 0; i < 3; i++)
 			{
 				wall[i].MoveWallY(WALL_CHANGE_SPEED * (1 - 0.25*i));
@@ -283,7 +279,7 @@ void UpdateField(void)
 			Pos.x = WALL_POS_X;
 			Pos.y = WALL_POS_Y;
 			Pos.z = WALL_POS_Z;
-			LiveWallFront.SetWall(Pos);
+//			LiveWallFront.SetWall(Pos);
 
 			LiveWallUse = true;
 		}
@@ -297,7 +293,7 @@ void UpdateField(void)
 			{
 				LiveWall[i].MoveWallY(-WALL_CHANGE_SPEED);
 			}
-			LiveWallFront.MoveWallY(-WALL_CHANGE_SPEED);
+//			LiveWallFront.MoveWallY(-WALL_CHANGE_SPEED);
 			for (int i = 0; i < 3; i++)
 			{
 				wall[i].MoveWallY(-WALL_CHANGE_SPEED * (1 - 0.25*i));
