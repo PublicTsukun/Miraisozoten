@@ -124,15 +124,15 @@ void EffectVoicetenHit::PolygonC::Motion(int count)
 
 void EffectVoicetenHit::Initialize()
 {
-	texA.LoadTexture("data/TEXTURE/エフェクト/texA.png");
-	texB.LoadTexture("data/TEXTURE/エフェクト/texB.png");
-	texC.LoadTexture("data/TEXTURE/エフェクト/texC.png");
+	//texA.LoadTexture("data/TEXTURE/エフェクト/texA.png");
+	//texB.LoadTexture("data/TEXTURE/エフェクト/texB.png");
+	//texC.LoadTexture("data/TEXTURE/エフェクト/texC.png");
 }
 void EffectVoicetenHit::Uninitialize()
 {
-	texA.Release();
-	texB.Release();
-	texB.Release();
+	//texA.Release();
+	//texB.Release();
+	//texB.Release();
 }
 
 int EffectVoicetenHit::Init()

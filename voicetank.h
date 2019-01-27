@@ -4,7 +4,7 @@
 
 #include "UIEnergyTank.h"
 #include "Library\Common.h"
-constexpr int VoiceVolumeMIN = 60;
+constexpr int VoiceVolumeMIN = 120;
 constexpr int VoiceVolumeMAX = 3000;
 
 class VoiceTankUI : public CEnergyTankUI
