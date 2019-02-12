@@ -21,8 +21,8 @@
 #define WALL_POS_Z	(2000.00f)
 
 
-#define WALL_LIVE_NUM_X	(16)
-#define WALL_LIVE_NUM_Y	(9)
+#define WALL_LIVE_NUM_X	(6)
+#define WALL_LIVE_NUM_Y	(4)
 #define LIVEWALL_SIZE_X	(WALL_SIZE_X/WALL_LIVE_NUM_X)
 #define LIVEWALL_SIZE_Y	(WALL_SIZE_Y/WALL_LIVE_NUM_Y)
 

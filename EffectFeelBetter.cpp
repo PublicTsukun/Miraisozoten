@@ -41,12 +41,12 @@ void EffectFeelBetter::PolygonA::Motion()
 
 void EffectFeelBetter::Initialize()
 {
-	texA.LoadTexture("data/TEXTURE/エフェクト/texA.png");
+	//texA.LoadTexture("data/TEXTURE/エフェクト/texA.png");
 }
 
 void EffectFeelBetter::Uninitialize()
 {
-	texA.Release();
+	//texA.Release();
 }
 
 int EffectFeelBetter::Init()

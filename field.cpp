@@ -76,14 +76,14 @@ const Vector3 wallPos = Vector3(WALL_POS_X, WALL_POS_Y, WALL_POS_Z);
 Wall LiveWall[WALL_LIVE_NUM_X*WALL_LIVE_NUM_Y];
 //Wall LiveWallFront;
 const Vector3 LivewallPos = Vector3(WALL_POS_X - (LIVEWALL_SIZE_X * 2 * (WALL_LIVE_NUM_X / 2))+ LIVEWALL_SIZE_X,
-									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2)),
+									WALL_POS_Y + (LIVEWALL_SIZE_Y * 2 * (WALL_LIVE_NUM_Y / 2))-LIVEWALL_SIZE_Y,
 									WALL_POS_Z);
 
 bool LiveWallUse;
 
 const char *WallTex[] =
 {
-	"data/TEXTURE/ステージ/アキバ/バック.png",
+	"data/TEXTURE/ステージ/アキバ/バック.jpg",
 	"data/TEXTURE/ステージ/アキバ/ミッド.png",
 	"data/TEXTURE/ステージ/アキバ/フロント.png",
 	"data/TEXTURE/ステージ/アメリカ/バック.jpg",
@@ -145,10 +145,10 @@ HRESULT InitField(void)
 	BackLight.SetLight(0);
 
 	/* スポットライト */
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		SpotLight[i].Type = D3DLIGHT_SPOT;
-		SpotLight[i].Position = Vector3((float)i * 600.0f - 1500.0f, 200.0f, 0.0f);
+		SpotLight[i].Position = Vector3((float)i * 600.0f - 1200.0f, 200.0f, 0.0f);
 		SpotLight[i].Range = 2100.0f;
 		SpotLight[i].Falloff = 2.0f;
 		SpotLight[i].Attenuation0 = 0.5f;
@@ -332,7 +332,7 @@ void UpdateField(void)
 		/* スポットライト */
 		// 方向操作
 		LCurve += 0.1f;
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			SpotVec[i].y = (i % 2) ? sinf(LCurve) : -sinf(LCurve);
 		}
@@ -355,7 +355,7 @@ void UpdateField(void)
 
 		// 反映
 		Vector3 vec;
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			SpotLight[i].Diffuse = D3DXCOLOR(LR, LG, LB, 1.0f);
 			SpotLight[i].Direction = Vector3(0, SpotVec[i].y / 3.0f, 1);
